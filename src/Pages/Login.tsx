@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 
     borderWidth: 1,
-    borderColor: 'blue'
+    borderColor: 'blue',
   }
 })
 
