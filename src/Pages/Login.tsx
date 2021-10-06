@@ -1,9 +1,29 @@
 import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import * as Google from 'expo-google-app-auth';
 import Svg, { Path } from "react-native-svg";
-import { LinearGradient } from "expo-linear-gradient"
+import { LinearGradient } from "expo-linear-gradient";
 
 const Login = () => {
+  const handleGoogleSignin = () => {
+    const config = {
+      iosClientId: '684156509987-mokd5cnud6oed8qn1r5nunqdu631friv.apps.googleusercontent.com',
+      androidClientId: '684156509987-cprs1rm38pjgu7jt4i2hhan3mqppao1k.apps.googleusercontent.com',
+      scopes: ['profile', 'email']
+    };
+
+    Google
+      .logInAsync(config)
+      .then(({type, user} ) => {
+        if(type !== 'success') return console.log('Canceled');
+
+        console.log(user)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
   return (
     <>
       <View style={styles.background}>
@@ -26,7 +46,7 @@ const Login = () => {
       </View>
 
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity activeOpacity={.7} style={[styles.button, styles.googleButton]}>
+        <TouchableOpacity onPress={() => handleGoogleSignin()} activeOpacity={.7} style={[styles.button, styles.googleButton]}>
           <Image 
             style={styles.img}
             source={require('../assets/img/googleLogo.png')} />
