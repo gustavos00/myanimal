@@ -14,10 +14,10 @@ const Login = () => {
 
     Google
       .logInAsync(config)
-      .then(({type, user} ) => {
-        if(type !== 'success') return console.log('Canceled');
+      .then((data) => {
+        if(data.type !== 'success') return console.log('Canceled');
 
-        console.log(user)
+        console.log(data.user)
       })
       .catch(error => {
         console.log(error)
