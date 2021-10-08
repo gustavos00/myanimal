@@ -1,8 +1,8 @@
 import React from 'react';
-import Login from './src/pages/Login';
+import MainStack from './src/navigator/MainStack';
 
 export default function App() {
   return (
-    <Login />
+    <MainStack />
   );
 }
