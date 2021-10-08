@@ -2,7 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
 import * as Google from 'expo-google-app-auth';
 import LoginWave from '../components/loginWave/index';
-import LoginButton from '../components/LoginButton/index';
+import LoginButton from "../components/LoginButton";
 
 const Login = () => {
   const handleGoogleSignin = () => {
@@ -29,8 +29,8 @@ const Login = () => {
       <LoginWave />
 
       <View style={styles.buttonsContainer}>
-       <LoginButton color={"#CE4232"} text={"Continue with Google"} imageName={"google"}/>
-       <LoginButton color={"#3C66C4"} text={"Continue with Facebook"} imageName={"facebook"}/>
+       <LoginButton color={"#CE4232"} handleOnClick={handleGoogleSignin} text={"Continue with Google"} imageName={"google"}/>
+       <LoginButton color={"#3C66C4"} handleOnClick={() => {console.log('test')}} text={"Continue with Facebook"} imageName={"facebook"}/>
       </View>
     </>
   )
