@@ -5,7 +5,6 @@ interface LoginButtonProps {
   color: string, 
   text: string, 
   imageName: string,
-
 }
 
 function LoginButton({color, text, imageName} : LoginButtonProps) {
