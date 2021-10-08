@@ -5,9 +5,10 @@ interface LoginButtonProps {
   color: string, 
   text: string, 
   imageName: string,
+  handleOnClick: () => void;
 }
 
-function LoginButton({color, text, imageName} : LoginButtonProps) {
+function LoginButton({color, text, imageName, handleOnClick} : LoginButtonProps) {
   let image
 
   switch(imageName) {
@@ -17,14 +18,14 @@ function LoginButton({color, text, imageName} : LoginButtonProps) {
 
     case 'google':
       image = require('../../assets/img/googleLogo.png')
-      break;
+      break; 
     default:
       console.log('Error finding loginButton image')
   }
 
   return (
     <>
-      <TouchableOpacity onPress={() => console.log('pressed')} activeOpacity={.7} style={[styles.button, {backgroundColor: color}]}>
+      <TouchableOpacity onPress={() => handleOnClick()} activeOpacity={.7} style={[styles.button, {backgroundColor: color}]}>
           <Image 
             style={styles.img}
             source={image} />
