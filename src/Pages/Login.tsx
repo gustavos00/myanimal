@@ -1,10 +1,14 @@
 import React from "react";
-import { Text, View, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { View, StyleSheet } from "react-native";
 import * as Google from 'expo-google-app-auth';
+
 import LoginWave from '../components/loginWave/index';
 import LoginButton from "../components/LoginButton";
 
 const Login = () => {
+  const navigation = useNavigation();
+
   const handleGoogleSignin = () => {
     const config = {
       iosClientId: '684156509987-mokd5cnud6oed8qn1r5nunqdu631friv.apps.googleusercontent.com',
@@ -30,7 +34,7 @@ const Login = () => {
 
       <View style={styles.buttonsContainer}>
        <LoginButton color={"#CE4232"} handleOnClick={handleGoogleSignin} text={"Continue with Google"} imageName={"google"}/>
-       <LoginButton color={"#3C66C4"} handleOnClick={() => {console.log('test')}} text={"Continue with Facebook"} imageName={"facebook"}/>
+       <LoginButton color={"#3C66C4"} handleOnClick={() => {navigation.navigate('Home' as any)}} text={"Continue with Facebook"} imageName={"facebook"}/>
       </View>
     </>
   )
