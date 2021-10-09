@@ -8,17 +8,22 @@ import Footer from '../components/Footer/index';
 const Login = () => {
   return (
     <>
-      <Header firstText={"Hello, Gustavo! 👋"} secondText={"How your pet is doing?"} />
+      <Header 
+        firstText={"Hello, "} 
+        bolderText={"Gustavo! 👋"}
+        secondText={"How your pet is doing?"} 
+        imageUrl={"https://lh3.googleusercontent.com/a-/AOh14GhcN-ZXLHX6aO1C4T9DjrBlsxpH641s9B8s9Y-4SQ=s96-c"} 
+      />
 
       <View style={styles.content}>
         <View style={styles.row}>
-          <HomeSquare />
-          <HomeSquare />
+          <HomeSquare imageName={' '} value={''}/>
+          <HomeSquare imageName={' '} value={''}/>
         </View>
 
         <View style={styles.row}>
-          <HomeSquare />
-          <HomeSquare />
+          <HomeSquare imageName={' '} value={''}/>
+          <HomeSquare imageName={' '} value={''}/>
         </View>
       </View>
 
@@ -28,13 +33,8 @@ const Login = () => {
 }
 
 const styles = StyleSheet.create({
-
-
   content: {
-    marginTop: 100,
-
-    backgroundColor: 'red',
-    borderWidth: 1,
+    marginTop: 80,
   },
 
   row: {
@@ -44,12 +44,7 @@ const styles = StyleSheet.create({
 
     flexDirection: 'row',
     justifyContent: 'space-around',
-
-    borderWidth: 1,
-    borderColor: 'purple'
   },
-
-
 })
 
 export default Login

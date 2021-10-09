@@ -1,37 +1,33 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
+import AnimalData from '../AnimalData';
 import HeaderWave from '../HeaderWave/index';
+import UserIcon from '../UserIcon/index';
 
 interface HeaderProps {
-  firstText: string,
-  secondText: string
+  firstText?: string,
+  bolderText?: string
+  secondText: string,
+
+  imageUrl: string,
 }
 
 
-function Header({firstText, secondText} : HeaderProps) {
+function Header({firstText, bolderText, secondText, imageUrl} : HeaderProps) {
   return (
     <>
       <View style={styles.headerContainer}>
         <View style={styles.header}>
             <View style={styles.headerText}>
-              <Text>{firstText}</Text>
-              <Text>{secondText}</Text>
+              <Text style={styles.firstText} >{firstText} <Text style={styles.bolderText}>{bolderText}</Text></Text>
+              <Text style={styles.secondText}>{secondText}</Text>
             </View>
 
-            <View style={styles.userImage}></View>
+           <UserIcon imageUrl={imageUrl}/>
         </View>
 
-        <HeaderWave />
-
-        <View style={styles.dataAnimalContainer}>
-          <View style={styles.arrowImage}></View>
-
-          <View style={styles.dataAnimal}>
-
-          </View>
-
-          <View style={styles.arrowImage}></View>
-        </View>
+        <AnimalData />
+        <HeaderWave />        
       </View>
     </>
   );
@@ -43,7 +39,7 @@ const styles = StyleSheet.create({
   },
 
   header: {
-    height: 150,
+    height: 130,
     paddingTop: 50,
 
     flexDirection: "row",
@@ -55,50 +51,20 @@ const styles = StyleSheet.create({
 
   headerText: {
     justifyContent: "center",
-
-    borderWidth: 1,
-    borderColor: 'green',
   },
 
-  userImage: {
-    width: 60,
-    height: 60, 
-
-    borderWidth: 1,
-    borderColor: 'yellow',
-
-    backgroundColor: 'red',
-    borderRadius: 50,
+  firstText: {
+    fontSize: 24,
+    fontWeight: '200',
   },
 
-  dataAnimalContainer: {
-    width: '100%',
-
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-
-    position: 'absolute',
-    top: 185,
-
-    borderWidth: 1,
-    borderColor: 'green',
+  bolderText: {
+    fontWeight: 'bold'
   },
 
-  dataAnimal: {
-    width: 250,
-    height: 80,
-
-    borderWidth: 1,
-    borderColor: 'purple',
-    borderRadius: 7,
-  },
-
-  arrowImage: {
-    width: 30,
-    height: 30,
-    
-    backgroundColor: 'red',
+  secondText: {
+    fontSize: 20,
+    fontWeight: '200',
   },
 })
 
