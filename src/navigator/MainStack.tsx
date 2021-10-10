@@ -8,7 +8,7 @@ import SplashScreen from '../pages/SplashScreen';
 
 export type RootStackParamList = {
   Login: undefined;
-  Home: undefined;
+  Home: { id: number};
   SplashScreen: undefined,
 }
 
@@ -17,7 +17,7 @@ const {Navigator, Group, Screen} = createStackNavigator<RootStackParamList>()
 export default () => {
   return (
     <NavigationContainer>
-      <Navigator>
+      <Navigator >
         <Group>
           <Screen options={{headerShown: false}} name="Login" component={Login}/>
           <Screen options={{headerShown: false}} name="Home" component={Home}/>

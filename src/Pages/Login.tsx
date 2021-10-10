@@ -34,7 +34,7 @@ const Login = () => {
 
       <View style={styles.buttonsContainer}>
        <LoginButton color={"#CE4232"} handleOnClick={handleGoogleSignin} text={"Continue with Google"} imageName={"google"}/>
-       <LoginButton color={"#3C66C4"} handleOnClick={() => {navigation.navigate('SplashScreen' as any)}} text={"Continue with Facebook"} imageName={"facebook"}/>
+       <LoginButton color={"#3C66C4"} handleOnClick={() => {navigation.navigate('Home' as any)}} text={"Continue with Facebook"} imageName={"facebook"}/>
       </View>
     </>
   )
