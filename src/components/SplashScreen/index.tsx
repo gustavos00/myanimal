@@ -17,6 +17,13 @@ const SplashScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    zIndex: 10,
+
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
     
     justifyContent: 'center',
     alignItems: 'center',
