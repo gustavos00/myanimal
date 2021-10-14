@@ -2,9 +2,9 @@ import React from 'react';
 import { View, StyleSheet, Image, SafeAreaView } from "react-native";
 import globalStyles from '../../assets/styles/global';
 
-import SliderAllDots from './SliderAllDots';
-import SliderHeader from './SliderHeader';
-import SliderSubheader from './SliderSubheader';
+import SliderAllDots from '../SliderAllDots';
+import SliderHeader from '../SliderHeader';
+import SliderSubheader from '../SliderSubheader';
 
 
 interface SliderContentProps {

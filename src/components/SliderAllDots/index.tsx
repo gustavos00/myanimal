@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet} from 'react-native';
-import SliderDot from './SliderDot';
+import SliderDot from '../SliderDot';
 
 interface SliderAllDotsProps {
   amount: number;
