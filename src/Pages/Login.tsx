@@ -1,13 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Image, SafeAreaView } from "react-native";
 import * as Google from 'expo-google-app-auth';
 
-import LoginWave from '../components/loginWave/index';
-import LoginButton from "../components/LoginButton";
+import api from '../api/api';
+
+import globalStyles from "../assets/styles/global";
+import Button from "../components/Login/Button";
+import RoundedBackground from "../components/RoundedBackground";
+
+import SliderContent from "../components/Login/SliderContent";
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation();
+
+  interface userGoogleDataProps {
+    givenName?: string;
+    familyName?: string;
+    photoUrl?: string;
+    email?: string;
+  }
+
+  const apiPostData = ({givenName, familyName, photoUrl, email} : userGoogleDataProps) => {
+    const params = new URLSearchParams({
+      givenName: givenName ?? "",
+      familyName: familyName ?? "",
+      photoUrl: photoUrl ?? "",
+      email: givenName ?? "",
+    })
+
+    api
+      .post('/user', params)
+      .then(({data, status}) => {
+        console.log(status)
+      })
+  }
 
   const handleGoogleSignin = () => {
     const config = {
@@ -19,9 +47,16 @@ const Login = () => {
     Google
       .logInAsync(config)
       .then((data) => {
-        if(data.type !== 'success') return console.log('Canceled');
+        if(data.type === 'cancel') return console.log('Canceled');
 
-        console.log(data.user)
+        setIsLoading(true);
+        apiPostData(data.user);
+
+        const handler = setTimeout(() => {
+            setIsLoading(false);
+            navigation.navigate('Home' as any)
+        }, 2000);
+        return () => clearTimeout(handler);
       })
       .catch(error => {
         console.log(error)
@@ -30,31 +65,38 @@ const Login = () => {
 
   return (
     <>
-      <LoginWave />
+      <View style={styles.bg}>
+        <RoundedBackground top> 
+          <SliderContent 
+            textBeforeBolder={"Imagine controlling your "} 
+            textAfterBolder={"pet's information"} 
+            textBolder={" in one place?"} 
+            imageName={'bird'} 
+            subheaderText={"On myAnimal you can control and share your pet's information quickly!"} />
+        </RoundedBackground>
 
-      <View style={styles.buttonsContainer}>
-       <LoginButton color={"#CE4232"} handleOnClick={handleGoogleSignin} text={"Continue with Google"} imageName={"google"}/>
-       <LoginButton color={"#3C66C4"} handleOnClick={() => {navigation.navigate('Home' as any)}} text={"Continue with Facebook"} imageName={"facebook"}/>
+        <View style={styles.buttonContainer}>
+          <Button text={'Start with Google'} handleClick={handleGoogleSignin} />
+        </View>
+      
       </View>
     </>
   )
 }
 
 const styles = StyleSheet.create({
-  googleButton: {
-    backgroundColor: '#CE4232',
+  bg: {
+    flex: 1,
+
+    backgroundColor: globalStyles.mainColor
   },
 
-  facebookButton: {
-    backgroundColor: '#3C66C4',
-  },
-
-  buttonsContainer: {
+  buttonContainer: {
     flex: 1,
 
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 })
 
 export default Login
