@@ -19,6 +19,8 @@ function SliderSubheader({text} : SliderSubheaderProps) {
 const styles = StyleSheet.create({
   text: {
     width: '85%',
+    marginTop: 7,
+    marginBottom: 3,
 
     fontSize: 18,
     lineHeight: 23,

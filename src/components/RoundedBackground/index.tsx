@@ -1,6 +1,6 @@
 import React, { ReactChild } from 'react';
 import { View, StyleSheet} from 'react-native';
-import globalStyles from '../assets/styles/global';
+import globalStyles from '../../assets/styles/global';
 
 interface RoundedBackgroundProps {
   top: boolean,

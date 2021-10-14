@@ -6,10 +6,9 @@ import * as Google from 'expo-google-app-auth';
 import api from '../api/api';
 
 import globalStyles from "../assets/styles/global";
-import Button from "../components/Login/Button";
+import Button from "../components/Button/";
 import RoundedBackground from "../components/RoundedBackground";
-
-import SliderContent from "../components/Login/SliderContent";
+import SliderContent from "../components/SliderContent/";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
