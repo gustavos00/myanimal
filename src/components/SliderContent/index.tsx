@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Image, SafeAreaView, Animated, ImageSourcePropType, Dimensions } from "react-native";
-import globalStyles from '../../assets/styles/global';
-import SliderDot from '../SliderDot';
 
+import DATA from '../../sliderData';
+
+import SliderDot from '../SliderDot';
 import SliderHeader from '../SliderHeader';
 import SliderSubheader from '../SliderSubheader';
 
@@ -15,41 +16,6 @@ interface SliderContentProps {
 
   imageName: string
 }
-
-const DATA = [
-  {
-    "key": "1",
-    "textBeforeBolder": "Imagine controlling your ",
-    "textBolder": "pet's information",
-    "textAfterBolder": " in one place?",
-    "subHeader": "On myAnimal you can control and share your pet's information quickly!",
-    "image": "rabbit"
-  },
-  {
-    "key": "2",
-    "textBeforeBolder": "Imagine controlling your ",
-    "textBolder": "pet's information",
-    "textAfterBolder": " in one place?",
-    "subHeader": "On myAnimal you can control and share your pet's information quickly!",
-    "image": "bird"
-  },
-  {
-    "key": "3",
-    "textBeforeBolder": "Imagine controlling your ",
-    "textBolder": "pet's information",
-    "textAfterBolder": " in one place?",
-    "subHeader": "On myAnimal you can control and share your pet's information quickly!",
-    "image": "https://image.flaticon.com/icons/png/256/3571/3571572.png"
-  },
-  {
-    "key": "4",
-    "textBeforeBolder": "Imagine controlling your ",
-    "textBolder": "pet's information",
-    "textAfterBolder": " in one place?",
-    "subHeader": "On myAnimal you can control and share your pet's information quickly!",
-    "image": "https://image.flaticon.com/icons/png/256/3571/3571572.png"
-  },
-]
 
 function SliderContent({ textBeforeBolder, textBolder, textAfterBolder, imageName, subheaderText }: SliderContentProps) {
   let image: ImageSourcePropType
@@ -79,6 +45,15 @@ function SliderContent({ textBeforeBolder, textBolder, textAfterBolder, imageNam
             case 'rabbit':
               image = require('../../assets/img/slideRabbit.png')
               break;
+
+            case 'fish':
+              image = require('../../assets/img/slideFish.png')
+              break;
+
+            case 'animal':
+              image = require('../../assets/img/slideAnimal.png')
+              break;
+
             default:
               console.log('Error getting slider content image')
               break;
@@ -87,7 +62,7 @@ function SliderContent({ textBeforeBolder, textBolder, textAfterBolder, imageNam
           return( 
             <View style={styles.sliderContainer}>
               <SafeAreaView />
-              <View style={{marginLeft: 18, borderWidth: 1 ,}}>
+              <View style={{marginLeft: 25, marginRight: 15}}>
                 <Image style={styles.sliderImage} source={image} />
 
                 <SliderHeader textBeforeBolder={item.textBeforeBolder} textBolder={item.textBolder} textAfterBolder={item.textAfterBolder}/>
