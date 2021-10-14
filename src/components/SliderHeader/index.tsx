@@ -24,9 +24,9 @@ function SliderHeader({ textBeforeBolder, textBolder, textAfterBolder }: SliderH
 
 const styles = StyleSheet.create({
   text: {
-    width: '85%',
+    width: 340,
 
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     lineHeight: 35,
     color: globalStyles.black

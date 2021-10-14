@@ -68,10 +68,11 @@ const Login = () => {
         <RoundedBackground top> 
           <SliderContent 
             textBeforeBolder={"Imagine controlling your "} 
-            textAfterBolder={"pet's information"} 
-            textBolder={" in one place?"} 
+            textAfterBolder={" in one place?"} 
+            textBolder={"pet's information"} 
             imageName={'bird'} 
-            subheaderText={"On myAnimal you can control and share your pet's information quickly!"} />
+            subheaderText={"On myAnimal you can control and share your pet's information quickly!"} 
+            />
         </RoundedBackground>
 
         <View style={styles.buttonContainer}>
