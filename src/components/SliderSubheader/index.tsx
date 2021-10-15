@@ -3,7 +3,7 @@ import { Text, StyleSheet } from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
 interface SliderSubheaderProps {
-  text: string
+  text?: string
 }
 
 function SliderSubheader({text} : SliderSubheaderProps) {
@@ -18,7 +18,9 @@ function SliderSubheader({text} : SliderSubheaderProps) {
 
 const styles = StyleSheet.create({
   text: {
-    width: '85%',
+    width: 330,
+    marginTop: 7,
+    marginBottom: 3,
 
     fontSize: 18,
     lineHeight: 23,
