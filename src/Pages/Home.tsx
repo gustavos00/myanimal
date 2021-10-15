@@ -1,35 +1,56 @@
 import React, { useState } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import LottieView from 'lottie-react-native'
+import { Text, StyleSheet, View } from "react-native";
 
 import api from '../api/api';
+
 import globalStyles from "../assets/styles/global";
+import Header from "../components/Header";
+import Background from "../components/Background";
+import Button from "../components/Button";
 
-interface userGoogleDataProps {
 
-}
+const Home = () => {
+  const [haveAnimals, setHaveAnimals] = useState(true);
 
-const Login = () => {
+  const createNewAnimal = () => {
+    console.log('a')
+  }
+
   return (
     <>
-    </>
-  )
-}
+      <Header />
+
+      <Background>
+        <>
+          { haveAnimals ?
+            <View style={styles.noAnimalContainer}>
+              <Text style={styles.noAnimalText}>Apparently you don't have any animal yet 🙁</Text>
+              <Button handleClick={createNewAnimal} text={'Create new animal'}/>
+            </View>
+          :
+            <>
+              <Text>no</Text>
+            </>
+          }
+        </>
+      </Background>
+    </> 
+)}
+
 
 const styles = StyleSheet.create({
-  bg: {
-    flex: 1,
+  noAnimalText: {
+    textAlign: 'center',
 
-    backgroundColor: globalStyles.mainColor
+    fontSize: 24,
+    fontWeight: 'bold',
+    lineHeight: 35,
   },
 
-  buttonContainer: {
-    flex: 1,
-
-    justifyContent: 'center',
+  noAnimalContainer: {
     alignItems: 'center',
-  },
+  }
 })
 
-export default Login
+export default Home

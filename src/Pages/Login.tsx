@@ -9,7 +9,7 @@ import * as Network from 'expo-network';
 import api from '../api/api';
 
 import globalStyles from "../assets/styles/global";
-import Button from "../components/Button/";
+import Button from "../components/LoginButton";
 import RoundedBackground from "../components/RoundedBackground";
 import SliderContent from "../components/SliderContent/";
 import BackgroundFilter from "../components/BackgroundFilter";
