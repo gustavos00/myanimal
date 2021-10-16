@@ -7,50 +7,79 @@ import api from '../api/api';
 import globalStyles from "../assets/styles/global";
 import Header from "../components/Header";
 import Background from "../components/Background";
-import Button from "../components/Button";
+import NoAnimalAlert from "../components/NoAnimalAlert";
+import BackgroundHeader from "../components/BackgroundHeader";
+import AnimalElement from "../components/AnimalElement";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 const Home = () => {
   const [haveAnimals, setHaveAnimals] = useState(true);
 
-  const createNewAnimal = () => {
-    console.log('a')
-  }
+  const animalData = [
+    {
+      name: 'Gustavo1',
+      race: 'Cao',
+      image: ''
+    },    {
+      name: 'Gustavo1',
+      race: 'Cao',
+      image: ''
+    },    {
+      name: 'Gustavo1',
+      race: 'Cao',
+      image: ''
+    },    {
+      name: 'Gustavo1',
+      race: 'Cao',
+      image: ''
+    },    {
+      name: 'Gustavo1',
+      race: 'Cao',
+      image: ''
+    },
+    {
+      name: 'Gustavo1',
+      race: 'Cao',
+      image: ''
+    },
+    {
+      name: 'Gustavo1',
+      race: 'Cao',
+      image: ''
+    },
+    {
+      name: 'Gustavo1',
+      race: 'Cao',
+      image: ''
+    }
+  ]
 
   return (
     <>
       <Header />
 
       <Background>
-        <>
-          { haveAnimals ?
-            <View style={styles.noAnimalContainer}>
-              <Text style={styles.noAnimalText}>Apparently you don't have any animal yet 🙁</Text>
-              <Button handleClick={createNewAnimal} text={'Create new animal'}/>
-            </View>
-          :
-            <>
-              <Text>no</Text>
-            </>
-          }
-        </>
+        { !haveAnimals ?
+          <NoAnimalAlert />
+        :
+          <>
+            <BackgroundHeader text={'Your animals'} />
+
+          <ScrollView>
+            {animalData.map((item, index) => { 
+              return <AnimalElement key={`key-${index}`} name={item.name} race={item.race} imageUrl={item.image} />
+            })}
+          </ScrollView>
+          </>
+        }
       </Background>
     </> 
 )}
 
 
 const styles = StyleSheet.create({
-  noAnimalText: {
-    textAlign: 'center',
 
-    fontSize: 24,
-    fontWeight: 'bold',
-    lineHeight: 35,
-  },
-
-  noAnimalContainer: {
-    alignItems: 'center',
-  }
 })
 
 export default Home

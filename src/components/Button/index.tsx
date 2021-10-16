@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 
     backgroundColor: globalStyles.mainColor,
-    borderRadius: 35
+    borderRadius: 20
   },
 
   btnText: {

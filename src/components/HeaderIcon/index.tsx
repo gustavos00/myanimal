@@ -9,7 +9,7 @@ function HeaderIcon({ photoUrl }: HeaderIconProps) {
   return (
     <>
       <View style={styles.image}>
-        <Image  source={{uri: photoUrl}}/>
+        {/* <Image  source={{uri: photoUrl}}/> */}
       </View>
     </>
   );

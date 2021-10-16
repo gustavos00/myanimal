@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   bg: {
     width: '100%',
     height: 655,
-    paddingTop: 30,
+    paddingTop: 20,
 
     position: 'absolute',
     bottom: 0,
