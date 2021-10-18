@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import LottieView from 'lottie-react-native'
+import { View, StyleSheet } from "react-native";
+import { getStorageItem, setStorageItem } from '../utils/localStorage';
 
 import * as Google from 'expo-google-app-auth';
 import * as Network from 'expo-network';
@@ -14,6 +14,7 @@ import RoundedBackground from "../components/RoundedBackground";
 import SliderContent from "../components/SliderContent/";
 import BackgroundFilter from "../components/BackgroundFilter";
 import BottomModal from "../components/BottomModal";
+import NoWIFIModal from "../components/NoWIFIModal";
 
 interface userGoogleDataProps {
   givenName?: string;
@@ -24,7 +25,7 @@ interface userGoogleDataProps {
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const [internetConnection, setInternetConnection] = useState(true)
+  const [internetConnection, setInternetConnection] = useState(false)
   const navigation = useNavigation();
 
   const verifyNetwork = () => {
@@ -45,13 +46,17 @@ const Login = () => {
       givenName: givenName ?? "",
       familyName: familyName ?? "",
       photoUrl: photoUrl ?? "",
-      email: givenName ?? "",
+      email: email ?? "",
     })
 
     api
       .post('/user', params)
-      .then(({data, status}) => {
-        console.log(status)
+      .then(({data}) => {
+        const userData = JSON.parse(JSON.stringify(data))
+        setStorageItem('user', userData)
+      })
+      .catch((err) => {
+        console.log(err)
       })
   }
 
@@ -103,16 +108,7 @@ const Login = () => {
       { internetConnection && 
         <BackgroundFilter >
           <BottomModal modalHeight={300}>
-            <>
-              <View style={styles.animationContainer}>
-                <LottieView resizeMode={'center'} source={require('../assets/animations/noWifi.json')} autoPlay />
-              </View>
-
-              <Text style={styles.noWifiText}>Please check your internet connection and try again</Text>
-              <TouchableOpacity onPress={verifyNetwork}>
-                <Text style={styles.tryAgainText}>Try again.</Text>
-              </TouchableOpacity>
-            </>
+            <NoWIFIModal handleClick={verifyNetwork}/>
           </BottomModal>
         </BackgroundFilter>
       }
