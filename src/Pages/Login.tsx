@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet } from "react-native";
 import { getStorageItem, setStorageItem } from '../utils/localStorage';
@@ -28,20 +28,24 @@ const Login = () => {
   const [internetConnection, setInternetConnection] = useState(false)
   const navigation = useNavigation();
 
-  const verifyNetwork = () => {
-    Network
-    .getNetworkStateAsync()
-    .then((res) => {
-      res.isConnected ? setInternetConnection(false) : setInternetConnection(true)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+  const verifyNetwork = async() => {
+    useEffect(() => {
+        Network
+          .getNetworkStateAsync()
+          .then((response) => {
+            response.isConnected ? setInternetConnection(false) : setInternetConnection(true)
+          })
+          .catch(() => {
+            console.log("Error #0103")
+          })
+    }, [])
+    
+
   }
   verifyNetwork()
   
 
-  const apiPostData = ({givenName, familyName, photoUrl, email} : userGoogleDataProps) => {
+  const apiPostData = async({givenName, familyName, photoUrl, email} : userGoogleDataProps) => {
     const params = new URLSearchParams({
       givenName: givenName ?? "",
       familyName: familyName ?? "",
@@ -49,47 +53,38 @@ const Login = () => {
       email: email ?? "",
     })
 
-    api
-      .post('/user', params)
-      .then(({data}) => {
-        const userData = JSON.parse(JSON.stringify(data))
-        setStorageItem('user', userData)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    try {
+      const { data } = await api.post('/user', params)
+      const userData = JSON.parse(JSON.stringify(data))
+      
+      await setStorageItem('token', userData.token)
+
+    } catch (e) {
+      console.log('Error #0101')
+    }
+    navigation.navigate('Home' as any)
   }
 
-  const handleGoogleSignin = () => {
+  const handleGoogleSignin = async() => {
+    setIsLoading(true);
     const config = {
       iosClientId: '684156509987-mokd5cnud6oed8qn1r5nunqdu631friv.apps.googleusercontent.com',
       androidClientId: '684156509987-cprs1rm38pjgu7jt4i2hhan3mqppao1k.apps.googleusercontent.com',
       scopes: ['profile', 'email']
     };
 
-    Google
-      .logInAsync(config)
-      .then((data) => {
-        if(data.type === 'cancel') return console.log('Canceled');
-
-        setIsLoading(true);
-        apiPostData(data.user);
-
-        const handler = setTimeout(() => {
-            setIsLoading(false);
-            navigation.navigate('Home' as any)
-        }, 2000);
-        return () => clearTimeout(handler);
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    try {
+      const data = await Google.logInAsync(config)
+      if(data.type === 'cancel') return;
+      apiPostData(data.user);
+    } catch {
+      console.log('Error #0102')
+    }
   }
 
   return (
     <> 
-
-        <View style={styles.bg}>
+      <View style={styles.bg}>
         <RoundedBackground top> 
           <SliderContent 
             textBeforeBolder={"Imagine controlling your "} 
@@ -130,27 +125,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  animationContainer: { 
-    width: 100,
-    height: 100,
-    marginBottom: 10,
-
-    alignItems: 'center'
-  },
-
-  noWifiText: {
-    fontWeight: 'bold',
-    fontSize: 24,
-    textAlign: 'center'
-  },
-
-  tryAgainText: {
-    marginTop: 10,
-
-    opacity: .8,
-    color: globalStyles.darkGray
-  }
 })
 
 export default Login

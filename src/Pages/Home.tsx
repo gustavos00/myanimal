@@ -1,75 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { Text, StyleSheet, View } from "react-native";
+import { StyleSheet, ScrollView } from "react-native";
+
+import * as SecureStore from 'expo-secure-store';
 
 import api from '../api/api';
 
-import globalStyles from "../assets/styles/global";
 import Header from "../components/Header";
 import Background from "../components/Background";
 import NoAnimalAlert from "../components/NoAnimalAlert";
 import BackgroundHeader from "../components/BackgroundHeader";
 import AnimalElement from "../components/AnimalElement";
-import { ScrollView } from "react-native-gesture-handler";
 
+interface animalData {
+  age: string,
+  chipnumber: string,
+  id: string,
+  name: string,
+  photourl: string,
+  race: string,
+  userid: string,
+}
+
+interface userData {
+  id: string,
+  givenname: string,
+  lastname: string,
+  photo: string,
+  email: string
+  animalData: Array<animalData>,
+}
 
 const Home = () => {
-  const [haveAnimals, setHaveAnimals] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<userData>();
 
-  const animalData = [
-    {
-      name: 'Gustavo1',
-      race: 'Cao',
-      image: ''
-    },    {
-      name: 'Gustavo1',
-      race: 'Cao',
-      image: ''
-    },    {
-      name: 'Gustavo1',
-      race: 'Cao',
-      image: ''
-    },    {
-      name: 'Gustavo1',
-      race: 'Cao',
-      image: ''
-    },    {
-      name: 'Gustavo1',
-      race: 'Cao',
-      image: ''
-    },
-    {
-      name: 'Gustavo1',
-      race: 'Cao',
-      image: ''
-    },
-    {
-      name: 'Gustavo1',
-      race: 'Cao',
-      image: ''
-    },
-    {
-      name: 'Gustavo1',
-      race: 'Cao',
-      image: ''
+  const getUserData = async() => {
+    try {
+      const token = await SecureStore.getItemAsync('token')
+      const { data } = await api.get(`/user/${token}`) 
+
+      setUser(data)
+    } catch {
+      console.log('Error #0201')
     }
-  ]
+  }
+
+  
+  useEffect(() => {
+    async function getData() {
+      await getUserData()
+    }
+
+    getData()
+  }, [])
 
   return (
     <>
       <Header />
 
       <Background>
-        { !haveAnimals ?
+        { false ?
           <NoAnimalAlert />
         :
           <>
             <BackgroundHeader text={'Your animals'} />
 
           <ScrollView>
-            {animalData.map((item, index) => { 
-              return <AnimalElement key={`key-${index}`} name={item.name} race={item.race} imageUrl={item.image} />
-            })}
+            { user?.animalData?.map((item, index) => { 
+              return <AnimalElement key={`key-${index}`} name={item.name} race={item.race} imageUrl={item.photourl} />
+            }) }
           </ScrollView>
           </>
         }

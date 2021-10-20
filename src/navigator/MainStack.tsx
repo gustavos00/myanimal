@@ -17,8 +17,8 @@ export default () => {
     <NavigationContainer>
       <Navigator screenOptions={{gestureEnabled: false}}>
         <Group>
-        <Screen options={{headerShown: false}} name="Login" component={Login}/>
-         <Screen options={{headerShown: false}} name="Home" component={Home}/>
+          <Screen options={{headerShown: false}} name="Login" component={Login}/>
+          <Screen options={{headerShown: false}} name="Home" component={Home}/>
         </Group>
       </Navigator>
     </NavigationContainer>
