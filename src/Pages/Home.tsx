@@ -34,18 +34,28 @@ interface userData {
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<userData>();
+  const [haveAnimals, setHaveAnimals] = useState(false);
 
   const getUserData = async() => {
     try {
       const token = await SecureStore.getItemAsync('token')
       const { data } = await api.get(`/user/${token}`) 
-
       setUser(data)
+      
+      if(user?.animalData !== undefined) {
+        if(user?.animalData.length > 0) {
+          setHaveAnimals(true)
+        } else {
+          setHaveAnimals(false)
+        }
+      } else {
+        console.log('Error #0202')
+      }
+
     } catch {
       console.log('Error #0201')
     }
   }
-
   
   useEffect(() => {
     async function getData() {
@@ -57,22 +67,18 @@ const Home = () => {
 
   return (
     <>
-      <Header />
+      <Header name={user?.givenname} image={user?.photo}/>
 
       <Background>
-        { false ?
-          <NoAnimalAlert />
-        :
-          <>
-            <BackgroundHeader text={'Your animals'} />
+        <>
+          <BackgroundHeader text={'Your animals'} />
 
           <ScrollView>
             { user?.animalData?.map((item, index) => { 
               return <AnimalElement key={`key-${index}`} name={item.name} race={item.race} imageUrl={item.photourl} />
             }) }
           </ScrollView>
-          </>
-        }
+        </>
       </Background>
     </> 
 )}
