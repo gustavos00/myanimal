@@ -2,15 +2,13 @@ import React from 'react';
 import { View, Image, StyleSheet } from 'react-native'
 
 interface HeaderIconProps {
-  photoUrl: string
+  photoUrl: string | undefined
 }
 
 function HeaderIcon({ photoUrl }: HeaderIconProps) {
   return (
     <>
-      <View style={styles.image}>
-        {/* <Image  source={{uri: photoUrl}}/> */}
-      </View>
+      <Image style={styles.image} source={{uri: photoUrl}}/>
     </>
   );
 }
@@ -20,7 +18,6 @@ const styles = StyleSheet.create({
     width: 90,
     height: 90,
 
-    backgroundColor: 'red',
     borderRadius: 100,
   },
 })

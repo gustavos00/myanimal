@@ -6,20 +6,21 @@ import HeaderIcon from '../HeaderIcon';
 import HeaderText from '../HeaderText';
 
 interface HeaderProps {
-  
+  name: string | undefined,
+  image: string | undefined
 }
 
-function Header({ }) {
+function Header({ name, image } : HeaderProps) {
   return (
     <>
       <View style={styles.header}>
         <View>
           <HeaderText 
-            mainText={'Hello, Gustavo 👋'} 
+            mainText={`Hello, ${name} 👋`} 
             secondText={'Where is your animal?'}/>
         </View>
 
-        <HeaderIcon photoUrl={''} />
+        <HeaderIcon photoUrl={image} />
       </View>
     </>
   );
