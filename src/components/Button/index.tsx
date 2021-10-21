@@ -1,50 +1,42 @@
-import React from 'react';
-import { Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import React, { ReactNode } from 'react';
+import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
-interface LoginButtonProps {
+interface ButtonProps {
   text: string,
   handleClick: () => void
 }
 
-function LoginButton({text, handleClick} : LoginButtonProps) {
+function Button({ text, handleClick }: ButtonProps) {
   return (
     <>
-      <TouchableOpacity activeOpacity={.7} style={styles.button} onPress={handleClick}>
-        <Image style={styles.buttonImage} source={require('../../assets/img/googleLogo.png')}/>
-        <Text style={styles.buttonText}>{text}</Text>
+      <TouchableOpacity activeOpacity={.7} onPress={handleClick} style={styles.btn}>
+        <Text style={styles.btnText}>{text}</Text>
       </TouchableOpacity>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    width: 279,
-    height: 51,
-
-    flexDirection: 'row',
-    alignItems: 'center',
+  btn: {
+    width: 280,
+    height: 50,
+    marginTop: 20,
+    marginBottom: 20,
+  
     justifyContent: 'center',
+    alignItems: 'center',
 
-    backgroundColor: globalStyles.white,
-    borderRadius: 17,
+    backgroundColor: globalStyles.mainColor,
+    borderRadius: 20
   },
 
-  buttonText: {
-    marginLeft: 18,
-
-    fontWeight: 'bold',
+  btnText: {
     fontSize: 24,
-
-    color: globalStyles.mainColor
-  },
-
-  buttonImage: {
-    width: 27,
-    height: 27,
+    fontWeight: 'bold',
+    color: globalStyles.white
   }
 })
 
 
-export default LoginButton;
+export default Button;

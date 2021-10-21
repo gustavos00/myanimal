@@ -1,35 +1,86 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-import LottieView from 'lottie-react-native'
+import { StyleSheet, ScrollView } from "react-native";
+
+import * as SecureStore from 'expo-secure-store';
 
 import api from '../api/api';
-import globalStyles from "../assets/styles/global";
 
-interface userGoogleDataProps {
+import Header from "../components/Header";
+import Background from "../components/Background";
+import NoAnimalAlert from "../components/NoAnimalAlert";
+import BackgroundHeader from "../components/BackgroundHeader";
+import AnimalElement from "../components/AnimalElement";
 
+interface animalData {
+  age: string,
+  chipnumber: string,
+  id: string,
+  name: string,
+  photourl: string,
+  race: string,
+  userid: string,
 }
 
-const Login = () => {
+interface userData {
+  id: string,
+  givenname: string,
+  lastname: string,
+  photo: string,
+  email: string
+  animalData: Array<animalData>,
+}
+
+const Home = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<userData>();
+
+  const getUserData = async() => {
+    try {
+      const token = await SecureStore.getItemAsync('token')
+      const { data } = await api.get(`/user/${token}`) 
+
+      setUser(data)
+    } catch {
+      console.log('Error #0201')
+    }
+  }
+
+  
+  useEffect(() => {
+    async function getData() {
+      await getUserData()
+    }
+
+    getData()
+  }, [])
+
   return (
     <>
-    </>
-  )
-}
+      <Header />
+
+      <Background>
+        { false ?
+          <NoAnimalAlert />
+        :
+          <>
+            <BackgroundHeader text={'Your animals'} />
+
+          <ScrollView>
+            { user?.animalData?.map((item, index) => { 
+              return <AnimalElement key={`key-${index}`} name={item.name} race={item.race} imageUrl={item.photourl} />
+            }) }
+          </ScrollView>
+          </>
+        }
+      </Background>
+    </> 
+)}
+
 
 const styles = StyleSheet.create({
-  bg: {
-    flex: 1,
 
-    backgroundColor: globalStyles.mainColor
-  },
-
-  buttonContainer: {
-    flex: 1,
-
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 })
 
-export default Login
+export default Home
+
