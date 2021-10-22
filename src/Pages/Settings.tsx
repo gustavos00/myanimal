@@ -1,14 +1,23 @@
 import React from 'react';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { View, StyleSheet } from 'react-native'
+import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
 
 import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import SettingsHeader from '../components/SettingsHeader';
+import SettingsElement from '../components/SettingsElement';
+import Underline from '../components/Underline';
 
 function Settings() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'Settings'>>();
+  const navigation = useNavigation();
+
+  const changeScreen = (screenName : string) => {
+    navigation.navigate(screenName as any)
+  }
   
   return (
     <>
@@ -18,6 +27,20 @@ function Settings() {
         <>
           <BackgroundHeader text={'Settings'} />
 
+          <View style={styles.textContainer}>
+            <SettingsHeader text={'Account Settings'} /> 
+            <SettingsElement handleClick={() => changeScreen('Home')} text={'Edit profile'}/>
+            <SettingsElement handleClick={() => changeScreen('Home')} text={'Payment Methods'}/>
+          </View>
+
+          <Underline />
+
+          <View style={styles.textContainer}>
+            <SettingsHeader text={'More'} /> 
+            <SettingsElement handleClick={() => changeScreen('Home')} text={'About us'}/>
+            <SettingsElement handleClick={() => changeScreen('Home')} text={'Privacy Policy'}/>
+          </View>
+          
         </>        
       </Background>
 
@@ -25,5 +48,13 @@ function Settings() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  textContainer: {
+    marginLeft: 55,
+    marginRight: 55,
+    marginTop: 20
+  }
+})
 
 export default Settings;
