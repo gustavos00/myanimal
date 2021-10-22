@@ -36,6 +36,14 @@ const styles = StyleSheet.create({
     height: 90,
     paddingBottom: 10,
 
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.13,
+    shadowRadius: 10,
+
     position: 'absolute',
     bottom: 0,
 

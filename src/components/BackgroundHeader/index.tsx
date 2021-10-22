@@ -1,6 +1,8 @@
 import React from 'react';
-import { Text, View, StyleSheet} from 'react-native';
+import { Text, StyleSheet} from 'react-native';
+
 import globalStyles from '../../assets/styles/global';
+import Underline from '../Underline';
 
 interface BackgroundHeaderProps {
   text: string
@@ -10,7 +12,7 @@ function BackgroundHeader({ text }: BackgroundHeaderProps) {
   return (
     <>
       <Text style={styles.header}>{text}</Text>
-      <View style={styles.underLine}></View>
+      <Underline />
     </>
   );
 }
@@ -25,14 +27,6 @@ const styles = StyleSheet.create({
 
     color: globalStyles.black
   },
-
-  underLine: {
-    width: '100%',
-    height: 1,
-    marginTop: 16,
-
-    backgroundColor: globalStyles.lightGray
-  }
 })
 
 export default BackgroundHeader;
