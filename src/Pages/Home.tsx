@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, ScrollView } from "react-native";
+import { useNavigation, } from '@react-navigation/native';
+import { StyleSheet, ScrollView, Text} from "react-native";
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -32,26 +32,14 @@ interface userData {
 }
 
 const Home = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<userData>();
-  const [haveAnimals, setHaveAnimals] = useState(false);
 
   const getUserData = async() => {
     try {
       const token = await SecureStore.getItemAsync('token')
       const { data } = await api.get(`/user/${token}`) 
-      setUser(data)
       
-      if(user?.animalData !== undefined) {
-        if(user?.animalData.length > 0) {
-          setHaveAnimals(true)
-        } else {
-          setHaveAnimals(false)
-        }
-      } else {
-        console.log('Error #0202')
-      }
-
+      setUser(data)
     } catch {
       console.log('Error #0201')
     }
@@ -61,7 +49,6 @@ const Home = () => {
     async function getData() {
       await getUserData()
     }
-
     getData()
   }, [])
 
@@ -78,7 +65,7 @@ const Home = () => {
               return <AnimalElement key={`key-${index}`} name={item.name} race={item.race} imageUrl={item.photourl} />
             }) }
           </ScrollView>
-        </>
+        </>        
       </Background>
     </> 
 )}

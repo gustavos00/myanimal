@@ -62,7 +62,7 @@ const Login = () => {
     } catch (e) {
       console.log('Error #0101')
     }
-    navigation.navigate('Home' as any)
+    navigation.navigate('Settings' as any)
   }
 
   const handleGoogleSignin = async() => {
