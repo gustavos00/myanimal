@@ -1,14 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState }from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+
 import globalStyles from '../../assets/styles/global';
 
 interface AnimalElementProps {
   name: string,
   race: string,
-  imageUrl: string
+  imageUrl: string,
+  isEditing: boolean
 }
 
-function AnimalElement({ name, race, imageUrl }: AnimalElementProps) {
+function AnimalElement({ name, race, imageUrl, isEditing }: AnimalElementProps) {
   return (
     <>
       <View style={styles.element}>
@@ -17,6 +19,15 @@ function AnimalElement({ name, race, imageUrl }: AnimalElementProps) {
         <View style={styles.textContainer}>
           <Text style={styles.nameText}>{name}</Text>
           <Text style={styles.raceText}>{race}</Text>
+        </View>
+
+        <View style={styles.editContainer}>
+          {isEditing && 
+            <>  
+              <Image source={require('../../assets/img/edit.png')} />
+              <Image source={require('../../assets/img/delete.png')} />
+            </>
+          }
         </View>
       </View>
     </>
@@ -66,6 +77,17 @@ const styles = StyleSheet.create({
   raceText: {
     fontSize: 16,
     color: globalStyles.darkGray
+  },
+
+  editContainer: {
+    width: 50,
+    height: 114,
+
+    position: 'absolute',
+    right: 0,
+
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
   }
 })
 

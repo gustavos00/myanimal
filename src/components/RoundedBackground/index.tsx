@@ -21,7 +21,15 @@ const styles = StyleSheet.create({
   bg: {
     width: '100%',
     
-    backgroundColor: globalStyles.white
+    backgroundColor: globalStyles.white,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 10,
   },
 
   top: {

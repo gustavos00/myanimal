@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, ScrollView } from "react-native";
+import { useNavigation, } from '@react-navigation/native';
+import { StyleSheet, ScrollView, View, TouchableOpacity} from "react-native";
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -11,6 +11,7 @@ import Background from "../components/Background";
 import NoAnimalAlert from "../components/NoAnimalAlert";
 import BackgroundHeader from "../components/BackgroundHeader";
 import AnimalElement from "../components/AnimalElement";
+import Footer from "../components/Footer";
 
 interface animalData {
   age: string,
@@ -32,26 +33,15 @@ interface userData {
 }
 
 const Home = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<userData>();
-  const [haveAnimals, setHaveAnimals] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const getUserData = async() => {
     try {
       const token = await SecureStore.getItemAsync('token')
       const { data } = await api.get(`/user/${token}`) 
-      setUser(data)
       
-      if(user?.animalData !== undefined) {
-        if(user?.animalData.length > 0) {
-          setHaveAnimals(true)
-        } else {
-          setHaveAnimals(false)
-        }
-      } else {
-        console.log('Error #0202')
-      }
-
+      setUser(data)
     } catch {
       console.log('Error #0201')
     }
@@ -61,7 +51,6 @@ const Home = () => {
     async function getData() {
       await getUserData()
     }
-
     getData()
   }, [])
 
@@ -71,15 +60,24 @@ const Home = () => {
 
       <Background>
         <>
-          <BackgroundHeader text={'Your animals'} />
+          <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
 
           <ScrollView>
             { user?.animalData?.map((item, index) => { 
-              return <AnimalElement key={`key-${index}`} name={item.name} race={item.race} imageUrl={item.photourl} />
+              return (
+                <View key={`key-${index}`}>
+                  <TouchableOpacity onLongPress={() => setIsEditing(!isEditing)}>
+                    <AnimalElement isEditing={isEditing} name={item.name} race={item.race} imageUrl={item.photourl} />
+                  </TouchableOpacity>
+                </View>
+                
+              )
             }) }
           </ScrollView>
-        </>
+        </>        
       </Background>
+
+      <Footer />
     </> 
 )}
 
