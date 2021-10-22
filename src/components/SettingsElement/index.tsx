@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginTop: 10,
     marginBottom: 5,
-
-    fontSize: 16,
+    
+    fontSize: 18,
     color: globalStyles.black
   }
 })

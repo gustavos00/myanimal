@@ -18,10 +18,10 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: 10,
     
-    fontSize: 20,
+    fontSize: 18,
     color: globalStyles.darkGray,
 
-    opacity: .5,
+    opacity: .6,
   }
 })
 
