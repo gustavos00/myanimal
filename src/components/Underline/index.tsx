@@ -16,6 +16,8 @@ const styles = StyleSheet.create({
     height: 1,
     marginTop: 16,
 
+    opacity: .6,
+
     backgroundColor: globalStyles.lightGray
   }
 })

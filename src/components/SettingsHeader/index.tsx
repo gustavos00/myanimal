@@ -19,9 +19,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     
     fontSize: 18,
-    color: globalStyles.darkGray,
+    fontWeight: '500',
+    color: globalStyles.mainColor,
 
-    opacity: .6,
+    opacity: 1,
   }
 })
 

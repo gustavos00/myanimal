@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   textContainer: {
     marginLeft: 55,
     marginRight: 55,
-    marginTop: 20
+    marginTop: 20,
   }
 })
 

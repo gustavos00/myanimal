@@ -19,10 +19,12 @@ function SettingsElement({ text, handleClick }: SettingsElementProps) {
 
 const styles = StyleSheet.create({
   text: {
-    marginLeft: 10,
+    marginLeft: 5,
     marginTop: 10,
     marginBottom: 5,
-    
+
+    opacity: .9,
+
     fontSize: 18,
     color: globalStyles.black
   }

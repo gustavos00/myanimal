@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation, } from '@react-navigation/native';
-import { StyleSheet, ScrollView, Text} from "react-native";
+import { StyleSheet, ScrollView, View, TouchableOpacity} from "react-native";
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -34,6 +34,7 @@ interface userData {
 
 const Home = () => {
   const [user, setUser] = useState<userData>();
+  const [isEditing, setIsEditing] = useState(false);
 
   const getUserData = async() => {
     try {
@@ -59,11 +60,18 @@ const Home = () => {
 
       <Background>
         <>
-          <BackgroundHeader text={'Your animals'} />
+          <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
 
           <ScrollView>
             { user?.animalData?.map((item, index) => { 
-              return <AnimalElement key={`key-${index}`} name={item.name} race={item.race} imageUrl={item.photourl} />
+              return (
+                <View key={`key-${index}`}>
+                  <TouchableOpacity onLongPress={() => setIsEditing(!isEditing)}>
+                    <AnimalElement isEditing={isEditing} name={item.name} race={item.race} imageUrl={item.photourl} />
+                  </TouchableOpacity>
+                </View>
+                
+              )
             }) }
           </ScrollView>
         </>        
