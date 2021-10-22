@@ -9,7 +9,10 @@ import Settings from "../pages/Settings";
 export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
-  Settings: undefined;
+  Settings: {
+    name: string,
+    photo: string,
+  };
 }
 
 const {Navigator, Group, Screen} = createStackNavigator<RootStackParamList>()

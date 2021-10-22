@@ -59,10 +59,10 @@ const Login = () => {
       
       await setStorageItem('token', userData.token)
 
-    } catch (e) {
+    } catch {
       console.log('Error #0101')
     }
-    navigation.navigate('Settings' as any)
+    navigation.navigate('Home' as any);
   }
 
   const handleGoogleSignin = async() => {
