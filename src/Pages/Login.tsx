@@ -58,11 +58,11 @@ const Login = () => {
       const userData = JSON.parse(JSON.stringify(data))
       
       await setStorageItem('token', userData.token)
+      navigation.navigate('Home' as any);
 
     } catch {
       console.log('Error #0101')
     }
-    navigation.navigate('Home' as any);
   }
 
   const handleGoogleSignin = async() => {

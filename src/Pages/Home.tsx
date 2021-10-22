@@ -11,6 +11,7 @@ import Background from "../components/Background";
 import NoAnimalAlert from "../components/NoAnimalAlert";
 import BackgroundHeader from "../components/BackgroundHeader";
 import AnimalElement from "../components/AnimalElement";
+import Footer from "../components/Footer";
 
 interface animalData {
   age: string,
@@ -67,6 +68,8 @@ const Home = () => {
           </ScrollView>
         </>        
       </Background>
+
+      <Footer />
     </> 
 )}
 
