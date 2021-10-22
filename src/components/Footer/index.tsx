@@ -1,18 +1,30 @@
 import React from 'react';
-import { Image, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import globalStyles from '../../assets/styles/global';
 import FooterElement from '../FooterElement/index';
 
 function Footer() {
+  const navigation = useNavigation();
+
+  const goToSettings = () => {
+    navigation.navigate('Settings' as any, {
+      name: 'Gustavo',
+      image: ''
+    });
+  }
+  const goToHome = () => {
+    navigation.navigate('Home' as any);
+  }  
   
   return (
     <>
       <View style={styles.footer}>
-        <FooterElement imageName={'setting'} />
-        <FooterElement active imageName={'home'} />
-        <FooterElement imageName={'notification'} />
-        <FooterElement imageName={'user'} />
+        <FooterElement handleClick={goToSettings} imageName={'setting'} />
+        <FooterElement handleClick={goToHome} imageName={'home'} active />
+        <FooterElement handleClick={goToSettings} imageName={'notification'} />
+        <FooterElement handleClick={goToSettings} imageName={'user'} />
       </View>
     </>
   );

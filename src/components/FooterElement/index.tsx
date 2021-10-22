@@ -3,10 +3,11 @@ import { TouchableOpacity, Image ,StyleSheet } from 'react-native';
 
 interface FooterElementProps {
   imageName: string,
-  active?: boolean
+  active?: boolean,
+  handleClick: () => void
 }
 
-function FooterElement({ imageName, active }: FooterElementProps) {
+function FooterElement({ imageName, active, handleClick }: FooterElementProps) {
   let image 
 
   switch (imageName) {
@@ -32,7 +33,7 @@ function FooterElement({ imageName, active }: FooterElementProps) {
   }
   return (
     <>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleClick}>
         <Image style={[styles.image, active ? {opacity: 1,} : {opacity: .4}]} source={image} />
       </TouchableOpacity>
     </>
