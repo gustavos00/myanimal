@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native'
 import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
@@ -10,6 +10,7 @@ import Footer from '../components/Footer';
 import SettingsHeader from '../components/SettingsHeader';
 import SettingsElement from '../components/SettingsElement';
 import Underline from '../components/Underline';
+import { deleteStorageItem } from '../utils/localStorage';
 
 function Settings() {
   const { params } = useRoute<RouteProp<RootStackParamList, 'Settings'>>();
@@ -17,6 +18,12 @@ function Settings() {
 
   const changeScreen = (screenName : string) => {
     navigation.navigate(screenName as any)
+  }
+
+  const clearUserLocalstorage = async () => {
+    await deleteStorageItem('token')
+
+    navigation.navigate('Login' as any)
   }
   
   return (
@@ -31,6 +38,7 @@ function Settings() {
             <SettingsHeader text={'Account Settings'} /> 
             <SettingsElement handleClick={() => changeScreen('Home')} text={'Edit profile'}/>
             <SettingsElement handleClick={() => changeScreen('Home')} text={'Payment Methods'}/>
+            <SettingsElement handleClick={async () => await clearUserLocalstorage()} text={'Log-out'}/>
           </View>
 
           <Underline />
