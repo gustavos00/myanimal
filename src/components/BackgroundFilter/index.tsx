@@ -1,16 +1,19 @@
 import React, { ReactNode } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 interface BackgroundFilterProps {
   children: ReactNode;
+  handlePress?: () => void
 }
 
-function BackgroundFilter({ children }: BackgroundFilterProps) {
+function BackgroundFilter({ children, handlePress }: BackgroundFilterProps) {
   return (
     <>
-      <View style={styles.filter}>
-        {children}
-      </View>
+      <TouchableWithoutFeedback onPress={handlePress}  >
+        <View style={styles.filter}>
+          {children}
+        </View>
+      </TouchableWithoutFeedback>
     </>
   );
 }
@@ -22,7 +25,7 @@ const styles = StyleSheet.create({
 
     position: 'absolute',
     
-    backgroundColor: "rgba(0, 0, 0, .5)"
+    backgroundColor: "rgba(0,0,0,.5)"
   }
 })
 
