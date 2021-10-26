@@ -11,7 +11,8 @@ function Footer() {
   const goToSettings = () => {
     navigation.navigate('Settings' as any, {
       name: 'Gustavo',
-      image: ''
+      image: '',
+      alreadyHaveOTP: true
     });
   }
   const goToHome = () => {
