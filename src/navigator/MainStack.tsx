@@ -11,8 +11,7 @@ export type RootStackParamList = {
   Login: undefined;
   Settings: {
     name: string,
-    photo: string,
-    alreadyHaveOTP: boolean
+    photo: string
   };
 }
 
