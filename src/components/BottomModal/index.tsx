@@ -1,19 +1,26 @@
 import React, { ReactNode } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Animated } from 'react-native';
+
+import GestureRecognizer from 'react-native-swipe-gestures';
+
 import globalStyles from '../../assets/styles/global';
+import BackgroundFilter from '../BackgroundFilter';
 
 interface BottomModalProps {
   children: ReactNode;
   modalHeight: number
+  swipeDownFunction?: () => void
 }
 
-function BottomModal({ children, modalHeight }: BottomModalProps) {
+function BottomModal({ children, modalHeight, swipeDownFunction }: BottomModalProps) {
   return (
     <>
-      <View style={[styles.modal, {height: modalHeight}]}>
-        <View style={styles.topBar}></View>
-        {children}
-      </View>
+      <BackgroundFilter handlePress={swipeDownFunction}>
+        <GestureRecognizer onSwipeDown={swipeDownFunction} style={[styles.modal, {height: modalHeight}]}>
+          <View style={styles.topBar}></View>
+          {children}
+        </GestureRecognizer>
+      </BackgroundFilter>
     </>
   );
 }

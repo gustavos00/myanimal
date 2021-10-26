@@ -5,7 +5,8 @@ const globalStyles = {
 
   black: '#2B303A',
   darkGray: '#4F4F4F',
-  lightGray: '#DBDBDB'
+  lightGray: '#DBDBDB',
+  gray: '#ADADAD'
 }
 
 export default globalStyles

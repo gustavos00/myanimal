@@ -65,7 +65,7 @@ const Home = () => {
           <ScrollView>
             { user?.animalData?.map((item, index) => { 
               return (
-                <View key={`key-${index}`}>
+                <View key={index}>
                   <TouchableOpacity onLongPress={() => setIsEditing(!isEditing)}>
                     <AnimalElement isEditing={isEditing} name={item.name} race={item.race} imageUrl={item.photourl} />
                   </TouchableOpacity>

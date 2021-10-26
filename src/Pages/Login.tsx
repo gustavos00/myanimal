@@ -60,7 +60,7 @@ const Login = () => {
       await setStorageItem('token', userData.token)
       navigation.navigate('Home' as any);
 
-    } catch {
+    } catch(e) {
       console.log('Error #0101')
     }
   }
