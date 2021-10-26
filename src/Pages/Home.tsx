@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigation, } from '@react-navigation/native';
-import { StyleSheet, ScrollView, View, TouchableOpacity} from "react-native";
-
-import * as SecureStore from 'expo-secure-store';
-
-import api from '../api/api';
+import {ScrollView, View, TouchableOpacity, Text} from "react-native";
 
 import Header from "../components/Header";
 import Background from "../components/Background";
@@ -12,13 +7,15 @@ import NoAnimalAlert from "../components/NoAnimalAlert";
 import BackgroundHeader from "../components/BackgroundHeader";
 import AnimalElement from "../components/AnimalElement";
 import Footer from "../components/Footer";
+import { getUserInformationFromAPI } from "../utils/user";
+import Loading from "../components/Loading";
 
 interface animalData {
   age: string,
   chipnumber: string,
   id: string,
   name: string,
-  photourl: string,
+  photo: string,
   race: string,
   userid: string,
 }
@@ -33,25 +30,18 @@ interface userData {
 }
 
 const Home = () => {
+  const [isLoading, setIsLoading] = useState<boolean>();
   const [user, setUser] = useState<userData>();
-  const [isEditing, setIsEditing] = useState(false);
-
-  const getUserData = async() => {
-    try {
-      const token = await SecureStore.getItemAsync('token')
-      const { data } = await api.get(`/user/${token}`) 
-      
-      setUser(data)
-    } catch {
-      console.log('Error #0201')
-    }
-  }
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   
   useEffect(() => {
+    setIsLoading(true)
     async function getData() {
-      await getUserData()
+      const data = await getUserInformationFromAPI()
+      setUser(data)
+      setIsLoading(false)
     }
-    getData()
+    getData();
   }, [])
 
   return (
@@ -59,32 +49,34 @@ const Home = () => {
       <Header name={user?.givenname} image={user?.photo}/>
 
       <Background>
-        <>
-          <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
-
           <ScrollView>
-            { user?.animalData?.map((item, index) => { 
-              return (
-                <View key={index}>
-                  <TouchableOpacity onLongPress={() => setIsEditing(!isEditing)}>
-                    <AnimalElement isEditing={isEditing} name={item.name} race={item.race} imageUrl={item.photourl} />
-                  </TouchableOpacity>
-                </View>
-                
-              )
-            }) }
-          </ScrollView>
-        </>        
+            {user?.animalData.length === 0 ? 
+            <>
+              <NoAnimalAlert />
+            </>
+            :
+            <>
+              <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
+              { user?.animalData?.map((item, index) => (
+                  <View key={index}>
+                    <TouchableOpacity onLongPress={() => setIsEditing(!isEditing)}>
+                      <AnimalElement isEditing={isEditing} name={item.name} race={item.race} imageUrl={item.photo} />
+                    </TouchableOpacity>
+                  </View>
+                ))}
+            </>
+            }
+          </ScrollView>       
       </Background>
 
-      <Footer />
-    </> 
+      <Footer wichActive={'home'} name={user?.givenname} photo={user?.photo}/>
+      
+      { isLoading &&
+        <Loading /> 
+      }
+    </>
 )}
 
-
-const styles = StyleSheet.create({
-
-})
 
 export default Home
 
