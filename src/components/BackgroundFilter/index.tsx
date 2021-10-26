@@ -9,7 +9,7 @@ interface BackgroundFilterProps {
 function BackgroundFilter({ children, handlePress }: BackgroundFilterProps) {
   return (
     <>
-      <TouchableWithoutFeedback onPress={handlePress}  >
+      <TouchableWithoutFeedback style={{width: '100%', height: '100%'}}onPress={handlePress}  >
         <View style={styles.filter}>
           {children}
         </View>
@@ -24,6 +24,10 @@ const styles = StyleSheet.create({
     height: '100%',
 
     position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
     
     backgroundColor: "rgba(0,0,0,.5)"
   }
