@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { View, Text, StyleSheet} from 'react-native';
+import globalStyles from '../../assets/styles/global';
 
 import Button from '../Button';
 
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
   noAnimalText: {
     textAlign: 'center',
 
+    color: globalStyles.black,
     fontSize: 24,
     fontWeight: 'bold',
     lineHeight: 35,
