@@ -12,6 +12,7 @@ export type RootStackParamList = {
   Settings: {
     name: string,
     photo: string,
+    alreadyHaveOTP: boolean
   };
 }
 
