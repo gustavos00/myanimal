@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { getStorageItem } from '../../utils/localStorage';
-import { getUserInformation } from '../../utils/user';
-
-import DotInputNumeric from '../DotInputNumeric';
-import ForgotPinButton from '../ForgotPinButton';
+import React from 'react';
+import { View, StyleSheet,  } from 'react-native';
 import KeyboardAvoidingWrapper from '../KeyboardAvoidingWrapper';
 
-interface PinPaymentMethodProps {
-  alreadyHavePIN?: boolean;
-}
 
 interface animalData {
   age: string,
@@ -30,41 +22,16 @@ interface userData {
   animalData: Array<animalData>,
 }
 
-function PinPaymentMethod({ alreadyHavePIN }: PinPaymentMethodProps) {
-  const [pin, setPin] = useState(Array(4).fill(''))
+function PinPaymentMethod() {
 
-  const handleChangeText = (text : string, index : number) => {
-    if(!isNaN(Number(text))) {
-      let newPIN = pin
-      newPIN[index] = text;
-      setPin(newPIN)
 
-      pin.forEach((item) => {
-        if(item === "") {
-          return ;
-        }
-        console.log('submit')
-      })
-      console.log('teste')
-    } 
-  }
   return (
     <>
       <KeyboardAvoidingWrapper >
         <>
           <View style={styles.dotInputContainer}>
-            {pin.map((item, index) => {
-              return (
-                <DotInputNumeric 
-                  autoFocusValue={index === 0 ? true : false}
-                  handleChangeTextFunction={(text) => handleChangeText(text, index)} 
-                  key={index}   
-                />
-              )
-            })}
+        
           </View>
-
-          <ForgotPinButton />
         </>
       </KeyboardAvoidingWrapper>
     </>
