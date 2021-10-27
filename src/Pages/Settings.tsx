@@ -14,6 +14,7 @@ import SettingsElement from '../components/SettingsElement';
 import Underline from '../components/Underline'
 import BottomModal from '../components/BottomModal';
 import PinPaymentMethod from '../components/PinPaymentMethod';
+import Loading from '../components/Loading';
 
 
 interface animalData {
@@ -43,16 +44,18 @@ function Settings() {
   
   const navigation = useNavigation();
 
-  useEffect(() => {
-    setIsLoading(true)
-    async function getData() {
-      const data = await getUserInformationFromLS()
-      setUser(data)
-      setIsLoading(false)
-    }
-    getData();
-  }, [])
-
+  if(!params) {
+    useEffect(() => {
+      setIsLoading(true)
+      async function getData() {
+        const data = await getUserInformationFromLS()
+        setUser(data)
+        
+        setIsLoading(false)
+      }
+      getData();
+    }, [])
+  }
 
   const closeModal = () => {
     setSecutiryModalOpen(false);
@@ -96,8 +99,12 @@ function Settings() {
 
       { securityModalOpen &&
         <BottomModal swipeDownFunction={closeModal} modalHeight={430}>
-          <PinPaymentMethod />
+          <PinPaymentMethod alreadyHavePin={true}/>
         </BottomModal>
+      }
+
+      { isLoading &&
+        <Loading /> 
       }
     </>
   );
