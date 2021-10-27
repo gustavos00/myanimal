@@ -1,70 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { getStorageItem } from '../../utils/localStorage';
-import { getUserInformation } from '../../utils/user';
+import { useNavigation } from '@react-navigation/core';
+import React, {useState} from 'react';
+import { View, StyleSheet} from 'react-native';
+import { KeycodeInput } from 'react-native-keycode';
 
-import DotInputNumeric from '../DotInputNumeric';
-import ForgotPinButton from '../ForgotPinButton';
+import api from '../../api/api'
+import { getStorageItem } from '../../utils/localStorage';
+
 import KeyboardAvoidingWrapper from '../KeyboardAvoidingWrapper';
 
 interface PinPaymentMethodProps {
-  alreadyHavePIN?: boolean;
+  alreadyHavePin: boolean
 }
 
-interface animalData {
-  age: string,
-  chipnumber: string,
-  id: string,
-  name: string,
-  photourl: string,
-  race: string,
-  userid: string,
+interface pinAuthProps {
+  allow: boolean
 }
 
-interface userData {
-  id: string,
-  givenname: string,
-  lastname: string,
-  photo: string,
-  email: string
-  animalData: Array<animalData>,
-}
+function PinPaymentMethod({alreadyHavePin} : PinPaymentMethodProps) {
+  const [pin, setPin] = useState<string>();
+  const navigation = useNavigation();
 
-function PinPaymentMethod({ alreadyHavePIN }: PinPaymentMethodProps) {
-  const [pin, setPin] = useState(Array(4).fill(''))
+  const handleSubmit = async (e: string) => {
+    if(e.match(/^[0-9]+$/) == null) { //Verify if string just have numbers
+      setPin('');
+      return ;
+    };
 
-  const handleChangeText = (text : string, index : number) => {
-    if(!isNaN(Number(text))) {
-      let newPIN = pin
-      newPIN[index] = text;
-      setPin(newPIN)
-
-      pin.forEach((item) => {
-        if(item === "") {
-          return ;
-        }
-        console.log('submit')
+    if(alreadyHavePin) {
+      const token = await getStorageItem('token');
+      const params = new URLSearchParams({
+        token: token ?? "",
+        pin: e ?? ""
       })
-      console.log('teste')
-    } 
+  
+      const data = await api.post('/user/pin', params) //API request | need to pass token
+      const { allow } = data.data as unknown as pinAuthProps
+
+      if(allow) {
+        console.log('allow');
+      } else {
+        console.log('nowAllow')
+        setPin('')
+      }
+    }
   }
+
   return (
     <>
       <KeyboardAvoidingWrapper >
         <>
           <View style={styles.dotInputContainer}>
-            {pin.map((item, index) => {
-              return (
-                <DotInputNumeric 
-                  autoFocusValue={index === 0 ? true : false}
-                  handleChangeTextFunction={(text) => handleChangeText(text, index)} 
-                  key={index}   
-                />
-              )
-            })}
+            <KeycodeInput 
+              numeric={true}
+              value={pin}
+              onComplete={(e) => handleSubmit(e)}
+              onChange={(e) => setPin(e)}
+            />
           </View>
-
-          <ForgotPinButton />
         </>
       </KeyboardAvoidingWrapper>
     </>

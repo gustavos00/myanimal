@@ -4838,6 +4838,13 @@ react-native-gesture-handler@~1.10.2:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
+react-native-keycode@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-keycode/-/react-native-keycode-1.1.2.tgz#bf11f321a60d9f82a7f9fa85119cc7a9a2a0096e"
+  integrity sha512-31yWKMP/gsp6hOKeW17fqHJcmmD4nwx/glq+//KqbNm2EP3ZRotn8KYdcxEf+9lqfWBXYMZJxeWQv03Y7UKs8g==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-safe-area-context@3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz#9549a2ce580f2374edb05e49d661258d1b8bcaed"

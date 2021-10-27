@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet } from "react-native";
-import { getStorageItem, setStorageItem } from '../utils/localStorage';
+import { setStorageItem } from '../utils/localStorage';
 
 import * as Google from 'expo-google-app-auth';
 import * as Network from 'expo-network';
