@@ -15,6 +15,7 @@ function Footer({name, photo, wichActive} : FooterProps) {
   const navigation = useNavigation();
 
   const goToSettings = () => {
+    //If current screen === settings return ;
     if(typeof(name) === undefined || typeof(photo) === undefined) {
       console.log('#0501')
     }
