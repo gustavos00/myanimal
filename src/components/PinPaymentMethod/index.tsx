@@ -1,36 +1,61 @@
-import React from 'react';
-import { View, StyleSheet,  } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
+import React, {useState} from 'react';
+import { View, StyleSheet} from 'react-native';
+import { KeycodeInput } from 'react-native-keycode';
+
+import api from '../../api/api'
+import { getStorageItem } from '../../utils/localStorage';
+
 import KeyboardAvoidingWrapper from '../KeyboardAvoidingWrapper';
 
-
-interface animalData {
-  age: string,
-  chipnumber: string,
-  id: string,
-  name: string,
-  photourl: string,
-  race: string,
-  userid: string,
+interface PinPaymentMethodProps {
+  alreadyHavePin: boolean
 }
 
-interface userData {
-  id: string,
-  givenname: string,
-  lastname: string,
-  photo: string,
-  email: string
-  animalData: Array<animalData>,
+interface pinAuthProps {
+  allow: boolean
 }
 
-function PinPaymentMethod() {
+function PinPaymentMethod({alreadyHavePin} : PinPaymentMethodProps) {
+  const [pin, setPin] = useState<string>();
+  const navigation = useNavigation();
 
+  const handleSubmit = async (e: string) => {
+    if(e.match(/^[0-9]+$/) == null) { //Verify if string just have numbers
+      setPin('');
+      return ;
+    };
+
+    if(alreadyHavePin) {
+      const token = await getStorageItem('token');
+      const params = new URLSearchParams({
+        token: token ?? "",
+        pin: e ?? ""
+      })
+  
+      const data = await api.post('/user/pin', params) //API request | need to pass token
+      const { allow } = data.data as unknown as pinAuthProps
+
+      if(allow) {
+        console.log('allow');
+      } else {
+        console.log('nowAllow')
+        setPin('')
+      }
+    }
+  }
 
   return (
     <>
       <KeyboardAvoidingWrapper >
         <>
           <View style={styles.dotInputContainer}>
-        
+            <KeycodeInput 
+              numeric={true}
+              value={pin}
+              onComplete={(e) => handleSubmit(e)}
+              onChange={(e) => setPin(e)}
+            />
           </View>
         </>
       </KeyboardAvoidingWrapper>
