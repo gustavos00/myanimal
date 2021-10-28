@@ -2,12 +2,12 @@ import React, { ReactNode } from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
-interface SettingsElementProps {
+interface OptionElementProps {
   text: string,
   handleClick: () => void
 }
 
-function SettingsElement({ text, handleClick }: SettingsElementProps) {
+function OptionElement({ text, handleClick }: OptionElementProps) {
   return (
     <>
       <TouchableOpacity onPress={handleClick}>
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default SettingsElement;
+export default OptionElement;
