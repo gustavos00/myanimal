@@ -9,8 +9,8 @@ import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import SettingsHeader from '../components/SettingsHeader';
-import SettingsElement from '../components/SettingsElement';
+import OptionHeader from '../components/OptionHeader';
+import OptionElement from '../components/OptionElement';
 import Underline from '../components/Underline'
 import BottomModal from '../components/BottomModal';
 import PinPaymentMethod from '../components/PinPaymentMethod';
@@ -78,18 +78,18 @@ function Settings() {
           <BackgroundHeader text={'Settings'} />
 
           <View style={styles.textContainer}>
-            <SettingsHeader text={'Account Settings'} /> 
-            <SettingsElement handleClick={async() => changeScreen('Home', false)} text={'Edit profile'}/>
-            <SettingsElement handleClick={() => setSecutiryModalOpen(true)} text={'Payment Methods'}/>
-            <SettingsElement handleClick={async () => changeScreen('Login', true)} text={'Log-out'}/>
+            <OptionHeader text={'Account Settings'} /> 
+            <OptionElement handleClick={async() => changeScreen('Home', false)} text={'Edit profile'}/>
+            <OptionElement handleClick={() => setSecutiryModalOpen(true)} text={'Payment Methods'}/>
+            <OptionElement handleClick={async () => changeScreen('Login', true)} text={'Log-out'}/>
           </View>
 
           <Underline />
 
           <View style={styles.textContainer}>
-            <SettingsHeader text={'More'} /> 
-            <SettingsElement handleClick={() => changeScreen('Home', false)} text={'About us'}/>
-            <SettingsElement handleClick={() => changeScreen('Home', false)} text={'Privacy Policy'}/>
+            <OptionHeader text={'More'} /> 
+            <OptionElement handleClick={() => changeScreen('Home', false)} text={'About us'}/>
+            <OptionElement handleClick={() => changeScreen('Home', false)} text={'Privacy Policy'}/>
           </View>
           
         </>        

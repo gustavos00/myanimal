@@ -2,11 +2,11 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
-interface SettingsHeaderProps {
+interface OptionHeaderProps {
   text: string;
 }
 
-function SettingsHeader({ text }: SettingsHeaderProps) {
+function OptionHeader({ text }: OptionHeaderProps) {
   return (
     <>
       <Text style={styles.text}>{text}</Text>
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default SettingsHeader;
+export default OptionHeader;
