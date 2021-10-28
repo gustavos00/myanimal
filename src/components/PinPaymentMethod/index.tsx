@@ -9,7 +9,7 @@ import { getStorageItem } from '../../utils/localStorage';
 import KeyboardAvoidingWrapper from '../KeyboardAvoidingWrapper';
 
 interface PinPaymentMethodProps {
-  alreadyHavePin: boolean
+  alreadyHavePin: boolean,
 }
 
 interface pinAuthProps {
@@ -38,8 +38,9 @@ function PinPaymentMethod({alreadyHavePin} : PinPaymentMethodProps) {
 
       if(allow) {
         console.log('allow');
-      } else {
-        console.log('nowAllow')
+        navigation.navigate('PaymentMethod' as any)
+      } else { 
+        console.log('notAllow')
         setPin('')
       }
     }

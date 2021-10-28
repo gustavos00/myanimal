@@ -49,24 +49,24 @@ const Home = () => {
       <Header name={user?.givenname} image={user?.photo}/>
 
       <Background>
-          <ScrollView>
-            {user?.animalData.length === 0 ? 
-            <>
-              <NoAnimalAlert />
-            </>
-            :
-            <>
-              <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
-              { user?.animalData?.map((item, index) => (
-                  <View key={index}>
-                    <TouchableOpacity onLongPress={() => setIsEditing(!isEditing)}>
-                      <AnimalElement isEditing={isEditing} name={item.name} race={item.race} imageUrl={item.photo} />
-                    </TouchableOpacity>
-                  </View>
-                ))}
-            </>
-            }
-          </ScrollView>       
+        <ScrollView>
+          {user?.animalData.length === 0 ? 
+          <>
+            <NoAnimalAlert />
+          </>
+          :
+          <>
+            <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
+            { user?.animalData?.map((item, index) => (
+                <View key={index}>
+                  <TouchableOpacity onLongPress={() => setIsEditing(!isEditing)}>
+                    <AnimalElement isEditing={isEditing} name={item.name} race={item.race} imageUrl={item.photo} />
+                  </TouchableOpacity>
+                </View>
+              ))}
+          </>
+          }
+        </ScrollView>       
       </Background>
 
       <Footer wichActive={'home'} name={user?.givenname} photo={user?.photo}/>
