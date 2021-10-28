@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Settings from "../pages/Settings";
+import PaymentMethod from '../pages/PaymentMethod';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -13,6 +14,7 @@ export type RootStackParamList = {
     name: string,
     photo: string
   };
+  PaymentMethod: undefined
 }
 
 const {Navigator, Group, Screen} = createStackNavigator<RootStackParamList>()
@@ -25,6 +27,7 @@ export default () => {
           <Screen options={{headerShown: false}} name="Login" component={Login}/>
           <Screen options={{headerShown: false}} name="Home" component={Home}/>
           <Screen options={{headerShown: false}} name="Settings" component={Settings}/>
+          <Screen options={{headerShown: false}} name="PaymentMethod" component={PaymentMethod}/>
         </Group>
       </Navigator>
     </NavigationContainer>
