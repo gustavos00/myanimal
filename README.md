@@ -18,7 +18,7 @@
 
 ### 🏠 [Homepage](https://github.com/gustavos00/myAnimal#readme)
 
-## Prerequisites
+## Pre-requisites
 
 - yarn >=1.22.11
 - expo >=4.11.0
