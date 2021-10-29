@@ -30,7 +30,7 @@ function Settings() {
   const navigation = useNavigation();
 
   useEffect(() => {
-    if(!params) {
+    if(params.name !== undefined && params.photo !== undefined) {
       setIsLoading(true)
       async function getData() {
         const data = await getUserInformationFromLS()
