@@ -16,24 +16,9 @@ import BottomModal from '../components/BottomModal';
 import PinPaymentMethod from '../components/PinPaymentMethod';
 import Loading from '../components/Loading';
 
-
-interface animalData {
-  age: string,
-  chipnumber: string,
-  id: string,
-  name: string,
-  photourl: string,
-  race: string,
-  userid: string,
-}
-
 interface userData {
-  id: string,
   givenname: string,
-  lastname: string,
   photo: string,
-  email: string
-  animalData: Array<animalData>,
 }
 
 function Settings() {
@@ -44,8 +29,8 @@ function Settings() {
   
   const navigation = useNavigation();
 
-  if(!params) {
-    useEffect(() => {
+  useEffect(() => {
+    if(!params) {
       setIsLoading(true)
       async function getData() {
         const data = await getUserInformationFromLS()
@@ -54,8 +39,14 @@ function Settings() {
         setIsLoading(false)
       }
       getData();
-    }, [])
-  }
+
+    } else {
+      setUser({
+        givenname: params.name,
+        photo: params.photo
+      })
+    }
+  }, [])
 
   const closeModal = () => {
     setSecutiryModalOpen(false);
@@ -71,7 +62,7 @@ function Settings() {
  
   return (
     <>
-      <Header name={params.name} image={params.photo}/>
+      <Header name={user?.givenname} image={user?.photo}/>
 
       <Background>
         <>
