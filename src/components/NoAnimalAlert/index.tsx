@@ -21,6 +21,7 @@ function NoAnimalAlert() {
 
 const styles = StyleSheet.create({
   noAnimalText: {
+    margin: 10,
     textAlign: 'center',
 
     color: globalStyles.black,
