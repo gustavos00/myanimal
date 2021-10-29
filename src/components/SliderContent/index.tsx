@@ -62,7 +62,7 @@ function SliderContent({ textBeforeBolder, textBolder, textAfterBolder, imageNam
           return( 
             <View style={styles.sliderContainer}>
               <SafeAreaView />
-              <View style={{marginLeft: 25, marginRight: 15}}>
+              <View style={{marginLeft: 20, marginRight: 20}}>
                 <Image style={styles.sliderImage} source={image} />
 
                 <SliderHeader textBeforeBolder={item.textBeforeBolder} textBolder={item.textBolder} textAfterBolder={item.textAfterBolder}/>
@@ -91,7 +91,8 @@ const styles = StyleSheet.create({
   },
 
   sliderContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
+    flexDirection: 'row-reverse'
   },
 
   dotsContainer: {
