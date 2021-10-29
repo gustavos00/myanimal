@@ -1,12 +1,15 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet} from 'react-native';
-import globalStyles from '../../assets/styles/global';
+import { useNavigation } from '@react-navigation/native';
 
+import globalStyles from '../../assets/styles/global';
 import Button from '../Button';
 
 function NoAnimalAlert() {
+  const navigation = useNavigation();
+  
   const createNewAnimal = () => {
-    console.log('a')
+    navigation.navigate('CreateOrUpdateAnimal' as any)
   }
 
   return (

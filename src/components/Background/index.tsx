@@ -4,14 +4,13 @@ import globalStyles from '../../assets/styles/global';
 
 interface BackgroundProps {
   children: ReactNode;
+  heightSize?: string
 }
 
-function Background({ children }: BackgroundProps) {
-
-
+function Background({ children, heightSize }: BackgroundProps) {
   return (
     <>
-      <View style={styles.bg}>
+      <View style={[styles.bg, heightSize ? {height: heightSize} : {height: '80%'}]}>
         {children}
       </View>
     </>
@@ -21,7 +20,7 @@ function Background({ children }: BackgroundProps) {
 const styles = StyleSheet.create({
   bg: {
     width: '100%',
-    height: '80%',
+
     paddingTop: 20,
 
     position: 'absolute',
@@ -36,7 +35,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
 
     backgroundColor: globalStyles.white,
-    borderRadius: 35
+    borderRadius: 35,
+
   }
 })
 
