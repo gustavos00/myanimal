@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {ScrollView, View, TouchableOpacity, Text} from "react-native";
+import {ScrollView, View, TouchableOpacity} from "react-native";
+import { getUserInformationFromAPI } from "../utils/user";
 
 import Header from "../components/Header";
 import Background from "../components/Background";
@@ -7,7 +8,6 @@ import NoAnimalAlert from "../components/NoAnimalAlert";
 import BackgroundHeader from "../components/BackgroundHeader";
 import AnimalElement from "../components/AnimalElement";
 import Footer from "../components/Footer";
-import { getUserInformationFromAPI } from "../utils/user";
 import Loading from "../components/Loading";
 
 interface animalData {
@@ -35,13 +35,15 @@ const Home = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   
   useEffect(() => {
-    setIsLoading(true)
-    async function getData() {
-      const data = await getUserInformationFromAPI()
-      setUser(data)
-      setIsLoading(false)
+    if(!user) {
+      setIsLoading(true)
+      async function getData() {
+        const data = await getUserInformationFromAPI()
+        setUser(data)
+        setIsLoading(false)
+      }
+      getData();
     }
-    getData();
   }, [])
 
   return (
