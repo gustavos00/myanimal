@@ -1,5 +1,5 @@
 import React, { ReactChild } from 'react';
-import { View, StyleSheet} from 'react-native';
+import { View, StyleSheet, Dimensions} from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
 interface RoundedBackgroundProps {
@@ -20,6 +20,7 @@ function RoundedBackground({ top, children }: RoundedBackgroundProps) {
 const styles = StyleSheet.create({
   bg: {
     width: '100%',
+    height: '80%',
     
     backgroundColor: globalStyles.white,
 
@@ -35,15 +36,11 @@ const styles = StyleSheet.create({
   top: {
     borderBottomLeftRadius: 35,
     borderBottomRightRadius: 35,
-
-    height: 673,
   },
 
   bottom: {
     borderTopLeftRadius: 35,
     borderTopRightRadius: 35,
-
-    height: 673,
   }
 })
 
