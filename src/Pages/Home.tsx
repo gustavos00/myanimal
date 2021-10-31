@@ -9,6 +9,7 @@ import BackgroundHeader from "../components/BackgroundHeader";
 import AnimalElement from "../components/AnimalElement";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
+import { getStorageItem, setStorageItem } from "../utils/localStorage";
 
 interface animalData {
   age: string,
@@ -40,7 +41,25 @@ const Home = () => {
       async function getData() {
         const data = await getUserInformationFromAPI()
         setUser(data)
+
+        await setDataOnLS(user)
+      }
+
+      async function setDataOnLS(user : userData | undefined) {
+        if (!user) {
+          //ERROR GETTING USER 
+          console.log('Error storing user information')
+
+          return;
+        }
+
+        await setStorageItem('user', user);
         setIsLoading(false)
+      }
+
+      async function test() {
+        const data = await getStorageItem('user')
+        console.log(data)
       }
       getData();
     }
