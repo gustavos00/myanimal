@@ -54,7 +54,7 @@ const Login = () => {
     })
 
     try {
-      const { data } = await api.post('/user', params)
+      const { data } = await api.post('/user/create', params)
       const userData = JSON.parse(JSON.stringify(data))
       
       await setStorageItem('token', userData.token)

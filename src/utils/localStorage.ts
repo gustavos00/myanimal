@@ -5,7 +5,7 @@ export async function getStorageItem(value: string) {
   return data;
 }
 
-export async function setStorageItem(key: string, value: string) {
+export async function setStorageItem(key: string, value: any) {
   return await SecureStore.setItemAsync(key, value);
 } 
 

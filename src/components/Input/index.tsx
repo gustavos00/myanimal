@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    padding: 10
+    padding: 10,
+    color: globalStyles.darkGray
   },
 
   text: {
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
 
     fontSize: 14,
-    color: globalStyles.darkGray
+    color: globalStyles.gray
   },
 
   textContainer: {
