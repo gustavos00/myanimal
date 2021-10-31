@@ -43,20 +43,20 @@ function PaymentMethod() {
 
   return (
     <>
-       <Header name={user?.givenname} image={user?.photo}/>
+      <Header name={user?.givenname} image={user?.photo}/>
 
-       <Background>
-          <BackgroundHeader text={'Payment methods'}/>
+      <Background>
+        <BackgroundHeader text={'Payment methods'}/>
 
-          <PaymentMethodsInformation />
+        <PaymentMethodsInformation />
 
-          <Underline />
-          <OptionHeader text={'Valid Payment Methods'}/>
-       </Background>
+        <Underline />
+        <OptionHeader text={'Valid Payment Methods'}/>
+      </Background>
 
-       <Footer name={user?.givenname} photo={user?.photo} wichActive={'settings'} />
+      <Footer name={user?.givenname} photo={user?.photo} wichActive={'settings'} />
 
-       { isLoading &&
+      { isLoading &&
         <Loading /> 
       }
     </>
