@@ -18,6 +18,7 @@ function StyledSwitch({ enableFunction, enableValue }: StyledSwitchProps) {
           thumbColor={enableValue ? globalStyles.white : globalStyles.mainColor}
           ios_backgroundColor={globalStyles.white}
           onValueChange={toggleSwitch}
+          style={{ transform: [{ scaleX: .8 }, { scaleY: .8 }] }}
           value={enableValue}
         />
     </>
