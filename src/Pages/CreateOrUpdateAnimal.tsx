@@ -1,5 +1,7 @@
-import React, { ReactNode, useState } from 'react';
-import { StyleSheet, Switch, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+
+import api from '../api/api';
 
 import globalStyles from '../assets/styles/global';
 import AddImage from '../components/AddImage';
@@ -19,6 +21,10 @@ function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
   const [race, setRace] = useState<String>()
   const [chipnumber, setChipnumber] = useState<String>()
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
+
+  const handleSubmitForm = () => {
+    api.post('/animal/create')
+  }
 
   return (
     <>
