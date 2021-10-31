@@ -33,7 +33,7 @@ function PinPaymentMethod({alreadyHavePin} : PinPaymentMethodProps) {
         pin: e ?? ""
       })
   
-      const data = await api.post('/user/pin', params) //API request | need to pass token
+      const data = await api.post('/user/verify/pin', params) //API request | need to pass token
       const { allow } = data.data as unknown as pinAuthProps
 
       if(allow) {
