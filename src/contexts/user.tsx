@@ -26,10 +26,7 @@ export function AuthProvider({children} : any) {
   const googleSignIn = async() => {
     const response = await auth.GoogleSignIn()
     setToken(response.token)
-
-    const userData = response
-    delete userData.token
-    setUser(userData)
+    setUser(response)
   }
 
   return (
