@@ -10,20 +10,49 @@ import Button from '../components/Button';
 import CreateOrUpdateSwitch from '../components/CreateOrUpdateSwitch';
 import Footer from '../components/Footer/index';
 import Input from '../components/Input';
+import { getStorageItem } from '../utils/localStorage';
 
 interface CreateOrUpdateAnimalProps {
   type: string;
 }
 
+interface getIdProps {
+  id: string
+}
+
+interface createAnimalProps {
+  fullname: string,
+  age: string,
+  race: string,
+  chipnumber: string, 
+  id: string
+}
+
 function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
-  const [fullname, setFullname] = useState<String>()
-  const [age, setAge] = useState<String>()
-  const [race, setRace] = useState<String>()
-  const [chipnumber, setChipnumber] = useState<String>()
+  const [fullname, setFullname] = useState('')
+  const [age, setAge] = useState('')
+  const [race, setRace] = useState('')
+  const [chipnumber, setChipnumber] = useState('')
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
 
-  const handleSubmitForm = () => {
-    api.post('/animal/create')
+  const handleSubmitForm = async () => {
+    const token = await getStorageItem('token')
+
+    let params = new URLSearchParams({
+      token: token ?? "",
+    })
+    let res = await api.post('/user/id', params)
+    const { id } = res.data as unknown as getIdProps
+
+    params = new URLSearchParams({
+      name: fullname,
+      age,
+      race,
+      chipnumber,
+      id
+    })
+
+    const result = await api.post('/animal/create', params)
   }
 
   return (
@@ -41,7 +70,7 @@ function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
             </View>
                         
             <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled}/>
-            <Button text={'Create new animal'} handleClick={() => console.log('click')}/>
+            <Button text={'Create new animal'} handleClick={handleSubmitForm}/>
           </View>
         </Background>
       </View>

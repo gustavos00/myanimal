@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet} from 'react-native'
-import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../navigator/MainStack';
+import { useNavigation } from '@react-navigation/native';
 import { deleteStorageItem } from '../utils/localStorage';
-import { getUserInformationFromLS } from '../utils/user';
 
 import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
@@ -22,31 +20,11 @@ interface userData {
 }
 
 function Settings() {
-  const { params } = useRoute<RouteProp<RootStackParamList, 'Settings'>>();
   const [securityModalOpen, setSecutiryModalOpen] = useState(false);
   const [user, setUser] = useState<userData>();
   const [isLoading, setIsLoading] = useState<boolean>();
   
   const navigation = useNavigation();
-
-  useEffect(() => {
-    if(params.name !== undefined && params.photo !== undefined) {
-      setIsLoading(true)
-      async function getData() {
-        const data = await getUserInformationFromLS()
-        setUser(data)
-        
-        setIsLoading(false)
-      }
-      getData();
-
-    } else {
-      setUser({
-        givenname: params.name,
-        photo: params.photo
-      })
-    }
-  }, [])
 
   const closeModal = () => {
     setSecutiryModalOpen(false);

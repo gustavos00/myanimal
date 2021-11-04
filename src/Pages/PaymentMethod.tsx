@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { getUserInformationFromLS } from '../utils/user';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { RootStackParamList } from '../navigator/MainStack';
+import React, { useState } from 'react';
 
 import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
@@ -18,28 +15,8 @@ interface userData {
 }
 
 function PaymentMethod() {
-  const { params } = useRoute<RouteProp<RootStackParamList, 'Settings'>>();
   const [user, setUser] = useState<userData>();
   const [isLoading, setIsLoading] = useState<boolean>();
-
-  useEffect(() => {
-    if(!params) {
-      setIsLoading(true)
-      async function getData() {
-        const data = await getUserInformationFromLS()
-        setUser(data)
-        
-        setIsLoading(false)
-      }
-      getData();
-
-    } else {
-      setUser({
-        givenname: params.name,
-        photo: params.photo
-      })
-    }
-  }, [])
 
   return (
     <>

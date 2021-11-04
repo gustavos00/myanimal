@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {ScrollView, View, TouchableOpacity} from "react-native";
-import { getUserInformationFromAPI } from "../utils/user";
 
 import Header from "../components/Header";
 import Background from "../components/Background";
@@ -9,7 +8,6 @@ import BackgroundHeader from "../components/BackgroundHeader";
 import AnimalElement from "../components/AnimalElement";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
-import { getStorageItem, setStorageItem } from "../utils/localStorage";
 
 interface animalData {
   age: string,
@@ -34,36 +32,6 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState<boolean>();
   const [user, setUser] = useState<userData>();
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  
-  useEffect(() => {
-    if(!user) {
-      setIsLoading(true)
-      async function getData() {
-        const data = await getUserInformationFromAPI()
-        setUser(data)
-
-        await setDataOnLS(user)
-      }
-
-      async function setDataOnLS(user : userData | undefined) {
-        if (!user) {
-          //ERROR GETTING USER 
-          console.log('Error storing user information')
-
-          return;
-        }
-
-        await setStorageItem('user', user);
-        setIsLoading(false)
-      }
-
-      async function test() {
-        const data = await getStorageItem('user')
-        console.log(data)
-      }
-      getData();
-    }
-  }, [])
 
   return (
     <>
