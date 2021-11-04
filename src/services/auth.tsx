@@ -5,7 +5,7 @@ import * as Google from 'expo-google-app-auth';
 
 import { setStorageItem } from '../utils/localStorage';
 
-interface userGoogleDataProps {
+interface UserGoogleDataResponse {
   givenName?: string;
   familyName?: string;
   photoUrl?: string;
@@ -31,7 +31,7 @@ export async function GoogleSignIn() {
   }
 }
 
-const apiPostData = async({givenName, familyName, photoUrl, email} : userGoogleDataProps) => {
+const apiPostData = async({givenName, familyName, photoUrl, email} : UserGoogleDataResponse) => {
   const params = new URLSearchParams({
     givenName: givenName ?? "",
     familyName: familyName ?? "",
@@ -43,6 +43,7 @@ const apiPostData = async({givenName, familyName, photoUrl, email} : userGoogleD
     const response = await api.post('/user/create', params)
     const responseJSON = JSON.parse(JSON.stringify(response))
     await setStorageItem('token', responseJSON.data.token)
+
 
     return responseJSON.data
   } catch(e) {

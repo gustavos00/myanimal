@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import * as auth from '../services/auth'
 
-interface userContextData {
+interface UserContextData {
   familyname: string,
   givenname: string,
   email: string,
@@ -11,7 +11,7 @@ interface userContextData {
 interface AuthContextData {
   signed: boolean,
   token: string | void,
-  user: userContextData | void,
+  user: UserContextData | void,
 
   googleSignIn(): void,
 }
@@ -20,7 +20,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 
 export function AuthProvider({children} : any) {
-  const [user, setUser] = useState<userContextData | void>()
+  const [user, setUser] = useState<UserContextData | void>()
   const [token, setToken] = useState<string | void>()
 
   const googleSignIn = async() => {
