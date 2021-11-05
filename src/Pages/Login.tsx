@@ -3,10 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet } from "react-native";
 import { setStorageItem } from '../utils/localStorage';
 
-
 import * as Network from 'expo-network';
-
-import api from '../api/api';
 
 import globalStyles from "../assets/styles/global";
 import Button from "../components/LoginButton";
@@ -39,7 +36,14 @@ const Login = () => {
   verifyNetwork()
   
   const { googleSignIn} = useContext(AuthContext);
-
+  
+  const handleGoogleSignIn = async() => {
+    const status = await googleSignIn()
+    
+    if(status) {
+      navigation.navigate('Home' as any)
+    }
+  }
 
   return (
     <> 
@@ -55,7 +59,7 @@ const Login = () => {
         </RoundedBackground>
 
         <View style={styles.buttonContainer}>
-          <Button text={'Start with Google'} handleClick={async () => await googleSignIn()} />
+          <Button text={'Start with Google'} handleClick={handleGoogleSignIn} />
         </View>
       </View>
 
