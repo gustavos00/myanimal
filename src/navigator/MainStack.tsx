@@ -11,10 +11,7 @@ import CreateOrUpdateAnimal from "../pages/CreateOrUpdateAnimal";
 export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
-  Settings: {
-    name: string,
-    photo: string
-  };
+  Settings: undefined
   PaymentMethod: undefined,
   CreateOrUpdateAnimal: undefined
 }

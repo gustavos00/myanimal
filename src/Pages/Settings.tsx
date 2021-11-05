@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { deleteStorageItem } from '../utils/localStorage';
@@ -13,6 +13,7 @@ import Underline from '../components/Underline'
 import BottomModal from '../components/BottomModal';
 import PinPaymentMethod from '../components/PinPaymentMethod';
 import Loading from '../components/Loading';
+import AuthContext from '../contexts/user';
 
 interface userData {
   givenname: string,
@@ -21,8 +22,7 @@ interface userData {
 
 function Settings() {
   const [securityModalOpen, setSecutiryModalOpen] = useState(false);
-  const [user, setUser] = useState<userData>();
-  const [isLoading, setIsLoading] = useState<boolean>();
+  const { user } = useContext(AuthContext);
   
   const navigation = useNavigation();
 
@@ -30,7 +30,7 @@ function Settings() {
     setSecutiryModalOpen(false);
   }
 
-  const changeScreen = async (screenName : string, clearStorage : boolean) => {
+  const changeScreen = async (screenName : string, clearStorage? : boolean) => {
     navigation.navigate(screenName as any)
 
     if(clearStorage) {
@@ -40,16 +40,17 @@ function Settings() {
  
   return (
     <>
-      <Header name={user?.givenname} image={user?.photo}/>
+      <Header name={user?.givenname} image={user?.photourl}/>
 
       <Background>
         <>
           <BackgroundHeader text={'Settings'} />
 
-          <View style={styles.textContainer}>
+          <View style={styles .textContainer}>
             <OptionHeader text={'Account Settings'} /> 
-            <OptionElement handleClick={async() => changeScreen('Home', false)} text={'Edit profile'}/>
+            <OptionElement handleClick={async() => changeScreen('Home')} text={'Edit profile'}/>
             <OptionElement handleClick={() => setSecutiryModalOpen(true)} text={'Payment Methods'}/>
+            <OptionElement handleClick={async() => changeScreen('CreateOrUpdateAnimal')} text={'Create Animal'}/>
             <OptionElement handleClick={async () => changeScreen('Login', true)} text={'Log-out'}/>
           </View>
 
@@ -57,23 +58,19 @@ function Settings() {
 
           <View style={styles.textContainer}>
             <OptionHeader text={'More'} /> 
-            <OptionElement handleClick={() => changeScreen('Home', false)} text={'About us'}/>
-            <OptionElement handleClick={() => changeScreen('Home', false)} text={'Privacy Policy'}/>
+            <OptionElement handleClick={() => changeScreen('Home')} text={'About us'}/>
+            <OptionElement handleClick={() => changeScreen('Home')} text={'Privacy Policy'}/>
           </View>
           
         </>        
       </Background>
 
-      <Footer wichActive={'settings'} name={user?.givenname} photo={user?.photo} />
+      <Footer wichActive={'settings'} />
 
       { securityModalOpen &&
         <BottomModal swipeDownFunction={closeModal} modalHeight={430}>
           <PinPaymentMethod alreadyHavePin={true}/>
         </BottomModal>
-      }
-
-      { isLoading &&
-        <Loading /> 
       }
     </>
   );

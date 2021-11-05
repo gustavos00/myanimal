@@ -31,7 +31,7 @@ function PaymentMethod() {
         <OptionHeader text={'Valid Payment Methods'}/>
       </Background>
 
-      <Footer name={user?.givenname} photo={user?.photo} wichActive={'settings'} />
+      <Footer wichActive={'settings'} />
 
       { isLoading &&
         <Loading /> 
