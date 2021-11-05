@@ -6,37 +6,23 @@ import globalStyles from '../../assets/styles/global';
 import FooterElement from '../FooterElement/index';
 
 interface FooterProps {
-  name?: string | undefined,
-  photo?: string | undefined
   wichActive: string
 }
 
-function Footer({name, photo, wichActive} : FooterProps) {
+function Footer({wichActive} : FooterProps) {
   const navigation = useNavigation();
 
-  const goToSettings = () => {
-    //If current screen === settings return ;
-    if(typeof(name) === undefined || typeof(photo) === undefined) {
-      console.log('#0501')
-    }
-
-    navigation.navigate('Settings' as never, {
-      name,
-      photo
-    } as never);
-  } 
-
-  const goToHome = () => {
-    navigation.navigate('Home' as any);
-  }  
+  const changeScreen = (name: string) => {
+    navigation.navigate(name as any);
+  }
   
   return (
     <>
       <View style={styles.footer}>
-        <FooterElement handleClick={goToSettings} imageName={'setting'} active={wichActive === 'settings' ? true : false} />
-        <FooterElement handleClick={goToHome} imageName={'home'} active={wichActive === 'home' ? true : false} />
-        <FooterElement handleClick={goToSettings} imageName={'notification'} active={wichActive === 'notification' ? true : false} />
-        <FooterElement handleClick={goToSettings} imageName={'user'} active={wichActive === 'user' ? true : false} />
+        <FooterElement handleClick={() => changeScreen('Settings')} imageName={'setting'} active={wichActive === 'settings' ? true : false} />
+        <FooterElement handleClick={() => changeScreen('Home')} imageName={'home'} active={wichActive === 'home' ? true : false} />
+        <FooterElement handleClick={() => changeScreen('Home')} imageName={'notification'} active={wichActive === 'notification' ? true : false} />
+        <FooterElement handleClick={() => changeScreen('Home')} imageName={'user'} active={wichActive === 'user' ? true : false} />
       </View>
     </>
   );
