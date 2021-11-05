@@ -22,7 +22,7 @@ export async function GoogleSignIn() {
   try {
     const data = await Google.logInAsync(config)
 
-    if(data.type === 'cancel') return;
+    if(data.type === 'cancel') return false;
 
     const token = await apiPostData(data.user)
     return token;
@@ -43,7 +43,6 @@ const apiPostData = async({givenName, familyName, photoUrl, email} : UserGoogleD
     const response = await api.post('/user/create', params)
     const responseJSON = JSON.parse(JSON.stringify(response))
     await setStorageItem('token', responseJSON.data.token)
-
 
     return responseJSON.data
   } catch(e) {
