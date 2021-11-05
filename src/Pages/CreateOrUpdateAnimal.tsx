@@ -16,14 +16,6 @@ interface CreateOrUpdateAnimalProps {
   type: string;
 }
 
-interface CreateAnimalProps {
-  name: string,
-  age: string,
-  race: string,
-  chipnumber: string, 
-  photo: string,
-}
-
 function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
@@ -42,7 +34,7 @@ function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
       photo: '',
     })
 
-    const { data } = await api.post('/animal/create', params)
+    await api.post('/animal/create', params)
     const animalData = {
       name,
       age,

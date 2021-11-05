@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 
 import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
@@ -7,7 +7,7 @@ import Header from '../components/Header';
 import PaymentMethodsInformation from '../components/PaymentMethodsInformation';
 import OptionHeader from '../components/OptionHeader';
 import Underline from '../components/Underline';
-import Loading from '../components/Loading';
+import AuthContext from '../contexts/user';
 
 interface userData {
   givenname: string,
@@ -15,12 +15,11 @@ interface userData {
 }
 
 function PaymentMethod() {
-  const [user, setUser] = useState<userData>();
-  const [isLoading, setIsLoading] = useState<boolean>();
+  const { user } = useContext(AuthContext);
 
   return (
     <>
-      <Header name={user?.givenname} image={user?.photo}/>
+      <Header name={user?.givenname} image={user?.photourl}/>
 
       <Background>
         <BackgroundHeader text={'Payment methods'}/>
@@ -32,10 +31,6 @@ function PaymentMethod() {
       </Background>
 
       <Footer wichActive={'settings'} />
-
-      { isLoading &&
-        <Loading /> 
-      }
     </>
   );
 }

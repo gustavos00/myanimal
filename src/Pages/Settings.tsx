@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { View, StyleSheet} from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { deleteStorageItem } from '../utils/localStorage';
+
+import * as SecureStore from 'expo-secure-store';
 
 import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
@@ -12,18 +13,11 @@ import OptionElement from '../components/OptionElement';
 import Underline from '../components/Underline'
 import BottomModal from '../components/BottomModal';
 import PinPaymentMethod from '../components/PinPaymentMethod';
-import Loading from '../components/Loading';
 import AuthContext from '../contexts/user';
-
-interface userData {
-  givenname: string,
-  photo: string,
-}
 
 function Settings() {
   const [securityModalOpen, setSecutiryModalOpen] = useState(false);
   const { user } = useContext(AuthContext);
-  
   const navigation = useNavigation();
 
   const closeModal = () => {
@@ -34,7 +28,7 @@ function Settings() {
     navigation.navigate(screenName as any)
 
     if(clearStorage) {
-      await deleteStorageItem('token')
+      await SecureStore.deleteItemAsync('token');
     }
   }
  

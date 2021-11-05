@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet } from "react-native";
-import { setStorageItem } from '../utils/localStorage';
-
-import * as Network from 'expo-network';
+import { verifyNetwork } from "../utils/network";
 
 import globalStyles from "../assets/styles/global";
 import Button from "../components/LoginButton";
@@ -13,34 +11,28 @@ import BackgroundFilter from "../components/BackgroundFilter";
 import BottomModal from "../components/BottomModal";
 import NoWIFIModal from "../components/NoWIFIModal";
 import AuthContext from "../contexts/user";
+import Loading from "../components/Loading";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [internetConnection, setInternetConnection] = useState(false)
   const navigation = useNavigation();
 
-  const verifyNetwork = async() => {
-    useEffect(() => {
-        Network
-          .getNetworkStateAsync()
-          .then((response) => {
-            response.isConnected ? setInternetConnection(false) : setInternetConnection(true)
-          })
-          .catch(() => {
-            console.log("Error #0103")
-          })
-    }, [])
-    
-
+  const verifyNetworkLocal = async() => {
+    const status = await verifyNetwork()
+    setInternetConnection(status)
   }
-  verifyNetwork()
+  verifyNetworkLocal();
+  
   
   const { googleSignIn} = useContext(AuthContext);
   
   const handleGoogleSignIn = async() => {
+    setIsLoading(true)
     const status = await googleSignIn()
     
     if(status) {
+      setIsLoading(false)
       navigation.navigate('Home' as any)
     }
   }
@@ -66,9 +58,14 @@ const Login = () => {
       { internetConnection && 
         <BackgroundFilter >
           <BottomModal modalHeight={300}>
-            <NoWIFIModal handleClick={verifyNetwork}/>
+            <NoWIFIModal handleClick={verifyNetworkLocal}/>
           </BottomModal>
         </BackgroundFilter>
+      }
+
+
+      { isLoading &&
+        <Loading /> 
       }
 
     </>
