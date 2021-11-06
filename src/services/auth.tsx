@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import api from '../api/api';
 
 import * as Google from 'expo-google-app-auth';
+import { Platform } from 'react-native';
 
 interface UserGoogleDataResponse {
   givenName?: string;
@@ -30,17 +31,21 @@ export async function GoogleSignIn() {
 }
 
 const apiPostData = async({givenName, familyName, photoUrl, email} : UserGoogleDataResponse) => {
-  const params = new URLSearchParams({
-    givenName: givenName ?? "",
-    familyName: familyName ?? "",
-    photoUrl: photoUrl ?? "",
-    email: email ?? "",
-  })
+  let userData = new FormData();
+
+  userData.append('givenName', givenName ?? "")
+  userData.append('familyName', familyName ?? "")
+  userData.append('email', email ?? "")
+  userData.append('file', {
+    uri: photoUrl,
+    name: 'profile',
+    type: 'image/png' // or your mime type what you want
+  } as any);
 
   try {
-    const response = await api.post('/user/create', params)
+    const response = await api.post('/user/create', userData)
     const responseJSON = JSON.parse(JSON.stringify(response))
-
+    
     return responseJSON.data
   } catch(e) {
     console.log(e)
