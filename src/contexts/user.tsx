@@ -5,7 +5,7 @@ interface AnimalData {
   age: string,
   chipnumber: string,
   name: string,
-  photo: string,
+  photourl: string,
   race: string,
   userid: string,
 }

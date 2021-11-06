@@ -27,13 +27,15 @@ const Home = () => {
           :
           <>
             <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
-            { user?.animalData.map((item, index) => (
+            { user?.animalData.map((item, index) => {
+              return (
                 <View key={index}>
                   <TouchableOpacity onLongPress={() => setIsEditing(!isEditing)}>
-                    <AnimalElement isEditing={isEditing} name={item.name} race={item.race} imageUrl={item.photo} />
+                    <AnimalElement isEditing={isEditing} name={item.name} race={item.race} imageUrl={item.photourl} />
                   </TouchableOpacity>
                 </View>
-              ))}
+              )
+              })}
           </>
           }
         </ScrollView>       

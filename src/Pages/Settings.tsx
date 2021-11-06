@@ -40,12 +40,21 @@ function Settings() {
         <>
           <BackgroundHeader text={'Settings'} />
 
-          <View style={styles .textContainer}>
+          <View style={styles.textContainer}>
             <OptionHeader text={'Account Settings'} /> 
             <OptionElement handleClick={async() => changeScreen('Home')} text={'Edit profile'}/>
             <OptionElement handleClick={() => setSecutiryModalOpen(true)} text={'Payment Methods'}/>
-            <OptionElement handleClick={async() => changeScreen('CreateOrUpdateAnimal')} text={'Create Animal'}/>
+
             <OptionElement handleClick={async () => changeScreen('Login', true)} text={'Log-out'}/>
+          </View>
+
+
+          <Underline />
+
+          <View style={styles.textContainer}>
+            <OptionHeader text={'Animal Settings'} /> 
+            <OptionElement handleClick={async() => changeScreen('CreateOrUpdateAnimal')} text={'Create Animal'}/>
+            <OptionElement handleClick={async() => changeScreen('CreateOrUpdateAnimal')} text={'Find My Animal'}/>
           </View>
 
           <Underline />
@@ -55,7 +64,6 @@ function Settings() {
             <OptionElement handleClick={() => changeScreen('Home')} text={'About us'}/>
             <OptionElement handleClick={() => changeScreen('Home')} text={'Privacy Policy'}/>
           </View>
-          
         </>        
       </Background>
 

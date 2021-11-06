@@ -16,6 +16,15 @@ interface CreateOrUpdateAnimalProps {
   type: string;
 }
 
+interface AnimalData {
+  age: string,
+  chipnumber: string,
+  name: string,
+  photo: string,
+  race: string,
+  userid: string,
+}
+
 function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
   const [name, setName] = useState<string>('')
   const [age, setAge] = useState<string>('')
@@ -23,29 +32,25 @@ function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
   const [chipnumber, setChipnumber] = useState<string>('')
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [photoUrl, setPhotoUrl] = useState<string>('')
-  const {token, pushAnimalData} = useContext(AuthContext);
+  const {user, pushAnimalData} = useContext(AuthContext);
 
   const handleSubmitForm = async () => {
-    const params = new URLSearchParams({
-      name,
-      age,
-      race,
-      chipnumber,
-      token: token ?? '',
-      photo: '',
-    })
+    let animalData = new FormData();
 
-    await api.post('/animal/create', params)
-    const animalData = {
-      name,
-      age,
-      race,
-      chipnumber,
-      userid: photoUrl,
-      photo: photoUrl,
-    }
-
-    pushAnimalData(animalData)
+    animalData.append('name', name)
+    animalData.append('age', age)
+    animalData.append('race', race)
+    animalData.append('chipnumber', chipnumber)
+    animalData.append('email', user?.email ?? "")
+    animalData.append('file', {
+      uri: photoUrl,
+      name: 'animalPhoto',
+      type: 'image/png' // or your mime type what you want
+    } as any);
+    
+    const result = await api.post('/animal/create', animalData)
+    const { data } = result
+    pushAnimalData(data as any)
   }
 
   return (

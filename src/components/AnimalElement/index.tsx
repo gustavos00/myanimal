@@ -1,5 +1,5 @@
-import React, { useState }from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 import globalStyles from '../../assets/styles/global';
 
@@ -14,7 +14,7 @@ function AnimalElement({ name, race, imageUrl, isEditing }: AnimalElementProps) 
   return (
     <>
       <View style={styles.element}>
-        <View style={styles.icon}></View>
+        <Image source={{uri: imageUrl}}style={styles.icon}/>
 
         <View style={styles.textContainer}>
           <Text style={styles.nameText}>{name}</Text>
@@ -58,8 +58,7 @@ const styles = StyleSheet.create({
   icon: {
     width: 84,
     height: 84,
-
-    backgroundColor: 'red',
+    
     borderRadius: 15,
   },
 
