@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { getUserInformationFromLS } from '../utils/user';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { RootStackParamList } from '../navigator/MainStack';
+import React, { useContext } from 'react';
 
 import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
@@ -10,40 +7,14 @@ import Header from '../components/Header';
 import PaymentMethodsInformation from '../components/PaymentMethodsInformation';
 import OptionHeader from '../components/OptionHeader';
 import Underline from '../components/Underline';
-import Loading from '../components/Loading';
-
-interface userData {
-  givenname: string,
-  photo: string,
-}
+import AuthContext from '../contexts/user';
 
 function PaymentMethod() {
-  const { params } = useRoute<RouteProp<RootStackParamList, 'Settings'>>();
-  const [user, setUser] = useState<userData>();
-  const [isLoading, setIsLoading] = useState<boolean>();
-
-  useEffect(() => {
-    if(!params) {
-      setIsLoading(true)
-      async function getData() {
-        const data = await getUserInformationFromLS()
-        setUser(data)
-        
-        setIsLoading(false)
-      }
-      getData();
-
-    } else {
-      setUser({
-        givenname: params.name,
-        photo: params.photo
-      })
-    }
-  }, [])
+  const { user } = useContext(AuthContext);
 
   return (
     <>
-      <Header name={user?.givenname} image={user?.photo}/>
+      <Header name={user?.givenname} image={user?.photourl}/>
 
       <Background>
         <BackgroundHeader text={'Payment methods'}/>
@@ -54,11 +25,7 @@ function PaymentMethod() {
         <OptionHeader text={'Valid Payment Methods'}/>
       </Background>
 
-      <Footer name={user?.givenname} photo={user?.photo} wichActive={'settings'} />
-
-      { isLoading &&
-        <Loading /> 
-      }
+      <Footer wichActive={'settings'} />
     </>
   );
 }
