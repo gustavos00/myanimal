@@ -2649,7 +2649,7 @@ expand-brackets@^2.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
-expo-app-auth@~11.0.2:
+expo-app-auth@~11.0.3:
   version "11.0.3"
   resolved "https://registry.yarnpkg.com/expo-app-auth/-/expo-app-auth-11.0.3.tgz#ab317ba2730379cdc616c6bda8e3ee0458f4b692"
   integrity sha512-vw6rWfrVAKFaDB/VShEZYH/Vsd2dYp5BS4Vuq3UARDlrCNwNumO8AualmffTc42k13RTBlKhGoaxUaol/UiTUA==
@@ -2707,12 +2707,12 @@ expo-font@~10.0.3:
     expo-modules-core "~0.4.4"
     fontfaceobserver "^2.1.0"
 
-expo-google-app-auth@^8.2.4:
-  version "8.2.4"
-  resolved "https://registry.yarnpkg.com/expo-google-app-auth/-/expo-google-app-auth-8.2.4.tgz#95cf96a0a43497f957f9185b0be9efe0539f3c99"
-  integrity sha512-ZMhJFimwuWAv+0tjGz28vuSIunqSoV5Fk2WIK5gGJWgkF/KksiCNLEqNKM4zHlCVAjszoBUE3MMtGUsNDn1Yvw==
+expo-google-app-auth@~9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/expo-google-app-auth/-/expo-google-app-auth-9.0.0.tgz#c8ee144132d0f8f0db940c576f2d386bbe32069c"
+  integrity sha512-UzL1N8dd2Cm84FkgWCbkkYJv79ptFLescGaOpoJRXlnXVEkmz/iQ7zETmwOsIcq5ISAPXvgrSMb1LniqjgmnGQ==
   dependencies:
-    expo-app-auth "~11.0.2"
+    expo-app-auth "~11.0.3"
 
 expo-image-picker@~11.0.3:
   version "11.0.3"
