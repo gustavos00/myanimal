@@ -20,12 +20,11 @@ const Login = () => {
 
   const verifyNetworkLocal = async() => {
     const status = await verifyNetwork()
-    setInternetConnection(status)
+    setInternetConnection(!status)
   }
   verifyNetworkLocal();
   
-  
-  const { googleSignIn} = useContext(AuthContext);
+  const { googleSignIn } = useContext(AuthContext);
   
   const handleGoogleSignIn = async() => {
     setIsLoading(true)
