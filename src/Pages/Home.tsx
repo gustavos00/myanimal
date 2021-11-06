@@ -28,7 +28,6 @@ const Home = () => {
           <>
             <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
             { user?.animalData.map((item, index) => {
-              console.log(item)
               return (
                 <View key={index}>
                   <TouchableOpacity onLongPress={() => setIsEditing(!isEditing)}>
