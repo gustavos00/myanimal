@@ -17,12 +17,13 @@ interface CreateOrUpdateAnimalProps {
 }
 
 function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
-  const [name, setName] = useState('')
-  const [age, setAge] = useState('')
-  const [race, setRace] = useState('')
-  const [chipnumber, setChipnumber] = useState('')
+  const [name, setName] = useState<string>('')
+  const [age, setAge] = useState<string>('')
+  const [race, setRace] = useState<string>('')
+  const [chipnumber, setChipnumber] = useState<string>('')
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
-  const { token, pushAnimalData } = useContext(AuthContext);
+  const [photoUrl, setPhotoUrl] = useState<string>('')
+  const {token, pushAnimalData} = useContext(AuthContext);
 
   const handleSubmitForm = async () => {
     const params = new URLSearchParams({
@@ -40,8 +41,8 @@ function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
       age,
       race,
       chipnumber,
-      userid: '',
-      photo: '',
+      userid: photoUrl,
+      photo: photoUrl,
     }
 
     pushAnimalData(animalData)
@@ -50,7 +51,7 @@ function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
   return (
     <>
       <View style={styles.headerBg}>
-        <AddImage />
+        <AddImage setProfilePhotoFunction={setPhotoUrl}/>
 
         <Background heightSize={'75%'}>
           <View style={styles.container}>
