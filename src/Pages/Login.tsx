@@ -29,9 +29,9 @@ const Login = () => {
   const handleGoogleSignIn = async() => {
     setIsLoading(true)
     const status = await googleSignIn()
+    setIsLoading(false)
     
     if(status) {
-      setIsLoading(false)
       navigation.navigate('Home' as any)
     }
   }
