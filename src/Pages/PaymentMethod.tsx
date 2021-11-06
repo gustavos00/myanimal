@@ -9,11 +9,6 @@ import OptionHeader from '../components/OptionHeader';
 import Underline from '../components/Underline';
 import AuthContext from '../contexts/user';
 
-interface userData {
-  givenname: string,
-  photo: string,
-}
-
 function PaymentMethod() {
   const { user } = useContext(AuthContext);
 

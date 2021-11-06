@@ -3,8 +3,6 @@ import api from '../api/api';
 
 import * as Google from 'expo-google-app-auth';
 
-import { setStorageItem } from '../utils/localStorage';
-
 interface UserGoogleDataResponse {
   givenName?: string;
   familyName?: string;
@@ -42,7 +40,6 @@ const apiPostData = async({givenName, familyName, photoUrl, email} : UserGoogleD
   try {
     const response = await api.post('/user/create', params)
     const responseJSON = JSON.parse(JSON.stringify(response))
-    await setStorageItem('token', responseJSON.data.token)
 
     return responseJSON.data
   } catch(e) {
