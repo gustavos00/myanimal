@@ -8,12 +8,27 @@ import Settings from "../pages/Settings";
 import PaymentMethod from '../pages/PaymentMethod';
 import CreateOrUpdateAnimal from "../pages/CreateOrUpdateAnimal";
 
+interface AnimalInfoParams {
+  age: string,
+  chipnumber: string,
+  id: number,
+  name: string,
+  photourl: string,
+  race: string,
+  userid: number,
+}
+
+interface CreateOrUpdateAnimalParams {
+  type: string
+  animalInfo: AnimalInfoParams
+}
+
 export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
   Settings: undefined
   PaymentMethod: undefined,
-  CreateOrUpdateAnimal: undefined
+  CreateOrUpdateAnimal: CreateOrUpdateAnimalParams
 }
 
 const {Navigator, Group, Screen} = createStackNavigator<RootStackParamList>()
