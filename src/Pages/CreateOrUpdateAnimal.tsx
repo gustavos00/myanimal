@@ -1,5 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { StyleSheet, View, Text } from 'react-native';
+import { RootStackParamList } from '../navigator/MainStack';
 
 import api from '../api/api';
 
@@ -11,28 +13,23 @@ import CreateOrUpdateSwitch from '../components/CreateOrUpdateSwitch';
 import Footer from '../components/Footer/index';
 import Input from '../components/Input';
 import AuthContext from '../contexts/user';
+import StyledText from '../components/StyledText';
+import ProfileImage from '../components/ProfileImage';
 
-interface CreateOrUpdateAnimalProps {
-  type: string;
-}
 
-interface AnimalData {
-  age: string,
-  chipnumber: string,
-  name: string,
-  photo: string,
-  race: string,
-  userid: string,
-}
-
-function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
+function CreateOrUpdateAnimal() {
   const [name, setName] = useState<string>('')
   const [age, setAge] = useState<string>('')
   const [race, setRace] = useState<string>('')
   const [chipnumber, setChipnumber] = useState<string>('')
-  const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [photoUrl, setPhotoUrl] = useState<string>('')
+  const [error, setError] = useState<string>('')
+  const [isEnabled, setIsEnabled] = useState<boolean>(false);
+
   const {user, pushAnimalData} = useContext(AuthContext);
+
+  const route = useRoute<RouteProp<RootStackParamList, 'CreateOrUpdateAnimal'>>();;
+  const { type, animalInfo } = route.params;
 
   const handleSubmitForm = async () => {
     let animalData = new FormData();
@@ -53,22 +50,61 @@ function CreateOrUpdateAnimal({ type }: CreateOrUpdateAnimalProps) {
     pushAnimalData(data as any)
   }
 
+  const handleChangeText = (e: string, type: string, setFunction: Dispatch<SetStateAction<string>>) => {
+    switch (type) {
+      case 'string':
+        
+        break;
+
+      case 'number':
+        if(isNaN(Number(e))) {
+          setError('Please, insert a valid age')
+        } else {
+          setError('')
+          setAge(e)
+        }
+        break;
+    
+      default:
+        break;
+    }
+  }
+
   return (
     <>
       <View style={styles.headerBg}>
-        <AddImage setProfilePhotoFunction={setPhotoUrl}/>
+        {type !== 'view' ?
+          <AddImage setProfilePhotoFunction={setPhotoUrl}/>
+        : 
+          <ProfileImage photoUrl={animalInfo.photourl}/>
+        }
+
 
         <Background heightSize={'75%'}>
           <View style={styles.container}>
             <View style={styles.inputsContainer}> 
-              <Input handleChangeFunction={(e: string) => setName(e)} text={'Full Name'}/>
-              <Input handleChangeFunction={(e: string) => setAge(e)} text={'Age'}/>
-              <Input handleChangeFunction={(e: string) => setRace(e)} text={'Race'}/>
-              <Input handleChangeFunction={(e: string) => setChipnumber(e)} text={'Tracking code'}/>
+              {type !== 'view' ?
+                <>
+                  <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setName)} text={'Full Name'}/>
+                  <Input handleChangeFunction={(e: string) => handleChangeText(e, 'number', setAge)} text={'Age'}/>
+                  <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setRace)} text={'Race'}/>
+                  <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setChipnumber)} text={'Chip Number'}/>
+                </>
+              : 
+                <>
+                  <StyledText value={animalInfo.name} text={'Full Name'}/>
+                  <StyledText value={animalInfo.age} text={'Age'}/>
+                  <StyledText value={animalInfo.race} text={'Race'}/>
+                  <StyledText value={animalInfo.chipnumber} text={'Chip Number'}/>
+                </>
+              }
+
             </View>
                         
             <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled}/>
             <Button text={'Create new animal'} handleClick={handleSubmitForm}/>
+
+            <Text>{error}</Text>
           </View>
         </Background>
       </View>
