@@ -8,6 +8,7 @@ interface AnimalData {
   photourl: string,
   race: string,
   userid: string,
+  haveFindMyPet: boolean
 }
 
 interface UserContextData {
