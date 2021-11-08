@@ -36,20 +36,20 @@ function AddImage({ setProfilePhotoFunction, widthSize, heightSize }: AddImagePr
   }
   return (
     <>
-    <View style={styles.container}>
-      <TouchableOpacity 
-        onPress={openImageLibrary} 
-        activeOpacity={.5} 
-        style={[styles.circle, widthSize ? {width: widthSize} : {width: 190}, heightSize ? {height: heightSize} : {height: 190}]}
-      >
-        {photoUrl ? 
-          <Image style={styles.animalImage} source={{uri: photoUrl}} />
-        : 
-          <Image style={styles.image} source={require('../../assets/img/add.png')} />
-        }
-        
-      </TouchableOpacity>
-    </View>
+      <View style={styles.container}>
+        <TouchableOpacity 
+          onPress={openImageLibrary} 
+          activeOpacity={.5} 
+          style={[styles.circle, widthSize ? {width: widthSize} : {width: 190}, heightSize ? {height: heightSize} : {height: 190}]}
+        >
+          {photoUrl ? 
+            <Image style={styles.animalImage} source={{uri: photoUrl}} />
+          : 
+            <Image style={styles.image} source={require('../../assets/img/add.png')} />
+          }
+          
+        </TouchableOpacity>
+      </View>
     </>
   );
 }
