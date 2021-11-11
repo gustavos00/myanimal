@@ -16,9 +16,8 @@ const Home = () => {
   const { user } = useContext(AuthContext);
   const navigation = useNavigation();
 
-  const changingToSettings = (item : Object) => {
-    navigation.navigate('CreateOrUpdateAnimal' as never, {
-      type: 'view',
+  const viewingAnimal = (item : Object) => {
+    navigation.navigate('ViewAnimal' as never, {
       animalInfo: item
     } as never)
   }
@@ -40,7 +39,7 @@ const Home = () => {
             { user?.animalData.map((item, index) => {
               return (
                 <View key={index}>
-                  <TouchableOpacity onPress={() => changingToSettings(item)} onLongPress={() => setIsEditing(!isEditing)}>
+                  <TouchableOpacity onPress={() => viewingAnimal(item)} onLongPress={() => setIsEditing(!isEditing)}>
                     <AnimalElement isEditing={isEditing} name={item.name} race={item.race} imageUrl={item.photourl} />
                   </TouchableOpacity>
                 </View>

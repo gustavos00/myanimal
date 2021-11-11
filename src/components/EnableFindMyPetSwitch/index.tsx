@@ -2,14 +2,14 @@ import React, { ReactNode } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 import globalStyles from '../../assets/styles/global';
-import StyledSwitch from '../StyledSwitch';
+import StyledSwitch from '../StyledSwitch/index';
 
-interface CreateOrUpdateSwitchProps {
-  enableFunction: (state : boolean) => void;
+interface EnableFindMyPetSwitchProps {
+  enableFunction?: (state : boolean) => void;
   enableValue: boolean
 }
 
-function CreateOrUpdateSwitch({ enableFunction, enableValue }: CreateOrUpdateSwitchProps) {
+function EnableFindMyPetSwitch({ enableFunction, enableValue }: EnableFindMyPetSwitchProps) {
   return (
     <>
       <View style={styles.switchContainer}>
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default CreateOrUpdateSwitch;
+export default EnableFindMyPetSwitch;

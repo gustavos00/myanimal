@@ -9,7 +9,7 @@ import globalStyles from '../assets/styles/global';
 import AddImage from '../components/AddImage';
 import Background from '../components/Background';
 import Button from '../components/Button';
-import CreateOrUpdateSwitch from '../components/CreateOrUpdateSwitch';
+import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
 import Input from '../components/Input';
 import AuthContext from '../contexts/user';
@@ -29,7 +29,7 @@ function CreateOrUpdateAnimal() {
   const {user, pushAnimalData} = useContext(AuthContext);
 
   const route = useRoute<RouteProp<RootStackParamList, 'CreateOrUpdateAnimal'>>();;
-  const { type, animalInfo } = route.params;
+  //const { type } = route.params;
 
   const handleSubmitForm = async () => {
     let animalData = new FormData();
@@ -73,32 +73,15 @@ function CreateOrUpdateAnimal() {
   return (
     <>
       <View style={styles.headerBg}>
-        {type !== 'view' ?
-          <AddImage setProfilePhotoFunction={setPhotoUrl}/>
-        : 
-          <ProfileImage photoUrl={animalInfo.photourl}/>
-        }
-
+        <AddImage setProfilePhotoFunction={setPhotoUrl}/>
 
         <Background heightSize={'75%'}>
           <View style={styles.container}>
             <View style={styles.inputsContainer}> 
-              {type !== 'view' ?
-                <>
-                  <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setName)} text={'Full Name'}/>
-                  <Input handleChangeFunction={(e: string) => handleChangeText(e, 'number', setAge)} text={'Age'}/>
-                  <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setRace)} text={'Race'}/>
-                  <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setChipnumber)} text={'Chip Number'}/>
-                </>
-              : 
-                <>
-                  <StyledText value={animalInfo.name} text={'Full Name'}/>
-                  <StyledText value={animalInfo.age} text={'Age'}/>
-                  <StyledText value={animalInfo.race} text={'Race'}/>
-                  <StyledText value={animalInfo.chipnumber} text={'Chip Number'}/>
-                </>
-              }
-
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setName)} text={'Full Name'}/>
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'number', setAge)} text={'Age'}/>
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setRace)} text={'Race'}/>
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setChipnumber)} text={'Chip Number'}/>
             </View>
                         
             <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled}/>
