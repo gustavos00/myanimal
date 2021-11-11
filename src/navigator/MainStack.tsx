@@ -7,6 +7,7 @@ import Login from "../pages/Login";
 import Settings from "../pages/Settings";
 import PaymentMethod from '../pages/PaymentMethod';
 import CreateOrUpdateAnimal from "../pages/CreateOrUpdateAnimal";
+import ViewAnimal from "../pages/ViewAnimal";
 
 interface AnimalInfoParams {
   age: string,
@@ -19,7 +20,10 @@ interface AnimalInfoParams {
 }
 
 interface CreateOrUpdateAnimalParams {
-  type: string
+  type?: string
+}
+
+interface ViewAnimalParams {
   animalInfo: AnimalInfoParams
 }
 
@@ -29,6 +33,7 @@ export type RootStackParamList = {
   Settings: undefined
   PaymentMethod: undefined,
   CreateOrUpdateAnimal: CreateOrUpdateAnimalParams
+  ViewAnimal: ViewAnimalParams
 }
 
 const {Navigator, Group, Screen} = createStackNavigator<RootStackParamList>()
@@ -43,6 +48,7 @@ export default () => {
             <Screen options={{headerShown: false}} name="Settings" component={Settings}/>
             <Screen options={{headerShown: false}} name="PaymentMethod" component={PaymentMethod}/>
             <Screen options={{headerShown: false}} name="CreateOrUpdateAnimal" component={CreateOrUpdateAnimal}/>
+            <Screen options={{headerShown: false}} name="ViewAnimal" component={ViewAnimal}/>
           </Group>
         </Navigator>
     </NavigationContainer>
