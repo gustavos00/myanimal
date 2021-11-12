@@ -13,11 +13,9 @@ import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
 import Input from '../components/Input';
 import AuthContext from '../contexts/user';
-import StyledText from '../components/StyledText';
-import ProfileImage from '../components/ProfileImage';
 
 
-function CreateOrUpdateAnimal() {
+function CreateAnimal() {
   const [name, setName] = useState<string>('')
   const [age, setAge] = useState<string>('')
   const [race, setRace] = useState<string>('')
@@ -27,9 +25,6 @@ function CreateOrUpdateAnimal() {
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
 
   const {user, pushAnimalData} = useContext(AuthContext);
-
-  const route = useRoute<RouteProp<RootStackParamList, 'CreateOrUpdateAnimal'>>();;
-  //const { type } = route.params;
 
   const handleSubmitForm = async () => {
     let animalData = new FormData();
@@ -117,4 +112,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CreateOrUpdateAnimal;
+export default CreateAnimal;
