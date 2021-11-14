@@ -1,30 +1,47 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import globalStyles from '../../assets/styles/global';
 
-interface AnimalElementProps {
+interface AnimalDataProps {
+  age: string,
+  chipnumber: string,
   name: string,
+  photourl: string,
   race: string,
-  imageUrl: string,
+}
+
+interface AnimalElementProps {
+  animalData: AnimalDataProps,
   isEditing: boolean
 }
 
-function AnimalElement({ name, race, imageUrl, isEditing }: AnimalElementProps) {
+function AnimalElement({ animalData, isEditing } : AnimalElementProps) {
+  const navigation = useNavigation();
+
+  const updatingAnimal = () => {
+    navigation.navigate('UpdateAnimal' as never, {
+      animalInfo: animalData
+    } as never)
+  }
   return (
     <>
       <View style={styles.element}>
-        <Image source={{uri: imageUrl}}style={styles.icon}/>
+        <Image source={{uri: animalData.photourl}}style={styles.icon}/>
 
         <View style={styles.textContainer}>
-          <Text style={styles.nameText}>{name}</Text>
-          <Text style={styles.raceText}>{race}</Text>
+          <Text style={styles.nameText}>{animalData.name}</Text>
+          <Text style={styles.raceText}>{animalData.race}</Text>
         </View>
 
         <View style={styles.editContainer}>
           {isEditing && 
             <>  
-              <Image source={require('../../assets/img/edit.png')} />
+              <TouchableOpacity onPress={updatingAnimal}>
+                <Image source={require('../../assets/img/edit.png')} />
+              </TouchableOpacity>
+
               <Image source={require('../../assets/img/delete.png')} />
             </>
           }

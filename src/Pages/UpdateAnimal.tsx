@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import { StyleSheet, View, Text } from 'react-native';
+import { RouteProp, useRoute } from '@react-navigation/core';
 import { RootStackParamList } from '../navigator/MainStack';
+import { StyleSheet, View, Text } from 'react-native';
 
 import api from '../api/api';
 
@@ -15,32 +15,36 @@ import Input from '../components/Input';
 import AuthContext from '../contexts/user';
 
 
-function CreateAnimal() {
-  const [name, setName] = useState<string>('')
-  const [age, setAge] = useState<string>('')
-  const [race, setRace] = useState<string>('')
-  const [chipnumber, setChipnumber] = useState<string>('')
-  const [photoUrl, setPhotoUrl] = useState<string>('')
+
+function UpdateAnimal() {
+  const route = useRoute<RouteProp<RootStackParamList, 'UpdateAnimal'>>();;
+  const { animalInfo } = route.params;
+
+  const [name, setName] = useState<string>(animalInfo.name)
+  const [age, setAge] = useState<string>(animalInfo.age)
+  const [race, setRace] = useState<string>(animalInfo.race)
+  const [chipnumber, setChipnumber] = useState<string>(animalInfo.chipnumber)
+  const [photoUrl, setPhotoUrl] = useState<string>(animalInfo.photourl)
   const [error, setError] = useState<string>('')
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
 
-  const {user, pushAnimalData} = useContext(AuthContext);
+  const { pushAnimalData} = useContext(AuthContext);
 
   const handleSubmitForm = async () => {
     let animalData = new FormData();
 
     animalData.append('name', name)
+    animalData.append('id', String(animalInfo.id))
     animalData.append('age', age)
     animalData.append('race', race)
     animalData.append('chipnumber', chipnumber)
-    animalData.append('email', user?.email ?? "")
     animalData.append('file', {
       uri: photoUrl,
       name: 'animalPhoto',
-      type: 'image/png' // or your mime type what you want
+      type: 'image/png'
     } as any);
     
-    const result = await api.post('/animal/create', animalData)
+    const result = await api.post('/animal/update', animalData)
     const { data } = result
     pushAnimalData(data as any)
   }
@@ -48,7 +52,7 @@ function CreateAnimal() {
   const handleChangeText = (e: string, type: string, setFunction: Dispatch<SetStateAction<string>>) => {
     switch (type) {
       case 'string':
-        
+        setFunction(e)
         break;
 
       case 'number':
@@ -68,19 +72,19 @@ function CreateAnimal() {
   return (
     <>
       <View style={styles.headerBg}>
-        <AddImage setProfilePhotoFunction={setPhotoUrl}/>
+        <AddImage animalPhotoUrl={animalInfo.photourl} setProfilePhotoFunction={setPhotoUrl}/>
 
         <Background heightSize={'75%'}>
           <View style={styles.container}>
             <View style={styles.inputsContainer}> 
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setName)} placeholder={'Full Name'}/>
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'number', setAge)} placeholder={'Age'}/>
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setRace)} placeholder={'Race'}/>
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setChipnumber)} placeholder={'Chip Number'}/>
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setName)} text={name} placeholder={'Full Name'}/>
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'number', setAge)} text={age} placeholder={'Age'}/>
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setRace)} text={race} placeholder={'Race'}/>
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setChipnumber)} text={chipnumber} placeholder={'Chip Number'}/>
             </View>
                         
             <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled}/>
-            <Button text={'Create new animal'} handleClick={handleSubmitForm}/>
+            <Button text={'Update animal'} handleClick={handleSubmitForm}/>
 
             <Text>{error}</Text>
           </View>
@@ -112,4 +116,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CreateAnimal;
+export default UpdateAnimal;
