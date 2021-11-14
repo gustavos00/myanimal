@@ -5,18 +5,19 @@ import Background from '../Background/index';
 
 interface InputProps {
   handleChangeFunction: (e: string) => void
-  text: string
+  placeholder: string,
+  text?:string
 }
 
-function Input({ handleChangeFunction, text }: InputProps) {
+function Input({ text, handleChangeFunction, placeholder }: InputProps) {
   return (
     <>
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={styles.text}>{text}</Text>
+          <Text style={styles.text}>{placeholder}</Text>
         </View>
 
-        <TextInput onChangeText={text => handleChangeFunction(text)} style={styles.input} />
+        <TextInput value={text} onChangeText={text => handleChangeFunction(text)} style={styles.input} />
       </View>
     </>
   );
