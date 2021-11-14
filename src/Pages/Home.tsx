@@ -21,7 +21,6 @@ const Home = () => {
       animalInfo: item
     } as never)
   }
-  
 
   return (
     <>
@@ -40,7 +39,7 @@ const Home = () => {
               return (
                 <View key={index}>
                   <TouchableOpacity onPress={() => viewingAnimal(item)} onLongPress={() => setIsEditing(!isEditing)}>
-                    <AnimalElement isEditing={isEditing} name={item.name} race={item.race} imageUrl={item.photourl} />
+                    <AnimalElement isEditing={isEditing} animalData={item} />
                   </TouchableOpacity>
                 </View>
               )
