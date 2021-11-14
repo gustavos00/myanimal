@@ -73,10 +73,10 @@ function CreateAnimal() {
         <Background heightSize={'75%'}>
           <View style={styles.container}>
             <View style={styles.inputsContainer}> 
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setName)} text={'Full Name'}/>
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'number', setAge)} text={'Age'}/>
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setRace)} text={'Race'}/>
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setChipnumber)} text={'Chip Number'}/>
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setName)} placeholder={'Full Name'}/>
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'number', setAge)} placeholder={'Age'}/>
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setRace)} placeholder={'Race'}/>
+              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setChipnumber)} placeholder={'Chip Number'}/>
             </View>
                         
             <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled}/>
