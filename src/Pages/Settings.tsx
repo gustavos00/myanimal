@@ -53,8 +53,8 @@ function Settings() {
 
           <View style={styles.textContainer}>
             <OptionHeader text={'Animal Settings'} /> 
-            <OptionElement handleClick={async() => changeScreen('CreateOrUpdateAnimal')} text={'Create Animal'}/>
-            <OptionElement handleClick={async() => changeScreen('CreateOrUpdateAnimal')} text={'Find My Animal'}/>
+            <OptionElement handleClick={async() => changeScreen('CreateAnimal')} text={'Create Animal'}/>
+            <OptionElement handleClick={async() => changeScreen('CreateAnimal')} text={'Find My Animal'}/>
           </View>
 
           <Underline />
