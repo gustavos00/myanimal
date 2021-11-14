@@ -28,7 +28,7 @@ function UpdateAnimal() {
   const [error, setError] = useState<string>('')
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
 
-  const {user, pushAnimalData} = useContext(AuthContext);
+  const { pushAnimalData} = useContext(AuthContext);
 
   const handleSubmitForm = async () => {
     let animalData = new FormData();
