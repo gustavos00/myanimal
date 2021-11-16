@@ -14,8 +14,6 @@ import Footer from '../components/Footer/index';
 import Input from '../components/Input';
 import AuthContext from '../contexts/user';
 
-
-
 function UpdateAnimal() {
   const route = useRoute<RouteProp<RootStackParamList, 'UpdateAnimal'>>();;
   const { animalInfo } = route.params;
@@ -28,7 +26,7 @@ function UpdateAnimal() {
   const [error, setError] = useState<string>('')
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
 
-  const { pushAnimalData} = useContext(AuthContext);
+  const { pushAnimalData } = useContext(AuthContext);
 
   const handleSubmitForm = async () => {
     let animalData = new FormData();

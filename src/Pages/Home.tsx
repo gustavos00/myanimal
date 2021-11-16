@@ -8,8 +8,19 @@ import BackgroundHeader from "../components/BackgroundHeader";
 import AnimalElement from "../components/AnimalElement";
 import Footer from "../components/Footer";
 import AuthContext from "../contexts/user";
+import ConfirmModal from "../components/ConfirmModal";
+
 import { useNavigation } from '@react-navigation/core';
 
+interface AnimalDataProps {
+  age: string,
+  chipnumber: string,
+  id: number,
+  name: string,
+  photourl: string,
+  race: string,
+  userid: number,
+}
 
 const Home = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -27,26 +38,27 @@ const Home = () => {
       <Header name={user?.givenname} image={user?.photourl}/>
 
       <Background>
-        <ScrollView>
-          {user?.animalData.length === 0 ? 
+        {user?.animalData.length === 0 ? 
           <>
             <NoAnimalAlert />
           </>
           :
           <>
             <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
-            { user?.animalData.map((item, index) => {
-              return (
-                <View key={index}>
-                  <TouchableOpacity onPress={() => viewingAnimal(item)} onLongPress={() => setIsEditing(!isEditing)}>
-                    <AnimalElement isEditing={isEditing} animalData={item} />
-                  </TouchableOpacity>
-                </View>
-              )
-              })}
-          </>
-          }
-        </ScrollView>       
+            <ScrollView>
+              { user?.animalData.map((item, index) => {
+                return (
+                  <View key={index}>
+                    <TouchableOpacity onPress={() => viewingAnimal(item)} onLongPress={() => setIsEditing(!isEditing)}>
+                      <AnimalElement isEditing={isEditing} animalData={item as AnimalDataProps} />
+                    </TouchableOpacity>
+                  </View>
+                )
+                })}
+                <View style={{marginBottom: 100}}/>
+            </ScrollView>    
+        </>
+        }
       </Background>
 
       <Footer wichActive={'home'}/>
