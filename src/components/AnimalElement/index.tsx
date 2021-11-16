@@ -2,6 +2,8 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
+import api from '../../api/api';
+
 import globalStyles from '../../assets/styles/global';
 
 interface AnimalDataProps {
@@ -22,8 +24,14 @@ interface AnimalElementProps {
 function AnimalElement({ animalData, isEditing } : AnimalElementProps) {
   const navigation = useNavigation();
 
-  const deletingAnimal = (id : number) => {
+  const deletingAnimal = async (id : number) => {
+    let animalId = new FormData();
+    animalId.append('id', String(id))
+
+    const result = await api.post('/animal/delete', animalId);
+    console.log('deleted')
   }
+
   const updatingAnimal = () => {
     navigation.navigate('UpdateAnimal' as never, {
       animalInfo: animalData
@@ -32,7 +40,7 @@ function AnimalElement({ animalData, isEditing } : AnimalElementProps) {
   return (
     <>
       <View style={styles.element}>
-        <Image source={{uri: animalData.photourl}}style={styles.icon}/>
+        <Image source={{uri: animalData.photourl}} style={styles.icon}/>
 
         <View style={styles.textContainer}>
           <Text style={styles.nameText}>{animalData.name}</Text>
@@ -81,7 +89,6 @@ const styles = StyleSheet.create({
   icon: {
     width: 84,
     height: 84,
-    
     borderRadius: 15,
   },
 
