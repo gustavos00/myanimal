@@ -7,9 +7,11 @@ import globalStyles from '../../assets/styles/global';
 interface AnimalDataProps {
   age: string,
   chipnumber: string,
+  id: number,
   name: string,
   photourl: string,
   race: string,
+  userid: number,
 }
 
 interface AnimalElementProps {
@@ -20,6 +22,8 @@ interface AnimalElementProps {
 function AnimalElement({ animalData, isEditing } : AnimalElementProps) {
   const navigation = useNavigation();
 
+  const deletingAnimal = (id : number) => {
+  }
   const updatingAnimal = () => {
     navigation.navigate('UpdateAnimal' as never, {
       animalInfo: animalData
@@ -42,7 +46,9 @@ function AnimalElement({ animalData, isEditing } : AnimalElementProps) {
                 <Image source={require('../../assets/img/edit.png')} />
               </TouchableOpacity>
 
-              <Image source={require('../../assets/img/delete.png')} />
+              <TouchableOpacity onPress={() => deletingAnimal(animalData.id)}>
+                <Image source={require('../../assets/img/delete.png')} />
+              </TouchableOpacity>
             </>
           }
         </View>

@@ -1,14 +1,14 @@
 import React, { createContext, useEffect, useState } from "react";
 import * as auth from '../services/auth'
 
-interface AnimalData {
+interface AnimalDataProps {
   age: string,
   chipnumber: string,
+  id: number,
   name: string,
   photourl: string,
   race: string,
-  userid: string,
-  haveFindMyPet: boolean
+  userid: number,
 }
 
 interface UserContextData {
@@ -16,7 +16,7 @@ interface UserContextData {
   givenname: string,
   email: string,
   photourl: string,
-  animalData: Array<AnimalData>,
+  animalData: Array<AnimalDataProps>,
 }
 
 interface AuthContextData {
@@ -25,7 +25,7 @@ interface AuthContextData {
   user: UserContextData | void,
 
   googleSignIn: () => Promise<boolean>,
-  pushAnimalData: (data : AnimalData) => void,
+  pushAnimalData: (data : AnimalDataProps) => void,
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -44,7 +44,7 @@ export function AuthProvider({children} : any) {
     return true;
   }
 
-  const pushAnimalData = (data : AnimalData) => {
+  const pushAnimalData = (data : AnimalDataProps) => {
     user?.animalData.push(data)
   }
 
