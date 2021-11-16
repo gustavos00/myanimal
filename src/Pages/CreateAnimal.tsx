@@ -48,7 +48,7 @@ function CreateAnimal() {
   const handleChangeText = (e: string, type: string, setFunction: Dispatch<SetStateAction<string>>) => {
     switch (type) {
       case 'string':
-        
+        setFunction(e)
         break;
 
       case 'number':
