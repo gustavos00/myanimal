@@ -62,7 +62,6 @@ const Login = () => {
         </BackgroundFilter>
       }
 
-
       { isLoading &&
         <Loading /> 
       }
