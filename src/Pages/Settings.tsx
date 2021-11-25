@@ -44,13 +44,11 @@ function Settings() {
             <OptionHeader text={'Account Settings'} /> 
             <OptionElement handleClick={async() => changeScreen('Home')} text={'Edit profile'}/>
             <OptionElement handleClick={() => setSecutiryModalOpen(true)} text={'Payment Methods'}/>
-
+            <OptionElement handleClick={() => setSecutiryModalOpen(true)} text={'Payment Historic'}/>
             <OptionElement handleClick={async () => changeScreen('Login', true)} text={'Log-out'}/>
           </View>
-
-
+          
           <Underline />
-
           <View style={styles.textContainer}>
             <OptionHeader text={'Animal Settings'} /> 
             <OptionElement handleClick={async() => changeScreen('CreateAnimal')} text={'Create Animal'}/>
@@ -58,7 +56,6 @@ function Settings() {
           </View>
 
           <Underline />
-
           <View style={styles.textContainer}>
             <OptionHeader text={'More'} /> 
             <OptionElement handleClick={() => changeScreen('Home')} text={'About us'}/>
