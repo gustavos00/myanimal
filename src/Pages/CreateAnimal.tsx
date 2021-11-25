@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { StyleSheet, View, Text } from 'react-native';
 import { RootStackParamList } from '../navigator/MainStack';
 
@@ -13,9 +13,11 @@ import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
 import Input from '../components/Input';
 import AuthContext from '../contexts/user';
+import Loading from '../components/Loading';
 
 
 function CreateAnimal() {
+  const navigation = useNavigation();
   const [name, setName] = useState<string>('')
   const [age, setAge] = useState<string>('')
   const [race, setRace] = useState<string>('')
@@ -23,6 +25,7 @@ function CreateAnimal() {
   const [photoUrl, setPhotoUrl] = useState<string>('')
   const [error, setError] = useState<string>('')
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {user, pushAnimalData} = useContext(AuthContext);
 
@@ -42,13 +45,17 @@ function CreateAnimal() {
     
     const result = await api.post('/animal/create', animalData)
     const { data } = result
+
     pushAnimalData(data as any)
+
+    setIsLoading(false);
+    navigation.navigate('Home' as any)
   }
 
   const handleChangeText = (e: string, type: string, setFunction: Dispatch<SetStateAction<string>>) => {
     switch (type) {
       case 'string':
-        
+        setFunction(e)
         break;
 
       case 'number':
@@ -88,6 +95,10 @@ function CreateAnimal() {
       </View>
 
       <Footer wichActive={'home'}/>
+
+      { isLoading &&
+        <Loading /> 
+      }
     </>
   );
 }

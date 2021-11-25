@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
-import { RouteProp, useRoute } from '@react-navigation/core';
+import { RouteProp, useRoute, useNavigation } from '@react-navigation/core';
 import { RootStackParamList } from '../navigator/MainStack';
 import { StyleSheet, View, Text } from 'react-native';
 
@@ -13,8 +13,10 @@ import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
 import Input from '../components/Input';
 import AuthContext from '../contexts/user';
+import Loading from '../components/Loading';
 
 function UpdateAnimal() {
+  const navigation = useNavigation();
   const route = useRoute<RouteProp<RootStackParamList, 'UpdateAnimal'>>();;
   const { animalInfo } = route.params;
 
@@ -25,10 +27,12 @@ function UpdateAnimal() {
   const [photoUrl, setPhotoUrl] = useState<string>(animalInfo.photourl)
   const [error, setError] = useState<string>('')
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { pushAnimalData } = useContext(AuthContext);
 
   const handleSubmitForm = async () => {
+    setIsLoading(true);
     let animalData = new FormData();
 
     animalData.append('name', name)
@@ -44,7 +48,11 @@ function UpdateAnimal() {
     
     const result = await api.post('/animal/update', animalData)
     const { data } = result
+
     pushAnimalData(data as any)
+
+    setIsLoading(false);
+    navigation.navigate('Home' as any)
   }
 
   const handleChangeText = (e: string, type: string, setFunction: Dispatch<SetStateAction<string>>) => {
@@ -90,6 +98,10 @@ function UpdateAnimal() {
       </View>
 
       <Footer wichActive={'home'}/>
+
+      { isLoading &&
+        <Loading /> 
+      }
     </>
   );
 }
