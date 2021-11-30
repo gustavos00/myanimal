@@ -15,7 +15,7 @@ function ConfirmModal({ text, confirmFunction, closeFunction }: ConfirmModalProp
       <BackgroundFilter>
         <View style={styles.backgroundContainer}>
           <View style={styles.background}>
-            <Text></Text>
+            <Text>{text}</Text>
 
             <View style={styles.buttonContainer}>
               <TouchableOpacity style={styles.yesBtn}>
