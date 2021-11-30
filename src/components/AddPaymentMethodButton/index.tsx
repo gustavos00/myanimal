@@ -9,7 +9,7 @@ interface AddPaymentMethodButtonProps {
 function AddPaymentMethodButton({ handleClickFunction }: AddPaymentMethodButtonProps) {
   return (
     <>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={handleClickFunction} style={styles.button}>
         <Text style={styles.plusText}>+</Text>
       </TouchableOpacity>
     </>
