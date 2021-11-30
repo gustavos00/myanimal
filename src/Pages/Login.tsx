@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet } from "react-native";
 import { verifyNetwork } from "../utils/network";
+import { showError } from "../utils/error";
 
 import globalStyles from "../assets/styles/global";
 import Button from "../components/LoginButton";
@@ -33,6 +34,8 @@ const Login = () => {
     
     if(status) {
       navigation.navigate('Home' as any)
+    } else {
+      showError('Google auth canceled ')
     }
   }
 
@@ -61,7 +64,6 @@ const Login = () => {
           </BottomModal>
         </BackgroundFilter>
       }
-
 
       { isLoading &&
         <Loading /> 

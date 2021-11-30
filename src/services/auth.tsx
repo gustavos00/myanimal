@@ -1,15 +1,9 @@
-import React, { ReactNode } from 'react';
+import { showError } from '../utils/error';
+import { UserGoogleDataResponse } from '../interfaces/UserGoogleDataResponse';
+
 import api from '../api/api';
 
 import * as Google from 'expo-google-app-auth';
-import { Platform } from 'react-native';
-
-interface UserGoogleDataResponse {
-  givenName?: string;
-  familyName?: string;
-  photoUrl?: string;
-  email?: string;
-}
 
 export async function GoogleSignIn() {
   const config = {
@@ -25,13 +19,13 @@ export async function GoogleSignIn() {
 
     const token = await apiPostData(data.user)
     return token;
-  } catch {
-    console.log('Error #0102')
+  } catch(e) {
+    showError('Error: ' + e, 'Apparently there was an error, try again');
   }
 }
 
 const apiPostData = async({givenName, familyName, photoUrl, email} : UserGoogleDataResponse) => {
-  let userData = new FormData();
+  let userData = new FormData(); //Arranjar outra maneira de fazer requests, API não entende
 
   userData.append('givenName', givenName ?? "")
   userData.append('familyName', familyName ?? "")
@@ -39,7 +33,7 @@ const apiPostData = async({givenName, familyName, photoUrl, email} : UserGoogleD
   userData.append('file', {
     uri: photoUrl,
     name: 'profile',
-    type: 'image/png' // or your mime type what you want
+    type: 'image/png'
   } as any);
 
   try {
@@ -48,6 +42,6 @@ const apiPostData = async({givenName, familyName, photoUrl, email} : UserGoogleD
     
     return responseJSON.data
   } catch(e) {
-    console.log(e)
+    showError('Error: ' + e, 'Apparently there was an error, try again');
   }
 }

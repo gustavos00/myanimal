@@ -9,7 +9,7 @@ function NoAnimalAlert() {
   const navigation = useNavigation();
   
   const createNewAnimal = () => {
-    navigation.navigate('CreateOrUpdateAnimal' as any)
+    navigation.navigate('CreateAnimal' as any)
   }
 
   return (

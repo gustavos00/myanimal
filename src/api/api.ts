@@ -1,10 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
-let baseURL = false ? 'https://myanimalapi.herokuapp.com/api' : 'http://localhost:3000/api';
+let baseURL = false
+  ? "https://myanimalapi.herokuapp.com/api"
+  : "http://localhost:3000/api";
 
 const instance = axios.create({
-  baseURL
-})
+  baseURL,
+});
 
-
-export default instance
+export default instance;

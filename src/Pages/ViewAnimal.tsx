@@ -1,16 +1,14 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+import React from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { RootStackParamList } from '../navigator/MainStack';
 
 import globalStyles from '../assets/styles/global';
 import Background from '../components/Background';
 import EnableFindMyPetSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
-import AuthContext from '../contexts/user';
 import StyledText from '../components/StyledText';
 import ProfileImage from '../components/ProfileImage';
-
 
 function CreateOrUpdateAnimal() {
   const route = useRoute<RouteProp<RootStackParamList, 'ViewAnimal'>>();;
