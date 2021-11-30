@@ -1,6 +1,7 @@
 import React from "react";
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { AnimalInfoParams } from "../interfaces/AnimalInfoParams";
 
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -9,16 +10,6 @@ import PaymentMethod from '../pages/PaymentMethod';
 import ViewAnimal from "../pages/ViewAnimal";
 import CreateAnimal from '../pages/CreateAnimal';
 import UpdateAnimal from "../pages/UpdateAnimal";
-
-interface AnimalInfoParams {
-  age: string,
-  chipnumber: string,
-  id: number,
-  name: string,
-  photourl: string,
-  race: string,
-  userid: number,
-}
 
 interface AnimalScreenParams {
   animalInfo: AnimalInfoParams

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
-import {ScrollView, View, TouchableOpacity} from "react-native";
+import {ScrollView, View, TouchableOpacity, Text} from "react-native";
+import { AnimalInfoParams } from "../interfaces/AnimalInfoParams";
 
 import Header from "../components/Header";
 import Background from "../components/Background";
@@ -8,23 +9,12 @@ import BackgroundHeader from "../components/BackgroundHeader";
 import AnimalElement from "../components/AnimalElement";
 import Footer from "../components/Footer";
 import AuthContext from "../contexts/user";
-import ConfirmModal from "../components/ConfirmModal";
 
 import { useNavigation } from '@react-navigation/core';
 
-interface AnimalDataProps {
-  age: string,
-  chipnumber: string,
-  id: number,
-  name: string,
-  photourl: string,
-  race: string,
-  userid: number,
-}
-
 const Home = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const { user } = useContext(AuthContext);
+  const { user, pushAnimalData } = useContext(AuthContext);
   const navigation = useNavigation();
 
   const viewingAnimal = (item : Object) => {
@@ -43,14 +33,14 @@ const Home = () => {
             <NoAnimalAlert />
           </>
           :
-          <>
+          <>d
             <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
             <ScrollView>
               { user?.animalData.map((item, index) => {
                 return (
                   <View key={index}>
                     <TouchableOpacity onPress={() => viewingAnimal(item)} onLongPress={() => setIsEditing(!isEditing)}>
-                      <AnimalElement isEditing={isEditing} animalData={item as AnimalDataProps} />
+                      <AnimalElement isEditing={isEditing} animalData={item as AnimalInfoParams} />
                     </TouchableOpacity>
                   </View>
                 )

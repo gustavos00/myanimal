@@ -1,23 +1,9 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useState } from "react";
+import { AnimalInfoParams } from "../interfaces/AnimalInfoParams";
+import { UserContextData } from "../interfaces/UserContextData";
+
 import * as auth from '../services/auth'
 
-interface AnimalDataProps {
-  age: string,
-  chipnumber: string,
-  id: number,
-  name: string,
-  photourl: string,
-  race: string,
-  userid: number,
-}
-
-interface UserContextData {
-  familyname: string,
-  givenname: string,
-  email: string,
-  photourl: string,
-  animalData: Array<AnimalDataProps>,
-}
 
 interface AuthContextData {
   signed: boolean,
@@ -25,7 +11,7 @@ interface AuthContextData {
   user: UserContextData | void,
 
   googleSignIn: () => Promise<boolean>,
-  pushAnimalData: (data : AnimalDataProps) => void,
+  pushAnimalData: (data : AnimalInfoParams) => void,
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -44,8 +30,8 @@ export function AuthProvider({children} : any) {
     return true;
   }
 
-  const pushAnimalData = (data : AnimalDataProps) => {
-    user?.animalData.push(data)
+  const pushAnimalData = (data : AnimalInfoParams) => {
+    console.log('its not pushing animal data to user state')
   }
 
   return (
