@@ -5,6 +5,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import api from '../../api/api';
 
 import globalStyles from '../../assets/styles/global';
+import { showError } from '../../utils/error';
 
 interface AnimalDataProps {
   age: string,
@@ -28,8 +29,11 @@ function AnimalElement({ animalData, isEditing } : AnimalElementProps) {
     let animalId = new FormData();
     animalId.append('id', String(id))
 
-    const result = await api.post('/animal/delete', animalId);
-    console.log('deleted')
+    try {
+    await api.post('/animal/delete', animalId);
+    } catch(e) {
+      showError('Error: ' + e, 'Apparently there was an error deleting this animal, try again')
+    } 
   }
 
   const updatingAnimal = () => {
@@ -37,6 +41,7 @@ function AnimalElement({ animalData, isEditing } : AnimalElementProps) {
       animalInfo: animalData
     } as never)
   }
+
   return (
     <>
       <View style={styles.element}>

@@ -14,6 +14,7 @@ import Footer from '../components/Footer/index';
 import Input from '../components/Input';
 import AuthContext from '../contexts/user';
 import Loading from '../components/Loading';
+import { showError } from '../utils/error';
 
 function UpdateAnimal() {
   const navigation = useNavigation();
@@ -46,13 +47,17 @@ function UpdateAnimal() {
       type: 'image/png'
     } as any);
     
-    const result = await api.post('/animal/update', animalData)
-    const { data } = result
-
-    pushAnimalData(data as any)
-
-    setIsLoading(false);
-    navigation.navigate('Home' as any)
+    try {
+      const result = await api.post('/animal/update', animalData)
+      const { data } = result
+  
+      pushAnimalData(data as any)
+  
+      setIsLoading(false);
+      navigation.navigate('Home' as any)
+    } catch(e) {
+      showError('Error: ' + e, 'Apparently there was an error, try again');
+    }
   }
 
   const handleChangeText = (e: string, type: string, setFunction: Dispatch<SetStateAction<string>>) => {
@@ -71,6 +76,7 @@ function UpdateAnimal() {
         break;
     
       default:
+        showError('Error handle text on create animal');
         break;
     }
   }

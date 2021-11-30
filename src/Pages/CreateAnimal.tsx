@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text } from 'react-native';
-import { RootStackParamList } from '../navigator/MainStack';
+import { showError } from '../utils/error';
+import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 
 import api from '../api/api';
 
@@ -14,7 +15,7 @@ import Footer from '../components/Footer/index';
 import Input from '../components/Input';
 import AuthContext from '../contexts/user';
 import Loading from '../components/Loading';
-
+import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 function CreateAnimal() {
   const navigation = useNavigation();
@@ -30,6 +31,7 @@ function CreateAnimal() {
   const {user, pushAnimalData} = useContext(AuthContext);
 
   const handleSubmitForm = async () => {
+    setIsLoading(true)
     let animalData = new FormData();
 
     animalData.append('name', name)
@@ -43,13 +45,19 @@ function CreateAnimal() {
       type: 'image/png' // or your mime type what you want
     } as any);
     
-    const result = await api.post('/animal/create', animalData)
-    const { data } = result
+    try {
+      const result = await api.post('/animal/create', animalData)
+      const { data } = result
 
-    pushAnimalData(data as any)
+      pushAnimalData(data as unknown as AnimalInfoParams)
 
-    setIsLoading(false);
-    navigation.navigate('Home' as any)
+      setIsLoading(false);
+      navigation.navigate('Home' as any)
+    } catch(e) {
+      showError('Error: ' + e, 'Apparently there was an error, try again');
+    }
+
+    setIsLoading(false)
   }
 
   const handleChangeText = (e: string, type: string, setFunction: Dispatch<SetStateAction<string>>) => {
@@ -68,6 +76,7 @@ function CreateAnimal() {
         break;
     
       default:
+        showError('Error handle text on create animal');
         break;
     }
   }
@@ -78,19 +87,21 @@ function CreateAnimal() {
         <AddImage setProfilePhotoFunction={setPhotoUrl}/>
 
         <Background heightSize={'75%'}>
-          <View style={styles.container}>
-            <View style={styles.inputsContainer}> 
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setName)} placeholder={'Full Name'}/>
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'number', setAge)} placeholder={'Age'}/>
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setRace)} placeholder={'Race'}/>
-              <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setChipnumber)} placeholder={'Chip Number'}/>
-            </View>
-                        
-            <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled}/>
-            <Button text={'Create new animal'} handleClick={handleSubmitForm}/>
+          <KeyboardAvoidingWrapper>
+            <View style={styles.container}>
+              <View style={styles.inputsContainer}> 
+                <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setName)} placeholder={'Full Name'}/>
+                <Input handleChangeFunction={(e: string) => handleChangeText(e, 'number', setAge)} placeholder={'Age'}/>
+                <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setRace)} placeholder={'Race'}/>
+                <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setChipnumber)} placeholder={'Chip Number'}/>
+              </View>
+                          
+              <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled}/>
+              <Button text={'Create new animal'} handleClick={handleSubmitForm}/>
 
-            <Text>{error}</Text>
-          </View>
+              <Text>{error}</Text>
+            </View>
+          </KeyboardAvoidingWrapper>
         </Background>
       </View>
 
