@@ -1,9 +1,9 @@
-import { AnimalInfoParams } from "../interfaces/AnimalInfoParams";
+import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 
 export interface UserContextData {
-  familyname: string;
-  givenname: string;
+  familyName: string;
+  givenName: string;
   email: string;
-  photourl: string;
+  imageUrl: string;
   animalData: Array<AnimalInfoParams>;
 }

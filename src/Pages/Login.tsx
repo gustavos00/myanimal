@@ -1,55 +1,57 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, StyleSheet } from "react-native";
-import { verifyNetwork } from "../utils/network";
-import { showError } from "../utils/error";
+import { View, StyleSheet } from 'react-native';
+import { verifyNetwork } from '../utils/network';
+import { showError } from '../utils/error';
 
-import globalStyles from "../assets/styles/global";
-import Button from "../components/LoginButton";
-import RoundedBackground from "../components/RoundedBackground";
-import SliderContent from "../components/SliderContent/";
-import BackgroundFilter from "../components/BackgroundFilter";
-import BottomModal from "../components/BottomModal";
-import NoWIFIModal from "../components/NoWIFIModal";
-import AuthContext from "../contexts/user";
-import Loading from "../components/Loading";
+import globalStyles from '../assets/styles/global';
+import Button from '../components/LoginButton';
+import RoundedBackground from '../components/RoundedBackground';
+import SliderContent from '../components/SliderContent/';
+import BackgroundFilter from '../components/BackgroundFilter';
+import BottomModal from '../components/BottomModal';
+import NoWIFIModal from '../components/NoWIFIModal';
+import AuthContext from '../contexts/user';
+import Loading from '../components/Loading';
 
 const Login = () => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [internetConnection, setInternetConnection] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
+  const [internetConnection, setInternetConnection] = useState(false);
   const navigation = useNavigation();
 
-  const verifyNetworkLocal = async() => {
-    const status = await verifyNetwork()
-    setInternetConnection(!status)
-  }
+  const verifyNetworkLocal = async () => {
+    const status = await verifyNetwork();
+    setInternetConnection(!status);
+  };
   verifyNetworkLocal();
-  
+
   const { googleSignIn } = useContext(AuthContext);
-  
-  const handleGoogleSignIn = async() => {
-    setIsLoading(true)
-    const status = await googleSignIn()
-    setIsLoading(false)
-    
-    if(status) {
-      navigation.navigate('Home' as any)
+
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    const status = await googleSignIn();
+    setIsLoading(false);
+
+    if (status) {
+      navigation.navigate('Home' as any);
     } else {
-      showError('Google auth canceled ')
+      showError('Google auth canceled ');
     }
-  }
+  };
 
   return (
-    <> 
+    <>
       <View style={styles.bg}>
-        <RoundedBackground top> 
-          <SliderContent 
-            textBeforeBolder={"Imagine controlling your "} 
-            textAfterBolder={" in one place?"} 
-            textBolder={"pet's information"} 
-            imageName={'bird'} 
-            subheaderText={"On myAnimal you can control and share your pet's information quickly!"} 
-            />
+        <RoundedBackground top>
+          <SliderContent
+            textBeforeBolder={'Imagine controlling your '}
+            textAfterBolder={' in one place?'}
+            textBolder={"pet's information"}
+            imageName={'bird'}
+            subheaderText={
+              "On myAnimal you can control and share your pet's information quickly!"
+            }
+          />
         </RoundedBackground>
 
         <View style={styles.buttonContainer}>
@@ -57,27 +59,24 @@ const Login = () => {
         </View>
       </View>
 
-      { internetConnection && 
-        <BackgroundFilter >
+      {internetConnection && (
+        <BackgroundFilter>
           <BottomModal modalHeight={300}>
-            <NoWIFIModal handleClick={verifyNetworkLocal}/>
+            <NoWIFIModal handleClick={verifyNetworkLocal} />
           </BottomModal>
         </BackgroundFilter>
-      }
+      )}
 
-      { isLoading &&
-        <Loading /> 
-      }
-
+      {isLoading && <Loading />}
     </>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   bg: {
     flex: 1,
 
-    backgroundColor: globalStyles.mainColor
+    backgroundColor: globalStyles.mainColor,
   },
 
   buttonContainer: {
@@ -86,6 +85,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});
 
-export default Login
+export default Login;
