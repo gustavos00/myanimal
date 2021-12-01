@@ -17,15 +17,23 @@ function CreateOrUpdateAnimal() {
   return (
     <>
       <View style={styles.headerBg}>
-        <ProfileImage photoUrl={animalInfo.photourl} />
+        <ProfileImage photoUrl={animalInfo.imageUrl} />
 
         <Background heightSize={'75%'}>
           <View style={styles.container}>
             <View style={styles.inputsContainer}>
-              <StyledText value={animalInfo.name} text={'Full Name'} />
+              <StyledText value={animalInfo.name} text={'Name'} />
               <StyledText value={animalInfo.age} text={'Age'} />
-              <StyledText value={animalInfo.race} text={'Race'} />
-              <StyledText value={animalInfo.chipnumber} text={'Chip Number'} />
+              <StyledText value={animalInfo.breed} text={'Breed'} />
+              <StyledText value={animalInfo.birthday} text={'Birthday'} />
+              <StyledText
+                value={animalInfo.birthdayMonth}
+                text={'Birthday month'}
+              />
+              <StyledText
+                value={animalInfo.trackNumber}
+                text={'Track number'}
+              />
             </View>
 
             <EnableFindMyPetSwitch enableValue={false} />
