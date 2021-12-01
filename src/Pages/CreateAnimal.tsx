@@ -51,33 +51,33 @@ function CreateAnimal() {
       navigation.navigate('Home' as any);
     } catch (e) {
       showError('Error: ' + e, 'Apparently there was an error, try again');
-    } finally {
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   const handleChangeText = (
     value: string,
-    type: string,
-    setFunction: Dispatch<SetStateAction<string>>
+    setFunction: Dispatch<SetStateAction<string>>,
+    valueLenght: number,
+    type?: string
   ) => {
-    switch (type) {
-      case 'string':
+    if (value.length > valueLenght) {
+      setError('Error message');
+      return;
+    }
+
+    let valueType = type ? type : 'string';
+    if (valueType === 'string') {
+      setFunction(value);
+    } else if (valueType === 'number') {
+      if (isNaN(Number(value))) {
+        setError('Please, insert a valid age');
+      } else {
+        setError('');
         setFunction(value);
-        break;
-
-      case 'number':
-        if (isNaN(Number(value))) {
-          setError('Please, insert a valid age');
-        } else {
-          setError('');
-          setFunction(value);
-        }
-        break;
-
-      default:
-        showError('Error handle text on create animal');
-        break;
+      }
+    } else {
+      showError('Error handle text on create animal');
     }
   };
 
@@ -90,39 +90,39 @@ function CreateAnimal() {
           <KeyboardAvoidingWrapper>
             <View style={styles.container}>
               <View style={styles.inputsContainer}>
-                <Input
+                <Input //Name
                   handleChangeFunction={(e: string) =>
-                    handleChangeText(e, 'string', setName)
+                    handleChangeText(e, setName, 250)
                   }
                   placeholder={'Name'}
                 />
-                <Input
+                <Input //Age
                   handleChangeFunction={(e: string) =>
-                    handleChangeText(e, 'number', setAge)
+                    handleChangeText(e, setAge, 5, 'number')
                   }
                   placeholder={'Age'}
                 />
-                <Input
+                <Input //Breed
                   handleChangeFunction={(e: string) =>
-                    handleChangeText(e, 'string', setBreed)
+                    handleChangeText(e, setBreed, 250)
                   }
                   placeholder={'Breed'}
                 />
-                <Input
+                <Input //Birthday
                   handleChangeFunction={(e: string) =>
-                    handleChangeText(e, 'string', setBirthday)
+                    handleChangeText(e, setBirthday, 2)
                   }
                   placeholder={'Birthday'}
                 />
-                <Input
+                <Input //Birthday month
                   handleChangeFunction={(e: string) =>
-                    handleChangeText(e, 'string', setBirthdayMonth)
+                    handleChangeText(e, setBirthdayMonth, 2)
                   }
                   placeholder={'Birthday month'}
                 />
-                <Input
+                <Input //Track number
                   handleChangeFunction={(e: string) =>
-                    handleChangeText(e, 'string', setTracknumber)
+                    handleChangeText(e, setTracknumber, 50)
                   }
                   placeholder={'Track number'}
                 />
