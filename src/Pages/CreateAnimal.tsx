@@ -33,26 +33,29 @@ function CreateAnimal() {
   const { pushAnimalData, token } = useContext(AuthContext);
 
   const handleSubmitForm = async () => {
-    setIsLoading(true);
+    //Check if error is a empty string
+    if (error) {
+      setIsLoading(true);
 
-    const params = new URLSearchParams();
-    params.append('name', name);
-    params.append('breed', breed);
-    params.append('age', age);
-    params.append('birthday', birthday);
-    params.append('birthdayMonth', birthdayMonth);
-    params.append('trackNumber', tracknumber);
-    params.append('token', token ?? '');
+      const params = new URLSearchParams();
+      params.append('name', name);
+      params.append('breed', breed);
+      params.append('age', age);
+      params.append('birthday', birthday);
+      params.append('birthdayMonth', birthdayMonth);
+      params.append('trackNumber', tracknumber);
+      params.append('token', token ?? '');
 
-    try {
-      const result = await api.post('/animal/create', params);
-      pushAnimalData(result.data as unknown as AnimalInfoParams);
+      try {
+        const result = await api.post('/animal/create', params);
+        pushAnimalData(result.data as unknown as AnimalInfoParams);
 
-      navigation.navigate('Home' as any);
-    } catch (e) {
-      showError('Error: ' + e, 'Apparently there was an error, try again');
+        navigation.navigate('Home' as any);
+      } catch (e) {
+        showError('Error: ' + e, 'Apparently there was an error, try again');
+      }
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   const handleChangeText = (
