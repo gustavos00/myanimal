@@ -1,23 +1,26 @@
-import React, { ReactNode } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import globalStyles from '../../assets/styles/global';
-import Background from '../Background/index';
 
 interface InputProps {
-  handleChangeFunction: (e: string) => void
-  placeholder: string,
-  text?:string
+  handleChangeFunction: (e: string) => void;
+  placeholder: string;
+  text?: string;
 }
 
 function Input({ text, handleChangeFunction, placeholder }: InputProps) {
   return (
     <>
-      <View style={styles.container}>
+      <View style={[styles.container]}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>{placeholder}</Text>
         </View>
 
-        <TextInput value={text} onChangeText={text => handleChangeFunction(text)} style={styles.input} />
+        <TextInput
+          value={text}
+          onChangeText={(text) => handleChangeFunction(text)}
+          style={styles.input}
+        />
       </View>
     </>
   );
@@ -34,12 +37,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
 
     borderWidth: 1,
-    borderColor: globalStyles.gray
+    borderColor: globalStyles.gray,
   },
 
   input: {
     padding: 10,
-    color: globalStyles.darkGray
+    color: globalStyles.darkGray,
   },
 
   text: {
@@ -47,7 +50,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
 
     fontSize: 14,
-    color: globalStyles.gray
+    color: globalStyles.gray,
   },
 
   textContainer: {
@@ -55,12 +58,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
 
     position: 'absolute',
-    top: -10, 
+    top: -10,
     left: 10,
 
-    zIndex: 10, 
-    elevation: 10
-  }
-})
+    zIndex: 10,
+    elevation: 10,
+  },
+});
 
 export default Input;
