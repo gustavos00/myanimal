@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { ScrollView, View, TouchableOpacity, Text } from 'react-native';
+import { ScrollView, View, TouchableOpacity } from 'react-native';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
+import { useNavigation } from '@react-navigation/core';
 
 import Header from '../components/Header';
 import Background from '../components/Background';
@@ -10,11 +11,9 @@ import AnimalElement from '../components/AnimalElement';
 import Footer from '../components/Footer';
 import AuthContext from '../contexts/user';
 
-import { useNavigation } from '@react-navigation/core';
-
 const Home = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const { user, pushAnimalData } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const navigation = useNavigation();
 
   const viewingAnimal = (item: Object) => {
