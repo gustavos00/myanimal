@@ -7,7 +7,7 @@ import { showError } from '../utils/error';
 import globalStyles from '../assets/styles/global';
 import Button from '../components/LoginButton';
 import RoundedBackground from '../components/RoundedBackground';
-import SliderContent from '../components/SliderContent/';
+import SliderContent from '../components/SliderContent';
 import BackgroundFilter from '../components/BackgroundFilter';
 import BottomModal from '../components/BottomModal';
 import NoWIFIModal from '../components/NoWIFIModal';
