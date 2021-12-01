@@ -6,7 +6,6 @@ import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Settings from '../pages/Settings';
-import PaymentMethod from '../pages/PaymentMethod';
 import ViewAnimal from '../pages/ViewAnimal';
 import CreateAnimal from '../pages/CreateAnimal';
 import UpdateAnimal from '../pages/UpdateAnimal';
@@ -19,7 +18,6 @@ export type RootStackParamList = {
   Home: undefined;
   Login: undefined;
   Settings: undefined;
-  PaymentMethod: undefined;
   CreateAnimal: undefined;
   ViewAnimal: AnimalScreenParams;
   UpdateAnimal: AnimalScreenParams;
@@ -46,11 +44,6 @@ export default () => {
             options={{ headerShown: false }}
             name="Settings"
             component={Settings}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="PaymentMethod"
-            component={PaymentMethod}
           />
           <Screen
             options={{ headerShown: false }}
