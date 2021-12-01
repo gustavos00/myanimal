@@ -1,9 +1,12 @@
-import { Alert } from "react-native"
+import { Alert } from 'react-native';
 
-export const showError = (errorMessage: string, customErrorMessage?: string) => {
-  console.log(errorMessage)
-
-  if(customErrorMessage) {
-    Alert.alert(customErrorMessage)
+export const showError = (
+  errorMessage: string,
+  customErrorMessage?: string
+) => {
+  if (customErrorMessage) {
+    Alert.alert(customErrorMessage as string);
   }
-}
+
+  throw new Error(errorMessage);
+};
