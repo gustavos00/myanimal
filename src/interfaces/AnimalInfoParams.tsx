@@ -1,9 +1,14 @@
 export interface AnimalInfoParams {
-  age: string;
-  chipnumber: string;
   id: number;
+
   name: string;
-  photourl: string;
-  race: string;
+  age: string;
+  trackNumber: string;
+
+  birthday: string;
+  birthdayMonth: string;
+
+  imageUrl: string;
+  breed: string;
   userid: number;
 }
