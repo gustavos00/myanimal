@@ -3,7 +3,11 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 
 import AddPaymentMethodButton from '../AddPaymentMethodButton';
 
-function PaymentMethodsInformation() {
+interface PaymentMethodsInformationProps {
+  handleClickFunctionParams: (state : boolean) => void
+}
+
+function PaymentMethodsInformation({handleClickFunctionParams} : PaymentMethodsInformationProps) {
   return (
     <>
       <View style={styles.container}>
@@ -14,7 +18,7 @@ function PaymentMethodsInformation() {
         scrollEventThrottle={32} 
         contentContainerStyle={styles.scroll} 
         >
-          <AddPaymentMethodButton handleClickFunction={() => {}}/>
+          <AddPaymentMethodButton handleClickFunction={() => handleClickFunctionParams(true)}/>
 
           <View style={styles.cc}>
 
