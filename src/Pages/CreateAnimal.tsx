@@ -19,85 +19,123 @@ import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 function CreateAnimal() {
   const navigation = useNavigation();
-  const [name, setName] = useState<string>('')
-  const [age, setAge] = useState<string>('')
-  const [race, setRace] = useState<string>('')
-  const [chipnumber, setChipnumber] = useState<string>('')
-  const [photoUrl, setPhotoUrl] = useState<string>('')
-  const [error, setError] = useState<string>('')
+  const [photo, setPhoto] = useState<string>('');
+  const [name, setName] = useState<string>('');
+  const [age, setAge] = useState<string>('');
+  const [breed, setBreed] = useState<string>('');
+  const [birthday, setBirthday] = useState<string>('');
+  const [birthdayMonth, setBirthdayMonth] = useState<string>('');
+  const [tracknumber, setTracknumber] = useState<string>('');
+  const [error, setError] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const {user, pushAnimalData} = useContext(AuthContext);
+  const { pushAnimalData, token } = useContext(AuthContext);
 
   const handleSubmitForm = async () => {
-    setIsLoading(true)
-    let animalData = new FormData();
+    setIsLoading(true);
 
-    animalData.append('name', name)
-    animalData.append('age', age)
-    animalData.append('race', race)
-    animalData.append('chipnumber', chipnumber)
-    animalData.append('email', user?.email ?? "")
-    animalData.append('file', {
-      uri: photoUrl,
-      name: 'animalPhoto',
-      type: 'image/png' // or your mime type what you want
-    } as any);
-    
+    const params = new URLSearchParams();
+    params.append('name', name);
+    params.append('breed', breed);
+    params.append('age', age);
+    params.append('birthday', birthday);
+    params.append('birthdayMonth', birthdayMonth);
+    params.append('trackNumber', tracknumber);
+    params.append('token', token ?? '');
+
     try {
-      const result = await api.post('/animal/create', animalData)
-      const { data } = result
+      const result = await api.post('/animal/create', params);
+      pushAnimalData(result.data as unknown as AnimalInfoParams);
 
-      pushAnimalData(data as unknown as AnimalInfoParams)
-
-      setIsLoading(false);
-      navigation.navigate('Home' as any)
-    } catch(e) {
+      navigation.navigate('Home' as any);
+    } catch (e) {
       showError('Error: ' + e, 'Apparently there was an error, try again');
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    setIsLoading(false)
-  }
-
-  const handleChangeText = (e: string, type: string, setFunction: Dispatch<SetStateAction<string>>) => {
+  const handleChangeText = (
+    value: string,
+    type: string,
+    setFunction: Dispatch<SetStateAction<string>>
+  ) => {
     switch (type) {
       case 'string':
-        setFunction(e)
+        setFunction(value);
         break;
 
       case 'number':
-        if(isNaN(Number(e))) {
-          setError('Please, insert a valid age')
+        if (isNaN(Number(value))) {
+          setError('Please, insert a valid age');
         } else {
-          setError('')
-          setAge(e)
+          setError('');
+          setFunction(value);
         }
         break;
-    
+
       default:
         showError('Error handle text on create animal');
         break;
     }
-  }
+  };
 
   return (
     <>
       <View style={styles.headerBg}>
-        <AddImage setProfilePhotoFunction={setPhotoUrl}/>
+        <AddImage setProfilePhotoFunction={setPhoto} />
 
         <Background heightSize={'75%'}>
           <KeyboardAvoidingWrapper>
             <View style={styles.container}>
-              <View style={styles.inputsContainer}> 
-                <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setName)} placeholder={'Full Name'}/>
-                <Input handleChangeFunction={(e: string) => handleChangeText(e, 'number', setAge)} placeholder={'Age'}/>
-                <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setRace)} placeholder={'Race'}/>
-                <Input handleChangeFunction={(e: string) => handleChangeText(e, 'string', setChipnumber)} placeholder={'Chip Number'}/>
+              <View style={styles.inputsContainer}>
+                <Input
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, 'string', setName)
+                  }
+                  placeholder={'Name'}
+                />
+                <Input
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, 'number', setAge)
+                  }
+                  placeholder={'Age'}
+                />
+                <Input
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, 'string', setBreed)
+                  }
+                  placeholder={'Breed'}
+                />
+                <Input
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, 'string', setBirthday)
+                  }
+                  placeholder={'Birthday'}
+                />
+                <Input
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, 'string', setBirthdayMonth)
+                  }
+                  placeholder={'Birthday month'}
+                />
+                <Input
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, 'string', setTracknumber)
+                  }
+                  placeholder={'Track number'}
+                />
               </View>
-                          
-              <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled}/>
-              <Button text={'Create new animal'} handleClick={handleSubmitForm}/>
+
+              <CreateOrUpdateSwitch
+                enableFunction={setIsEnabled}
+                enableValue={isEnabled}
+              />
+              <Button
+                text={'Create new animal'}
+                handleClick={handleSubmitForm}
+              />
 
               <Text>{error}</Text>
             </View>
@@ -105,11 +143,9 @@ function CreateAnimal() {
         </Background>
       </View>
 
-      <Footer wichActive={'home'}/>
+      <Footer wichActive={'home'} />
 
-      { isLoading &&
-        <Loading /> 
-      }
+      {isLoading && <Loading />}
     </>
   );
 }
@@ -120,7 +156,7 @@ const styles = StyleSheet.create({
 
     justifyContent: 'center',
 
-    backgroundColor: globalStyles.mainColor
+    backgroundColor: globalStyles.mainColor,
   },
 
   inputsContainer: {
@@ -132,6 +168,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});
 
 export default CreateAnimal;

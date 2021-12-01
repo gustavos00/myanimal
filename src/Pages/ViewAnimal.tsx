@@ -11,29 +11,29 @@ import StyledText from '../components/StyledText';
 import ProfileImage from '../components/ProfileImage';
 
 function CreateOrUpdateAnimal() {
-  const route = useRoute<RouteProp<RootStackParamList, 'ViewAnimal'>>();;
+  const route = useRoute<RouteProp<RootStackParamList, 'ViewAnimal'>>();
   const { animalInfo } = route.params;
 
   return (
     <>
       <View style={styles.headerBg}>
-        <ProfileImage photoUrl={animalInfo.photourl}/>
-    
+        <ProfileImage photoUrl={animalInfo.photourl} />
+
         <Background heightSize={'75%'}>
           <View style={styles.container}>
-            <View style={styles.inputsContainer}> 
-              <StyledText value={animalInfo.name} text={'Full Name'}/>
-              <StyledText value={animalInfo.age} text={'Age'}/>
-              <StyledText value={animalInfo.race} text={'Race'}/>
-              <StyledText value={animalInfo.chipnumber} text={'Chip Number'}/>
+            <View style={styles.inputsContainer}>
+              <StyledText value={animalInfo.name} text={'Full Name'} />
+              <StyledText value={animalInfo.age} text={'Age'} />
+              <StyledText value={animalInfo.race} text={'Race'} />
+              <StyledText value={animalInfo.chipnumber} text={'Chip Number'} />
             </View>
-                        
-            <EnableFindMyPetSwitch enableValue={false}/>
+
+            <EnableFindMyPetSwitch enableValue={false} />
           </View>
         </Background>
       </View>
 
-      <Footer wichActive={'home'}/>
+      <Footer wichActive={'home'} />
     </>
   );
 }
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 
     justifyContent: 'center',
 
-    backgroundColor: globalStyles.mainColor
+    backgroundColor: globalStyles.mainColor,
   },
 
   inputsContainer: {
@@ -56,6 +56,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});
 
 export default CreateOrUpdateAnimal;
