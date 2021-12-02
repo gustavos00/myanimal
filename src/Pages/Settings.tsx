@@ -18,10 +18,6 @@ function Settings() {
   const { user } = useContext(AuthContext);
   const navigation = useNavigation();
 
-  const closeModal = () => {
-    setSecutiryModalOpen(false);
-  };
-
   const changeScreen = async (screenName: string, clearStorage?: boolean) => {
     navigation.navigate(screenName as any);
 
@@ -43,14 +39,6 @@ function Settings() {
             <OptionElement
               handleClick={async () => changeScreen('Home')}
               text={'Edit profile'}
-            />
-            <OptionElement
-              handleClick={() => setSecutiryModalOpen(true)}
-              text={'Payment Methods'}
-            />
-            <OptionElement
-              handleClick={() => setSecutiryModalOpen(true)}
-              text={'Payment Historic'}
             />
             <OptionElement
               handleClick={async () => changeScreen('Login', true)}
