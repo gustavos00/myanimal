@@ -15,7 +15,6 @@ import BottomModal from '../components/BottomModal';
 import AuthContext from '../contexts/user';
 
 function Settings() {
-  const [securityModalOpen, setSecutiryModalOpen] = useState(false);
   const { user } = useContext(AuthContext);
   const navigation = useNavigation();
 
@@ -88,12 +87,6 @@ function Settings() {
       </Background>
 
       <Footer wichActive={'settings'} />
-
-      {securityModalOpen && (
-        <BottomModal swipeDownFunction={closeModal} modalHeight={430}>
-          <PinPaymentMethod alreadyHavePin={true} />
-        </BottomModal>
-      )}
     </>
   );
 }
