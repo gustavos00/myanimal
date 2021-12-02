@@ -36,7 +36,6 @@ const Home = () => {
           </>
         ) : (
           <>
-            d
             <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
             <ScrollView>
               {user?.animalData.map((item, index) => {
