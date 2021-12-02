@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
 
     backgroundColor: globalStyles.white,
-    borderRadius: 35,
+    borderTopRightRadius: 35,
+    borderTopLeftRadius: 35,
 
   }
 })

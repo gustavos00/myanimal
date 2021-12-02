@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { RootStackParamList } from '../navigator/MainStack';
 
 import globalStyles from '../assets/styles/global';
@@ -20,7 +20,7 @@ function CreateOrUpdateAnimal() {
         <ProfileImage photoUrl={animalInfo.imageUrl} />
 
         <Background heightSize={'75%'}>
-          <View style={styles.container}>
+          <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.inputsContainer}>
               <StyledText value={animalInfo.name} text={'Name'} />
               <StyledText value={animalInfo.age} text={'Age'} />
@@ -37,7 +37,7 @@ function CreateOrUpdateAnimal() {
             </View>
 
             <EnableFindMyPetSwitch enableValue={false} />
-          </View>
+          </ScrollView>
         </Background>
       </View>
 
