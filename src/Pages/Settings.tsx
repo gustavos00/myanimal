@@ -12,7 +12,6 @@ import OptionHeader from '../components/OptionHeader';
 import OptionElement from '../components/OptionElement';
 import Underline from '../components/Underline';
 import BottomModal from '../components/BottomModal';
-import PinPaymentMethod from '../components/PinPaymentMethod';
 import AuthContext from '../contexts/user';
 
 function Settings() {
