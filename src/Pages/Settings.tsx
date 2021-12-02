@@ -12,11 +12,9 @@ import OptionHeader from '../components/OptionHeader';
 import OptionElement from '../components/OptionElement';
 import Underline from '../components/Underline';
 import BottomModal from '../components/BottomModal';
-import PinPaymentMethod from '../components/PinPaymentMethod';
 import AuthContext from '../contexts/user';
 
 function Settings() {
-  const [securityModalOpen, setSecutiryModalOpen] = useState(false);
   const { user } = useContext(AuthContext);
   const navigation = useNavigation();
 
@@ -89,12 +87,6 @@ function Settings() {
       </Background>
 
       <Footer wichActive={'settings'} />
-
-      {securityModalOpen && (
-        <BottomModal swipeDownFunction={closeModal} modalHeight={430}>
-          <PinPaymentMethod alreadyHavePin={true} />
-        </BottomModal>
-      )}
     </>
   );
 }
