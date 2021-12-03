@@ -34,20 +34,25 @@ function CreateAnimal() {
 
   const handleSubmitForm = async () => {
     //Check if error is a empty string
-    if (error) {
+    if (error === '') {
       setIsLoading(true);
 
-      const params = new URLSearchParams();
-      params.append('name', name);
-      params.append('breed', breed);
-      params.append('age', age);
-      params.append('birthday', birthday);
-      params.append('birthdayMonth', birthdayMonth);
-      params.append('trackNumber', tracknumber);
-      params.append('token', token ?? '');
+      const animalData = new FormData();
+      animalData.append('name', name);
+      animalData.append('breed', breed);
+      animalData.append('age', age);
+      animalData.append('birthday', birthday);
+      animalData.append('birthdayMonth', birthdayMonth);
+      animalData.append('trackNumber', tracknumber);
+      animalData.append('token', token ?? '');
+      animalData.append('animalPhoto', {
+        uri: photo,
+        name: 'animalPhoto',
+        type: 'image/png', // or your mime type what you want
+      } as unknown as string | Blob);
 
       try {
-        const result = await api.post('/animal/create', params);
+        const result = await api.post('/animal/create', animalData);
         pushAnimalData(result.data as unknown as AnimalInfoParams);
 
         navigation.navigate('Home' as any);
@@ -67,6 +72,8 @@ function CreateAnimal() {
     if (value.length > valueLenght) {
       setError('Error message');
       return;
+    } else {
+      setError('');
     }
 
     let valueType = type ? type : 'string';
