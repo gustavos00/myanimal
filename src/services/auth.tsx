@@ -1,4 +1,5 @@
 import { showError } from '../utils/error';
+import { UserGoogleDataResponse } from '../interfaces/UserGoogleDataResponse';
 
 import api from '../api/api';
 
@@ -24,14 +25,20 @@ export async function GoogleSignIn() {
   }
 }
 
-const apiPostData = async (paramss: any) => {
-  const params = new URLSearchParams();
-  params.append('givenName', paramss.givenName);
-  params.append('familyName', paramss.familyName);
-  params.append('email', paramss.email);
+const apiPostData = async (params: UserGoogleDataResponse) => {
+  let userData = new FormData();
+
+  userData.append('givenName', params.givenName ?? '');
+  userData.append('familyName', params.familyName ?? '');
+  userData.append('email', params.email ?? '');
+  userData.append('userPhoto', {
+      uri: params.photoUrl,
+      name: 'userPhoto',
+      type: 'image/png', // or your mime type what you want
+  } as unknown as string | Blob);
 
   try {
-    const response = await api.post('/user/create', params);
+    const response = await api.post('/user/create', userData);
     const responseJSON = JSON.parse(JSON.stringify(response));
 
     return responseJSON.data;
