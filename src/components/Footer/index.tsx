@@ -18,7 +18,7 @@ function Footer({wichActive} : FooterProps) {
   
   return (
     <>
-    <View style={{marginTop: 90}} />
+    <View style={{marginTop: 0}} />
       <View style={styles.footer}>
         <FooterElement handleClick={() => changeScreen('Settings')} imageName={'setting'} active={wichActive === 'settings' ? true : false} />
         <FooterElement handleClick={() => changeScreen('Home')} imageName={'home'} active={wichActive === 'home' ? true : false} />
