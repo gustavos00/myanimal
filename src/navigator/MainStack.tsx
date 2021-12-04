@@ -9,6 +9,7 @@ import Settings from '../pages/Settings';
 import ViewAnimal from '../pages/ViewAnimal';
 import CreateAnimal from '../pages/CreateAnimal';
 import UpdateAnimal from '../pages/UpdateAnimal';
+import FindMyAnimal from '../pages/FindMyAnimal';
 
 interface AnimalScreenParams {
   animalInfo: AnimalInfoParams;
@@ -21,6 +22,7 @@ export type RootStackParamList = {
   CreateAnimal: undefined;
   ViewAnimal: AnimalScreenParams;
   UpdateAnimal: AnimalScreenParams;
+  FindMyAnimal: undefined;
 };
 
 const { Navigator, Group, Screen } = createStackNavigator<RootStackParamList>();
@@ -59,6 +61,11 @@ export default () => {
             options={{ headerShown: false }}
             name="UpdateAnimal"
             component={UpdateAnimal}
+          />
+          <Screen
+            options={{ headerShown: false }}
+            name="FindMyAnimal"
+            component={FindMyAnimal}
           />
         </Group>
       </Navigator>
