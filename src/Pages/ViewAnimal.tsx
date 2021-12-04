@@ -1,41 +1,47 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+import React from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { StyleSheet, View, Text } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { RootStackParamList } from '../navigator/MainStack';
 
 import globalStyles from '../assets/styles/global';
 import Background from '../components/Background';
 import EnableFindMyPetSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
-import AuthContext from '../contexts/user';
 import StyledText from '../components/StyledText';
 import ProfileImage from '../components/ProfileImage';
 
-
 function CreateOrUpdateAnimal() {
-  const route = useRoute<RouteProp<RootStackParamList, 'ViewAnimal'>>();;
+  const route = useRoute<RouteProp<RootStackParamList, 'ViewAnimal'>>();
   const { animalInfo } = route.params;
 
   return (
     <>
       <View style={styles.headerBg}>
-        <ProfileImage photoUrl={animalInfo.photourl}/>
-    
+        <ProfileImage photoUrl={animalInfo.imageUrl} />
+
         <Background heightSize={'75%'}>
-          <View style={styles.container}>
-            <View style={styles.inputsContainer}> 
-              <StyledText value={animalInfo.name} text={'Full Name'}/>
-              <StyledText value={animalInfo.age} text={'Age'}/>
-              <StyledText value={animalInfo.race} text={'Race'}/>
-              <StyledText value={animalInfo.chipnumber} text={'Chip Number'}/>
+          <ScrollView contentContainerStyle={styles.container}>
+            <View style={styles.inputsContainer}>
+              <StyledText value={animalInfo.name} text={'Name'} />
+              <StyledText value={animalInfo.age} text={'Age'} />
+              <StyledText value={animalInfo.breed} text={'Breed'} />
+              <StyledText value={animalInfo.birthday} text={'Birthday'} />
+              <StyledText
+                value={animalInfo.birthdayMonth}
+                text={'Birthday month'}
+              />
+              <StyledText
+                value={animalInfo.trackNumber}
+                text={'Track number'}
+              />
             </View>
-                        
-            <EnableFindMyPetSwitch enableValue={false}/>
-          </View>
+
+            <EnableFindMyPetSwitch enableValue={false} />
+          </ScrollView>
         </Background>
       </View>
 
-      <Footer wichActive={'home'}/>
+      <Footer wichActive={'home'} />
     </>
   );
 }
@@ -46,7 +52,7 @@ const styles = StyleSheet.create({
 
     justifyContent: 'center',
 
-    backgroundColor: globalStyles.mainColor
+    backgroundColor: globalStyles.mainColor,
   },
 
   inputsContainer: {
@@ -58,6 +64,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-})
+});
 
 export default CreateOrUpdateAnimal;

@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
 
     backgroundColor: globalStyles.white,
-    borderRadius: 17,
+    borderRadius: 15,
   },
 
   buttonText: {
