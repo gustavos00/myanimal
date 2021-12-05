@@ -2,13 +2,13 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
-interface InputProps {
+interface StyledInputProps {
   handleChangeFunction: (e: string) => void;
   placeholder: string;
   text?: string;
 }
 
-function Input({ text, handleChangeFunction, placeholder }: InputProps) {
+function StyledInput({ text, handleChangeFunction, placeholder }: StyledInputProps) {
   return (
     <>
       <View style={[styles.container]}>
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Input;
+export default StyledInput;

@@ -12,7 +12,7 @@ import Background from '../components/Background';
 import Button from '../components/Button';
 import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
-import Input from '../components/Input';
+import Input from '../components/StyledInput';
 import AuthContext from '../contexts/user';
 import Loading from '../components/Loading';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';

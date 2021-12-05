@@ -1,23 +1,25 @@
 import React from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 
 import globalStyles from '../../assets/styles/global';
 import HeaderIcon from '../HeaderIcon';
 import HeaderText from '../HeaderText';
 
 interface HeaderProps {
-  name: string | undefined,
-  image: string | undefined
+  name?: string;
+  image?: string;
+  text?: string;
 }
 
-function Header({ name, image } : HeaderProps) {
+function Header({ name, image, text }: HeaderProps) {
   return (
     <>
       <View style={styles.header}>
         <View>
-          <HeaderText 
-            mainText={`Hello, ${name} 👋`} 
-            secondText={'Where is your animal?'}/>
+          <HeaderText
+            mainText={`Hello, ${name} 👋`}
+            secondText={text ? text : 'Where is your animal?'}
+          />
         </View>
 
         <HeaderIcon photoUrl={image} />
@@ -34,8 +36,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     flexDirection: 'row',
 
-    backgroundColor: globalStyles.mainColor
-  }
-})
+    backgroundColor: globalStyles.mainColor,
+  },
+});
 
 export default Header;
