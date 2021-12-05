@@ -10,9 +10,14 @@ import ViewAnimal from '../pages/ViewAnimal';
 import CreateAnimal from '../pages/CreateAnimal';
 import UpdateAnimal from '../pages/UpdateAnimal';
 import FindMyAnimal from '../pages/FindMyAnimal';
+import { OwnerInfoParams } from '../interfaces/OwnerInfoParams';
 
 interface AnimalScreenParams {
   animalInfo: AnimalInfoParams;
+}
+
+interface OwnerContactsParams {
+  ownerContacts: OwnerInfoParams;
 }
 
 export type RootStackParamList = {
@@ -22,7 +27,7 @@ export type RootStackParamList = {
   CreateAnimal: undefined;
   ViewAnimal: AnimalScreenParams;
   UpdateAnimal: AnimalScreenParams;
-  FindMyAnimal: undefined;
+  FindMyAnimal: OwnerContactsParams;
 };
 
 const { Navigator, Group, Screen } = createStackNavigator<RootStackParamList>();
