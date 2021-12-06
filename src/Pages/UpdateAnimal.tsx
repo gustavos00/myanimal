@@ -11,7 +11,7 @@ import Background from '../components/Background';
 import Button from '../components/Button';
 import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
-import Input from '../components/Input';
+import Input from '../components/StyledInput';
 import AuthContext from '../contexts/user';
 import Loading from '../components/Loading';
 import { showError } from '../utils/error';
@@ -23,9 +23,9 @@ function UpdateAnimal() {
 
   const [name, setName] = useState<string>(animalInfo.name);
   const [age, setAge] = useState<string>(animalInfo.age);
-  const [race, setRace] = useState<string>(animalInfo.race);
-  const [chipnumber, setChipnumber] = useState<string>(animalInfo.chipnumber);
-  const [photoUrl, setPhotoUrl] = useState<string>(animalInfo.photourl);
+  const [race, setRace] = useState<string>(animalInfo.breed);
+  const [chipnumber, setChipnumber] = useState<string>(animalInfo.trackNumber);
+  const [imageUrl, setImageUrl] = useState<string>(animalInfo.imageUrl);
   const [error, setError] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -42,7 +42,7 @@ function UpdateAnimal() {
     animalData.append('race', race);
     animalData.append('chipnumber', chipnumber);
     animalData.append('file', {
-      uri: photoUrl,
+      uri: imageUrl,
       name: 'animalPhoto',
       type: 'image/png',
     } as any);
@@ -89,8 +89,8 @@ function UpdateAnimal() {
     <>
       <View style={styles.headerBg}>
         <AddImage
-          animalPhotoUrl={animalInfo.photourl}
-          setProfilePhotoFunction={setPhotoUrl}
+          animalImageUrl={animalInfo.imageUrl}
+          setProfilePhotoFunction={setImageUrl}
         />
 
         <Background heightSize={'75%'}>

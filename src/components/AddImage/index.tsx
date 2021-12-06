@@ -10,11 +10,11 @@ interface AddImageProps {
   widthSize?: string,
   heightSize?: string,
   setProfilePhotoFunction?: (url: string) => void;
-  animalPhotoUrl?: string
+  animalImageUrl?: string
 }
 
-function AddImage({ animalPhotoUrl, setProfilePhotoFunction, widthSize, heightSize }: AddImageProps) {
-  const [photoUrl, setPhotoUrl] = useState<string | undefined>(animalPhotoUrl)
+function AddImage({ animalImageUrl, setProfilePhotoFunction, widthSize, heightSize }: AddImageProps) {
+  const [photoUrl, setPhotoUrl] = useState<string | undefined>(animalImageUrl)
 
   const openImageLibrary = async() => {
     const data = await ImagePicker.requestMediaLibraryPermissionsAsync();
