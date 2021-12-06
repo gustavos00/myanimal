@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, View, StyleSheet } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
 
@@ -13,27 +13,29 @@ import Footer from '../components/Footer';
 import Button from '../components/Button';
 
 import AuthContext from '../contexts/user';
+import Map from '../components/Maps';
+import Maps from '../components/Maps';
 
 function FindMyAnimal() {
-  const { width, height } = Dimensions.get('window');
-  const latitudeDelta = 0.0922
-  const longitudeDelta = latitudeDelta + width / height;
-
-  const [mapRegion, setmapRegion] = useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta,
-    longitudeDelta,
-  });
   const { user } = useContext(AuthContext);
 
   const route = useRoute<RouteProp<RootStackParamList, 'FindMyAnimal'>>();
   const { ownerContacts } = route.params;
 
+  //Static data for tests
+  const { width, height } = Dimensions.get('window');
+  const latitudeDelta = 0.0922;
+  const longitudeDelta = latitudeDelta + width / height;
+
+  const mapRegion = {
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta,
+    longitudeDelta,
+  };
+
   const openOnMapsHandleClick = () => {
     openMap(mapRegion);
-    const t = createMapLink(mapRegion);
-    console.log(t);
   };
 
   return (
@@ -49,24 +51,17 @@ function FindMyAnimal() {
 
         {ownerContacts && (
           <>
-            <View
-              style={{
-                flex: 0.7,
-              }}
-            >
-              <MapView
-                style={{
-                  flex: 1,
-                }}
-                region={mapRegion}
-                zoomControlEnabled={true}
-                zoomTapEnabled={true}
-              >
-                <Marker coordinate={mapRegion} title="Marker" />
-              </MapView>
-            </View>
+            <View style={styles.mapsContainer}>
+              <Maps
+                longitude={mapRegion.longitude}
+                latitude={mapRegion.latitude}
+              />
 
-            <Button text={'Open on maps'} handleClick={openOnMapsHandleClick} />
+              <Button
+                text={'Open on maps'}
+                handleClick={openOnMapsHandleClick}
+              />
+            </View>
           </>
         )}
       </Background>
@@ -75,5 +70,11 @@ function FindMyAnimal() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  mapsContainer: {
+    flex: 0.7,
+  },
+});
 
 export default FindMyAnimal;
