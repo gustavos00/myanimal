@@ -45,10 +45,8 @@ function Settings() {
     const { data } = await api.get(
       `/animal/findMyAnimal/?trackNumber=${trackNumber}`
     );
-    console.log(data);
 
     if (data) {
-      setLoading(false);
       navigation.navigate(
         'FindMyAnimal' as never,
         {
@@ -56,6 +54,8 @@ function Settings() {
         } as never
       );
     }
+
+    setLoading(false);
   };
 
   const swipeDownHandleFunction = () => {
