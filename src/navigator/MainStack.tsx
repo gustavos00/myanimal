@@ -17,7 +17,7 @@ interface AnimalScreenParams {
 }
 
 interface OwnerContactsParams {
-  ownerContacts: OwnerInfoParams;
+  ownerData: OwnerInfoParams;
 }
 
 export type RootStackParamList = {

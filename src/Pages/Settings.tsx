@@ -50,7 +50,7 @@ function Settings() {
       navigation.navigate(
         'FindMyAnimal' as never,
         {
-          ownerContacts: data,
+          ownerData: data,
         } as never
       );
     }
