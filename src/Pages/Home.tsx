@@ -27,7 +27,7 @@ const Home = () => {
 
   return (
     <>
-      <Header name={user?.givenName} image={user?.imageUrl} />
+      <Header text={'Is missing something...'} name={user?.givenName} image={user?.imageUrl} />
 
       <Background>
         {user?.animalData.length === 0 ? (
