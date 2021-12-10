@@ -35,8 +35,6 @@ function CreateAnimal() {
   const handleSubmitForm = async () => {
     //Check if error is a empty string
     if (error === '') {
-      setIsLoading(true);
-
       const animalData = new FormData();
       animalData.append('name', name);
       animalData.append('breed', breed);
@@ -52,8 +50,10 @@ function CreateAnimal() {
       } as unknown as string | Blob);
 
       try {
+        setIsLoading(true);
         const result = await api.post('/animal/create', animalData);
         pushAnimalData(result.data as unknown as AnimalInfoParams);
+        setIsLoading(false);
 
         navigation.navigate('Home' as any);
       } catch (e) {

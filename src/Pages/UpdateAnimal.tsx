@@ -33,7 +33,7 @@ function UpdateAnimal() {
   const { pushAnimalData } = useContext(AuthContext);
 
   const handleSubmitForm = async () => {
-    setIsLoading(true);
+
     let animalData = new FormData();
 
     animalData.append('name', name);
@@ -48,12 +48,13 @@ function UpdateAnimal() {
     } as any);
 
     try {
+      setIsLoading(true);
       const result = await api.post('/animal/update', animalData);
       const { data } = result;
 
       pushAnimalData(data as any);
-
       setIsLoading(false);
+      
       navigation.navigate('Home' as any);
     } catch (e) {
       showError('Error: ' + e, 'Apparently there was an error, try again');

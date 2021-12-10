@@ -1,8 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 
+import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
+import { OwnerInfoParams } from '../interfaces/OwnerInfoParams';
+
+import CreateAddress from '../pages/CreateAddress';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Settings from '../pages/Settings';
@@ -10,14 +13,13 @@ import ViewAnimal from '../pages/ViewAnimal';
 import CreateAnimal from '../pages/CreateAnimal';
 import UpdateAnimal from '../pages/UpdateAnimal';
 import FindMyAnimal from '../pages/FindMyAnimal';
-import { OwnerInfoParams } from '../interfaces/OwnerInfoParams';
 
 interface AnimalScreenParams {
   animalInfo: AnimalInfoParams;
 }
 
 interface OwnerContactsParams {
-  ownerContacts: OwnerInfoParams;
+  ownerData: OwnerInfoParams;
 }
 
 export type RootStackParamList = {
@@ -28,6 +30,7 @@ export type RootStackParamList = {
   ViewAnimal: AnimalScreenParams;
   UpdateAnimal: AnimalScreenParams;
   FindMyAnimal: OwnerContactsParams;
+  CreateAddress: undefined;
 };
 
 const { Navigator, Group, Screen } = createStackNavigator<RootStackParamList>();
@@ -71,6 +74,12 @@ export default () => {
             options={{ headerShown: false }}
             name="FindMyAnimal"
             component={FindMyAnimal}
+          />
+
+          <Screen
+            options={{ headerShown: false }}
+            name="CreateAddress"
+            component={CreateAddress}
           />
         </Group>
       </Navigator>

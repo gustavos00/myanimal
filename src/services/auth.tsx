@@ -18,8 +18,9 @@ export async function GoogleSignIn() {
     const data = await Google.logInAsync(config);
     if (data.type === 'cancel') return false;
 
-    const token = await apiPostData(data.user);
-    return token;
+    const responseData = await apiPostData(data.user);
+
+    return responseData;
   } catch (e) {
     showError('Error: ' + e, 'Apparently there was an error, try again');
   }
@@ -34,14 +35,19 @@ const apiPostData = async (params: UserGoogleDataResponse) => {
   userData.append('userPhoto', {
       uri: params.photoUrl,
       name: 'userPhoto',
-      type: 'image/png', // or your mime type what you want
-  } as unknown as string | Blob);
+      type: 'image/png',
+  } as unknown as string);
 
   try {
     const response = await api.post('/user/create', userData);
-    const responseJSON = JSON.parse(JSON.stringify(response));
+    const { data, status } = JSON.parse(JSON.stringify(response));
 
-    return responseJSON.data;
+    const tempObj = {
+      ...data,
+      status: status
+    }
+
+    return tempObj
   } catch (e) {
     showError('Error: ' + e, 'Apparently there was an error, try again');
   }
