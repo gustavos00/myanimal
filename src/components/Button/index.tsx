@@ -4,7 +4,7 @@ import globalStyles from '../../assets/styles/global';
 
 interface ButtonProps {
   text: string;
-  handleClick: () => void;
+  handleClick: (e?: any) => void;
 }
 
 function Button({ text, handleClick }: ButtonProps) {
