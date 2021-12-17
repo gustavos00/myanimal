@@ -15,6 +15,7 @@ import Input from '../components/StyledInput';
 import AuthContext from '../contexts/user';
 import Loading from '../components/Loading';
 import { showError } from '../utils/error';
+import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 
 function UpdateAnimal() {
   const navigation = useNavigation();
@@ -23,8 +24,14 @@ function UpdateAnimal() {
 
   const [name, setName] = useState<string>(animalInfo.name);
   const [age, setAge] = useState<string>(animalInfo.age);
-  const [race, setRace] = useState<string>(animalInfo.breed);
-  const [chipnumber, setChipnumber] = useState<string>(animalInfo.trackNumber);
+  const [breed, setBreed] = useState<string>(animalInfo.breed);
+  const [birthday, setBirthday] = useState<string>(animalInfo.birthday);
+  const [birthdayMonth, setBirthdayMonth] = useState<string>(
+    animalInfo.birthdayMonth
+  );
+  const [trackNumber, setTrackNumber] = useState<string>(
+    animalInfo.trackNumber
+  );
   const [imageUrl, setImageUrl] = useState<string>(animalInfo.imageUrl);
   const [error, setError] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
@@ -33,56 +40,65 @@ function UpdateAnimal() {
   const { pushAnimalData } = useContext(AuthContext);
 
   const handleSubmitForm = async () => {
+    //Check if error is a empty string
+    if (error === '') {
+      const animalData = new FormData();
+      animalData.append('id', String(animalInfo.idAnimal));
+      animalData.append('name', name);
+      animalData.append('breed', breed);
+      animalData.append('age', age);
+      animalData.append('birthday', birthday);
+      animalData.append('birthdayMonth', birthdayMonth);
+      animalData.append('trackNumber', trackNumber);
+      animalData.append('idUser', String(animalInfo.userIdUser));
+      animalData.append('animalPhoto', {
+        uri: imageUrl,
+        name: 'animalPhoto',
+        type: 'image/png', // or your mime type what you want
+      } as unknown as string | Blob);
 
-    let animalData = new FormData();
+      try {
+        setIsLoading(true);
+        const result = await api.post('/animal/update', animalData);
+        const { data } = result;
 
-    animalData.append('name', name);
-    animalData.append('id', String(animalInfo.id));
-    animalData.append('age', age);
-    animalData.append('race', race);
-    animalData.append('chipnumber', chipnumber);
-    animalData.append('file', {
-      uri: imageUrl,
-      name: 'animalPhoto',
-      type: 'image/png',
-    } as any);
+        pushAnimalData(data as any);
+        setIsLoading(false);
 
-    try {
-      setIsLoading(true);
-      const result = await api.post('/animal/update', animalData);
-      const { data } = result;
-
-      pushAnimalData(data as any);
-      setIsLoading(false);
-      
-      navigation.navigate('Home' as any);
-    } catch (e) {
-      showError('Error: ' + e, 'Apparently there was an error, try again');
+        navigation.navigate('Home' as any);
+      } catch (e) {
+        setIsLoading(false);
+        showError('Error: ' + e, 'Apparently there was an error, try again');
+      }
     }
   };
-
   const handleChangeText = (
-    e: string,
-    type: string,
-    setFunction: Dispatch<SetStateAction<string>>
+    value: string,
+    setFunction: Dispatch<SetStateAction<string>>,
+    valueLenght: number,
+    type?: string
   ) => {
-    switch (type) {
-      case 'string':
-        setFunction(e);
-        break;
+    if (value.length > valueLenght) {
+      //Check string size
+      setError('Error message');
+      return;
+    } else {
+      setError('');
+    }
 
-      case 'number':
-        if (isNaN(Number(e))) {
-          setError('Please, insert a valid age');
-        } else {
-          setError('');
-          setAge(e);
-        }
-        break;
-
-      default:
-        showError('Error handle text on create animal');
-        break;
+    //Checkick text type
+    let valueType = type ?? 'string';
+    if (valueType === 'string') {
+      setFunction(value);
+    } else if (valueType === 'number') {
+      if (isNaN(Number(value))) {
+        setError('Please, insert a valid age');
+      } else {
+        setError('');
+        setFunction(value);
+      }
+    } else {
+      showError('Error handle text on create animal');
     }
   };
 
@@ -95,46 +111,62 @@ function UpdateAnimal() {
         />
 
         <Background heightSize={'75%'}>
-          <View style={styles.container}>
-            <View style={styles.inputsContainer}>
-              <Input
-                handleChangeFunction={(e: string) =>
-                  handleChangeText(e, 'string', setName)
-                }
-                text={name}
-                placeholder={'Full Name'}
+          <KeyboardAvoidingWrapper>
+            <View style={styles.container}>
+              <View style={styles.inputsContainer}>
+                <Input //Name
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, setName, 250)
+                  }
+                  text={name}
+                  placeholder={'Name'}
+                />
+                <Input //Age
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, setAge, 5, 'number')
+                  }
+                  text={age}
+                  placeholder={'Age'}
+                />
+                <Input //Breed
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, setBreed, 250)
+                  }
+                  text={breed}
+                  placeholder={'Breed'}
+                />
+                <Input //Birthday
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, setBirthday, 2)
+                  }
+                  text={birthday}
+                  placeholder={'Birthday'}
+                />
+                <Input //Birthday month
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, setBirthdayMonth, 2)
+                  }
+                  text={birthdayMonth}
+                  placeholder={'Birthday month'}
+                />
+                <Input //Track number
+                  handleChangeFunction={(e: string) =>
+                    handleChangeText(e, setTrackNumber, 50)
+                  }
+                  text={trackNumber}
+                  placeholder={'Track number'}
+                />
+              </View>
+
+              <CreateOrUpdateSwitch
+                enableFunction={setIsEnabled}
+                enableValue={isEnabled}
               />
-              <Input
-                handleChangeFunction={(e: string) =>
-                  handleChangeText(e, 'number', setAge)
-                }
-                text={age}
-                placeholder={'Age'}
-              />
-              <Input
-                handleChangeFunction={(e: string) =>
-                  handleChangeText(e, 'string', setRace)
-                }
-                text={race}
-                placeholder={'Race'}
-              />
-              <Input
-                handleChangeFunction={(e: string) =>
-                  handleChangeText(e, 'string', setChipnumber)
-                }
-                text={chipnumber}
-                placeholder={'Chip Number'}
-              />
+              <Button text={'Update animal'} handleClick={handleSubmitForm} />
+
+              <Text>{error}</Text>
             </View>
-
-            <CreateOrUpdateSwitch
-              enableFunction={setIsEnabled}
-              enableValue={isEnabled}
-            />
-            <Button text={'Update animal'} handleClick={handleSubmitForm} />
-
-            <Text>{error}</Text>
-          </View>
+          </KeyboardAvoidingWrapper>
         </Background>
       </View>
 
