@@ -5,12 +5,17 @@ import { showError } from '../utils/error';
 
 import * as auth from '../services/auth';
 
+interface GoogleSignInProps {
+  wasCreated?: boolean
+  isValid?: boolean
+}
+
 interface AuthContextData {
   signed: boolean;
   token: string | void;
   user: UserContextData | void;
 
-  googleSignIn: () => Promise<boolean | void>;
+  googleSignIn: () => Promise<false | GoogleSignInProps | undefined>
   pushAnimalData: (data: AnimalInfoParams) => void;
 }
 
@@ -28,7 +33,12 @@ export function AuthProvider({ children }: any) {
       setToken(response.token);
       setUser(response);
 
-      return true;
+      const obj = {
+        wasCreated: response.status === 201 ? true : false,
+        isValid: true
+      };
+
+      return obj
     } catch (e) {
       showError('Error: ' + e, 'Apparently there was an error, try again');
     }

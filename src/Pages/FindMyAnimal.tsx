@@ -1,10 +1,9 @@
-import React, { useContext, useState } from 'react';
-import MapView, { Marker } from 'react-native-maps';
+import React, { useContext, useEffect, useState } from 'react';
 import { Dimensions, View, StyleSheet } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
 
-import openMap, { createMapLink } from 'react-native-open-maps';
+import openMap from 'react-native-open-maps';
 
 import Header from '../components/Header';
 import Background from '../components/Background/index';
@@ -31,22 +30,24 @@ function FindMyAnimal() {
   const { ownerData } = route.params;
   const { latitude, longitude } = ownerData;
 
-  const openOnMapsHandleClick = (region : geographicDataProps) => {
+  const openOnMapsHandleClick = (region: geographicDataProps) => {
     openMap(region);
   };
 
   if (longitude && latitude) {
-    setHaveValidAddress(true);
-    const { width, height } = Dimensions.get('window');
-    const latitudeDelta = 0.0922;
-    const longitudeDelta = latitudeDelta + width / height;
+    useEffect(() => {
+      setHaveValidAddress(true);
+      const { width, height } = Dimensions.get('window');
+      const latitudeDelta = 0.0922;
+      const longitudeDelta = latitudeDelta + width / height;
 
-    setGeographicData({
-      latitude,
-      longitude,
-      latitudeDelta,
-      longitudeDelta,
-    });
+      setGeographicData({
+        latitude,
+        longitude,
+        latitudeDelta,
+        longitudeDelta,
+      });
+    }, []);
   }
 
   return (
@@ -71,7 +72,9 @@ function FindMyAnimal() {
 
               <Button
                 text={'Open on maps'}
-                handleClick={(geographicData : geographicDataProps) => {openOnMapsHandleClick(geographicData)}}
+                handleClick={(geographicData: geographicDataProps) => {
+                  openOnMapsHandleClick(geographicData);
+                }}
               />
             </View>
           </>

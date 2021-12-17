@@ -8,26 +8,42 @@ interface StyledInputProps {
   text?: string;
 }
 
-function StyledInput({ text, handleChangeFunction, placeholder }: StyledInputProps) {
+function StyledInput({
+  text,
+  handleChangeFunction,
+  placeholder,
+}: StyledInputProps) {
   return (
     <>
-      <View style={[styles.container]}>
-        <View style={styles.textContainer}>
-          <Text style={styles.text}>{placeholder}</Text>
-        </View>
+      <View style={styles.inputContainer}>
+        <View style={styles.container}>
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>{placeholder}</Text>
+          </View>
 
-        <TextInput
-          value={text}
-          onChangeText={(text) => handleChangeFunction(text)}
-          style={styles.input}
-        />
+          <TextInput
+            value={text}
+            onChangeText={(text) => handleChangeFunction(text)}
+            style={styles.input}
+          />
+        </View>
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    width: '100%',
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   container: {
+    width: '90%',
+
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 5,
@@ -38,6 +54,7 @@ const styles = StyleSheet.create({
 
     borderWidth: 1,
     borderColor: globalStyles.gray,
+    borderRadius: 5
   },
 
   input: {

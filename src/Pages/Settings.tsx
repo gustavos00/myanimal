@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { showError } from '../utils/error';
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -58,10 +59,9 @@ function Settings() {
       }
       setLoading(false)
     } catch (e) {
+      showError('Error: ' + e, 'Apparently there was an error, try again');
       console.log(response)
     }
-
-    setLoading(false);
   };
 
   const swipeDownHandleFunction = () => {
@@ -124,19 +124,12 @@ function Settings() {
             swipeDownFunction={swipeDownHandleFunction}
             modalHeight={250}
           >
-            <View style={{ width: '100%', alignItems: 'center' }}>
-              <View style={{ width: '90%' }}>
-                <StyledInput
-                  placeholder={'Track number'}
-                  handleChangeFunction={handleChangeText}
-                />
+            <StyledInput
+              placeholder={'Track number'}
+              handleChangeFunction={handleChangeText}
+            />
 
-                <Button
-                  text={'Find owner animal'}
-                  handleClick={handleSubmitForm}
-                />
-              </View>
-            </View>
+            <Button text={'Find owner animal'} handleClick={handleSubmitForm} />
           </BottomModal>
         </>
       )}
