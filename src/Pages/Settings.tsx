@@ -42,24 +42,25 @@ function Settings() {
   };
 
   const handleSubmitForm = async () => {
+    let response;
     try {
       setLoading(true);
-      const { data } = await api.get(
+      response = await api.get(
         `/animal/findMyAnimal/?trackNumber=${trackNumber}`
       );
 
-      if (data) {
+      if (response.data) {
         navigation.navigate(
           'FindMyAnimal' as never,
           {
-            ownerData: data,
+            ownerData: response.data,
           } as never
         );
       }
-
-      setLoading(false);
+      setLoading(false)
     } catch (e) {
       showError('Error: ' + e, 'Apparently there was an error, try again');
+      console.log(response)
     }
   };
 
