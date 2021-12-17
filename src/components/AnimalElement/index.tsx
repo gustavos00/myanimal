@@ -17,11 +17,8 @@ function AnimalElement({ animalData, isEditing }: AnimalElementProps) {
   const navigation = useNavigation();
 
   const deletingAnimal = async (id: number) => {
-    let animalId = new FormData();
-    animalId.append('id', String(id));
-
     try {
-      await api.post('/animal/delete', animalId);
+      await api.delete(`/animal/delete/${String(id)}`);
     } catch (e) {
       showError(
         'Error: ' + e,
@@ -56,7 +53,7 @@ function AnimalElement({ animalData, isEditing }: AnimalElementProps) {
                 <Image source={require('../../assets/img/edit.png')} />
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => deletingAnimal(animalData.id)}>
+              <TouchableOpacity onPress={() => deletingAnimal(animalData.idAnimal)}>
                 <Image source={require('../../assets/img/delete.png')} />
               </TouchableOpacity>
             </>
