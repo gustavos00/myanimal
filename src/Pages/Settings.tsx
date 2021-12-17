@@ -60,7 +60,6 @@ function Settings() {
       setLoading(false)
     } catch (e) {
       showError('Error: ' + e, 'Apparently there was an error, try again');
-      console.log(response)
     }
   };
 
