@@ -23,7 +23,7 @@ function Footer({wichActive} : FooterProps) {
         <FooterElement handleClick={() => changeScreen('Settings')} imageName={'setting'} active={wichActive === 'settings' ? true : false} />
         <FooterElement handleClick={() => changeScreen('Home')} imageName={'home'} active={wichActive === 'home' ? true : false} />
         <FooterElement handleClick={() => changeScreen('Home')} imageName={'notification'} active={wichActive === 'notification' ? true : false} />
-        <FooterElement handleClick={() => changeScreen('Home')} imageName={'user'} active={wichActive === 'user' ? true : false} />
+        <FooterElement handleClick={() => changeScreen('ViewProfile')} imageName={'user'} active={wichActive === 'user' ? true : false} />
       </View>
     </>
   );
