@@ -1,19 +1,26 @@
-import React, { ReactNode } from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
 interface ProfileImageProps {
   widthSize?: number,
   heightSize?: number,
-  photoUrl: string
+  photoUrl: string | undefined,
+  statusMessage?: string
 }
 
-function ProfileImage({ widthSize, heightSize, photoUrl }: ProfileImageProps) {
+function ProfileImage({ widthSize, heightSize, photoUrl, statusMessage }: ProfileImageProps) {
   return (
     <>
       <View style={styles.container}>
         <View style={[styles.circle, widthSize ? {width: widthSize} : {width: 190}, heightSize ? {height: heightSize} : {height: 190}]}>
           <Image style={styles.animalImage} source={{uri: photoUrl}} />
+ 
+        
+          {/* Status conditional conditional */}
+          <TouchableOpacity activeOpacity={.7} style={styles.statusContainer}>
+            {/* Add a representation of status */}
+          </TouchableOpacity>
         </View>
       </View>
     </>
@@ -32,6 +39,18 @@ const styles = StyleSheet.create({
     
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  statusContainer: {
+    width: 40,
+    height: 40,
+    
+    position: 'absolute',
+    bottom: -5,
+    right: 25,
+
+    borderRadius: 40,
+    backgroundColor: 'red',
   },
 
   circle: {
