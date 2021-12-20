@@ -89,6 +89,15 @@ function Settings() {
 
           <Underline />
           <View style={styles.textContainer}>
+            <OptionHeader text={'Friends'} />
+            <OptionElement
+              handleClick={async () => changeScreen('CreateAnimal')}
+              text={'Add friends'}
+            />
+          </View>
+
+          <Underline />
+          <View style={styles.textContainer}>
             <OptionHeader text={'Animal Settings'} />
             <OptionElement
               handleClick={async () => changeScreen('CreateAnimal')}
@@ -104,7 +113,7 @@ function Settings() {
           <View style={styles.textContainer}>
             <OptionHeader text={'More'} />
             <OptionElement
-              handleClick={() => changeScreen('Home')}
+              handleClick={() => changeScreen('AboutUs')}
               text={'About us'}
             />
             <OptionElement
