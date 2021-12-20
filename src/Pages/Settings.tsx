@@ -91,8 +91,12 @@ function Settings() {
           <View style={styles.textContainer}>
             <OptionHeader text={'Friends'} />
             <OptionElement
-              handleClick={async () => changeScreen('CreateAnimal')}
+              handleClick={async () => changeScreen('')}
               text={'Add friends'}
+            />
+            <OptionElement
+              handleClick={async () => changeScreen('')}
+              text={'Generate QR Code'}
             />
           </View>
 
