@@ -13,6 +13,8 @@ import ViewAnimal from '../pages/ViewAnimal';
 import CreateAnimal from '../pages/CreateAnimal';
 import UpdateAnimal from '../pages/UpdateAnimal';
 import FindMyAnimal from '../pages/FindMyAnimal';
+import ViewProfile from '../pages/ViewProfile';
+import AboutUs from '../pages/AboutUs';
 
 interface AnimalScreenParams {
   animalInfo: AnimalInfoParams;
@@ -31,6 +33,8 @@ export type RootStackParamList = {
   UpdateAnimal: AnimalScreenParams;
   FindMyAnimal: OwnerContactsParams;
   CreateAddress: undefined;
+  ViewProfile: undefined;
+  AboutUs: undefined;
 };
 
 const { Navigator, Group, Screen } = createStackNavigator<RootStackParamList>();
@@ -57,6 +61,21 @@ export default () => {
           />
           <Screen
             options={{ headerShown: false }}
+            name="AboutUs"
+            component={AboutUs}
+          />
+          <Screen
+            options={{ headerShown: false }}
+            name="CreateAddress"
+            component={CreateAddress}
+          />
+          <Screen
+            options={{ headerShown: false }}
+            name="ViewProfile"
+            component={ViewProfile}
+          />
+          <Screen
+            options={{ headerShown: false }}
             name="CreateAnimal"
             component={CreateAnimal}
           />
@@ -74,12 +93,6 @@ export default () => {
             options={{ headerShown: false }}
             name="FindMyAnimal"
             component={FindMyAnimal}
-          />
-
-          <Screen
-            options={{ headerShown: false }}
-            name="CreateAddress"
-            component={CreateAddress}
           />
         </Group>
       </Navigator>
