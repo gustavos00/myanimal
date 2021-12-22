@@ -33,14 +33,17 @@ const Login = () => {
     setIsLoading(false);
 
     if (status) {
-      if (status.wasCreated) {
-        //If he was created
-        navigation.navigate('CreateAddress' as any);
+      const { haveAddress } = status;
+      if (haveAddress) {
+        navigation.navigate(
+          'Home' as never,
+          {
+            haveAddress,
+          } as never
+        );
       } else {
-        navigation.navigate('Home' as any);
+        showError('Google auth canceled ');
       }
-    } else {
-      showError('Google auth canceled ');
     }
   };
 
