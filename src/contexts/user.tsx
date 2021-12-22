@@ -1,14 +1,10 @@
 import React, { createContext, useState } from 'react';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 import { UserContextData } from '../interfaces/UserContextData';
+import { GoogleSignInProps } from '../interfaces/GoogleSignInProps';
 import { showError } from '../utils/error';
 
 import * as auth from '../services/auth';
-
-interface GoogleSignInProps {
-  haveAddress?: boolean
-  isValid?: boolean
-}
 
 interface AuthContextData {
   signed: boolean;
