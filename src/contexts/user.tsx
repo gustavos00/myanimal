@@ -6,7 +6,7 @@ import { showError } from '../utils/error';
 import * as auth from '../services/auth';
 
 interface GoogleSignInProps {
-  wasCreated?: boolean
+  haveAddress?: boolean
   isValid?: boolean
 }
 
@@ -33,12 +33,12 @@ export function AuthProvider({ children }: any) {
       setToken(response.token);
       setUser(response);
 
-      const obj = {
-        wasCreated: response.status === 201 ? true : false,
-        isValid: true
-      };
+      const tempObj = {
+        haveAddress: response.address ? true : false,
+        isValid: response ? true : false,
+      }
 
-      return obj
+      return tempObj
     } catch (e) {
       showError('Error: ' + e, 'Apparently there was an error, try again');
     }
