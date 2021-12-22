@@ -34,16 +34,14 @@ const Login = () => {
 
     if (status) {
       const { haveAddress } = status;
-      if (haveAddress) {
-        navigation.navigate(
-          'Home' as never,
-          {
-            haveAddress,
-          } as never
-        );
-      } else {
-        showError('Google auth canceled ');
-      }
+      navigation.navigate(
+        'Home' as never,
+        {
+          haveAddress,
+        } as never
+      );
+    } else {
+      showError('Google auth canceled ');
     }
   };
 
