@@ -1,14 +1,10 @@
 import React, { createContext, useState } from 'react';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 import { UserContextData } from '../interfaces/UserContextData';
+import { GoogleSignInProps } from '../interfaces/GoogleSignInProps';
 import { showError } from '../utils/error';
 
 import * as auth from '../services/auth';
-
-interface GoogleSignInProps {
-  wasCreated?: boolean
-  isValid?: boolean
-}
 
 interface AuthContextData {
   signed: boolean;
@@ -33,12 +29,12 @@ export function AuthProvider({ children }: any) {
       setToken(response.token);
       setUser(response);
 
-      const obj = {
-        wasCreated: response.status === 201 ? true : false,
-        isValid: true
-      };
+      const tempObj = {
+        haveAddress: response.address ? true : false,
+        isValid: response ? true : false,
+      }
 
-      return obj
+      return tempObj
     } catch (e) {
       showError('Error: ' + e, 'Apparently there was an error, try again');
     }
