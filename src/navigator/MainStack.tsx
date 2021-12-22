@@ -6,7 +6,6 @@ import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 import { OwnerInfoParams } from '../interfaces/OwnerInfoParams';
 import { GoogleSignInProps } from '../interfaces/GoogleSignInProps';
 
-import CreateAddress from '../pages/CreateAddress';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Settings from '../pages/Settings';
@@ -37,7 +36,6 @@ export type RootStackParamList = {
   ViewAnimal: AnimalScreenParams;
   UpdateAnimal: AnimalScreenParams;
   FindMyAnimal: OwnerContactsParams;
-  CreateAddress: undefined;
   ViewProfile: undefined;
   AboutUs: undefined;
 };
@@ -68,11 +66,6 @@ export default () => {
             options={{ headerShown: false }}
             name="AboutUs"
             component={AboutUs}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="CreateAddress"
-            component={CreateAddress}
           />
           <Screen
             options={{ headerShown: false }}
