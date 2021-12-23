@@ -1,5 +1,11 @@
 import React, { ReactNode } from 'react';
-import { Keyboard, KeyboardAvoidingView, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  ScrollView,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 
 interface KeyboardAvoidingWrapperProps {
   children: ReactNode;
@@ -8,12 +14,14 @@ interface KeyboardAvoidingWrapperProps {
 function KeyboardAvoidingWrapper({ children }: KeyboardAvoidingWrapperProps) {
   return (
     <>
-      <KeyboardAvoidingView>
+      <KeyboardAvoidingView style={{width: '100%'}}>
         <ScrollView>
-          <TouchableWithoutFeedback style={{flex: 1, backgroundColor: 'red'}}onPress={Keyboard.dismiss}>
+          <TouchableWithoutFeedback
+            onPress={Keyboard.dismiss}
+          >
             {children}
           </TouchableWithoutFeedback>
-          <View style={{marginBottom: 100}}/>
+          <View style={{ marginBottom: 100 }} />
         </ScrollView>
       </KeyboardAvoidingView>
     </>
