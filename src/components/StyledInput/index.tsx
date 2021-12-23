@@ -6,17 +6,22 @@ interface StyledInputProps {
   handleChangeFunction: (e: string) => void;
   placeholder: string;
   text?: string;
+  width?: number;
 }
+
+let elementHeight;
 
 function StyledInput({
   text,
   handleChangeFunction,
   placeholder,
+  width,
 }: StyledInputProps) {
+
   return (
     <>
       <View style={styles.inputContainer}>
-        <View style={styles.container}>
+        <View style={[styles.container, { width: width ?? '90%'}]}>
           <View style={styles.textContainer}>
             <Text style={styles.text}>{placeholder}</Text>
           </View>
@@ -42,8 +47,6 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    width: '90%',
-
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 5,
