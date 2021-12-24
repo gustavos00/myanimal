@@ -11,11 +11,13 @@ import Footer from '../components/Footer';
 import AuthContext from '../contexts/user';
 import GeneralAnimalElements from '../components/GeneralAnimalElements';
 import BottomModal from '../components/BottomModal';
+import CreateAddress from '../components/CreateAddress';
 
 const Home = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Home'>>();
   const { haveAddress } = route.params;
 
+  const [haveAddressState, setHaveAddressState] = useState(haveAddress as boolean);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const { user } = useContext(AuthContext);
 
@@ -51,10 +53,10 @@ const Home = () => {
 
       <Footer wichActive={'home'} />
 
-      {!haveAddress && (
+      {!haveAddressState && (
         <>
-          <BottomModal modalHeight={350}>
-            <></>
+          <BottomModal modalHeight={450}>
+            <CreateAddress changeHaveAddressStateFunction={setHaveAddressState }/>
           </BottomModal>
         </>
       )}
