@@ -30,7 +30,7 @@ export function AuthProvider({ children }: any) {
       setUser(response);
 
       const tempObj = {
-        haveAddress: response.address ? true : false,
+        haveAddress: response.userAddress ? true : false,
         isValid: response ? true : false,
       }
 
