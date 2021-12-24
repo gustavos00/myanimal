@@ -65,7 +65,7 @@ function UpdateAnimal() {
         pushAnimalData(data as any);
         setIsLoading(false);
 
-        navigation.navigate('Home' as any);
+        navigation.navigate('Home' as never, {} as never);
       } catch (e) {
         setIsLoading(false);
         showError('Error: ' + e, 'Apparently there was an error, try again');
