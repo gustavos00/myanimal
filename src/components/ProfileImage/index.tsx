@@ -3,24 +3,39 @@ import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
 interface ProfileImageProps {
-  widthSize?: number,
-  heightSize?: number,
-  photoUrl: string | undefined,
-  statusMessage?: string
+  widthSize?: number;
+  heightSize?: number;
+  photoUrl: string | undefined;
+  statusMessage?: string;
 }
 
-function ProfileImage({ widthSize, heightSize, photoUrl, statusMessage }: ProfileImageProps) {
+function ProfileImage({
+  widthSize,
+  heightSize,
+  photoUrl,
+  statusMessage,
+}: ProfileImageProps) {
   return (
     <>
       <View style={styles.container}>
-        <View style={[styles.circle, widthSize ? {width: widthSize} : {width: 190}, heightSize ? {height: heightSize} : {height: 190}]}>
-          <Image style={styles.animalImage} source={{uri: photoUrl}} />
- 
-        
-          {/* Status conditional conditional */}
-          <TouchableOpacity activeOpacity={.7} style={styles.statusContainer}>
-            {/* Add a representation of status */}
-          </TouchableOpacity>
+        <View
+          style={[
+            styles.circle,
+            widthSize ? { width: widthSize } : { width: 190 },
+            heightSize ? { height: heightSize } : { height: 190 },
+          ]}
+        >
+          <Image style={styles.animalImage} source={{ uri: photoUrl }} />
+
+          {statusMessage && (
+            <>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={styles.statusContainer}
+              >
+              </TouchableOpacity>
+            </>
+          )}
         </View>
       </View>
     </>
@@ -29,14 +44,14 @@ function ProfileImage({ widthSize, heightSize, photoUrl, statusMessage }: Profil
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%', 
+    width: '100%',
 
     position: 'absolute',
     top: '7%',
 
     elevation: 100,
     zIndex: 1000,
-    
+
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -44,7 +59,7 @@ const styles = StyleSheet.create({
   statusContainer: {
     width: 40,
     height: 40,
-    
+
     position: 'absolute',
     bottom: -5,
     right: 25,
@@ -54,13 +69,13 @@ const styles = StyleSheet.create({
   },
 
   circle: {
-    width: 190,    
+    width: 190,
     height: 190,
 
     borderRadius: 100,
     backgroundColor: globalStyles.white,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 5,
@@ -69,7 +84,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
 
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   image: {
@@ -81,7 +96,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: '100%',
     height: '100%',
-  }
-})
+  },
+});
 
 export default ProfileImage;
