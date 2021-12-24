@@ -25,7 +25,7 @@ interface OwnerContactsParams {
 }
 
 interface HomeAddressStatusParams {
-  haveAddress: GoogleSignInProps;
+  haveAddress?: GoogleSignInProps;
 }
 
 export type RootStackParamList = {
