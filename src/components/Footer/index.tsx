@@ -12,16 +12,17 @@ interface FooterProps {
 function Footer({wichActive} : FooterProps) {
   const navigation = useNavigation();
 
-  const changeScreen = (name: string) => {
-    navigation.navigate(name as any);
+  const changeScreen = (name: string, haveFakeObject?: boolean) => {
+    return haveFakeObject ? navigation.navigate(name as never, { } as never) : navigation.navigate(name as any)
   }
+
+  
   
   return (
     <>
-    <View style={{marginTop: 0}} />
       <View style={styles.footer}>
         <FooterElement handleClick={() => changeScreen('Settings')} imageName={'setting'} active={wichActive === 'settings' ? true : false} />
-        <FooterElement handleClick={() => changeScreen('Home')} imageName={'home'} active={wichActive === 'home' ? true : false} />
+        <FooterElement handleClick={() => changeScreen('Home', true)} imageName={'home'} active={wichActive === 'home' ? true : false} />
         <FooterElement handleClick={() => changeScreen('Home')} imageName={'notification'} active={wichActive === 'notification' ? true : false} />
         <FooterElement handleClick={() => changeScreen('ViewProfile')} imageName={'user'} active={wichActive === 'user' ? true : false} />
       </View>
