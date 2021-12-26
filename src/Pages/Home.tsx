@@ -1,17 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
 
 import Header from '../components/Header';
-import Background from '../components/Background';
-import NoAnimalAlert from '../components/NoAnimalAlert';
-import BackgroundHeader from '../components/BackgroundHeader';
 import Footer from '../components/Footer';
 import AuthContext from '../contexts/user';
-import GeneralAnimalElements from '../components/GeneralAnimalElements';
 import BottomModal from '../components/BottomModal';
 import CreateAddress from '../components/CreateAddress';
+import HomeContentContainer from '../components/HomeContentContainer';
 
 const Home = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Home'>>();
@@ -27,9 +23,9 @@ const Home = () => {
 
   useEffect(() => {
     if ((animalData && animalData.length == 0) || !haveAddress) {
-      setHomePhrase('Is missing something...');
+      setHomePhrase('Something is missing...');
     } else {
-      setHomePhrase("How it's your animal?");
+      setHomePhrase('How is your animal?');
     }
   }, []);
 
@@ -37,24 +33,11 @@ const Home = () => {
     <>
       <>
         <Header text={homePhrase} />
-        <Background>
-          {animalData?.length === 0 ? (
-            <>
-              <NoAnimalAlert />
-            </>
-          ) : (
-            <>
-              <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
-              <ScrollView>
-                <GeneralAnimalElements
-                  setIsEditing={setIsEditing}
-                  isEditing={isEditing}
-                  animalData={animalData}
-                />
-              </ScrollView>
-            </>
-          )}
-        </Background>
+        <HomeContentContainer
+          animalData={animalData}
+          setIsEditing={setIsEditing}
+          isEditing={isEditing}
+        />
 
         <Footer wichActive={'home'} />
 
