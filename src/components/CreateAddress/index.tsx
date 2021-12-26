@@ -54,7 +54,7 @@ function CreateAddress({ changeHaveAddressStateFunction } : CreateAddressProps) 
 
       try {
         setIsLoading(true);
-        const response = await api.post('user/createAddress', addressData);
+        await api.post('user/createAddress', addressData);
         setIsLoading(false);
         changeHaveAddressStateFunction(true)
 

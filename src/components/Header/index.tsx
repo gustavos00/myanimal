@@ -1,28 +1,31 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 
 import globalStyles from '../../assets/styles/global';
+import AuthContext from '../../contexts/user';
 import HeaderIcon from '../HeaderIcon';
 import HeaderText from '../HeaderText';
 
 interface HeaderProps {
-  name?: string;
-  image?: string;
   text?: string;
 }
 
-function Header({ name, image, text }: HeaderProps) {
+
+
+function Header({ text }: HeaderProps) {
+  const { user } = useContext(AuthContext);
+  
   return (
     <>
       <View style={styles.header}>
         <View>
           <HeaderText
-            mainText={`Hello, ${name} 👋`}
+            mainText={`Hello, ${user?.givenName} 👋`}
             secondText={text ? text : 'Where is your animal?'}
           />
         </View>
 
-        <HeaderIcon photoUrl={image} />
+        <HeaderIcon photoUrl={user?.imageUrl} />
       </View>
     </>
   );

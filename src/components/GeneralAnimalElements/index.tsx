@@ -6,7 +6,7 @@ import { AnimalInfoParams } from '../../interfaces/AnimalInfoParams';
 import AnimalElement from '../AnimalElement';
 
 interface GeneralAnimalElementsProps {
-  animalData: Array<AnimalInfoParams> | undefined;
+  animalData: Array<AnimalInfoParams> | void;
   isEditing: boolean;
   setIsEditing: (s: boolean) => void;
 }

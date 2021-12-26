@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { showError } from '../utils/error';
 
 import * as SecureStore from 'expo-secure-store';
 
@@ -12,22 +11,34 @@ import Footer from '../components/Footer';
 import OptionHeader from '../components/OptionHeader';
 import OptionElement from '../components/OptionElement';
 import Underline from '../components/Underline';
-import BottomModal from '../components/BottomModal';
 import AuthContext from '../contexts/user';
-import StyledInput from '../components/StyledInput/index';
-import Button from '../components/Button';
 import Loading from '../components/Loading';
-
-import api from '../api/api';
+import GenerateFriendQrContainer from '../components/GenerateFriendQRContainer';
+import FindMyAnimalContainer from '../components/findMyAnimalContainer';
+import { showError } from '../utils/error';
 
 function Settings() {
   const [loading, setLoading] = useState<boolean>();
-  const [trackNumber, setTrackNumber] = useState<string>();
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [generateQRModalIsOpen, setGenerateQRModalIsOpen] =
+    useState<boolean>(false);
   const [findMyAnimalModalIsOpen, setFindMyAnimalModalIsOpen] =
     useState<boolean>(false);
 
   const navigation = useNavigation();
   const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (user) {
+      setUserEmail(user.email);
+    } else {
+      setUserEmail('');
+      showError(
+        'Error getting user data',
+        'Apparently there was a problem getting your email.'
+      );
+    }
+  }, [user]);
 
   const changeScreen = async (screenName: string, clearStorage?: boolean) => {
     navigation.navigate(screenName as any);
@@ -37,39 +48,9 @@ function Settings() {
     }
   };
 
-  const handleChangeText = (e: string) => {
-    setTrackNumber(e);
-  };
-
-  const handleSubmitForm = async () => {
-    let response;
-    try {
-      setLoading(true);
-      response = await api.get(
-        `/animal/findMyAnimal/?trackNumber=${trackNumber}`
-      );
-
-      if (response.data) {
-        navigation.navigate(
-          'FindMyAnimal' as never,
-          {
-            ownerData: response.data,
-          } as never
-        );
-      }
-      setLoading(false)
-    } catch (e) {
-      showError('Error: ' + e, 'Apparently there was an error, try again');
-    }
-  };
-
-  const swipeDownHandleFunction = () => {
-    setFindMyAnimalModalIsOpen(false);
-  };
-
   return (
     <>
-      <Header name={user?.givenName} image={user?.imageUrl} />
+      <Header />
 
       <Background>
         <>
@@ -91,11 +72,11 @@ function Settings() {
           <View style={styles.textContainer}>
             <OptionHeader text={'Friends'} />
             <OptionElement
-              handleClick={async () => changeScreen('')}
+              handleClick={async () => changeScreen('ScanQR')}
               text={'Add friends'}
             />
             <OptionElement
-              handleClick={async () => changeScreen('')}
+              handleClick={() => setGenerateQRModalIsOpen(true)}
               text={'Generate QR Code'}
             />
           </View>
@@ -131,22 +112,20 @@ function Settings() {
       <Footer wichActive={'settings'} />
 
       {findMyAnimalModalIsOpen && (
-        <>
-          <BottomModal
-            swipeDownFunction={swipeDownHandleFunction}
-            modalHeight={250}
-          >
-            <StyledInput
-              placeholder={'Track number'}
-              handleChangeFunction={handleChangeText}
-            />
-
-            <Button text={'Find owner animal'} handleClick={handleSubmitForm} />
-          </BottomModal>
-        </>
+        <FindMyAnimalContainer
+          closeBottomModalFunction={setFindMyAnimalModalIsOpen}
+          setLoadingFunction={setLoading}
+        />
       )}
 
       {loading && <Loading />}
+
+      {generateQRModalIsOpen && (
+        <GenerateFriendQrContainer
+          closeBottomModalFunction={setGenerateQRModalIsOpen}
+          email={userEmail}
+        />
+      )}
     </>
   );
 }

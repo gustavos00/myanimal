@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, SetStateAction, useState } from 'react';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 import { UserContextData } from '../interfaces/UserContextData';
 import { GoogleSignInProps } from '../interfaces/GoogleSignInProps';
@@ -10,15 +10,22 @@ interface AuthContextData {
   signed: boolean;
   token: string | void;
   user: UserContextData | void;
+  animalData: Array<AnimalInfoParams> | void;
 
-  googleSignIn: () => Promise<false | GoogleSignInProps | undefined>
+  googleSignIn: () => Promise<false | GoogleSignInProps | undefined>;
   pushAnimalData: (data: AnimalInfoParams) => void;
+  deleteAnimalData: (id: number) => void;
+}
+
+function isEmpty(obj: object) {
+  return Object.keys(obj).length === 0;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<UserContextData | void>();
+  const [animalData, setAnimalData] = useState<Array<AnimalInfoParams>>();
   const [token, setToken] = useState<string | void>();
 
   const googleSignIn = async () => {
@@ -27,14 +34,17 @@ export function AuthProvider({ children }: any) {
       if (!response) return false;
 
       setToken(response.token);
+      setAnimalData(response.animalData);
+
+      delete response.animalData;
       setUser(response);
 
       const tempObj = {
-        haveAddress: response.userAddress ? true : false,
+        haveAddress: !isEmpty(response.userAddress),
         isValid: response ? true : false,
-      }
+      };
 
-      return tempObj
+      return tempObj;
     } catch (e) {
       showError('Error: ' + e, 'Apparently there was an error, try again');
     }
@@ -42,7 +52,23 @@ export function AuthProvider({ children }: any) {
   };
 
   const pushAnimalData = (data: AnimalInfoParams) => {
-    console.log('its not pushing animal data to user state');
+    if(animalData) {
+      const tempObj = {
+        ...data,
+        arraykey: animalData.length + 1
+      }
+      if (animalData) {
+        setAnimalData((animalData) => [...(animalData ?? []), tempObj]);
+      }
+    } else {
+      showError('Error pushing animal data', 'Apparently there was adding your animal data, try again');
+    }
+  };
+
+  const deleteAnimalData = (id: number) => {
+    const temp = [...(animalData ?? [])];
+    temp.splice(id-1); //ID start in 1, but where we are talking about the lenght
+    setAnimalData(temp);
   };
 
   return (
@@ -51,9 +77,11 @@ export function AuthProvider({ children }: any) {
         signed: !!user,
         token,
         user,
+        animalData,
 
         googleSignIn,
         pushAnimalData,
+        deleteAnimalData,
       }}
     >
       {children}

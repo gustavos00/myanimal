@@ -9,4 +9,5 @@ export interface AnimalInfoParams {
   name: string;
   trackNumber: string;
   userIdUser: number;
+  arrayKey: number
 }

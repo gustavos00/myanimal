@@ -20,12 +20,12 @@ function ViewProfile() {
 
   const handleStatusText = (e: string) => {
     //Sanitize string
-    setNewStatusPhrase(e)
-  }
+    setNewStatusPhrase(e);
+  };
 
   const handleUpdateStatusButton = () => {
     //API Request
-  }
+  };
 
   return (
     <>
@@ -46,9 +46,19 @@ function ViewProfile() {
       <Footer wichActive={'user'} />
 
       {statusModalIsOpen && (
-        <BottomModal modalHeight={250} swipeDownFunction={() => setStatusModalIsOpen(false)}>
-          <StyledInput text={newStatusPhrase} placeholder={'Update status'} handleChangeFunction={handleStatusText} />
-          <Button text={'Update Status'} handleClick={handleUpdateStatusButton}/>
+        <BottomModal
+          modalHeight={250}
+          swipeDownFunction={() => setStatusModalIsOpen(false)}
+        >
+          <StyledInput
+            text={newStatusPhrase}
+            placeholder={'Update status'}
+            handleChangeFunction={handleStatusText}
+          />
+          <Button
+            text={'Update Status'}
+            handleClick={handleUpdateStatusButton}
+          />
         </BottomModal>
       )}
     </>

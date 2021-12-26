@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
@@ -7,6 +7,7 @@ import globalStyles from '../../assets/styles/global';
 
 import { showError } from '../../utils/error';
 import { AnimalInfoParams } from '../../interfaces/AnimalInfoParams';
+import AuthContext from '../../contexts/user';
 
 interface AnimalElementProps {
   animalData: AnimalInfoParams;
@@ -15,10 +16,12 @@ interface AnimalElementProps {
 
 function AnimalElement({ animalData, isEditing }: AnimalElementProps) {
   const navigation = useNavigation();
+  const { deleteAnimalData } = useContext(AuthContext);
 
-  const deletingAnimal = async (id: number) => {
+  const deletingAnimal = async (id: number, arrayKey: number) => {
     try {
       await api.delete(`/animal/delete/${String(id)}`);
+      deleteAnimalData(arrayKey);
     } catch (e) {
       showError(
         'Error: ' + e,
@@ -53,7 +56,11 @@ function AnimalElement({ animalData, isEditing }: AnimalElementProps) {
                 <Image source={require('../../assets/img/edit.png')} />
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => deletingAnimal(animalData.idAnimal)}>
+              <TouchableOpacity
+                onPress={() =>
+                  deletingAnimal(animalData.idAnimal, animalData.arrayKey)
+                }
+              >
                 <Image source={require('../../assets/img/delete.png')} />
               </TouchableOpacity>
             </>

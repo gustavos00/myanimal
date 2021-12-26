@@ -53,9 +53,7 @@ function FindMyAnimal() {
   return (
     <>
       <Header
-        name={user?.givenName}
         text={'Yupi, you found a animal'}
-        image={user?.imageUrl}
       />
 
       <Background>
