@@ -56,7 +56,11 @@ function AnimalElement({ animalData, isEditing }: AnimalElementProps) {
                 <Image source={require('../../assets/img/edit.png')} />
               </TouchableOpacity>
 
-              <TouchableOpacity onPress={() => deletingAnimal(animalData.idAnimal, animalData.arrayKey)}>
+              <TouchableOpacity
+                onPress={() =>
+                  deletingAnimal(animalData.idAnimal, animalData.arrayKey)
+                }
+              >
                 <Image source={require('../../assets/img/delete.png')} />
               </TouchableOpacity>
             </>
