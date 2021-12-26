@@ -5,7 +5,7 @@ export const showError = (
   customErrorMessage?: string
 ) => {
   if (customErrorMessage) {
-    Alert.alert(customErrorMessage as string);
+    Alert.alert(customErrorMessage);
   }
 
   throw new Error(errorMessage);
