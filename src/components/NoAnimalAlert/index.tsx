@@ -1,22 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import globalStyles from '../../assets/styles/global';
-import Button from '../Button';
+import CircleAddButton from '../CircleAddButton';
 
 function NoAnimalAlert() {
   const navigation = useNavigation();
-  
+
   const createNewAnimal = () => {
-    navigation.navigate('CreateAnimal' as any)
-  }
+    navigation.navigate('CreateAnimal' as any);
+  };
 
   return (
     <>
       <View style={styles.noAnimalContainer}>
-        <Text style={styles.noAnimalText}>Apparently you don't have any animal yet 🙁</Text>
-        <Button handleClick={createNewAnimal} text={'Create new animal'}/>
+        <Image
+          style={styles.noAnimalImage}
+          source={require('../../assets/img/noAnimal.png')}
+        />
+
+        <CircleAddButton handleClick={createNewAnimal} />
       </View>
     </>
   );
@@ -25,17 +29,19 @@ function NoAnimalAlert() {
 const styles = StyleSheet.create({
   noAnimalText: {
     margin: 10,
+    marginHorizontal: 25,
     textAlign: 'center',
 
     color: globalStyles.black,
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 19,
     lineHeight: 35,
   },
 
+  noAnimalImage: { width: 300, height: 300, marginVertical: 30 },
+
   noAnimalContainer: {
     alignItems: 'center',
-  }
-})
+  },
+});
 
 export default NoAnimalAlert;
