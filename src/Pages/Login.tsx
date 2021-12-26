@@ -34,7 +34,6 @@ const Login = () => {
 
     if (status) {
       const { haveAddress } = status;
-      console.log(haveAddress)
       navigation.navigate(
         'Home' as never,
         {
