@@ -35,12 +35,12 @@ function CreateAnimal() {
   const handleSubmitForm = async () => {
     //Check if error is a empty string
     if (error === '') {
-      if(photo === '') {
+      if (photo === '') {
         //Should i set a fake image or request a image?
-        console.log('Missing image')
+        console.log('Missing image');
         return;
       }
-      
+
       const animalData = new FormData();
       animalData.append('name', name);
       animalData.append('breed', breed);
@@ -61,12 +61,11 @@ function CreateAnimal() {
         pushAnimalData(result.data as unknown as AnimalInfoParams);
         setIsLoading(false);
 
-        navigation.navigate('Home' as never, { } as never);
+        navigation.navigate('Home' as never, {} as never);
       } catch (e) {
-        setIsLoading(false);
         showError('Error: ' + e, 'Apparently there was an error, try again');
+        setIsLoading(false);
       }
-      
     }
   };
 
