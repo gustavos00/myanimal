@@ -52,8 +52,16 @@ export function AuthProvider({ children }: any) {
   };
 
   const pushAnimalData = (data: AnimalInfoParams) => {
-    if (animalData) {
-      setAnimalData((animalData) => [...(animalData ?? []), data]);
+    if(animalData) {
+      const tempObj = {
+        ...data,
+        arraykey: animalData.length + 1
+      }
+      if (animalData) {
+        setAnimalData((animalData) => [...(animalData ?? []), tempObj]);
+      }
+    } else {
+      showError('Error pushing animal data', 'Apparently there was adding your animal data, try again');
     }
   };
 
