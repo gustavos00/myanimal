@@ -15,8 +15,8 @@ function HeaderIcon({ photoUrl }: HeaderIconProps) {
 
 const styles = StyleSheet.create({
   image: { 
-    width: 90,
-    height: 90,
+    width: 75,
+    height: 75,
 
     borderRadius: 100,
   },
