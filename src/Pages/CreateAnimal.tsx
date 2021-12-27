@@ -149,7 +149,7 @@ function CreateAnimal() {
                 enableValue={isEnabled}
               />
               <Button
-                text={'Create new animal'}
+                text={'Create new pet'}
                 handleClick={handleSubmitForm}
               />
 
