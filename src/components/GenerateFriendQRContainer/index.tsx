@@ -9,24 +9,30 @@ import BottomModal from '../BottomModal';
 import { showError } from '../../utils/error';
 import Loading from '../Loading';
 
+interface userDataProps {
+  email?: string,
+  id?: number 
+}
+
 interface GenerateFriendQrContainerProps {
   closeBottomModalFunction: (e: boolean) => void;
-  email: string;
+  userData: userDataProps;
 }
 
 function GenerateFriendQrContainer({
   closeBottomModalFunction,
-  email,
+  userData,
 }: GenerateFriendQrContainerProps) {
   const [token, setToken] = useState();
   const [loading, setLoading] = useState<boolean>();
 
-  if(!email) return <></>;
+  if(!userData.email) return <></>;
 
   const generateQR = async () => {
+    if(!userData) return console.log('error getting user data');
     try {
       setLoading(true)
-      const response = await api.get(`user/friend/token?email=${email}`);
+      const response = await api.get(`user/friend/token?email=${userData.email}&id=${userData.id}`);
       setLoading(false)
 
       const { token } = response.data
