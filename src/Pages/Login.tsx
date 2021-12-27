@@ -41,7 +41,7 @@ const Login = () => {
         } as never
       );
     } else {
-      showError('Google auth canceled ');
+      console.log('Google auth canceled ');
     }
   };
 

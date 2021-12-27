@@ -40,6 +40,11 @@ function Settings() {
     }
   }, [user]);
 
+  const userDataObj = {
+    email: userEmail,
+    id: user?.id,
+  }
+
   const changeScreen = async (screenName: string, clearStorage?: boolean) => {
     navigation.navigate(screenName as any);
 
@@ -123,7 +128,7 @@ function Settings() {
       {generateQRModalIsOpen && (
         <GenerateFriendQrContainer
           closeBottomModalFunction={setGenerateQRModalIsOpen}
-          email={userEmail}
+          userData={userDataObj}
         />
       )}
     </>
