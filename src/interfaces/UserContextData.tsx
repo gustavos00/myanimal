@@ -3,6 +3,7 @@ import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 export interface UserContextData {
   familyName: string;
   givenName: string;
+  id: number;
   email: string;
   imageUrl: string;
   animalData: Array<AnimalInfoParams>;
@@ -10,9 +11,9 @@ export interface UserContextData {
 }
 
 interface UserAddressData {
-  doorNumber: string,
-  postalCode: string,
-  streetName: string,
-  parishName: string,
-  locationName: string,
+  doorNumber: string;
+  postalCode: string;
+  streetName: string;
+  parishName: string;
+  locationName: string;
 }
