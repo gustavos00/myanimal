@@ -1,86 +1,133 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-interface t {
-  type: any;
-  data: any
+import api from '../api/api'
+
+import Header from '../components/Header';
+import Background from '../components/Background';
+import BackgroundHeader from '../components/BackgroundHeader';
+import Footer from '../components/Footer';
+import Button from '../components/Button';
+
+interface HandleScanCode {
+  type: string;
+  data: string;
 }
 
 function ScanQr() {
   const [hasPermission, setHasPermission] = useState<boolean>();
   const [scanned, setScanned] = useState(false);
-  const [text, setText] = useState('Not yet scanned')
+  const [message, setMessage] = useState<string | undefined>();
 
   const askForCameraPermission = () => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted' ? true : false);
-    })()
-  }
+    })();
+  };
 
   // Request Camera Permission
   useEffect(() => {
     askForCameraPermission();
   }, []);
 
-  // What happens when we scan the bar code
-  const handleBarCodeScanned = ({ type, data } : t) => {
-    setScanned(true);
-    setText(data)
-    console.log('Type: ' + type + '\nData: ' + data)
-  };
-
-  // Check permissions and return the screens
+  /* RE-REQUEST IF DONT HAVE CAMERA PERMS
+  Check permissions and return the screens
   if (hasPermission === null) {
     return (
       <View style={styles.container}>
         <Text>Requesting for camera permission</Text>
-      </View>)
+      </View>
+    );
   }
   if (hasPermission === false) {
     return (
       <View style={styles.container}>
         <Text style={{ margin: 10 }}>No access to camera</Text>
-        <Button title={'Allow Camera'} onPress={() => askForCameraPermission()} />
-      </View>)
-  }
-
-  // Return the View
-  return (
-    <View style={styles.container}>
-      <View style={styles.barcodebox}>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{ height: 400, width: 400 }} />
+        <Button
+          title={'Allow Camera'}
+          onPress={() => askForCameraPermission()}
+        />
       </View>
-      <Text style={styles.maintext}>{text}</Text>
+    );
+  }*/
 
-      {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
-    </View>
+  // What happens when we scan the bar code
+  const handleBarCodeScanned = async ({ type, data }: HandleScanCode) => {
+    setScanned(true);
+
+    if (type === 'org.iso.QRCode') {
+      setMessage('QR Readed');
+
+      const response = await api.get(`user/friend/verifyToken?token=${data}`)
+      //Request
+    } else {
+      setMessage('Please, read a valid QR code.');
+    }
+  };
+
+  const enableReScan = () => {
+    setScanned(false);
+    setMessage(undefined);
+  };
+
+  return (
+    <>
+      <Header text={'New friends, hm?'} />
+      <Background>
+        <>
+          <BackgroundHeader text={'Scan Friend QR Code'} />
+
+          <View style={styles.container}>
+            <BarCodeScanner
+              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+              style={styles.qrCodeBox}
+            />
+
+            {message && (
+              <>
+                <Text style={styles.messageText}>{message}</Text>
+
+                <Button handleClick={enableReScan} text={'Re-scan'} />
+              </>
+            )}
+          </View>
+
+          <Footer wichActive={'settings'} />
+        </>
+      </Background>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    paddingTop: 50,
+
     alignItems: 'center',
-    justifyContent: 'center',
   },
+
+  messageText: {
+    marginTop: 20,
+
+    fontSize: 19,
+    fontWeight: 'bold',
+  },
+
   maintext: {
     fontSize: 16,
     margin: 20,
   },
-  barcodebox: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 300,
-    width: 300,
+
+  qrCodeBox: {
+    width: 350,
+    height: 350,
+
     overflow: 'hidden',
     borderRadius: 30,
-    backgroundColor: 'tomato'
-  }
+  },
 });
 
 export default ScanQr;
