@@ -7,6 +7,7 @@ import QRCode from 'react-native-qrcode-svg';
 import globalStyles from '../../assets/styles/global';
 import BottomModal from '../BottomModal';
 import { showError } from '../../utils/error';
+import Loading from '../Loading';
 
 interface GenerateFriendQrContainerProps {
   closeBottomModalFunction: (e: boolean) => void;
@@ -18,22 +19,27 @@ function GenerateFriendQrContainer({
   email,
 }: GenerateFriendQrContainerProps) {
   const [token, setToken] = useState();
+  const [loading, setLoading] = useState<boolean>();
 
   if(!email) return <></>;
 
   const generateQR = async () => {
     try {
+      setLoading(true)
       const response = await api.get(`user/friend/token?email=${email}`);
+      setLoading(false)
 
       const { token } = response.data
       setToken(token)
     } catch (e) {
+      setLoading(false)
       showError('Error: ' + e, 'Apparently there was an error, try again');
     }
   };
 
   useEffect(() => {
     const generateQRuseEffectFunction = async () => {
+      setLoading(true)
       await generateQR()
     }
 
@@ -58,6 +64,8 @@ function GenerateFriendQrContainer({
           </View>
         </>
       </BottomModal>
+
+      {loading && <Loading />}
     </>
   );
 }
