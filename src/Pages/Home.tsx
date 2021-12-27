@@ -25,7 +25,7 @@ const Home = () => {
     if ((animalData && animalData.length == 0) || !haveAddress) {
       setHomePhrase('Something is missing...');
     } else {
-      setHomePhrase('How is your animal?');
+      setHomePhrase('How is your pet?');
     }
   }, []);
 

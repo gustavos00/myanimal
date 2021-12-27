@@ -53,7 +53,7 @@ function FindMyAnimal() {
   return (
     <>
       <Header
-        text={'Yupi, you found a animal'}
+        text={'Yupi, you found a pet'}
       />
 
       <Background>

@@ -21,7 +21,7 @@ function Header({ text }: HeaderProps) {
         <View>
           <HeaderText
             mainText={`Hello, ${user?.givenName} 👋`}
-            secondText={text ? text : 'Where is your animal?'}
+            secondText={text ? text : 'Where is your pet?'}
           />
         </View>
 
