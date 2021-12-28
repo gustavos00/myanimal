@@ -51,7 +51,7 @@ function FindMyAnimalContainer({
       }
       setLoadingFunction(false);
     } catch (e) {
-      showError('Error: ' + e, 'Apparently there was an error, try again');
+      return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
   };
   return (
