@@ -60,7 +60,7 @@ function CreateAddress({ changeHaveAddressStateFunction } : CreateAddressProps) 
 
         //Dynamic push user data
       } catch (e) {
-        showError('Error: ' + e, 'Apparently there was an error, try again');
+        return showError('Error: ' + e, 'Apparently there was an error, try again');
       }
     }
   };

@@ -39,7 +39,7 @@ function GenerateFriendQrContainer({
       setToken(token)
     } catch (e) {
       setLoading(false)
-      showError('Error: ' + e, 'Apparently there was an error, try again');
+      return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
   };
 

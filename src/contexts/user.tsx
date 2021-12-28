@@ -1,10 +1,11 @@
-import React, { createContext, SetStateAction, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 import { UserContextData } from '../interfaces/UserContextData';
 import { GoogleSignInProps } from '../interfaces/GoogleSignInProps';
 import { showError } from '../utils/error';
 
 import * as auth from '../services/auth';
+import storage from '../utils/storage';
 
 interface AuthContextData {
   signed: boolean;
@@ -15,6 +16,14 @@ interface AuthContextData {
   googleSignIn: () => Promise<false | GoogleSignInProps | undefined>;
   pushAnimalData: (data: AnimalInfoParams) => void;
   deleteAnimalData: (id: number) => void;
+  setUserData: (data: UserContextData) => void;
+  setAnimalDataGlobalFunction: (data: Array<AnimalInfoParams>) => void;
+}
+
+interface UserGoogleData extends UserContextData {
+  token: string;
+  accessToken: string;
+  salt: string;
 }
 
 function isEmpty(obj: object) {
@@ -28,47 +37,77 @@ export function AuthProvider({ children }: any) {
   const [animalData, setAnimalData] = useState<Array<AnimalInfoParams>>();
   const [token, setToken] = useState<string | void>();
 
-  const googleSignIn = async () => {
+  const setTokenOnLocalStorage = async (token: string, salt: string) => {
+    //Missing date
     try {
-      const response = await auth.GoogleSignIn();
-      if (!response) return false;
-
-      setToken(response.token);
-      setAnimalData(response.animalData);
-
-      delete response.animalData;
-      setUser(response);
-
-      const tempObj = {
-        haveAddress: !isEmpty(response.userAddress),
-        isValid: response ? true : false,
-      };
-
-      return tempObj;
+      await storage.save({ key: '@userAccess', data: { token, salt } });
     } catch (e) {
-      showError('Error: ' + e, 'Apparently there was an error, try again');
+      return showError(
+        'Error: ' + e,
+        'Apparently there was an error, try again'
+      );
     }
-    return;
+  };
+
+  const googleSignIn = async () => {
+    let googleResponse: UserGoogleData;
+    let tempObj = {};
+
+    try {
+      googleResponse = await auth.GoogleSignIn();
+      if (!googleResponse) return false;
+
+      setToken(googleResponse.token);
+      setAnimalData(googleResponse.animalData);
+      setUser(googleResponse);
+      await setTokenOnLocalStorage(
+        googleResponse.accessToken,
+        googleResponse.salt
+      );
+
+      tempObj = {
+        haveAddress: !isEmpty(googleResponse.userAddress),
+        isValid: googleResponse ? true : false,
+      };
+    } catch (e) {
+      return showError(
+        'Error: ' + e,
+        'Apparently there was an error, try again'
+      );
+    }
+
+    return tempObj;
   };
 
   const pushAnimalData = (data: AnimalInfoParams) => {
-    if(animalData) {
+    if (animalData) {
       const tempObj = {
         ...data,
-        arraykey: animalData.length + 1
-      }
+        arraykey: animalData.length + 1,
+      };
       if (animalData) {
         setAnimalData((animalData) => [...(animalData ?? []), tempObj]);
       }
     } else {
-      showError('Error pushing animal data', 'Apparently there was adding your animal data, try again');
+      return showError(
+        'Error pushing animal data',
+        'Apparently there was adding your animal data, try again'
+      );
     }
   };
 
   const deleteAnimalData = (id: number) => {
     const temp = [...(animalData ?? [])];
-    temp.splice(id-1); //ID start in 1, but where we are talking about the lenght
+    temp.splice(id - 1); //ID start in 1, but where we are talking about the lenght
     setAnimalData(temp);
+  };
+
+  const setUserData = (data: UserContextData) => {
+    setUser(data);
+  };
+
+  const setAnimalDataGlobalFunction = (data: Array<AnimalInfoParams>) => {
+    setAnimalData(data);
   };
 
   return (
@@ -82,6 +121,8 @@ export function AuthProvider({ children }: any) {
         googleSignIn,
         pushAnimalData,
         deleteAnimalData,
+        setUserData,
+        setAnimalDataGlobalFunction,
       }}
     >
       {children}

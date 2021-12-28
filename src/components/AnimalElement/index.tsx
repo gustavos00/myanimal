@@ -23,7 +23,7 @@ function AnimalElement({ animalData, isEditing }: AnimalElementProps) {
       await api.delete(`/animal/delete/${String(id)}`);
       deleteAnimalData(arrayKey);
     } catch (e) {
-      showError(
+      return showError(
         'Error: ' + e,
         'Apparently there was an error deleting this animal, try again'
       );

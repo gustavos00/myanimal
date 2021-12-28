@@ -68,7 +68,7 @@ function UpdateAnimal() {
         navigation.navigate('Home' as never, {} as never);
       } catch (e) {
         setIsLoading(false);
-        showError('Error: ' + e, 'Apparently there was an error, try again');
+        return showError('Error: ' + e, 'Apparently there was an error, try again');
       }
     }
   };
@@ -98,7 +98,7 @@ function UpdateAnimal() {
         setFunction(value);
       }
     } else {
-      showError('Error handle text on create animal');
+      return showError('Error handle text on create animal');
     }
   };
 

@@ -2,8 +2,9 @@ import { showError } from '../utils/error';
 import { UserGoogleDataResponse } from '../interfaces/UserGoogleDataResponse';
 
 import api from '../api/api';
-
 import * as Google from 'expo-google-app-auth';
+
+const uuid = require('uuid');
 
 export async function GoogleSignIn() {
   const config = {
@@ -16,19 +17,23 @@ export async function GoogleSignIn() {
 
   try {
     const data = await Google.logInAsync(config);
-    if (data.type === 'cancel') return false;
-
-    const responseData = await apiPostData(data.user);
-
-    return responseData;
+    
+    if(data.type !== 'cancel') {
+      const responseData = await apiPostData(data.user);
+      return responseData
+    } else {
+      return false
+    }
   } catch (e) {
-    showError('Error: ' + e, 'Apparently there was an error, try again');
+    return showError('Error: ' + e, 'Apparently there was an error, try again');
   }
 }
 
 const apiPostData = async (params: UserGoogleDataResponse) => {
+  const salt = uuid.v4();
+  
   let userData = new FormData();
-
+  userData.append('salt', salt)
   userData.append('givenName', params.givenName ?? '');
   userData.append('familyName', params.familyName ?? '');
   userData.append('email', params.email ?? '');
@@ -49,6 +54,6 @@ const apiPostData = async (params: UserGoogleDataResponse) => {
 
     return tempObj
   } catch (e) {
-    showError('Error: ' + e, 'Apparently there was an error, try again');
+    return showError('Error: ' + e, 'Apparently there was an error, try again');
   }
 };

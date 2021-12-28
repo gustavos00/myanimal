@@ -63,8 +63,11 @@ function CreateAnimal() {
 
         navigation.navigate('Home' as never, {} as never);
       } catch (e) {
-        showError('Error: ' + e, 'Apparently there was an error, try again');
         setIsLoading(false);
+        return showError(
+          'Error: ' + e,
+          'Apparently there was an error, try again'
+        );
       }
     }
   };
@@ -93,7 +96,7 @@ function CreateAnimal() {
         setFunction(value);
       }
     } else {
-      showError('Error handle text on create animal');
+      return showError('Error handle text on create animal');
     }
   };
 
@@ -148,10 +151,7 @@ function CreateAnimal() {
                 enableFunction={setIsEnabled}
                 enableValue={isEnabled}
               />
-              <Button
-                text={'Create new pet'}
-                handleClick={handleSubmitForm}
-              />
+              <Button text={'Create new pet'} handleClick={handleSubmitForm} />
 
               <Text>{error}</Text>
             </View>

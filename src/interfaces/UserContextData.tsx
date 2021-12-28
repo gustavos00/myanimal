@@ -1,4 +1,5 @@
-import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
+import { AnimalInfoParams } from "./AnimalInfoParams";
+import { UserAddressData } from "./UserAddressData";
 
 export interface UserContextData {
   familyName: string;
@@ -6,14 +7,7 @@ export interface UserContextData {
   id: number;
   email: string;
   imageUrl: string;
-  animalData: Array<AnimalInfoParams>;
+  animalData: Array<AnimalInfoParams>
   userAddress: UserAddressData;
 }
 
-interface UserAddressData {
-  doorNumber: string;
-  postalCode: string;
-  streetName: string;
-  parishName: string;
-  locationName: string;
-}

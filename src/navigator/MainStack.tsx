@@ -6,6 +6,7 @@ import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 import { OwnerInfoParams } from '../interfaces/OwnerInfoParams';
 import { GoogleSignInProps } from '../interfaces/GoogleSignInProps';
 
+import SplashScreen from '../pages/SplashScreen';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Settings from '../pages/Settings';
@@ -16,6 +17,7 @@ import FindMyAnimal from '../pages/FindMyAnimal';
 import ViewProfile from '../pages/ViewProfile';
 import AboutUs from '../pages/AboutUs';
 import ScanQR from '../pages/ScanQR';
+
 
 interface AnimalScreenParams {
   animalInfo: AnimalInfoParams;
@@ -30,6 +32,7 @@ interface HomeAddressStatusParams {
 }
 
 export type RootStackParamList = {
+  SplashScreen: undefined;
   Home: HomeAddressStatusParams;
   Login: undefined;
   Settings: undefined;
@@ -49,6 +52,11 @@ export default () => {
     <NavigationContainer>
       <Navigator screenOptions={{ gestureEnabled: false }}>
         <Group>
+        <Screen
+            options={{ headerShown: false }}
+            name="SplashScreen"
+            component={SplashScreen}
+          />
           <Screen
             options={{ headerShown: false }}
             name="Login"
