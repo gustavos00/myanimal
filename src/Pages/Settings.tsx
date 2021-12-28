@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
-import * as SecureStore from 'expo-secure-store';
+import { showError } from '../utils/error';
 
 import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
@@ -15,7 +14,8 @@ import AuthContext from '../contexts/user';
 import Loading from '../components/Loading';
 import GenerateFriendQrContainer from '../components/GenerateFriendQRContainer';
 import FindMyAnimalContainer from '../components/findMyAnimalContainer';
-import { showError } from '../utils/error';
+
+import storage from '../utils/storage';
 
 function Settings() {
   const [loading, setLoading] = useState<boolean>();
@@ -33,7 +33,7 @@ function Settings() {
       setUserEmail(user.email);
     } else {
       setUserEmail('');
-      showError(
+      return showError(
         'Error getting user data',
         'Apparently there was a problem getting your email.'
       );
@@ -43,13 +43,13 @@ function Settings() {
   const userDataObj = {
     email: userEmail,
     id: user?.id,
-  }
+  };
 
   const changeScreen = async (screenName: string, clearStorage?: boolean) => {
     navigation.navigate(screenName as any);
 
     if (clearStorage) {
-      await SecureStore.deleteItemAsync('token');
+      await storage.remove({key: '@userAccess'});
     }
   };
 
