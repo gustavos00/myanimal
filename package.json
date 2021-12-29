@@ -21,6 +21,7 @@
     "expo-image-picker": "~11.0.3",
     "expo-linear-gradient": "~10.0.3",
     "expo-network": "~4.0.3",
+    "expo-notifications": "~0.13.3",
     "expo-status-bar": "~1.1.0",
     "install": "^0.13.0",
     "lottie-ios": "3.2.3",

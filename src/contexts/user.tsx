@@ -6,6 +6,7 @@ import { showError } from '../utils/error';
 
 import * as auth from '../services/auth';
 import storage from '../utils/storage';
+import isEmpty from '../utils/isEmpty';
 
 interface AuthContextData {
   signed: boolean;
@@ -24,10 +25,6 @@ interface UserGoogleData extends UserContextData {
   token: string;
   accessToken: string;
   salt: string;
-}
-
-function isEmpty(obj: object) {
-  return Object.keys(obj).length === 0;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
