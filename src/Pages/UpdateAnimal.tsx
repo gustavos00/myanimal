@@ -6,7 +6,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import api from '../api/api';
 
 import globalStyles from '../assets/styles/global';
-import AddImage from '../components/AddImage';
+import AddImage from '../components/AddPhoto';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
@@ -32,7 +32,7 @@ function UpdateAnimal() {
   const [trackNumber, setTrackNumber] = useState<string>(
     animalInfo.trackNumber
   );
-  const [imageUrl, setImageUrl] = useState<string>(animalInfo.imageUrl);
+  const [photoUrl, setPhotoUrl] = useState<string>(animalInfo.photoUrl);
   const [error, setError] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -52,7 +52,7 @@ function UpdateAnimal() {
       animalData.append('trackNumber', trackNumber);
       animalData.append('idUser', String(animalInfo.userIdUser));
       animalData.append('animalPhoto', {
-        uri: imageUrl,
+        uri: photoUrl,
         name: 'animalPhoto',
         type: 'image/png', // or your mime type what you want
       } as unknown as string | Blob);
@@ -106,8 +106,8 @@ function UpdateAnimal() {
     <>
       <View style={styles.headerBg}>
         <AddImage
-          animalImageUrl={animalInfo.imageUrl}
-          setProfilePhotoFunction={setImageUrl}
+          photoUrl={animalInfo.photoUrl}
+          setProfilePhotoFunction={setPhotoUrl}
         />
 
         <Background heightSize={'75%'}>

@@ -17,7 +17,7 @@ import FindMyAnimal from '../pages/FindMyAnimal';
 import ViewProfile from '../pages/ViewProfile';
 import AboutUs from '../pages/AboutUs';
 import ScanQR from '../pages/ScanQR';
-
+import UpdateProfile from '../pages/UpdateProfile';
 
 interface AnimalScreenParams {
   animalInfo: AnimalInfoParams;
@@ -41,6 +41,7 @@ export type RootStackParamList = {
   UpdateAnimal: AnimalScreenParams;
   FindMyAnimal: OwnerContactsParams;
   ViewProfile: undefined;
+  UpdateProfile: undefined;
   AboutUs: undefined;
   ScanQR: undefined;
 };
@@ -52,7 +53,7 @@ export default () => {
     <NavigationContainer>
       <Navigator screenOptions={{ gestureEnabled: false }}>
         <Group>
-        <Screen
+          <Screen
             options={{ headerShown: false }}
             name="SplashScreen"
             component={SplashScreen}
@@ -86,6 +87,11 @@ export default () => {
             options={{ headerShown: false }}
             name="ViewProfile"
             component={ViewProfile}
+          />
+          <Screen
+            options={{ headerShown: false }}
+            name="UpdateProfile"
+            component={UpdateProfile}
           />
           <Screen
             options={{ headerShown: false }}

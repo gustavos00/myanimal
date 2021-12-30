@@ -10,11 +10,9 @@ interface HeaderProps {
   text?: string;
 }
 
-
-
 function Header({ text }: HeaderProps) {
   const { user } = useContext(AuthContext);
-  
+
   return (
     <>
       <View style={styles.header}>
@@ -25,7 +23,7 @@ function Header({ text }: HeaderProps) {
           />
         </View>
 
-        <HeaderIcon photoUrl={user?.imageUrl} />
+        <HeaderIcon photoUrl={user?.photoUrl} />
       </View>
     </>
   );

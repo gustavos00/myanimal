@@ -9,8 +9,6 @@ interface StyledInputProps {
   width?: number;
 }
 
-let elementHeight;
-
 function StyledInput({
   text,
   handleChangeFunction,

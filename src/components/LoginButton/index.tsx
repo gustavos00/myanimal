@@ -11,7 +11,7 @@ function LoginButton({text, handleClick} : LoginButtonProps) {
   return (
     <>
       <TouchableOpacity activeOpacity={.7} style={styles.button} onPress={handleClick}>
-        <Image style={styles.buttonImage} source={require('../../assets/img/googleLogo.png')}/>
+        <Image style={styles.buttonPhoto} source={require('../../assets/img/googleLogo.png')}/>
         <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
     </>
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     color: globalStyles.mainColor
   },
 
-  buttonImage: {
+  buttonPhoto: {
     width: 27,
     height: 27,
   }

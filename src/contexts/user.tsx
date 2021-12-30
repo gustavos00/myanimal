@@ -17,8 +17,8 @@ interface AuthContextData {
   googleSignIn: () => Promise<false | GoogleSignInProps | undefined>;
   pushAnimalData: (data: AnimalInfoParams) => void;
   deleteAnimalData: (id: number) => void;
-  setUserData: (data: UserContextData) => void;
   setAnimalDataGlobalFunction: (data: Array<AnimalInfoParams>) => void;
+  setUserData: (data: UserContextData) => void;
 }
 
 interface UserGoogleData extends UserContextData {
@@ -57,6 +57,7 @@ export function AuthProvider({ children }: any) {
       setToken(googleResponse.token);
       setAnimalData(googleResponse.animalData);
       setUser(googleResponse);
+      console.log(googleResponse)
       await setTokenOnLocalStorage(
         googleResponse.accessToken,
         googleResponse.salt

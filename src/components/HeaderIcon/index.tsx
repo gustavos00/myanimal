@@ -8,13 +8,13 @@ interface HeaderIconProps {
 function HeaderIcon({ photoUrl }: HeaderIconProps) {
   return (
     <>
-      <Image style={styles.image} source={{uri: photoUrl}}/>
+      <Image style={styles.photo} source={{uri: photoUrl}}/>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  image: { 
+  photo: { 
     width: 75,
     height: 75,
 

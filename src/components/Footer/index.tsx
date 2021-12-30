@@ -6,25 +6,41 @@ import globalStyles from '../../assets/styles/global';
 import FooterElement from '../FooterElement/index';
 
 interface FooterProps {
-  wichActive: string
+  wichActive: string;
 }
 
-function Footer({wichActive} : FooterProps) {
+function Footer({ wichActive }: FooterProps) {
   const navigation = useNavigation();
 
   const changeScreen = (name: string, haveFakeObject?: boolean) => {
-    return haveFakeObject ? navigation.navigate(name as never, { } as never) : navigation.navigate(name as any)
-  }
+    return haveFakeObject
+      ? navigation.navigate(name as never, {} as never)
+      : navigation.navigate(name as any);
+  };
 
-  
-  
   return (
     <>
       <View style={styles.footer}>
-        <FooterElement handleClick={() => changeScreen('Settings')} imageName={'setting'} active={wichActive === 'settings' ? true : false} />
-        <FooterElement handleClick={() => changeScreen('Home', true)} imageName={'home'} active={wichActive === 'home' ? true : false} />
-        <FooterElement handleClick={() => changeScreen('Home')} imageName={'notification'} active={wichActive === 'notification' ? true : false} />
-        <FooterElement handleClick={() => changeScreen('ViewProfile')} imageName={'user'} active={wichActive === 'user' ? true : false} />
+        <FooterElement
+          handleClick={() => changeScreen('Settings')}
+          photoName={'setting'}
+          active={wichActive === 'settings' ? true : false}
+        />
+        <FooterElement
+          handleClick={() => changeScreen('Home', true)}
+          photoName={'home'}
+          active={wichActive === 'home' ? true : false}
+        />
+        <FooterElement
+          handleClick={() => changeScreen('Home')}
+          photoName={'notification'}
+          active={wichActive === 'notification' ? true : false}
+        />
+        <FooterElement
+          handleClick={() => changeScreen('ViewProfile')}
+          photoName={'user'}
+          active={wichActive === 'user' ? true : false}
+        />
       </View>
     </>
   );
@@ -36,7 +52,7 @@ const styles = StyleSheet.create({
     height: 90,
     paddingBottom: 10,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 0,
@@ -55,6 +71,6 @@ const styles = StyleSheet.create({
 
     backgroundColor: globalStyles.white,
   },
-})
+});
 
 export default Footer;

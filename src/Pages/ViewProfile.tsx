@@ -8,7 +8,7 @@ import Button from '../components/Button';
 import Footer from '../components/Footer';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import OptionHeader from '../components/OptionHeader';
-import ProfileImage from '../components/ProfileImage';
+import ProfilePhoto from '../components/ProfilePhoto';
 import StyledInput from '../components/StyledInput';
 import StyledText from '../components/StyledText';
 import Underline from '../components/Underline';
@@ -33,7 +33,7 @@ function ViewProfile() {
   return (
     <>
       <View style={styles.headerBg}>
-        <ProfileImage photoUrl={user?.imageUrl} />
+        <ProfilePhoto photoUrl={user?.photoUrl} />
 
         <Background heightSize={'75%'}>
           <KeyboardAvoidingWrapper>
@@ -67,12 +67,10 @@ function ViewProfile() {
                   value={user?.userAddress.postalCode ?? ''}
                   text={'Postal code'}
                 />
-
                 <StyledText
                   value={user?.userAddress.parishName ?? ''}
                   text={'Parish'}
                 />
-
                 <StyledText
                   value={user?.userAddress.locationName ?? ''}
                   text={'Locality'}
