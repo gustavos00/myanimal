@@ -11,13 +11,21 @@ import { UserContextData } from '../interfaces/UserContextData';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 
 import * as Notifications from 'expo-notifications';
+import { verifyNetwork } from '../utils/network';
+import BackgroundFilter from '../components/BackgroundFilter';
+import BottomModal from '../components/BottomModal';
+import NoWIFIModal from '../components/NoWIFIModal';
 
 function SplashScreen() {
   const navigation = useNavigation();
   const { setUserData, setAnimalDataGlobalFunction } = useContext(AuthContext);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [internetConnection, setInternetConnection] = useState<boolean>(false);
   const [notificationPermissions, setNotificationPermissions] =
     useState<boolean>();
 
+  //NOTIFICATIONS
   //Check notification permissions
   const getNotificationsPermissions = async () => {
     const settings = await Notifications.getPermissionsAsync();
@@ -69,6 +77,7 @@ function SplashScreen() {
     getNotificationsPermissionsStatus();
   }, []);
 
+  //CHECK USER
   //Check token on localstorage
   const getTokenFromLocalStorage = async () => {
     let accessResponse;
@@ -125,7 +134,26 @@ function SplashScreen() {
 
     getToken();
   }, []);
-  return <></>;
+
+  //CHECK INTERNET
+
+
+  const verifyNetworkLocal = async () => {
+    const status = await verifyNetwork();
+    setInternetConnection(!status);
+  };
+  verifyNetworkLocal();
+  return (
+    <>
+      {internetConnection && (
+        <BackgroundFilter>
+          <BottomModal modalHeight={300}>
+            <NoWIFIModal handleClick={verifyNetworkLocal} />
+          </BottomModal>
+        </BackgroundFilter>
+      )}
+    </>
+  );
 }
 
 export default SplashScreen;
