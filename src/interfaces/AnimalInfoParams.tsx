@@ -4,8 +4,8 @@ export interface AnimalInfoParams {
   birthdayMonth: string;
   breed: string;
   idAnimal: number;
-  imageName: string;
-  imageUrl: string;
+  photoName: string;
+  photoUrl: string;
   name: string;
   trackNumber: string;
   userIdUser: number;

@@ -42,7 +42,7 @@ function AnimalElement({ animalData, isEditing }: AnimalElementProps) {
   return (
     <>
       <View style={styles.element}>
-        <Image source={{ uri: animalData.imageUrl }} style={styles.icon} />
+        <Image source={{ uri: animalData.photoUrl }} style={styles.icon} />
 
         <View style={styles.textContainer}>
           <Text style={styles.nameText}>{animalData.name}</Text>

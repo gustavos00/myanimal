@@ -2,19 +2,19 @@ import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
-interface ProfileImageProps {
+interface ProfilePhotoProps {
   widthSize?: number;
   heightSize?: number;
   photoUrl: string | undefined;
   statusMessage?: string;
 }
 
-function ProfileImage({
+function ProfilePhoto({
   widthSize,
   heightSize,
   photoUrl,
   statusMessage,
-}: ProfileImageProps) {
+}: ProfilePhotoProps) {
   return (
     <>
       <View style={styles.container}>
@@ -25,15 +25,14 @@ function ProfileImage({
             heightSize ? { height: heightSize } : { height: 190 },
           ]}
         >
-          <Image style={styles.animalImage} source={{ uri: photoUrl }} />
+          <Image style={styles.animalPhoto} source={{ uri: photoUrl }} />
 
           {statusMessage && (
             <>
               <TouchableOpacity
                 activeOpacity={0.7}
                 style={styles.statusContainer}
-              >
-              </TouchableOpacity>
+              ></TouchableOpacity>
             </>
           )}
         </View>
@@ -87,16 +86,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  image: {
-    width: '20%',
-    height: '20%',
-  },
-
-  animalImage: {
+  animalPhoto: {
     borderRadius: 100,
     width: '100%',
     height: '100%',
   },
 });
 
-export default ProfileImage;
+export default ProfilePhoto;

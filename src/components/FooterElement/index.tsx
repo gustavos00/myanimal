@@ -2,29 +2,29 @@ import React, { ReactNode } from 'react';
 import { TouchableOpacity, Image ,StyleSheet } from 'react-native';
 
 interface FooterElementProps {
-  imageName: string,
+  photoName: string,
   active?: boolean,
   handleClick: () => void
 }
 
-function FooterElement({ imageName, active, handleClick }: FooterElementProps) {
-  let image 
+function FooterElement({ photoName, active, handleClick }: FooterElementProps) {
+  let photo 
 
-  switch (imageName) {
+  switch (photoName) {
     case 'setting':
-      image = require('../../assets/img/setting.png')
+      photo = require('../../assets/img/setting.png')
       break;
 
     case 'home':
-      image = require('../../assets/img/home.png')
+      photo = require('../../assets/img/home.png')
       break;
 
     case 'notification':
-      image = require('../../assets/img/notifications.png')
+      photo = require('../../assets/img/notifications.png')
       break;
 
     case 'user':
-      image = require('../../assets/img/user.png')
+      photo = require('../../assets/img/user.png')
       break;
   
     default:
@@ -34,14 +34,14 @@ function FooterElement({ imageName, active, handleClick }: FooterElementProps) {
   return (
     <>
       <TouchableOpacity onPress={handleClick}>
-        <Image style={[styles.image, active ? {opacity: 1,} : {opacity: .4}]} source={image} />
+        <Image style={[styles.photo, active ? {opacity: 1,} : {opacity: .4}]} source={photo} />
       </TouchableOpacity>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  image: {
+  photo: {
     width: 32,
     height: 32,
   }

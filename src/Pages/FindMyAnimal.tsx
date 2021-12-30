@@ -52,9 +52,7 @@ function FindMyAnimal() {
 
   return (
     <>
-      <Header
-        text={'Yupi, you found a pet'}
-      />
+      <Header text={'Yupi, you found a pet'} />
 
       <Background>
         <BackgroundHeader text={'Find myAnimal'} />

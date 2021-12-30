@@ -16,7 +16,7 @@ function NoAnimalAlert() {
     <>
       <View style={styles.noAnimalContainer}>
         <Image
-          style={styles.noAnimalImage}
+          style={styles.noAnimalPhoto}
           source={require('../../assets/img/noAnimal.png')}
         />
 
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     lineHeight: 35,
   },
 
-  noAnimalImage: { width: 300, height: 300, marginVertical: 30 },
+  noAnimalPhoto: { width: 300, height: 300, marginVertical: 30 },
 
   noAnimalContainer: {
     alignItems: 'center',

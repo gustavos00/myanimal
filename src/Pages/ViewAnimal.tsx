@@ -8,7 +8,7 @@ import Background from '../components/Background';
 import EnableFindMyPetSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
 import StyledText from '../components/StyledText';
-import ProfileImage from '../components/ProfileImage';
+import ProfilePhoto from '../components/ProfilePhoto';
 
 function CreateOrUpdateAnimal() {
   const route = useRoute<RouteProp<RootStackParamList, 'ViewAnimal'>>();
@@ -17,7 +17,7 @@ function CreateOrUpdateAnimal() {
   return (
     <>
       <View style={styles.headerBg}>
-        <ProfileImage photoUrl={animalInfo.imageUrl} />
+        <ProfilePhoto photoUrl={animalInfo.photoName} />
 
         <Background heightSize={'75%'}>
           <ScrollView contentContainerStyle={styles.container}>

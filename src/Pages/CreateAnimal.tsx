@@ -1,13 +1,13 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Text, Alert } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { showError } from '../utils/error';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 
 import api from '../api/api';
 
 import globalStyles from '../assets/styles/global';
-import AddImage from '../components/AddImage';
+import AddPhoto from '../components/AddPhoto';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
@@ -37,7 +37,7 @@ function CreateAnimal() {
     if (error === '') {
       if (photo === '') {
         //Should i set a fake image or request a image?
-        console.log('Missing image');
+        console.log('Missing photo');
         return;
       }
 
@@ -103,7 +103,7 @@ function CreateAnimal() {
   return (
     <>
       <View style={styles.headerBg}>
-        <AddImage setProfilePhotoFunction={setPhoto} />
+        <AddPhoto setProfilePhotoFunction={setPhoto} />
 
         <Background heightSize={'75%'}>
           <KeyboardAvoidingWrapper>

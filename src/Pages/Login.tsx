@@ -53,7 +53,7 @@ const Login = () => {
             textBeforeBolder={'Imagine controlling your '}
             textAfterBolder={' in one place?'}
             textBolder={"pet's information"}
-            imageName={'bird'}
+            photoName={'bird'}
             subheaderText={
               "On myAnimal you can control and share your pet's information quickly!"
             }

@@ -2,19 +2,19 @@ import React, { ReactNode } from 'react';
 import { Image, Touchable, TouchableOpacity } from 'react-native';
 
 interface EditElementProps {
-  imageName: string;
+  photoName: string;
 }
 
-function EditElement({ imageName }: EditElementProps) {
-  let image
+function EditElement({ photoName }: EditElementProps) {
+  let photo
 
-  switch (imageName) {
+  switch (photoName) {
     case 'edit':
-      image = require('../../assets/img/edit.png')
+      photo = require('../../assets/img/edit.png')
       break;
 
     case 'delete':
-      image = require('../../assets/img/delete.png')
+      photo = require('../../assets/img/delete.png')
       break;
   
     default:
@@ -23,7 +23,7 @@ function EditElement({ imageName }: EditElementProps) {
   return (
     <>
       <TouchableOpacity activeOpacity={.7} onPress={(e) => console.log('a')}>
-        <Image source={image} /> 
+        <Image source={photo} /> 
       </TouchableOpacity>
     </>
   );

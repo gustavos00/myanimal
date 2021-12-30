@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-import api from '../api/api'
+import api from '../api/api';
 
 import Header from '../components/Header';
 import Background from '../components/Background';
@@ -21,7 +21,7 @@ function ScanQr() {
   const [scanned, setScanned] = useState(false);
   const [message, setMessage] = useState<string | undefined>();
 
-  const { user } = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
 
   const askForCameraPermission = () => {
     (async () => {
@@ -63,7 +63,9 @@ function ScanQr() {
     if (type === 'org.iso.QRCode') {
       setMessage('QR Readed');
 
-      const response = await api.get(`user/friend/verifyToken?token=${data}&fromWho=${user?.id}`)
+      const response = await api.get(
+        `user/friend/verifyToken?token=${data}&fromWho=${user?.id}`
+      );
       //Request
     } else {
       setMessage('Please, read a valid QR code.');

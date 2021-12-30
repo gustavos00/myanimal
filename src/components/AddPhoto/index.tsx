@@ -6,17 +6,17 @@ import * as ImagePicker from 'expo-image-picker'
 import globalStyles from '../../assets/styles/global';
 import { useState } from 'react';
 
-interface AddImageProps {
+interface AddPhotoProps {
   widthSize?: string,
   heightSize?: string,
   setProfilePhotoFunction?: (url: string) => void;
-  animalImageUrl?: string
+  photoUrl?: string
 }
 
-function AddImage({ animalImageUrl, setProfilePhotoFunction, widthSize, heightSize }: AddImageProps) {
-  const [photoUrl, setPhotoUrl] = useState<string | undefined>(animalImageUrl)
+function AddPhoto({ photoUrl, setProfilePhotoFunction, widthSize, heightSize }: AddPhotoProps) {
+  const [localPhotoUrl, setLocalPhotoUrl] = useState<string | undefined>(photoUrl)
 
-  const openImageLibrary = async() => {
+  const openPhotoLibrary = async() => {
     const data = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if(data.status === 'granted') {
@@ -29,7 +29,7 @@ function AddImage({ animalImageUrl, setProfilePhotoFunction, widthSize, heightSi
 
       if (!result.cancelled && setProfilePhotoFunction) {
         setProfilePhotoFunction(result.uri);
-        setPhotoUrl(result.uri);
+        setLocalPhotoUrl(result.uri);
       }
     } else {
       console.log(data)
@@ -39,14 +39,14 @@ function AddImage({ animalImageUrl, setProfilePhotoFunction, widthSize, heightSi
     <>
       <View style={styles.container}>
         <TouchableOpacity 
-          onPress={openImageLibrary} 
+          onPress={openPhotoLibrary} 
           activeOpacity={.5} 
           style={[styles.circle, widthSize ? {width: widthSize} : {width: 190}, heightSize ? {height: heightSize} : {height: 190}]}
         >
           {photoUrl ? 
-            <Image style={styles.animalImage} source={{uri: photoUrl}} />
+            <Image style={styles.animalPhoto} source={{uri: localPhotoUrl}} />
           : 
-            <Image style={styles.image} source={require('../../assets/img/add.png')} />
+            <Image style={styles.photo} source={require('../../assets/img/add.png')} />
           }
           
         </TouchableOpacity>
@@ -88,16 +88,16 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 
-  image: {
+  photo: {
     width: '20%',
     height: '20%',
   },
 
-  animalImage: {
+  animalPhoto: {
     borderRadius: 100,
     width: '100%',
     height: '100%',
   }
 })
 
-export default AddImage;
+export default AddPhoto;
