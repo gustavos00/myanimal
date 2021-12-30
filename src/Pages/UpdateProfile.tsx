@@ -86,6 +86,7 @@ function UpdateProfile() {
             <View style={styles.container}>
               <View style={styles.firstInputContainer}>
                 <OptionHeader text={'Account information'} />
+                
                 <StyledInput
                   handleChangeFunction={setGivenName}
                   text={givenName}
@@ -133,12 +134,15 @@ function UpdateProfile() {
                 />
               </View>
               <Button text={'Save'} handleClick={handleSubmitForm} />
+
             </View>
           </KeyboardAvoidingWrapper>
         </Background>
       </View>
 
+
       <Footer wichActive={'settings'} />
+
     </>
   );
 }
