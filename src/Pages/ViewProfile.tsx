@@ -67,6 +67,16 @@ function ViewProfile() {
                   value={user?.userAddress.postalCode ?? ''}
                   text={'Postal code'}
                 />
+
+                <StyledText
+                  value={user?.userAddress.parishName ?? ''}
+                  text={'Parish'}
+                />
+
+                <StyledText
+                  value={user?.userAddress.locationName ?? ''}
+                  text={'Locality'}
+                />
               </View>
             </View>
           </KeyboardAvoidingWrapper>
