@@ -49,7 +49,7 @@ function Settings() {
     navigation.navigate(screenName as any);
 
     if (clearStorage) {
-      await storage.remove({key: '@userAccess'});
+      await storage.remove({ key: '@userAccess' });
     }
   };
 
@@ -64,7 +64,7 @@ function Settings() {
           <View style={styles.textContainer}>
             <OptionHeader text={'Account Settings'} />
             <OptionElement
-              handleClick={async () => changeScreen('Home')}
+              handleClick={async () => changeScreen('UpdateProfile')}
               text={'Edit profile'}
             />
             <OptionElement
