@@ -1,34 +1,19 @@
-import React, { useContext, useState } from 'react';
-import { ScrollView, View, StyleSheet } from 'react-native';
+import React, { useContext } from 'react';
+import { View, StyleSheet } from 'react-native';
+
 import globalStyles from '../assets/styles/global';
 
 import Background from '../components/Background';
-import BottomModal from '../components/BottomModal';
-import Button from '../components/Button';
 import Footer from '../components/Footer';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import OptionHeader from '../components/OptionHeader';
 import ProfileImage from '../components/ProfileImage';
-import StyledInput from '../components/StyledInput';
 import StyledText from '../components/StyledText';
 import Underline from '../components/Underline';
-
 import AuthContext from '../contexts/user';
 
-function ViewProfile() {
-  const [statusModalIsOpen, setStatusModalIsOpen] = useState(false);
-  const [newStatusPhrase, setNewStatusPhrase] = useState<string>();
-
+function UpdateProfile() {
   const { user } = useContext(AuthContext);
-
-  const handleStatusText = (e: string) => {
-    //Sanitize string
-    setNewStatusPhrase(e);
-  };
-
-  const handleUpdateStatusButton = () => {
-    //API Request
-  };
 
   return (
     <>
@@ -67,16 +52,6 @@ function ViewProfile() {
                   value={user?.userAddress.postalCode ?? ''}
                   text={'Postal code'}
                 />
-
-                <StyledText
-                  value={user?.userAddress.parishName ?? ''}
-                  text={'Parish'}
-                />
-
-                <StyledText
-                  value={user?.userAddress.locationName ?? ''}
-                  text={'Locality'}
-                />
               </View>
             </View>
           </KeyboardAvoidingWrapper>
@@ -84,23 +59,6 @@ function ViewProfile() {
       </View>
 
       <Footer wichActive={'user'} />
-
-      {statusModalIsOpen && (
-        <BottomModal
-          modalHeight={250}
-          swipeDownFunction={() => setStatusModalIsOpen(false)}
-        >
-          <StyledInput
-            text={newStatusPhrase}
-            placeholder={'Update status'}
-            handleChangeFunction={handleStatusText}
-          />
-          <Button
-            text={'Update Status'}
-            handleClick={handleUpdateStatusButton}
-          />
-        </BottomModal>
-      )}
     </>
   );
 }
@@ -130,4 +88,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ViewProfile;
+
+export default UpdateProfile;
