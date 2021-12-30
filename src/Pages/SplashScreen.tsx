@@ -20,7 +20,6 @@ function SplashScreen() {
   const navigation = useNavigation();
   const { setUserData, setAnimalDataGlobalFunction } = useContext(AuthContext);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [internetConnection, setInternetConnection] = useState<boolean>(false);
   const [notificationPermissions, setNotificationPermissions] =
     useState<boolean>();
@@ -137,12 +136,16 @@ function SplashScreen() {
 
   //CHECK INTERNET
 
-
-  const verifyNetworkLocal = async () => {
-    const status = await verifyNetwork();
-    setInternetConnection(!status);
+  const verifyNetworkLocal = () => {
+    useEffect(() => {
+      const verifyNetworkInsideUseEffect = async () => {
+        const status = await verifyNetwork();
+        setInternetConnection(!status);
+      };
+      verifyNetworkInsideUseEffect();
+    }, []);
   };
-  verifyNetworkLocal();
+
   return (
     <>
       {internetConnection && (
