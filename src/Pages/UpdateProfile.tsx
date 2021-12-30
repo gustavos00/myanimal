@@ -15,7 +15,7 @@ import OptionHeader from '../components/OptionHeader';
 import StyledInput from '../components/StyledInput';
 import Underline from '../components/Underline';
 import AuthContext from '../contexts/user';
-import AddImage from '../components/AddPhoto';
+import AddPhoto from '../components/AddPhoto';
 
 function UpdateProfile() {
   const navigation = useNavigation();
@@ -79,7 +79,7 @@ function UpdateProfile() {
   return (
     <>
       <View style={styles.headerBg}>
-        <AddImage photoUrl={photoUrl} setProfilePhotoFunction={setPhotoUrl} />
+        <AddPhoto photoUrl={photoUrl} setProfilePhotoFunction={setPhotoUrl} />
 
         <Background heightSize={'75%'}>
           <KeyboardAvoidingWrapper>
