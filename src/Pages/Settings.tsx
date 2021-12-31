@@ -77,6 +77,10 @@ function Settings() {
           <View style={styles.textContainer}>
             <OptionHeader text={'Friends'} />
             <OptionElement
+              handleClick={async () => changeScreen('FriendsRequests')}
+              text={'View friends requests'}
+            />
+            <OptionElement
               handleClick={async () => changeScreen('ScanQR')}
               text={'Add friends'}
             />
