@@ -17,6 +17,7 @@ import FindMyAnimal from '../pages/FindMyAnimal';
 import ViewProfile from '../pages/ViewProfile';
 import AboutUs from '../pages/AboutUs';
 import ScanQR from '../pages/ScanQR';
+import FriendsRequests from '../pages/FriendsRequests';
 import UpdateProfile from '../pages/UpdateProfile';
 
 interface AnimalScreenParams {
@@ -44,6 +45,7 @@ export type RootStackParamList = {
   UpdateProfile: undefined;
   AboutUs: undefined;
   ScanQR: undefined;
+  FriendsRequests: undefined;
 };
 
 const { Navigator, Group, Screen } = createStackNavigator<RootStackParamList>();
@@ -72,6 +74,11 @@ export default () => {
             options={{ headerShown: false }}
             name="ScanQR"
             component={ScanQR}
+          />
+          <Screen
+            options={{ headerShown: false }}
+            name="FriendsRequests"
+            component={FriendsRequests}
           />
           <Screen
             options={{ headerShown: false }}
