@@ -1,29 +1,17 @@
 import React, { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, StyleSheet } from 'react-native';
-import { verifyNetwork } from '../utils/network';
-import { showError } from '../utils/error';
 
 import globalStyles from '../assets/styles/global';
 import Button from '../components/LoginButton';
 import RoundedBackground from '../components/RoundedBackground';
 import SliderContent from '../components/SliderContent';
-import BackgroundFilter from '../components/BackgroundFilter';
-import BottomModal from '../components/BottomModal';
-import NoWIFIModal from '../components/NoWIFIModal';
 import AuthContext from '../contexts/user';
 import Loading from '../components/Loading';
 
 const Login = () => {
   const [isLoading, setLoading] = useState(false);
-  const [internetConnection, setInternetConnection] = useState(false);
   const navigation = useNavigation();
-
-  const verifyNetworkLocal = async () => {
-    const status = await verifyNetwork();
-    setInternetConnection(!status);
-  };
-  verifyNetworkLocal();
 
   const { googleSignIn } = useContext(AuthContext);
 
@@ -64,14 +52,6 @@ const Login = () => {
           <Button text={'Start with Google'} handleClick={handleGoogleSignIn} />
         </View>
       </View>
-
-      {internetConnection && (
-        <BackgroundFilter>
-          <BottomModal modalHeight={300}>
-            <NoWIFIModal handleClick={verifyNetworkLocal} />
-          </BottomModal>
-        </BackgroundFilter>
-      )}
 
       {isLoading && <Loading />}
     </>
