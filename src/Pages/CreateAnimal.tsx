@@ -28,7 +28,7 @@ function CreateAnimal() {
   const [tracknumber, setTracknumber] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const { pushAnimalData, token } = useContext(AuthContext);
 
@@ -56,14 +56,14 @@ function CreateAnimal() {
       } as unknown as string | Blob);
 
       try {
-        setIsLoading(true);
+        setLoading(true);
         const result = await api.post('/animal/create', animalData);
         pushAnimalData(result.data as unknown as AnimalInfoParams);
-        setIsLoading(false);
+        setLoading(false);
 
         navigation.navigate('Home' as never, {} as never);
       } catch (e) {
-        setIsLoading(false);
+        setLoading(false);
         return showError(
           'Error: ' + e,
           'Apparently there was an error, try again'

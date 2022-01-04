@@ -21,7 +21,7 @@ function CreateAddress({ changeHaveAddressStateFunction } : CreateAddressProps) 
   const [parish, setParish] = useState<string>();
   const [locality, setLocality] = useState<string>();
   const [error, setError] = useState<string>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const { user } = useContext(AuthContext);
 
@@ -53,9 +53,9 @@ function CreateAddress({ changeHaveAddressStateFunction } : CreateAddressProps) 
       addressData.append('email', user?.email ?? '')
 
       try {
-        setIsLoading(true);
+        setLoading(true);
         await api.post('user/createAddress', addressData);
-        setIsLoading(false);
+        setLoading(false);
         changeHaveAddressStateFunction(true)
 
         //Dynamic push user data
