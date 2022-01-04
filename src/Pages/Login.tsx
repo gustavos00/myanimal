@@ -15,7 +15,7 @@ import AuthContext from '../contexts/user';
 import Loading from '../components/Loading';
 
 const Login = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [internetConnection, setInternetConnection] = useState(false);
   const navigation = useNavigation();
 
@@ -28,9 +28,9 @@ const Login = () => {
   const { googleSignIn } = useContext(AuthContext);
 
   const handleGoogleSignIn = async () => {
-    setIsLoading(true);
+    setLoading(true);
     const status = await googleSignIn();
-    setIsLoading(false);
+    setLoading(false);
 
     if (status) {
       const { haveAddress } = status;
