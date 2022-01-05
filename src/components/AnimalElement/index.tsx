@@ -46,7 +46,7 @@ function AnimalElement({ animalData, isEditing }: AnimalElementProps) {
 
         <View style={styles.textContainer}>
           <Text style={styles.nameText}>{animalData.name}</Text>
-          <Text style={styles.raceText}>{animalData.breed}</Text>
+          <Text style={styles.breedText}>{animalData.breed}</Text>
         </View>
 
         <View style={styles.editContainer}>
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  raceText: {
+  breedText: {
     fontSize: 16,
     color: globalStyles.darkGray,
   },
