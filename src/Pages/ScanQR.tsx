@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { useNavigation } from '@react-navigation/core';
+import { showError } from '../utils/error';
 
 import api from '../api/api';
 
@@ -21,6 +23,7 @@ function ScanQr() {
   const [scanned, setScanned] = useState(false);
   const [message, setMessage] = useState<string | undefined>();
 
+  const navigation = useNavigation();
   const { user } = useContext(AuthContext);
 
   const askForCameraPermission = () => {
@@ -57,16 +60,25 @@ function ScanQr() {
   }*/
 
   // What happens when we scan the bar code
-  const handleBarCodeScanned = async ({ type, data }: HandleScanCode) => {
+  const handleQRCodeScanned = async ({ type, data }: HandleScanCode) => {
     setScanned(true);
 
     if (type === 'org.iso.QRCode') {
       setMessage('QR Readed');
 
-      const response = await api.get(
-        `user/friend/verifyToken?token=${data}&fromWho=${user?.id}`
-      );
-      //Request
+      try {
+        await api.get(
+          `user/friend/verifyToken?token=${data}&fromWho=${user?.id}`
+        );
+
+        Alert.alert('Your friend request has made with success');
+        navigation.navigate(
+          'Home' as never,
+          { isValid: true, haveAddress: true } as never
+        );
+      } catch (e: any) {
+        showError('Error: ' + e, 'Apparently there was an error, try again');
+      }
     } else {
       setMessage('Please, read a valid QR code.');
     }
@@ -86,7 +98,7 @@ function ScanQr() {
 
           <View style={styles.container}>
             <BarCodeScanner
-              onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+              onBarCodeScanned={scanned ? undefined : handleQRCodeScanned}
               style={styles.qrCodeBox}
             />
 
