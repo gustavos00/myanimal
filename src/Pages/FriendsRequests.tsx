@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { showError } from '../utils/error';
+import { FlatList, View } from 'react-native';
+
+import AuthContext from '../contexts/user';
+import api from '../api/api';
 
 import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
-
-import api from '../api/api';
-import { FlatList, Text, View } from 'react-native';
-import AnimalElement from '../components/AnimalElement';
+import FriendRequestElement from '../components/FriendRequestElement';
 
 function FriendsRequests() {
   const [loading, setLoading] = useState<boolean>();
   const [friendsRequests, setFriendsRequests] = useState();
 
+  const { user } = useContext(AuthContext);
+
   const getAllFriendsRequests = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const response = await api.get(`user/friend/get?id=1`);
+      const response = await api.get(`/user/friend/get?id=${user?.id}`);
+      console.log(response.data);
       setFriendsRequests(response.data);
-      setLoading(false)
+      setLoading(false);
     } catch (e) {
       setLoading(false);
       return showError(
@@ -35,7 +39,7 @@ function FriendsRequests() {
       await getAllFriendsRequests();
     };
 
-    getAllFriendsRequests();
+    getFriendsRequests();
   }, []);
 
   return (
@@ -48,12 +52,10 @@ function FriendsRequests() {
 
           <FlatList
             data={friendsRequests}
-            renderItem={({index, item}) => {
-              console.log(index)
-              console.log('----')
+            renderItem={({ index, item }) => {
               return (
-                <View key={index}>
-                  <Text>{item.fromWho}</Text>
+                <View key={item.idfriends}>
+                  <FriendRequestElement friendRequestData={item} />
                 </View>
               );
             }}
