@@ -17,12 +17,12 @@ export async function GoogleSignIn() {
 
   try {
     const data = await Google.logInAsync(config);
-    
-    if(data.type !== 'cancel') {
+
+    if (data.type !== 'cancel') {
       const responseData = await apiPostData(data.user);
-      return responseData
+      return responseData;
     } else {
-      return false
+      return false;
     }
   } catch (e) {
     return showError('Error: ' + e, 'Apparently there was an error, try again');
@@ -31,16 +31,16 @@ export async function GoogleSignIn() {
 
 const apiPostData = async (params: UserGoogleDataResponse) => {
   const salt = uuid.v4();
-  
+
   let userData = new FormData();
-  userData.append('salt', salt)
+  userData.append('salt', salt);
   userData.append('givenName', params.givenName ?? '');
   userData.append('familyName', params.familyName ?? '');
   userData.append('email', params.email ?? '');
   userData.append('userPhoto', {
-      uri: params.photoUrl,
-      name: 'userPhoto',
-      type: 'image/png',
+    uri: params.photoUrl,
+    name: 'userPhoto',
+    type: 'image/png',
   } as unknown as string);
 
   try {
@@ -49,10 +49,10 @@ const apiPostData = async (params: UserGoogleDataResponse) => {
 
     const tempObj = {
       ...data,
-      status: status
-    }
+      status: status,
+    };
 
-    return tempObj
+    return tempObj;
   } catch (e) {
     return showError('Error: ' + e, 'Apparently there was an error, try again');
   }
