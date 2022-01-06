@@ -17,8 +17,8 @@ interface AuthContextData {
   googleSignIn: () => Promise<false | GoogleSignInProps | undefined>;
   pushAnimalData: (data: AnimalInfoParams) => void;
   deleteAnimalData: (id: number) => void;
-  setAnimalDataGlobalFunction: (data: Array<AnimalInfoParams>) => void;
-  setUserData: (data: UserContextData) => void;
+  setAnimalData: (data: Array<AnimalInfoParams>) => void;
+  setUser: (data: UserContextData) => void;
   setToken: (token : string) => void
 }
 
@@ -102,14 +102,6 @@ export function AuthProvider({ children }: any) {
     setAnimalData(temp);
   };
 
-  const setUserData = (data: UserContextData) => {
-    setUser(data);
-  };
-
-  const setAnimalDataGlobalFunction = (data: Array<AnimalInfoParams>) => {
-    setAnimalData(data);
-  };
-
   return (
     <AuthContext.Provider
       value={{
@@ -121,8 +113,8 @@ export function AuthProvider({ children }: any) {
         googleSignIn,
         pushAnimalData,
         deleteAnimalData,
-        setUserData,
-        setAnimalDataGlobalFunction,
+        setUser,
+        setAnimalData,
         setToken
       }}
     >
