@@ -3,17 +3,15 @@ import { AnimalInfoParams } from '../../interfaces/AnimalInfoParams';
 
 import Background from '../Background';
 import BackgroundHeader from '../BackgroundHeader';
-import GeneralAnimalElements from '../GeneralAnimalElements';
+import GenerateElements from '../GenerateAnimalElements';
 import KeyboardAvoidingWrapper from '../KeyboardAvoidingWrapper';
 import NoAnimalAlert from '../NoAnimalAlert';
 
 interface HomeContentContainerProps {
   animalData: Array<AnimalInfoParams> | void;
-  isEditing: boolean;
-  setIsEditing: (e: boolean) => void;
 }
 
-function HomeContentContainer({ animalData, isEditing, setIsEditing }: HomeContentContainerProps) {
+function HomeContentContainer({ animalData}: HomeContentContainerProps) {
   return (
     <>
       <Background>
@@ -23,11 +21,9 @@ function HomeContentContainer({ animalData, isEditing, setIsEditing }: HomeConte
           </>
         ) : (
           <>
-            <BackgroundHeader isEditing={isEditing} text={'Your animals'} />
+            <BackgroundHeader text={'Your animals'} />
             <KeyboardAvoidingWrapper>
-              <GeneralAnimalElements
-                setIsEditing={setIsEditing}
-                isEditing={isEditing}
+              <GenerateElements
                 animalData={animalData}
               />
             </KeyboardAvoidingWrapper>

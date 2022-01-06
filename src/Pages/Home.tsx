@@ -18,7 +18,6 @@ const Home = () => {
   const [haveAddressState, setHaveAddressState] = useState(
     haveAddress as boolean
   );
-  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [homePhrase, setHomePhrase] = useState<string>();
 
   useEffect(() => {
@@ -35,8 +34,6 @@ const Home = () => {
         <Header text={homePhrase} />
         <HomeContentContainer
           animalData={animalData}
-          setIsEditing={setIsEditing}
-          isEditing={isEditing}
         />
 
         <Footer wichActive={'home'} />
