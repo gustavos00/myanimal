@@ -3,17 +3,47 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
-interface ActionsElementsProps {}
+interface ActionsElementsProps {
+  trueText: string;
+  falseText: string;
 
-function ActionsElements({}: ActionsElementsProps) {
+  trueColor?: string;
+  falseColor?: string;
+
+  trueFunction: () => void;
+  falseFunction: () => void;
+}
+
+function ActionsElements({
+  trueText,
+  falseText,
+  trueColor,
+  falseColor,
+  trueFunction,
+  falseFunction,
+}: ActionsElementsProps) {
   return (
     <View style={styles.actionsContainer}>
-      <TouchableOpacity activeOpacity={0.7} style={styles.acceptRequest}>
-        <Text>Accept</Text>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={trueFunction}
+        style={[
+          styles.acceptRequest,
+          { backgroundColor: trueColor ?? 'green' },
+        ]}
+      >
+        <Text>{trueText}</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity activeOpacity={0.7} style={styles.declineRequest}>
-        <Text>Decline</Text>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={falseFunction}
+        style={[
+          styles.declineRequest,
+          { backgroundColor: falseColor ?? 'red' },
+        ]}
+      >
+        <Text>{falseText}</Text>
       </TouchableOpacity>
     </View>
   );

@@ -43,7 +43,7 @@ function AddPhoto({ photoUrl, setProfilePhotoFunction, widthSize, heightSize }: 
           activeOpacity={.5} 
           style={[styles.circle, widthSize ? {width: widthSize} : {width: 190}, heightSize ? {height: heightSize} : {height: 190}]}
         >
-          {photoUrl ? 
+          {photoUrl || localPhotoUrl ? 
             <Image style={styles.animalPhoto} source={{uri: localPhotoUrl}} />
           : 
             <Image style={styles.photo} source={require('../../assets/img/add.png')} />

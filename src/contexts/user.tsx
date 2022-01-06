@@ -17,8 +17,9 @@ interface AuthContextData {
   googleSignIn: () => Promise<false | GoogleSignInProps | undefined>;
   pushAnimalData: (data: AnimalInfoParams) => void;
   deleteAnimalData: (id: number) => void;
-  setAnimalDataGlobalFunction: (data: Array<AnimalInfoParams>) => void;
-  setUserData: (data: UserContextData) => void;
+  setAnimalData: (data: Array<AnimalInfoParams>) => void;
+  setUser: (data: UserContextData) => void;
+  setToken: (token : string) => void
 }
 
 interface UserGoogleData extends UserContextData {
@@ -32,7 +33,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<UserContextData | void>();
   const [animalData, setAnimalData] = useState<Array<AnimalInfoParams>>();
-  const [token, setToken] = useState<string | void>();
+  const [token, setToken] = useState<string | void>('vaiSeFuderRN');
 
   const setTokenOnLocalStorage = async (token: string, salt: string) => {
     //Missing date
@@ -53,11 +54,12 @@ export function AuthProvider({ children }: any) {
     try {
       googleResponse = await auth.GoogleSignIn();
       if (!googleResponse) return false;
+      console.log(googleResponse)
 
       setToken(googleResponse.token);
       setAnimalData(googleResponse.animalData);
       setUser(googleResponse);
-      console.log(googleResponse)
+      console.log('token state ' + token);
       await setTokenOnLocalStorage(
         googleResponse.accessToken,
         googleResponse.salt
@@ -100,14 +102,6 @@ export function AuthProvider({ children }: any) {
     setAnimalData(temp);
   };
 
-  const setUserData = (data: UserContextData) => {
-    setUser(data);
-  };
-
-  const setAnimalDataGlobalFunction = (data: Array<AnimalInfoParams>) => {
-    setAnimalData(data);
-  };
-
   return (
     <AuthContext.Provider
       value={{
@@ -119,8 +113,9 @@ export function AuthProvider({ children }: any) {
         googleSignIn,
         pushAnimalData,
         deleteAnimalData,
-        setUserData,
-        setAnimalDataGlobalFunction,
+        setUser,
+        setAnimalData,
+        setToken
       }}
     >
       {children}

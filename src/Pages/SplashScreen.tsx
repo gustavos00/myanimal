@@ -18,7 +18,8 @@ import NoWIFIModal from '../components/NoWIFIModal';
 
 function SplashScreen() {
   const navigation = useNavigation();
-  const { setUserData, setAnimalDataGlobalFunction } = useContext(AuthContext);
+  const { setUser, setAnimalData, setToken } =
+    useContext(AuthContext);
 
   const [internetConnection, setInternetConnection] = useState<boolean>(false);
   const [notificationPermissions, setNotificationPermissions] =
@@ -106,9 +107,9 @@ function SplashScreen() {
 
         return false;
       }
-
-      setUserData(userData);
-      setAnimalDataGlobalFunction(
+      setToken(userData.token);
+      setUser(userData);
+      setAnimalData(
         userData.animalData as Array<AnimalInfoParams>
       );
 

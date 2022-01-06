@@ -34,41 +34,45 @@ function CreateAnimal() {
 
   const handleSubmitForm = async () => {
     //Check if error is a empty string
-    if (error === '') {
-      if (photo === '') {
-        //Should i set a fake image or request a image?
-        console.log('Missing photo');
-        return;
-      }
+    if (!!error) {
+      return console.log('Error');
+    }
 
-      const animalData = new FormData();
-      animalData.append('name', name);
-      animalData.append('breed', breed);
-      animalData.append('age', age);
-      animalData.append('birthday', birthday);
-      animalData.append('birthdayMonth', birthdayMonth);
-      animalData.append('trackNumber', tracknumber);
-      animalData.append('token', token ?? '');
-      animalData.append('animalPhoto', {
-        uri: photo,
-        name: 'animalPhoto',
-        type: 'image/png', // or your mime type what you want
-      } as unknown as string | Blob);
+    if (photo === '') {
+      //Should i set a fake image or request a image?
+      return console.log('Missing photo');
+    }
 
-      try {
-        setLoading(true);
-        const result = await api.post('/animal/create', animalData);
-        pushAnimalData(result.data as unknown as AnimalInfoParams);
-        setLoading(false);
+    const animalData = new FormData();
+    animalData.append('name', name);
+    animalData.append('breed', breed);
+    animalData.append('age', age);
+    animalData.append('birthday', birthday);
+    animalData.append('birthdayMonth', birthdayMonth);
+    animalData.append('trackNumber', tracknumber);
+    animalData.append('token', token ?? '');
+    animalData.append('animalPhoto', {
+      uri: photo,
+      name: 'animalPhoto',
+      type: 'image/png', // or your mime type what you want
+    } as unknown as string | Blob);
 
-        navigation.navigate('Home' as never, {} as never);
-      } catch (e) {
-        setLoading(false);
-        return showError(
-          'Error: ' + e,
-          'Apparently there was an error, try again'
-        );
-      }
+    try {
+      setLoading(true);
+      const result = await api.post('/animal/create', animalData);
+      pushAnimalData(result.data as unknown as AnimalInfoParams);
+      setLoading(false);
+
+      navigation.navigate(
+        'Home' as never,
+        { isValid: true, haveAddress: true } as never
+      );
+    } catch (e) {
+      setLoading(false);
+      return showError(
+        'Error: ' + e,
+        'Apparently there was an error, try again'
+      );
     }
   };
 

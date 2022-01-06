@@ -19,7 +19,7 @@ import AddPhoto from '../components/AddPhoto';
 
 function UpdateProfile() {
   const navigation = useNavigation();
-  const { user, setUserData } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   const [streetName, setStreetName] = useState<string | undefined>(
     user?.userAddress.streetName
@@ -66,7 +66,7 @@ function UpdateProfile() {
 
     try {
       const response = await api.post('/user/update', newUserData);
-      setUserData(response.data as unknown as UserContextData);
+      setUser(response.data as unknown as UserContextData);
       navigation.navigate(
         'Home' as never,
         { haveAddress: true, isValid: true } as never

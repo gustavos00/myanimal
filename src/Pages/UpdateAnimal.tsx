@@ -65,10 +65,16 @@ function UpdateAnimal() {
         pushAnimalData(data as any);
         setLoading(false);
 
-        navigation.navigate('Home' as never, {} as never);
+        navigation.navigate(
+          'Home' as never,
+          { isValid: true, haveAddress: true } as never
+        );
       } catch (e) {
         setLoading(false);
-        return showError('Error: ' + e, 'Apparently there was an error, try again');
+        return showError(
+          'Error: ' + e,
+          'Apparently there was an error, try again'
+        );
       }
     }
   };

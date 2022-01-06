@@ -7,6 +7,7 @@ export interface UserContextData {
   id: number;
   email: string;
   phoneNumber: string;
+  token: string;
   photoUrl: string;
   animalData: Array<AnimalInfoParams>
   userAddress: UserAddressData;
