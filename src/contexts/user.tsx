@@ -19,6 +19,7 @@ interface AuthContextData {
   deleteAnimalData: (id: number) => void;
   setAnimalDataGlobalFunction: (data: Array<AnimalInfoParams>) => void;
   setUserData: (data: UserContextData) => void;
+  setToken: (token : string) => void
 }
 
 interface UserGoogleData extends UserContextData {
@@ -32,7 +33,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<UserContextData | void>();
   const [animalData, setAnimalData] = useState<Array<AnimalInfoParams>>();
-  const [token, setToken] = useState<string | void>();
+  const [token, setToken] = useState<string | void>('vaiSeFuderRN');
 
   const setTokenOnLocalStorage = async (token: string, salt: string) => {
     //Missing date
@@ -53,11 +54,12 @@ export function AuthProvider({ children }: any) {
     try {
       googleResponse = await auth.GoogleSignIn();
       if (!googleResponse) return false;
+      console.log(googleResponse)
 
       setToken(googleResponse.token);
       setAnimalData(googleResponse.animalData);
       setUser(googleResponse);
-      console.log(googleResponse)
+      console.log('token state ' + token);
       await setTokenOnLocalStorage(
         googleResponse.accessToken,
         googleResponse.salt
@@ -121,6 +123,7 @@ export function AuthProvider({ children }: any) {
         deleteAnimalData,
         setUserData,
         setAnimalDataGlobalFunction,
+        setToken
       }}
     >
       {children}
