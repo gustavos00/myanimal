@@ -1,6 +1,14 @@
 import React, { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+  ScrollView,
+} from 'react-native';
 
 import api from '../../api/api';
 import globalStyles from '../../assets/styles/global';
@@ -8,13 +16,13 @@ import globalStyles from '../../assets/styles/global';
 import { showError } from '../../utils/error';
 import { AnimalInfoParams } from '../../interfaces/AnimalInfoParams';
 import AuthContext from '../../contexts/user';
+import ActionsElements from '../ActionsElements';
 
 interface AnimalElementProps {
   animalData: AnimalInfoParams;
-  isEditing: boolean;
 }
 
-function AnimalElement({ animalData, isEditing }: AnimalElementProps) {
+function AnimalElement({ animalData }: AnimalElementProps) {
   const navigation = useNavigation();
   const { deleteAnimalData } = useContext(AuthContext);
 
@@ -39,42 +47,66 @@ function AnimalElement({ animalData, isEditing }: AnimalElementProps) {
     );
   };
 
+  const viewingAnimal = (item: Object) => {
+    navigation.navigate(
+      'ViewAnimal' as never,
+      {
+        animalInfo: item,
+      } as never
+    );
+  };
+
   return (
     <>
       <View style={styles.element}>
-        <Image source={{ uri: animalData.photoUrl }} style={styles.icon} />
+        <ScrollView horizontal style={styles.container}>
+          <TouchableOpacity
+            onPress={() => {
+              viewingAnimal(animalData);
+            }}
+          >
+            <View style={styles.contentContainer}>
+              <Image
+                source={{ uri: animalData.photoUrl }}
+                style={styles.icon}
+              />
 
-        <View style={styles.textContainer}>
-          <Text style={styles.nameText}>{animalData.name}</Text>
-          <Text style={styles.breedText}>{animalData.breed}</Text>
-        </View>
+              <View style={styles.textContainer}>
+                <Text style={styles.nameText}>{animalData.name}</Text>
+                <Text style={styles.breedText}>{animalData.breed}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
 
-        <View style={styles.editContainer}>
-          {isEditing && (
-            <>
-              <TouchableOpacity onPress={updatingAnimal}>
-                <Image source={require('../../assets/img/edit.png')} />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() =>
-                  deletingAnimal(animalData.idAnimal, animalData.arrayKey)
-                }
-              >
-                <Image source={require('../../assets/img/delete.png')} />
-              </TouchableOpacity>
-            </>
-          )}
-        </View>
+          <ActionsElements
+            trueText={'Edit'}
+            falseText={'Delete'}
+            trueColor={'blue'}
+            trueFunction={updatingAnimal}
+            falseFunction={() => {
+              deletingAnimal(animalData.idAnimal, animalData.arrayKey);
+            }}
+          />
+        </ScrollView>
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: globalStyles.fullDeviceWidth,
+  },
+
+  contentContainer: {
+    width: globalStyles.fullDeviceWidth,
+    padding: globalStyles.smallGap,
+
+    flexDirection: 'row',
+  },
+
   element: {
-    margin: 12,
-    padding: 15,
+    margin: globalStyles.smallGap,
 
     backgroundColor: 'white',
     borderRadius: 15,
@@ -88,19 +120,19 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
 
     elevation: 4,
-
-    flexDirection: 'row',
   },
 
   icon: {
-    width: 84,
-    height: 84,
-    borderRadius: 15,
+    width: Dimensions.get('window').width * 0.22,
+    height: Dimensions.get('window').width * 0.22,
+    borderRadius: globalStyles.smallGap,
+
+    backgroundColor: 'red',
   },
 
   textContainer: {
-    marginLeft: 10,
-    marginTop: 10,
+    marginLeft: globalStyles.smallGap,
+    marginTop: globalStyles.smallGap,
   },
 
   nameText: {
@@ -112,17 +144,6 @@ const styles = StyleSheet.create({
   breedText: {
     fontSize: 16,
     color: globalStyles.darkGray,
-  },
-
-  editContainer: {
-    width: 50,
-    height: 114,
-
-    position: 'absolute',
-    right: 0,
-
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
   },
 });
 
