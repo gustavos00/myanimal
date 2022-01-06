@@ -17,7 +17,7 @@ function CreateOrUpdateAnimal() {
   return (
     <>
       <View style={styles.headerBg}>
-        <ProfilePhoto photoUrl={animalInfo.photoName} />
+        <ProfilePhoto photoUrl={animalInfo.photoUrl} />
 
         <Background heightSize={'75%'}>
           <ScrollView contentContainerStyle={styles.container}>
