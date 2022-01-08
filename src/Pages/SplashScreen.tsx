@@ -9,25 +9,28 @@ import { useNavigation } from '@react-navigation/core';
 import { showError } from '../utils/error';
 import { UserContextProps } from '../interfaces/UserContextData';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
-
+import { generateUrlSearchParams } from '../utils/URLSearchParams';
 import { verifyNetwork } from '../utils/network';
+
+import { hasNotificationsPermissions } from '../utils/notifications';
+
 import BackgroundFilter from '../components/BackgroundFilter';
 import BottomModal from '../components/BottomModal';
 import NoWIFIModal from '../components/NoWIFIModal';
-import { generateUrlSearchParams } from '../utils/URLSearchParams';
 
 function SplashScreen() {
   const navigation = useNavigation();
+
+  const [accessResponse, setAccessResponse] = useState();
+  const [userData, setUserData] = useState<UserContextProps>();
+
   const { setUser, setAnimalData } = useContext(UserContext);
-  const { setToken } = useContext(AuthContext);
+  const { setToken, setExpoToken } = useContext(AuthContext);
 
   const [internetConnection, setInternetConnection] = useState<boolean>(false);
 
   //Check token on localstorage
   const getTokenFromLocalStorage = async () => {
-    const [accessResponse, setAccessResponse] = useState();
-    let userData;
-
     try {
       const response = await storage.load({ key: '@userAccess' });
       setAccessResponse(response);
@@ -45,20 +48,21 @@ function SplashScreen() {
 
       try {
         const response = await api.post('/user/access/verify', tokenData);
-        userData = response.data as unknown as UserContextProps;
+        setUserData(response.data as unknown as UserContextProps);
       } catch (e: any) {
         //Verify error type by docs https://github.com/sunnylqm/react-native-storage
         showError('Error: ' + e, 'Apparently there was an error, try again');
 
         return false;
       }
-      setToken(userData.token);
-      setUser(userData);
-      setAnimalData(userData.animalData as Array<AnimalInfoParams>);
 
-      const { userAddress } = userData;
-
-      return { haveAddress: !isEmpty(userAddress), isValid: true };
+      if (userData) {
+        setToken(userData?.token);
+        setUser(userData);
+        setAnimalData(userData.animalData as Array<AnimalInfoParams>);
+        const { userAddress } = userData;
+        return { haveAddress: !isEmpty(userAddress) };
+      }
     } else {
       return false;
     }
@@ -76,6 +80,15 @@ function SplashScreen() {
     };
 
     getToken();
+  }, []);
+
+  useEffect(() => {
+    const getNotificationsStatus = async () => {
+      const response = await hasNotificationsPermissions();
+      !!response && setExpoToken(response);
+      console.log(response);
+    };
+    getNotificationsStatus();
   }, []);
 
   //CHECK INTERNET
