@@ -6,13 +6,13 @@ import AuthContext from '../contexts/auth';
 import isEmpty from '../utils/isEmpty';
 
 import { useNavigation } from '@react-navigation/core';
-import { showError } from '../utils/error';
 import { UserContextProps } from '../interfaces/UserContextData';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 import { generateUrlSearchParams } from '../utils/URLSearchParams';
 import { verifyNetwork } from '../utils/network';
-
+import { showError } from '../utils/error';
 import { hasNotificationsPermissions } from '../utils/notifications';
+import { storeExpoToken } from '../services/auth';
 
 import BackgroundFilter from '../components/BackgroundFilter';
 import BottomModal from '../components/BottomModal';
@@ -25,7 +25,7 @@ function SplashScreen() {
   const [userData, setUserData] = useState<UserContextProps>();
 
   const { setUser, setAnimalData } = useContext(UserContext);
-  const { setToken, setExpoToken } = useContext(AuthContext);
+  const { setToken, token } = useContext(AuthContext);
 
   const [internetConnection, setInternetConnection] = useState<boolean>(false);
 
@@ -34,9 +34,15 @@ function SplashScreen() {
     try {
       const response = await storage.load({ key: '@userAccess' });
       setAccessResponse(response);
-    } catch (e) {
-      //Handle error, expired, 404, etc...
-      console.log(e);
+    } catch (e: any) {
+      switch (e.name) {
+        case 'NotFoundError':
+          console.log('Not found');
+          break;
+        case 'ExpiredError':
+          console.log('Expired');
+          break;
+      }
       return false;
     }
 
@@ -85,8 +91,9 @@ function SplashScreen() {
   useEffect(() => {
     const getNotificationsStatus = async () => {
       const response = await hasNotificationsPermissions();
-      !!response && setExpoToken(response);
-      console.log(response);
+      if (!!response) {
+        storeExpoToken({ expoToken: response, token: token ?? '' });
+      }
     };
     getNotificationsStatus();
   }, []);
