@@ -15,14 +15,12 @@ interface AuthContextData {
 
   googleSignIn: () => Promise<false | HomeAddressStatusParams | undefined>;
   setToken: (token: string) => void;
-  setExpoToken: (expoToken: string) => void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export function AuthProvider({ children }: any) {
   const [token, setToken] = useState<string | void>();
-  const [expoToken, setExpoToken] = useState<string | void>();
 
   const { setAnimalData, setUser } = useContext(UserContext);
 
@@ -36,7 +34,7 @@ export function AuthProvider({ children }: any) {
   };
 
   const googleSignIn = async () => {
-    const [haveAddressStatus, setHaveAddressStatus] = useState<boolean>();
+    let haveAddressStatus;
 
     try {
       const response = await auth.GoogleSignIn();
@@ -45,7 +43,7 @@ export function AuthProvider({ children }: any) {
       setToken(response.token);
       setAnimalData(response.animalData);
       setUser(response);
-      setHaveAddressStatus(!isEmpty(response.userAddress));
+      haveAddressStatus = !isEmpty(response.userAddress);
       await setTokenOnLocalStorage(response.accessToken, response.salt);
     } catch (e) {
       return showError('Error: ' + e, 'Apparently there was an error, try again');
@@ -60,7 +58,6 @@ export function AuthProvider({ children }: any) {
         token,
         googleSignIn,
         setToken,
-        setExpoToken,
       }}
     >
       {children}
