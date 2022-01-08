@@ -1,11 +1,14 @@
 import React from 'react';
 import MainStack from './src/navigator/MainStack';
-import { AuthProvider } from './src/contexts/user';
+import { UserProvider } from './src/contexts/user';
+import { AuthProvider } from './src/contexts/auth';
 
 export default function App() {
   return (
-    <AuthProvider>
-      <MainStack />
-    </AuthProvider>
+    <UserProvider>
+      <AuthProvider>
+        <MainStack />
+      </AuthProvider>
+    </UserProvider>
   );
 }
