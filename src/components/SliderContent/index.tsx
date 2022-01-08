@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-import DATA from '../../sliderData';
+import sliderData from '../../sliderData';
 
 import SliderDot from '../SliderDot';
 import SliderHeader from '../SliderHeader';
@@ -22,16 +22,10 @@ interface SliderContentProps {
 
   subheaderText?: string;
 
-  photoName: string;
+  photoLocal: string;
 }
 
-function SliderContent({
-  textBeforeBolder,
-  textBolder,
-  textAfterBolder,
-  photoName,
-  subheaderText,
-}: SliderContentProps) {
+function SliderContent() {
   let photoLocal: ImageSourcePropType;
   const { width } = Dimensions.get('screen');
   const scrollX = React.useRef(new Animated.Value(0)).current;
@@ -39,7 +33,7 @@ function SliderContent({
   return (
     <>
       <Animated.FlatList
-        data={DATA}
+        data={sliderData}
         keyExtractor={(item) => item.key}
         horizontal
         pagingEnabled
@@ -52,19 +46,19 @@ function SliderContent({
         renderItem={({ item }) => {
           switch (item.image) {
             case 'bird':
-              photoName = require('../../assets/img/slideBird.png');
+              photoLocal = require('../../assets/img/slideBird.png');
               break;
 
             case 'rabbit':
-              photoName = require('../../assets/img/slideRabbit.png');
+              photoLocal = require('../../assets/img/slideRabbit.png');
               break;
 
             case 'fish':
-              photoName = require('../../assets/img/slideFish.png');
+              photoLocal = require('../../assets/img/slideFish.png');
               break;
 
             case 'animal':
-              photoName = require('../../assets/img/slideAnimal.png');
+              photoLocal = require('../../assets/img/slideAnimal.png');
               break;
 
             default:
@@ -91,7 +85,7 @@ function SliderContent({
       />
 
       <View style={styles.dotsContainer}>
-        <SliderDot scrollX={scrollX} amount={DATA.length} width={width} />
+        <SliderDot scrollX={scrollX} amount={sliderData.length} width={width} />
       </View>
     </>
   );
