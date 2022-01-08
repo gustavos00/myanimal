@@ -65,7 +65,7 @@ function CreateAnimal() {
       pushAnimalData(result.data as unknown as AnimalInfoParams);
       setLoading(false);
 
-      navigation.navigate('Home' as never, { isValid: true, haveAddress: true } as never);
+      navigation.navigate('Home' as never, { haveAddress: true } as never);
     } catch (e) {
       setLoading(false);
       return showError('Error: ' + e, 'Apparently there was an error, try again');
@@ -114,9 +114,7 @@ function CreateAnimal() {
                   placeholder={'Name'}
                 />
                 <Input //Age
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setAge, 5, 'number')
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setAge, 5, 'number')}
                   placeholder={'Age'}
                 />
                 <Input //Breed
@@ -124,29 +122,20 @@ function CreateAnimal() {
                   placeholder={'Breed'}
                 />
                 <Input //Birthday
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setBirthday, 2)
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setBirthday, 2)}
                   placeholder={'Birthday'}
                 />
                 <Input //Birthday month
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setBirthdayMonth, 2)
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setBirthdayMonth, 2)}
                   placeholder={'Birthday month'}
                 />
                 <Input //Track number
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setTrackNumber, 50)
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setTrackNumber, 50)}
                   placeholder={'Track number'}
                 />
               </View>
 
-              <CreateOrUpdateSwitch
-                enableFunction={setIsEnabled}
-                enableValue={isEnabled}
-              />
+              <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled} />
               <Button text={'Create new pet'} handleClick={handleSubmitForm} />
 
               <Text>{error}</Text>

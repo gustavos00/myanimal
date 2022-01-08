@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
 import { OwnerInfoParams } from '../interfaces/OwnerInfoParams';
-import { GoogleSignInProps } from '../interfaces/GoogleSignInProps';
 
 import SplashScreen from '../pages/SplashScreen';
 import Home from '../pages/Home';
@@ -29,7 +28,7 @@ interface OwnerContactsParams {
 }
 
 interface HomeAddressStatusParams {
-  haveAddress?: GoogleSignInProps;
+  haveAddress?: boolean;
 }
 
 export type RootStackParamList = {

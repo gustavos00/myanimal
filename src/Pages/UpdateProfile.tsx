@@ -54,7 +54,7 @@ function UpdateProfile() {
     try {
       const response = await api.post('/user/update', newUserData);
       setUser(response.data as unknown as UserContextProps);
-      navigation.navigate('Home' as never, { haveAddress: true, isValid: true } as never);
+      navigation.navigate('Home' as never, { haveAddress: true } as never);
     } catch (e) {
       console.log(e);
     }

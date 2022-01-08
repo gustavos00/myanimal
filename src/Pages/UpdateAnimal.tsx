@@ -66,7 +66,7 @@ function UpdateAnimal() {
 
         navigation.navigate(
           'Home' as never,
-          { isValid: true, haveAddress: true } as never
+          { haveAddress: true } as never
         );
       } catch (e) {
         setLoading(false);

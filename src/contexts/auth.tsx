@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from 'react';
-import { GoogleSignInProps } from '../interfaces/GoogleSignInProps';
 import { showError } from '../utils/error';
 
 import * as auth from '../services/auth';
@@ -7,10 +6,14 @@ import storage from '../utils/storage';
 import isEmpty from '../utils/isEmpty';
 import UserContext from './user';
 
+interface HomeAddressStatusParams {
+  haveAddress?: boolean;
+}
+
 interface AuthContextData {
   token: string | void;
 
-  googleSignIn: () => Promise<false | GoogleSignInProps | undefined>;
+  googleSignIn: () => Promise<false | HomeAddressStatusParams | undefined>;
   setToken: (token: string) => void;
   setExpoToken: (expoToken: string) => void;
 }

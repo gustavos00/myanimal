@@ -70,7 +70,7 @@ function ScanQr() {
         await api.get(`user/friend/verifyToken?token=${data}&fromWho=${user?.id}`);
 
         Alert.alert('Your friend request has made with success');
-        navigation.navigate('Home' as never, { isValid: true, haveAddress: true } as never);
+        navigation.navigate('Home' as never, { haveAddress: true } as never);
       } catch (e: any) {
         showError('Error: ' + e, 'Apparently there was an error, try again');
       }
