@@ -14,16 +14,6 @@ Notifications.setNotificationHandler({
   },
 });
 
-useEffect(() => {
-  Notifications.addNotificationResponseReceivedListener((response) => {
-    console.log(response.notification.request.content.data);
-  });
-
-  Notifications.addNotificationReceivedListener((notification) => {
-    console.log(1);
-  });
-}, []);
-
 const getExpoToken = async () => {
   const response = await Notifications.getExpoPushTokenAsync();
   return response.data;
@@ -47,7 +37,15 @@ const requestPermissions = async () => {
   });
 };
 
-export const hasNotificationsPermissionsAsync = async () => {
+export const hasNotificationsPermissions = async () => {
+  Notifications.addNotificationResponseReceivedListener((response) => {
+    console.log(response.notification.request.content.data);
+  });
+
+  Notifications.addNotificationReceivedListener((notification) => {
+    console.log(1);
+  });
+
   if (Constants.isDevice) {
     const notificationsStatus = await allowsNotifications();
 
