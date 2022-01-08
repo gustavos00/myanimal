@@ -16,6 +16,7 @@ import Input from '../components/StyledInput';
 import AuthContext from '../contexts/user';
 import Loading from '../components/Loading';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+import { generateFormData } from '../utils/FormData';
 
 function CreateAnimal() {
   const navigation = useNavigation();
@@ -25,7 +26,7 @@ function CreateAnimal() {
   const [breed, setBreed] = useState<string>('');
   const [birthday, setBirthday] = useState<string>('');
   const [birthdayMonth, setBirthdayMonth] = useState<string>('');
-  const [tracknumber, setTracknumber] = useState<string>('');
+  const [trackNumber, setTrackNumber] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -43,18 +44,19 @@ function CreateAnimal() {
       return console.log('Missing photo');
     }
 
-    const animalData = new FormData();
-    animalData.append('name', name);
-    animalData.append('breed', breed);
-    animalData.append('age', age);
-    animalData.append('birthday', birthday);
-    animalData.append('birthdayMonth', birthdayMonth);
-    animalData.append('trackNumber', tracknumber);
-    animalData.append('token', token ?? '');
+    const tempObj = {
+      name,
+      breed,
+      age,
+      birthday,
+      birthdayMonth,
+      trackNumber,
+    };
+    const animalData = generateFormData(tempObj);
     animalData.append('animalPhoto', {
       uri: photo,
       name: 'animalPhoto',
-      type: 'image/png', // or your mime type what you want
+      type: 'image/png',
     } as unknown as string | Blob);
 
     try {
@@ -63,16 +65,10 @@ function CreateAnimal() {
       pushAnimalData(result.data as unknown as AnimalInfoParams);
       setLoading(false);
 
-      navigation.navigate(
-        'Home' as never,
-        { isValid: true, haveAddress: true } as never
-      );
+      navigation.navigate('Home' as never, { isValid: true, haveAddress: true } as never);
     } catch (e) {
       setLoading(false);
-      return showError(
-        'Error: ' + e,
-        'Apparently there was an error, try again'
-      );
+      return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
   };
 
@@ -82,23 +78,23 @@ function CreateAnimal() {
     valueLenght: number,
     type?: string
   ) => {
+    let valueType = type ? type : 'string'; //Is string by default
+
     if (value.length > valueLenght) {
-      setError('Error message');
-      return;
+      return setError('Error message');
     } else {
       setError('');
     }
 
-    let valueType = type ? type : 'string';
     if (valueType === 'string') {
       setFunction(value);
     } else if (valueType === 'number') {
-      if (isNaN(Number(value))) {
-        setError('Please, insert a valid age');
-      } else {
+      if (!isNaN(Number(value))) {
         setError('');
         setFunction(value);
+        return;
       }
+      setError('Please, insert a valid age');
     } else {
       return showError('Error handle text on create animal');
     }
@@ -114,9 +110,7 @@ function CreateAnimal() {
             <View style={styles.container}>
               <View style={styles.inputsContainer}>
                 <Input //Name
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setName, 250)
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setName, 250)}
                   placeholder={'Name'}
                 />
                 <Input //Age
@@ -126,9 +120,7 @@ function CreateAnimal() {
                   placeholder={'Age'}
                 />
                 <Input //Breed
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setBreed, 250)
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setBreed, 250)}
                   placeholder={'Breed'}
                 />
                 <Input //Birthday
@@ -145,7 +137,7 @@ function CreateAnimal() {
                 />
                 <Input //Track number
                   handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setTracknumber, 50)
+                    handleChangeText(e, setTrackNumber, 50)
                   }
                   placeholder={'Track number'}
                 />

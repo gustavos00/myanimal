@@ -16,6 +16,7 @@ import AuthContext from '../contexts/user';
 import Loading from '../components/Loading';
 import { showError } from '../utils/error';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+import { generateFormData } from '../utils/FormData';
 
 function UpdateAnimal() {
   const navigation = useNavigation();
@@ -26,12 +27,8 @@ function UpdateAnimal() {
   const [age, setAge] = useState<string>(animalInfo.age);
   const [breed, setBreed] = useState<string>(animalInfo.breed);
   const [birthday, setBirthday] = useState<string>(animalInfo.birthday);
-  const [birthdayMonth, setBirthdayMonth] = useState<string>(
-    animalInfo.birthdayMonth
-  );
-  const [trackNumber, setTrackNumber] = useState<string>(
-    animalInfo.trackNumber
-  );
+  const [birthdayMonth, setBirthdayMonth] = useState<string>(animalInfo.birthdayMonth);
+  const [trackNumber, setTrackNumber] = useState<string>(animalInfo.trackNumber);
   const [photoUrl, setPhotoUrl] = useState<string>(animalInfo.photoUrl);
   const [error, setError] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
@@ -42,15 +39,17 @@ function UpdateAnimal() {
   const handleSubmitForm = async () => {
     //Check if error is a empty string
     if (error === '') {
-      const animalData = new FormData();
-      animalData.append('id', String(animalInfo.idAnimal));
-      animalData.append('name', name);
-      animalData.append('breed', breed);
-      animalData.append('age', age);
-      animalData.append('birthday', birthday);
-      animalData.append('birthdayMonth', birthdayMonth);
-      animalData.append('trackNumber', trackNumber);
-      animalData.append('idUser', String(animalInfo.userIdUser));
+      const tempObj = {
+        id: String(animalInfo.idAnimal),
+        name,
+        breed,
+        age,
+        birthday,
+        birthdayMonth,
+        trackNumber,
+        idUser: String(animalInfo.userIdUser),
+      };
+      const animalData = generateFormData(tempObj);
       animalData.append('animalPhoto', {
         uri: photoUrl,
         name: 'animalPhoto',
@@ -71,10 +70,7 @@ function UpdateAnimal() {
         );
       } catch (e) {
         setLoading(false);
-        return showError(
-          'Error: ' + e,
-          'Apparently there was an error, try again'
-        );
+        return showError('Error: ' + e, 'Apparently there was an error, try again');
       }
     }
   };
@@ -111,19 +107,14 @@ function UpdateAnimal() {
   return (
     <>
       <View style={styles.headerBg}>
-        <AddImage
-          photoUrl={animalInfo.photoUrl}
-          setProfilePhotoFunction={setPhotoUrl}
-        />
+        <AddImage photoUrl={animalInfo.photoUrl} setProfilePhotoFunction={setPhotoUrl} />
 
         <Background heightSize={'75%'}>
           <KeyboardAvoidingWrapper>
             <View style={styles.container}>
               <View style={styles.inputsContainer}>
                 <Input //Name
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setName, 250)
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setName, 250)}
                   text={name}
                   placeholder={'Name'}
                 />
@@ -135,9 +126,7 @@ function UpdateAnimal() {
                   placeholder={'Age'}
                 />
                 <Input //Breed
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setBreed, 250)
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setBreed, 250)}
                   text={breed}
                   placeholder={'Breed'}
                 />

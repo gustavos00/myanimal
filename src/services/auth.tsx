@@ -3,15 +3,14 @@ import { UserGoogleDataResponse } from '../interfaces/UserGoogleDataResponse';
 
 import api from '../api/api';
 import * as Google from 'expo-google-app-auth';
+import { generateFormData } from '../utils/FormData';
 
 const uuid = require('uuid');
 
 export async function GoogleSignIn() {
   const config = {
-    iosClientId:
-      '684156509987-mokd5cnud6oed8qn1r5nunqdu631friv.apps.googleusercontent.com',
-    androidClientId:
-      '684156509987-cprs1rm38pjgu7jt4i2hhan3mqppao1k.apps.googleusercontent.com',
+    iosClientId: '684156509987-mokd5cnud6oed8qn1r5nunqdu631friv.apps.googleusercontent.com',
+    androidClientId: '684156509987-cprs1rm38pjgu7jt4i2hhan3mqppao1k.apps.googleusercontent.com',
     scopes: ['profile', 'email'],
   };
 
@@ -29,16 +28,12 @@ export async function GoogleSignIn() {
   }
 }
 
-const apiPostData = async (params: UserGoogleDataResponse) => {
+const apiPostData = async ({ givenName, familyName, email, photoUrl }: UserGoogleDataResponse) => {
   const salt = uuid.v4();
 
-  let userData = new FormData();
-  userData.append('salt', salt);
-  userData.append('givenName', params.givenName ?? '');
-  userData.append('familyName', params.familyName ?? '');
-  userData.append('email', params.email ?? '');
+  let userData = generateFormData({ salt, givenName, familyName, email });
   userData.append('userPhoto', {
-    uri: params.photoUrl,
+    uri: photoUrl,
     name: 'userPhoto',
     type: 'image/png',
   } as unknown as string);
