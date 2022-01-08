@@ -1,20 +1,20 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 
 import api from '../../api/api';
-import AuthContext from '../../contexts/user';
-import { GoogleSignInProps } from '../../interfaces/GoogleSignInProps';
+import UserContext from '../../contexts/user';
 import { showError } from '../../utils/error';
+import { generateUrlSearchParams } from '../../utils/URLSearchParams';
 
 import Button from '../Button';
 import KeyboardAvoidingWrapper from '../KeyboardAvoidingWrapper';
 import Loading from '../Loading';
 import StyledInput from '../StyledInput';
 
-interface CreateAddressProps { 
-  changeHaveAddressStateFunction: Dispatch<SetStateAction<boolean>>
+interface CreateAddressProps {
+  changeHaveAddressStateFunction: Dispatch<SetStateAction<boolean>>;
 }
 
-function CreateAddress({ changeHaveAddressStateFunction } : CreateAddressProps) {
+function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
   const [streetName, setStreetName] = useState<string>();
   const [doorNumber, setDoorNumber] = useState<string>();
   const [postalCode, setPostalCode] = useState<string>();
@@ -23,7 +23,7 @@ function CreateAddress({ changeHaveAddressStateFunction } : CreateAddressProps) 
   const [error, setError] = useState<string>();
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
 
   const handleText = (
     e: string,
@@ -46,17 +46,19 @@ function CreateAddress({ changeHaveAddressStateFunction } : CreateAddressProps) 
 
   const handleSubmitForm = async () => {
     if (streetName && doorNumber && postalCode) {
-      const addressData = new URLSearchParams();
-      addressData.append('streetName', streetName);
-      addressData.append('doorNumber', doorNumber);
-      addressData.append('postalCode', postalCode);
-      addressData.append('email', user?.email ?? '')
+      const tempObj = {
+        streetName,
+        doorNumber,
+        postalCode,
+        email: user?.email ?? '',
+      };
+      const addressData = generateUrlSearchParams(tempObj);
 
       try {
         setLoading(true);
         await api.post('user/createAddress', addressData);
         setLoading(false);
-        changeHaveAddressStateFunction(true)
+        changeHaveAddressStateFunction(true);
 
         //Dynamic push user data
       } catch (e) {
@@ -72,9 +74,7 @@ function CreateAddress({ changeHaveAddressStateFunction } : CreateAddressProps) 
           <StyledInput
             text={streetName}
             placeholder={'Street name'}
-            handleChangeFunction={(e: string) =>
-              handleText(e, 4, setStreetName)
-            }
+            handleChangeFunction={(e: string) => handleText(e, 4, setStreetName)}
           />
           <StyledInput
             text={doorNumber}
@@ -86,9 +86,7 @@ function CreateAddress({ changeHaveAddressStateFunction } : CreateAddressProps) 
           <StyledInput
             text={postalCode}
             placeholder={'Postal Code'}
-            handleChangeFunction={(e: string) =>
-              handleText(e, 4, setPostalCode)
-            }
+            handleChangeFunction={(e: string) => handleText(e, 4, setPostalCode)}
           />
 
           <StyledInput

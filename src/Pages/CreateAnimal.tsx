@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text } from 'react-native';
 import { showError } from '../utils/error';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
+import { generateFormData } from '../utils/FormData';
 
 import api from '../api/api';
 
@@ -13,10 +14,9 @@ import Button from '../components/Button';
 import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
 import Input from '../components/StyledInput';
-import AuthContext from '../contexts/user';
+import UserContext from '../contexts/user';
 import Loading from '../components/Loading';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
-import { generateFormData } from '../utils/FormData';
 
 function CreateAnimal() {
   const navigation = useNavigation();
@@ -31,7 +31,7 @@ function CreateAnimal() {
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const { pushAnimalData, token } = useContext(AuthContext);
+  const { pushAnimalData } = useContext(UserContext);
 
   const handleSubmitForm = async () => {
     //Check if error is a empty string

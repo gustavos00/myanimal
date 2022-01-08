@@ -12,7 +12,7 @@ import Button from '../components/Button';
 import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
 import Input from '../components/StyledInput';
-import AuthContext from '../contexts/user';
+import UserContext from '../contexts/user';
 import Loading from '../components/Loading';
 import { showError } from '../utils/error';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
@@ -34,7 +34,7 @@ function UpdateAnimal() {
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const { pushAnimalData } = useContext(AuthContext);
+  const { pushAnimalData } = useContext(UserContext);
 
   const handleSubmitForm = async () => {
     //Check if error is a empty string

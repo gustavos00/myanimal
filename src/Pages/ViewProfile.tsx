@@ -13,13 +13,13 @@ import StyledInput from '../components/StyledInput';
 import StyledText from '../components/StyledText';
 import Underline from '../components/Underline';
 
-import AuthContext from '../contexts/user';
+import UserContext from '../contexts/user';
 
 function ViewProfile() {
   const [statusModalIsOpen, setStatusModalIsOpen] = useState(false);
   const [newStatusPhrase, setNewStatusPhrase] = useState<string>();
 
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
 
   const handleStatusText = (e: string) => {
     //Sanitize string

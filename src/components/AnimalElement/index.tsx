@@ -15,7 +15,7 @@ import globalStyles from '../../assets/styles/global';
 
 import { showError } from '../../utils/error';
 import { AnimalInfoParams } from '../../interfaces/AnimalInfoParams';
-import AuthContext from '../../contexts/user';
+import UserContext from '../../contexts/user';
 import ActionsElements from '../ActionsElements';
 
 interface AnimalElementProps {
@@ -24,7 +24,7 @@ interface AnimalElementProps {
 
 function AnimalElement({ animalData }: AnimalElementProps) {
   const navigation = useNavigation();
-  const { deleteAnimalData } = useContext(AuthContext);
+  const { deleteAnimalData } = useContext(UserContext);
 
   const deletingAnimal = async (id: number, arrayKey: number) => {
     try {

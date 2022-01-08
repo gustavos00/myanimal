@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { showError } from '../utils/error';
 import { FlatList, View } from 'react-native';
 
-import AuthContext from '../contexts/user';
+import UserContext from '../contexts/user';
 import api from '../api/api';
 
 import Background from '../components/Background';
@@ -16,7 +16,7 @@ function FriendsRequests() {
   const [loading, setLoading] = useState<boolean>();
   const [friendsRequests, setFriendsRequests] = useState();
 
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
 
   const getAllFriendsRequests = async () => {
     setLoading(true);

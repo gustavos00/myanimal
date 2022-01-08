@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { UserContextData } from '../interfaces/UserContextData';
+import { UserContextProps } from '../interfaces/UserContextData';
 
 import globalStyles from '../assets/styles/global';
 
@@ -14,13 +14,13 @@ import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import OptionHeader from '../components/OptionHeader';
 import StyledInput from '../components/StyledInput';
 import Underline from '../components/Underline';
-import AuthContext from '../contexts/user';
+import UserContext from '../contexts/user';
 import AddPhoto from '../components/AddPhoto';
 import { generateFormData } from '../utils/FormData';
 
 function UpdateProfile() {
   const navigation = useNavigation();
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(UserContext);
 
   const [streetName, setStreetName] = useState<string | undefined>(user?.userAddress.streetName);
   const [doorNumber, setDoorNumber] = useState<string | undefined>(user?.userAddress.doorNumber);
@@ -53,7 +53,7 @@ function UpdateProfile() {
 
     try {
       const response = await api.post('/user/update', newUserData);
-      setUser(response.data as unknown as UserContextData);
+      setUser(response.data as unknown as UserContextProps);
       navigation.navigate('Home' as never, { haveAddress: true, isValid: true } as never);
     } catch (e) {
       console.log(e);
