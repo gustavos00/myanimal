@@ -1,16 +1,18 @@
 import { showError } from '../utils/error';
 import { UserGoogleDataResponse } from '../interfaces/UserGoogleDataResponse';
+import { generateFormData } from '../utils/FormData';
 
 import api from '../api/api';
+import Config from 'react-native-config';
+
 import * as Google from 'expo-google-app-auth';
-import { generateFormData } from '../utils/FormData';
 
 const uuid = require('uuid');
 
 export async function GoogleSignIn() {
   const config = {
-    iosClientId: '684156509987-mokd5cnud6oed8qn1r5nunqdu631friv.apps.googleusercontent.com',
-    androidClientId: '684156509987-cprs1rm38pjgu7jt4i2hhan3mqppao1k.apps.googleusercontent.com',
+    iosClientId: Config.IOS_CLIENT_ID,
+    androidClientId: Config.ANDROID_CLIENT_ID,
     scopes: ['profile', 'email'],
   };
 
@@ -18,8 +20,8 @@ export async function GoogleSignIn() {
     const data = await Google.logInAsync(config);
 
     if (data.type !== 'cancel') {
-      const responseData = await apiPostData(data.user);
-      return responseData;
+      const response = await storeUserData(data.user);
+      return response;
     } else {
       return false;
     }
@@ -28,10 +30,10 @@ export async function GoogleSignIn() {
   }
 }
 
-const apiPostData = async ({ givenName, familyName, email, photoUrl }: UserGoogleDataResponse) => {
+const storeUserData = async ({ givenName, familyName, email, photoUrl }: UserGoogleDataResponse) => {
   const salt = uuid.v4();
 
-  let userData = generateFormData({ salt, givenName, familyName, email });
+  const userData = generateFormData({ salt, givenName, familyName, email });
   userData.append('userPhoto', {
     uri: photoUrl,
     name: 'userPhoto',
