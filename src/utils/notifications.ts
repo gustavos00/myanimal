@@ -1,7 +1,5 @@
 import Constants from 'expo-constants';
 
-import { useEffect } from 'react';
-
 import * as Notifications from 'expo-notifications';
 
 Notifications.setNotificationHandler({
