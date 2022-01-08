@@ -11,7 +11,6 @@ import BackgroundHeader from '../components/BackgroundHeader';
 import Footer from '../components/Footer';
 import Button from '../components/Button';
 
-import AuthContext from '../contexts/user';
 import Maps from '../components/Maps';
 
 interface geographicDataProps {
@@ -24,7 +23,6 @@ interface geographicDataProps {
 function FindMyAnimal() {
   const [haveValidAddress, setHaveValidAddress] = useState<boolean>();
   const [geographicData, setGeographicData] = useState<geographicDataProps>();
-  const { user } = useContext(AuthContext);
 
   const route = useRoute<RouteProp<RootStackParamList, 'FindMyAnimal'>>();
   const { ownerData } = route.params;
