@@ -10,10 +10,11 @@ import {
 } from 'react-native';
 
 import sliderData from '../../sliderData';
-
 import SliderDot from '../SliderDot';
 import SliderHeader from '../SliderHeader';
 import SliderSubheader from '../SliderSubheader';
+
+import globalStyles from '../../assets/styles/global'
 
 interface SliderContentProps {
   textBeforeBolder: string;
@@ -69,7 +70,7 @@ function SliderContent() {
           return (
             <View style={styles.sliderContainer}>
               <SafeAreaView />
-              <View style={{ marginLeft: 20, marginRight: 20 }}>
+              <View style={styles.sliderContent}>
                 <Image style={styles.sliderPhoto} source={photoLocal} />
 
                 <SliderHeader
@@ -93,15 +94,22 @@ function SliderContent() {
 
 const styles = StyleSheet.create({
   sliderPhoto: {
-    width: 350,
-    height: 350,
+    width: globalStyles.fullDeviceWidth,
+    height: globalStyles.fullDeviceHeight * .45,
 
     marginBottom: 30,
+  },
+
+  sliderContent: {
+    marginHorizontal: Dimensions.get('window').width / 100,
+    borderWidth: 1,
+    
   },
 
   sliderContainer: {
     alignItems: 'center',
     flexDirection: 'row-reverse',
+    borderWidth: 1,
   },
 
   dotsContainer: {
