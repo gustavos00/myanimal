@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import globalStyles from '../../assets/styles/global';
-import AuthContext from '../../contexts/user';
+import UserContext from '../../contexts/user';
 import HeaderIcon from '../HeaderIcon';
 import HeaderText from '../HeaderText';
 
@@ -11,7 +11,7 @@ interface HeaderProps {
 }
 
 function Header({ text }: HeaderProps) {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
 
   return (
     <>

@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 import OptionHeader from '../components/OptionHeader';
 import OptionElement from '../components/OptionElement';
 import Underline from '../components/Underline';
-import AuthContext from '../contexts/user';
+import UserContext from '../contexts/user';
 import Loading from '../components/Loading';
 import GenerateFriendQrContainer from '../components/GenerateFriendQRContainer';
 import FindMyAnimalContainer from '../components/findMyAnimalContainer';
@@ -20,13 +20,11 @@ import storage from '../utils/storage';
 function Settings() {
   const [loading, setLoading] = useState<boolean>();
   const [userEmail, setUserEmail] = useState<string>('');
-  const [generateQRModalIsOpen, setGenerateQRModalIsOpen] =
-    useState<boolean>(false);
-  const [findMyAnimalModalIsOpen, setFindMyAnimalModalIsOpen] =
-    useState<boolean>(false);
+  const [generateQRModalIsOpen, setGenerateQRModalIsOpen] = useState<boolean>(false);
+  const [findMyAnimalModalIsOpen, setFindMyAnimalModalIsOpen] = useState<boolean>(false);
 
   const navigation = useNavigation();
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     if (user) {
@@ -67,10 +65,7 @@ function Settings() {
               handleClick={async () => changeScreen('UpdateProfile')}
               text={'Edit profile'}
             />
-            <OptionElement
-              handleClick={async () => changeScreen('Login', true)}
-              text={'Log-out'}
-            />
+            <OptionElement handleClick={async () => changeScreen('Login', true)} text={'Log-out'} />
           </View>
 
           <Underline />
@@ -80,10 +75,7 @@ function Settings() {
               handleClick={async () => changeScreen('FriendsRequests')}
               text={'View friends requests'}
             />
-            <OptionElement
-              handleClick={async () => changeScreen('ScanQR')}
-              text={'Add friends'}
-            />
+            <OptionElement handleClick={async () => changeScreen('ScanQR')} text={'Add friends'} />
             <OptionElement
               handleClick={() => setGenerateQRModalIsOpen(true)}
               text={'Generate QR Code'}
@@ -106,14 +98,8 @@ function Settings() {
           <Underline />
           <View style={styles.textContainer}>
             <OptionHeader text={'More'} />
-            <OptionElement
-              handleClick={() => changeScreen('AboutUs')}
-              text={'About us'}
-            />
-            <OptionElement
-              handleClick={() => changeScreen('Home')}
-              text={'Privacy Policy'}
-            />
+            <OptionElement handleClick={() => changeScreen('AboutUs')} text={'About us'} />
+            <OptionElement handleClick={() => changeScreen('Home')} text={'Privacy Policy'} />
           </View>
         </>
       </Background>

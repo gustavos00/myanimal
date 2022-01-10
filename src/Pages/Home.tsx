@@ -4,7 +4,7 @@ import { RootStackParamList } from '../navigator/MainStack';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import AuthContext from '../contexts/user';
+import UserContext from '../contexts/user';
 import BottomModal from '../components/BottomModal';
 import CreateAddress from '../components/CreateAddress';
 import HomeContentContainer from '../components/HomeContentContainer';
@@ -13,7 +13,7 @@ const Home = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Home'>>();
   const { haveAddress } = route.params;
 
-  const { animalData } = useContext(AuthContext);
+  const { animalData } = useContext(UserContext);
 
   const [haveAddressState, setHaveAddressState] = useState(
     haveAddress as boolean

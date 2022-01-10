@@ -1,83 +1,23 @@
 import React, { createContext, useState } from 'react';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
-import { UserContextData } from '../interfaces/UserContextData';
-import { GoogleSignInProps } from '../interfaces/GoogleSignInProps';
+import { UserContextProps } from '../interfaces/UserContextData';
 import { showError } from '../utils/error';
 
-import * as auth from '../services/auth';
-import storage from '../utils/storage';
-import isEmpty from '../utils/isEmpty';
-
-interface AuthContextData {
-  signed: boolean;
-  token: string | void;
-  user: UserContextData | void;
+interface UserContextData {
+  user: UserContextProps | void;
   animalData: Array<AnimalInfoParams> | void;
 
-  googleSignIn: () => Promise<false | GoogleSignInProps | undefined>;
   pushAnimalData: (data: AnimalInfoParams) => void;
   deleteAnimalData: (id: number) => void;
   setAnimalData: (data: Array<AnimalInfoParams>) => void;
-  setUser: (data: UserContextData) => void;
-  setToken: (token : string) => void
+  setUser: (data: UserContextProps) => void;
 }
 
-interface UserGoogleData extends UserContextData {
-  token: string;
-  accessToken: string;
-  salt: string;
-}
+const UserContext = createContext<UserContextData>({} as UserContextData);
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
-
-export function AuthProvider({ children }: any) {
-  const [user, setUser] = useState<UserContextData | void>();
+export function UserProvider({ children }: any) {
+  const [user, setUser] = useState<UserContextProps | void>();
   const [animalData, setAnimalData] = useState<Array<AnimalInfoParams>>();
-  const [token, setToken] = useState<string | void>('vaiSeFuderRN');
-
-  const setTokenOnLocalStorage = async (token: string, salt: string) => {
-    //Missing date
-    try {
-      await storage.save({ key: '@userAccess', data: { token, salt } });
-    } catch (e) {
-      return showError(
-        'Error: ' + e,
-        'Apparently there was an error, try again'
-      );
-    }
-  };
-
-  const googleSignIn = async () => {
-    let googleResponse: UserGoogleData;
-    let tempObj = {};
-
-    try {
-      googleResponse = await auth.GoogleSignIn();
-      if (!googleResponse) return false;
-      console.log(googleResponse)
-
-      setToken(googleResponse.token);
-      setAnimalData(googleResponse.animalData);
-      setUser(googleResponse);
-      console.log('token state ' + token);
-      await setTokenOnLocalStorage(
-        googleResponse.accessToken,
-        googleResponse.salt
-      );
-
-      tempObj = {
-        haveAddress: !isEmpty(googleResponse.userAddress),
-        isValid: googleResponse ? true : false,
-      };
-    } catch (e) {
-      return showError(
-        'Error: ' + e,
-        'Apparently there was an error, try again'
-      );
-    }
-
-    return tempObj;
-  };
 
   const pushAnimalData = (data: AnimalInfoParams) => {
     if (animalData) {
@@ -103,24 +43,20 @@ export function AuthProvider({ children }: any) {
   };
 
   return (
-    <AuthContext.Provider
+    <UserContext.Provider
       value={{
-        signed: !!user,
-        token,
         user,
         animalData,
 
-        googleSignIn,
         pushAnimalData,
         deleteAnimalData,
         setUser,
         setAnimalData,
-        setToken
       }}
     >
       {children}
-    </AuthContext.Provider>
+    </UserContext.Provider>
   );
 }
 
-export default AuthContext;
+export default UserContext;

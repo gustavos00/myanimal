@@ -1,92 +1,48 @@
 import React, { useContext, useEffect, useState } from 'react';
 import storage from '../utils/storage';
 import api from '../api/api';
-import AuthContext from '../contexts/user';
-import Constants from 'expo-constants';
+import UserContext from '../contexts/user';
+import AuthContext from '../contexts/auth';
 import isEmpty from '../utils/isEmpty';
 
 import { useNavigation } from '@react-navigation/core';
-import { showError } from '../utils/error';
-import { UserContextData } from '../interfaces/UserContextData';
+import { UserContextProps } from '../interfaces/UserContextData';
 import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
-
-import * as Notifications from 'expo-notifications';
+import { generateUrlSearchParams } from '../utils/URLSearchParams';
 import { verifyNetwork } from '../utils/network';
+import { showError } from '../utils/error';
+import { hasNotificationsPermissions } from '../utils/notifications';
+import { storeExpoToken } from '../services/auth';
+
 import BackgroundFilter from '../components/BackgroundFilter';
 import BottomModal from '../components/BottomModal';
 import NoWIFIModal from '../components/NoWIFIModal';
 
 function SplashScreen() {
   const navigation = useNavigation();
-  const { setUser, setAnimalData, setToken } =
-    useContext(AuthContext);
+
+  const [accessResponse, setAccessResponse] = useState();
+  const [userData, setUserData] = useState<UserContextProps>();
+
+  const { setUser, setAnimalData } = useContext(UserContext);
+  const { setToken, token } = useContext(AuthContext);
 
   const [internetConnection, setInternetConnection] = useState<boolean>(false);
-  const [notificationPermissions, setNotificationPermissions] =
-    useState<boolean>();
 
-  //NOTIFICATIONS
-  //Check notification permissions
-  const getNotificationsPermissions = async () => {
-    const settings = await Notifications.getPermissionsAsync();
-    return (
-      settings.granted ||
-      settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL
-    );
-  };
-
-  //Request notifications
-  const requestNotificationPermissions = async () => {
-    const response = await Notifications.requestPermissionsAsync({
-      ios: {
-        allowAlert: true,
-        allowBadge: true,
-        allowSound: true,
-        allowAnnouncements: true,
-      },
-    });
-
-    return response.status === 'granted';
-  };
-
-  useEffect(() => {
-    const getNotificationsPermissionsStatus = async () => {
-      const response = await getNotificationsPermissions();
-      setNotificationPermissions(response);
-
-      if (!notificationPermissions) {
-        //if dont have permissions
-        const response = await requestNotificationPermissions();
-        setNotificationPermissions(response);
-      } else {
-        //if have permissions
-        if (Constants.isDevice) {
-          //if have permissions
-          try {
-            const response = await Notifications.getExpoPushTokenAsync();
-            console.log(response.data);
-          } catch (e) {
-            console.log(e);
-          }
-        } else {
-          console.log('its not a device');
-        }
-      }
-    };
-
-    getNotificationsPermissionsStatus();
-  }, []);
-
-  //CHECK USER
   //Check token on localstorage
   const getTokenFromLocalStorage = async () => {
-    let accessResponse;
-    let userData;
-
     try {
-      accessResponse = await storage.load({ key: '@userAccess' });
-    } catch (e) {
-      console.log(e);
+      const response = await storage.load({ key: '@userAccess' });
+      setAccessResponse(response);
+    } catch (e: any) {
+      switch (e.name) {
+        case 'NotFoundError':
+          console.log('Not found');
+          break;
+        case 'ExpiredError':
+          console.log('Expired');
+          break;
+      }
       return false;
     }
 
@@ -94,28 +50,25 @@ function SplashScreen() {
       const { salt, token } = accessResponse;
 
       //API request
-      let tokenData = new URLSearchParams();
-      tokenData.append('salt', salt);
-      tokenData.append('token', token);
+      const tokenData = generateUrlSearchParams({ salt, token });
 
       try {
         const response = await api.post('/user/access/verify', tokenData);
-        userData = response.data as unknown as UserContextData;
+        setUserData(response.data as unknown as UserContextProps);
       } catch (e: any) {
         //Verify error type by docs https://github.com/sunnylqm/react-native-storage
         showError('Error: ' + e, 'Apparently there was an error, try again');
 
         return false;
       }
-      setToken(userData.token);
-      setUser(userData);
-      setAnimalData(
-        userData.animalData as Array<AnimalInfoParams>
-      );
 
-      const { userAddress } = userData;
-
-      return { haveAddress: !isEmpty(userAddress), isValid: true };
+      if (userData) {
+        setToken(userData?.token);
+        setUser(userData);
+        setAnimalData(userData.animalData as Array<AnimalInfoParams>);
+        const { userAddress } = userData;
+        return { haveAddress: !isEmpty(userAddress) };
+      }
     } else {
       return false;
     }
@@ -135,8 +88,17 @@ function SplashScreen() {
     getToken();
   }, []);
 
-  //CHECK INTERNET
+  useEffect(() => {
+    const getNotificationsStatus = async () => {
+      const response = await hasNotificationsPermissions();
+      if (!!response) {
+        storeExpoToken({ expoToken: response, token: token ?? '' });
+      }
+    };
+    getNotificationsStatus();
+  }, []);
 
+  //CHECK INTERNET
   const verifyNetworkLocal = () => {
     useEffect(() => {
       const verifyNetworkInsideUseEffect = async () => {

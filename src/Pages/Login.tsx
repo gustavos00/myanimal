@@ -6,7 +6,7 @@ import globalStyles from '../assets/styles/global';
 import Button from '../components/LoginButton';
 import RoundedBackground from '../components/RoundedBackground';
 import SliderContent from '../components/SliderContent';
-import AuthContext from '../contexts/user';
+import AuthContext from '../contexts/auth';
 import Loading from '../components/Loading';
 
 const Login = () => {

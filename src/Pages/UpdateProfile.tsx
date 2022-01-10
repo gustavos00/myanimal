@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { UserContextData } from '../interfaces/UserContextData';
+import { UserContextProps } from '../interfaces/UserContextData';
 
 import globalStyles from '../assets/styles/global';
 
@@ -14,63 +14,47 @@ import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import OptionHeader from '../components/OptionHeader';
 import StyledInput from '../components/StyledInput';
 import Underline from '../components/Underline';
-import AuthContext from '../contexts/user';
+import UserContext from '../contexts/user';
 import AddPhoto from '../components/AddPhoto';
+import { generateFormData } from '../utils/FormData';
 
 function UpdateProfile() {
   const navigation = useNavigation();
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(UserContext);
 
-  const [streetName, setStreetName] = useState<string | undefined>(
-    user?.userAddress.streetName
-  );
-  const [doorNumber, setDoorNumber] = useState<string | undefined>(
-    user?.userAddress.doorNumber
-  );
-  const [postalCode, setPostalCode] = useState<string | undefined>(
-    user?.userAddress.postalCode
-  );
-  const [parish, setParish] = useState<string | undefined>(
-    user?.userAddress.parishName
-  );
-  const [locality, setLocality] = useState<string | undefined>(
-    user?.userAddress.locationName
-  );
-  const [givenName, setGivenName] = useState<string | undefined>(
-    user?.givenName
-  );
-  const [familyName, setFamilyName] = useState<string | undefined>(
-    user?.familyName
-  );
-  const [phoneNumber, setPhoneNumber] = useState<string | undefined>(
-    user?.phoneNumber
-  );
+  const [streetName, setStreetName] = useState<string | undefined>(user?.userAddress.streetName);
+  const [doorNumber, setDoorNumber] = useState<string | undefined>(user?.userAddress.doorNumber);
+  const [postalCode, setPostalCode] = useState<string | undefined>(user?.userAddress.postalCode);
+  const [parish, setParish] = useState<string | undefined>(user?.userAddress.parishName);
+  const [locality, setLocality] = useState<string | undefined>(user?.userAddress.locationName);
+  const [givenName, setGivenName] = useState<string | undefined>(user?.givenName);
+  const [familyName, setFamilyName] = useState<string | undefined>(user?.familyName);
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>(user?.phoneNumber);
   const [photoUrl, setPhotoUrl] = useState<string | undefined>(user?.photoUrl);
 
   const handleSubmitForm = async () => {
-    const newUserData = new FormData();
-    newUserData.append('streetName', streetName ?? '');
-    newUserData.append('doorNumber', doorNumber ?? '');
-    newUserData.append('postalCode', postalCode ?? '');
-    newUserData.append('parish', parish ?? '');
-    newUserData.append('locality', locality ?? '');
-    newUserData.append('givenName', givenName ?? '');
-    newUserData.append('familyName', familyName ?? '');
-    newUserData.append('phoneNumber', phoneNumber ?? '');
-    newUserData.append('email', user?.email ?? '');
+    const tempObj = {
+      streetName,
+      doorNumber,
+      postalCode,
+      parish,
+      locality,
+      givenName,
+      familyName,
+      phoneNumber,
+      email: user?.email,
+    };
+    const newUserData = generateFormData(tempObj);
     newUserData.append('userPhoto', {
       uri: photoUrl,
       name: 'userPhoto',
-      type: 'image/png', // or your mime type what you want
+      type: 'image/png',
     } as unknown as string | Blob);
 
     try {
       const response = await api.post('/user/update', newUserData);
-      setUser(response.data as unknown as UserContextData);
-      navigation.navigate(
-        'Home' as never,
-        { haveAddress: true, isValid: true } as never
-      );
+      setUser(response.data as unknown as UserContextProps);
+      navigation.navigate('Home' as never, { haveAddress: true } as never);
     } catch (e) {
       console.log(e);
     }
@@ -86,7 +70,7 @@ function UpdateProfile() {
             <View style={styles.container}>
               <View style={styles.firstInputContainer}>
                 <OptionHeader text={'Account information'} />
-                
+
                 <StyledInput
                   handleChangeFunction={setGivenName}
                   text={givenName}
@@ -134,15 +118,12 @@ function UpdateProfile() {
                 />
               </View>
               <Button text={'Save'} handleClick={handleSubmitForm} />
-
             </View>
           </KeyboardAvoidingWrapper>
         </Background>
       </View>
 
-
       <Footer wichActive={'settings'} />
-
     </>
   );
 }

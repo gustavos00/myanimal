@@ -1,7 +1,7 @@
 import { AnimalInfoParams } from "./AnimalInfoParams";
 import { UserAddressData } from "./UserAddressData";
 
-export interface UserContextData {
+export interface UserContextProps {
   familyName: string;
   givenName: string;
   id: number;
