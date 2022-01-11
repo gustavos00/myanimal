@@ -11,12 +11,12 @@ import {
 } from 'react-native';
 import ActionsElements from '../ActionsElements';
 
-import { UserContextData } from '../../types/UserContextData';
+import { UserData } from '../../types/UserData';
 
 interface FriendRequestElementContent {
   userFromWho: number;
   userToWhom: number;
-  user: UserContextData
+  user: UserData
 }
 
 interface FriendRequestElementProps {

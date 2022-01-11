@@ -6,7 +6,7 @@ import AuthContext from '../contexts/auth';
 import isEmpty from '../utils/isEmpty';
 
 import { useNavigation } from '@react-navigation/core';
-import { UserContextData } from '../types/UserContextData';
+import { UserData } from '../types/UserData';
 import { AnimalData } from '../types/AnimalData';
 import { generateUrlSearchParams } from '../utils/URLSearchParams';
 import { verifyNetwork } from '../utils/network';
@@ -22,7 +22,7 @@ function SplashScreen() {
   const navigation = useNavigation();
 
   const [accessResponse, setAccessResponse] = useState();
-  const [userData, setUserData] = useState<UserContextData>();
+  const [userData, setUserData] = useState<UserData>();
 
   const { setUser, setAnimalData } = useContext(UserContext);
   const { setToken, token } = useContext(AuthContext);
@@ -54,7 +54,7 @@ function SplashScreen() {
 
       try {
         const response = await api.post('/user/access/verify', tokenData);
-        setUserData(response.data as unknown as UserContextData);
+        setUserData(response.data as unknown as UserData);
       } catch (e: any) {
         //Verify error type by docs https://github.com/sunnylqm/react-native-storage
         showError('Error: ' + e, 'Apparently there was an error, try again');
@@ -64,7 +64,7 @@ function SplashScreen() {
 
       if (userData) {
         setToken(userData?.token);
-        setUser(userData as UserContextData);
+        setUser(userData as UserData);
         setAnimalData(userData.animalData as Array<AnimalData>);
         const { userAddress } = userData;
         return { haveAddress: !isEmpty(userAddress) };

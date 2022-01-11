@@ -1,7 +1,7 @@
 import { AnimalData } from "./AnimalData";
 import { UserAddressData } from "./UserAddressData";
 
-export interface UserContextData {
+export interface UserData {
   familyName: string;
   givenName: string;
   id: number;
