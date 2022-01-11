@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { AnimalData } from '../types/AnimalData';
-import { OwnerInfoParams } from '../types/OwnerInfoParams';
+import { AnimalOwnerAddressData } from '../types/AnimalOwnerAddressData';
 
 import SplashScreen from '../pages/SplashScreen';
 import Home from '../pages/Home';
@@ -24,7 +24,7 @@ interface AnimalScreenParams {
 }
 
 interface OwnerContactsParams {
-  ownerData: OwnerInfoParams;
+  ownerData: AnimalOwnerAddressData;
 }
 
 interface HomeAddressStatusParams {
