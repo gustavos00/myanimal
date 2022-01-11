@@ -13,6 +13,7 @@ const globalStyles = {
   fullDeviceWidth: Dimensions.get('window').width,
   fullDeviceHeight: Dimensions.get('window').height,
 
+  smallerGap: Dimensions.get('window').width * .04,
   smallGap: Dimensions.get('window').width * .04,
 }
 
