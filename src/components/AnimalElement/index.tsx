@@ -14,7 +14,7 @@ import api from '../../api/api';
 import globalStyles from '../../assets/styles/global';
 
 import { showError } from '../../utils/error';
-import { AnimalInfoParams } from '../../interfaces/AnimalInfoParams';
+import { AnimalInfoParams } from '../../types/AnimalInfoParams';
 import UserContext from '../../contexts/user';
 import ActionsElements from '../ActionsElements';
 
@@ -100,13 +100,13 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     width: globalStyles.fullDeviceWidth,
-    padding: globalStyles.smallGap,
+    padding: globalStyles.smallerGap,
 
     flexDirection: 'row',
   },
 
   element: {
-    margin: globalStyles.smallGap,
+    margin: globalStyles.smallerGap,
 
     backgroundColor: 'white',
     borderRadius: 15,
@@ -125,14 +125,14 @@ const styles = StyleSheet.create({
   icon: {
     width: Dimensions.get('window').width * 0.22,
     height: Dimensions.get('window').width * 0.22,
-    borderRadius: globalStyles.smallGap,
+    borderRadius: globalStyles.smallerGap,
 
     backgroundColor: 'red',
   },
 
   textContainer: {
-    marginLeft: globalStyles.smallGap,
-    marginTop: globalStyles.smallGap,
+    marginLeft: globalStyles.smallerGap,
+    marginTop: globalStyles.smallerGap,
   },
 
   nameText: {

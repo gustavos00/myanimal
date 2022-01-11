@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text } from 'react-native';
 import { showError } from '../utils/error';
-import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
+import { AnimalInfoParams } from '../types/AnimalInfoParams';
 import { generateFormData } from '../utils/FormData';
 
 import api from '../api/api';

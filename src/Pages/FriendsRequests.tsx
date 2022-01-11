@@ -55,7 +55,7 @@ function FriendsRequests() {
             renderItem={({ index, item }) => {
               return (
                 <View key={item.idfriends}>
-                  <FriendRequestElement friendRequestData={item} />
+                  <FriendRequestElement key={item.idfriends} friendRequestData={item} />
                 </View>
               );
             }}

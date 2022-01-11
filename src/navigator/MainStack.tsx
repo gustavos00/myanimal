@@ -2,8 +2,8 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
-import { OwnerInfoParams } from '../interfaces/OwnerInfoParams';
+import { AnimalInfoParams } from '../types/AnimalInfoParams';
+import { OwnerInfoParams } from '../types/OwnerInfoParams';
 
 import SplashScreen from '../pages/SplashScreen';
 import Home from '../pages/Home';

@@ -1,22 +1,22 @@
 import React, { createContext, useState } from 'react';
-import { AnimalInfoParams } from '../interfaces/AnimalInfoParams';
-import { UserContextProps } from '../interfaces/UserContextData';
+import { AnimalInfoParams } from '../types/AnimalInfoParams';
+import { UserContextData } from '../types/UserContextData';
 import { showError } from '../utils/error';
 
-interface UserContextData {
-  user: UserContextProps | void;
+interface UserContextContent {
+  user: UserContextData | void;
   animalData: Array<AnimalInfoParams> | void;
 
   pushAnimalData: (data: AnimalInfoParams) => void;
   deleteAnimalData: (id: number) => void;
   setAnimalData: (data: Array<AnimalInfoParams>) => void;
-  setUser: (data: UserContextProps) => void;
+  setUser: (data: UserContextData) => void;
 }
 
-const UserContext = createContext<UserContextData>({} as UserContextData);
+const UserContext = createContext<UserContextContent>({} as UserContextContent);
 
 export function UserProvider({ children }: any) {
-  const [user, setUser] = useState<UserContextProps | void>();
+  const [user, setUser] = useState<UserContextData | void>();
   const [animalData, setAnimalData] = useState<Array<AnimalInfoParams>>();
 
   const pushAnimalData = (data: AnimalInfoParams) => {
