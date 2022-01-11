@@ -11,10 +11,12 @@ import {
 } from 'react-native';
 import ActionsElements from '../ActionsElements';
 
+import { UserContextData } from '../../types/UserContextData';
+
 interface FriendRequestElementContent {
   userFromWho: number;
   userToWhom: number;
-  photoUrl: string;
+  user: UserContextData
 }
 
 interface FriendRequestElementProps {
@@ -30,21 +32,21 @@ function FriendRequestElement({
         <ScrollView horizontal style={styles.container}>
           <View style={styles.contentContainer}>
             <Image
-              source={{ uri: friendRequestData.photoUrl }}
+              source={{ uri: friendRequestData.user.photoUrl }}
               style={styles.icon}
             />
 
             <View style={styles.textContainer}>
               <Text style={styles.nameText}>
-                {friendRequestData.userFromWho}
+                {friendRequestData.user.givenName}
               </Text>
               <Text style={styles.localityText}>
-                {friendRequestData.userToWhom}
+                {friendRequestData.user.familyName}
               </Text>
             </View>
           </View>
 
-          <ActionsElements />
+          <ActionsElements trueText={'Accept'} falseText={'Decline'} trueColor={'green'} falseColor={'red'} trueFunction={() => console.log('ea')} falseFunction={() => console.log('ea')} />
         </ScrollView>
       </View>
     </>
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     width: globalStyles.fullDeviceWidth,
-    padding: globalStyles.smallGap,
+    padding: globalStyles.smallerGap,
 
     flexDirection: 'row',
   },
@@ -88,7 +90,8 @@ const styles = StyleSheet.create({
   },
 
   element: {
-    margin: globalStyles.smallGap,
+    marginHorizontal: globalStyles.smallerGap,
+    marginTop: globalStyles.smallGap,
 
     backgroundColor: 'white',
     borderRadius: 15,
@@ -107,14 +110,14 @@ const styles = StyleSheet.create({
   icon: {
     width: Dimensions.get('window').width * 0.22,
     height: Dimensions.get('window').width * 0.22,
-    borderRadius: globalStyles.smallGap,
+    borderRadius: globalStyles.smallerGap,
 
     backgroundColor: 'red',
   },
 
   textContainer: {
-    marginLeft: globalStyles.smallGap,
-    marginTop: globalStyles.smallGap,
+    marginLeft: globalStyles.smallerGap,
+    marginTop: globalStyles.smallerGap,
   },
 
   nameText: {

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { showError } from '../utils/error';
-import { UserGoogleDataResponse } from '../interfaces/UserGoogleDataResponse';
+import { UserGoogleDataResponse } from '../types/UserGoogleDataResponse';
 import { generateFormData } from '../utils/FormData';
 
 import api from '../api/api';

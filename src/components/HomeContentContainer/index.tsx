@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimalInfoParams } from '../../interfaces/AnimalInfoParams';
+import { AnimalInfoParams } from '../../types/AnimalInfoParams';
 
 import Background from '../Background';
 import BackgroundHeader from '../BackgroundHeader';
