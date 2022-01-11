@@ -1,4 +1,4 @@
-export interface UserGoogleDataResponse {
+export interface UserGoogleData {
   givenName?: string;
   familyName?: string;
   photoUrl?: string;
