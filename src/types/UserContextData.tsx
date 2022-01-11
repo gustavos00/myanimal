@@ -1,4 +1,4 @@
-import { AnimalInfoParams } from "./AnimalInfoParams";
+import { AnimalData } from "./AnimalData";
 import { UserAddressData } from "./UserAddressData";
 
 export interface UserContextData {
@@ -9,7 +9,7 @@ export interface UserContextData {
   phoneNumber: string;
   token: string;
   photoUrl: string;
-  animalData: Array<AnimalInfoParams>
+  animalData: Array<AnimalData>
   userAddress: UserAddressData;
 }
 

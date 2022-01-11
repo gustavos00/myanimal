@@ -1,11 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 
-import { AnimalInfoParams } from '../../types/AnimalInfoParams';
+import { AnimalData } from '../../types/AnimalData';
 import AnimalElement from '../AnimalElement';
 
 interface GenerateElementsProps {
-  animalData: Array<AnimalInfoParams> | void;
+  animalData: Array<AnimalData> | void;
 }
 
 function GenerateElements({ animalData }: GenerateElementsProps) {
@@ -14,7 +14,7 @@ function GenerateElements({ animalData }: GenerateElementsProps) {
       {animalData?.map((item, index) => {
         return (
           <View key={index}>
-            <AnimalElement animalData={item as AnimalInfoParams} />
+            <AnimalElement animalData={item as AnimalData} />
           </View>
         );
       })}

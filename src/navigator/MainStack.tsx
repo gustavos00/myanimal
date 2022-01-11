@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { AnimalInfoParams } from '../types/AnimalInfoParams';
+import { AnimalData } from '../types/AnimalData';
 import { OwnerInfoParams } from '../types/OwnerInfoParams';
 
 import SplashScreen from '../pages/SplashScreen';
@@ -20,7 +20,7 @@ import FriendsRequests from '../pages/FriendsRequests';
 import UpdateProfile from '../pages/UpdateProfile';
 
 interface AnimalScreenParams {
-  animalInfo: AnimalInfoParams;
+  animalInfo: AnimalData;
 }
 
 interface OwnerContactsParams {

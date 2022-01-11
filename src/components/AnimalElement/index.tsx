@@ -14,12 +14,12 @@ import api from '../../api/api';
 import globalStyles from '../../assets/styles/global';
 
 import { showError } from '../../utils/error';
-import { AnimalInfoParams } from '../../types/AnimalInfoParams';
+import { AnimalData } from '../../types/AnimalData';
 import UserContext from '../../contexts/user';
 import ActionsElements from '../ActionsElements';
 
 interface AnimalElementProps {
-  animalData: AnimalInfoParams;
+  animalData: AnimalData;
 }
 
 function AnimalElement({ animalData }: AnimalElementProps) {

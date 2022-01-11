@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text } from 'react-native';
 import { showError } from '../utils/error';
-import { AnimalInfoParams } from '../types/AnimalInfoParams';
+import { AnimalData } from '../types/AnimalData';
 import { generateFormData } from '../utils/FormData';
 
 import api from '../api/api';
@@ -62,7 +62,7 @@ function CreateAnimal() {
     try {
       setLoading(true);
       const result = await api.post('/animal/create', animalData);
-      pushAnimalData(result.data as unknown as AnimalInfoParams);
+      pushAnimalData(result.data as unknown as AnimalData);
       setLoading(false);
 
       navigation.navigate('Home' as never, { haveAddress: true } as never);

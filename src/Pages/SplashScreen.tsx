@@ -7,7 +7,7 @@ import isEmpty from '../utils/isEmpty';
 
 import { useNavigation } from '@react-navigation/core';
 import { UserContextData } from '../types/UserContextData';
-import { AnimalInfoParams } from '../types/AnimalInfoParams';
+import { AnimalData } from '../types/AnimalData';
 import { generateUrlSearchParams } from '../utils/URLSearchParams';
 import { verifyNetwork } from '../utils/network';
 import { showError } from '../utils/error';
@@ -65,7 +65,7 @@ function SplashScreen() {
       if (userData) {
         setToken(userData?.token);
         setUser(userData as UserContextData);
-        setAnimalData(userData.animalData as Array<AnimalInfoParams>);
+        setAnimalData(userData.animalData as Array<AnimalData>);
         const { userAddress } = userData;
         return { haveAddress: !isEmpty(userAddress) };
       }
