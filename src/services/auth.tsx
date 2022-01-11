@@ -1,11 +1,9 @@
 import { useContext } from 'react';
 import { showError } from '../utils/error';
-import { UserGoogleDataResponse } from '../types/UserGoogleDataResponse';
+import { UserGoogleData } from '../types/UserGoogleData';
 import { generateFormData } from '../utils/FormData';
 
 import api from '../api/api';
-import Config from 'react-native-config';
-import AuthContext from '../contexts/auth';
 
 import * as Google from 'expo-google-app-auth';
 
@@ -21,7 +19,7 @@ const storeUserData = async ({
   familyName,
   email,
   photoUrl,
-}: UserGoogleDataResponse) => {
+}: UserGoogleData) => {
   const salt = uuid.v4();
 
   const userData = generateFormData({ salt, givenName, familyName, email });

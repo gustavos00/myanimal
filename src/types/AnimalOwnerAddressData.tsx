@@ -1,4 +1,4 @@
-export interface OwnerInfoParams {
+export interface AnimalOwnerAddressData {
   email: string;
   phoneNumber: string;
 

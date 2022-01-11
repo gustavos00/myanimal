@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimalInfoParams } from '../../types/AnimalInfoParams';
+import { AnimalData } from '../../types/AnimalData';
 
 import Background from '../Background';
 import BackgroundHeader from '../BackgroundHeader';
@@ -8,7 +8,7 @@ import KeyboardAvoidingWrapper from '../KeyboardAvoidingWrapper';
 import NoAnimalAlert from '../NoAnimalAlert';
 
 interface HomeContentContainerProps {
-  animalData: Array<AnimalInfoParams> | void;
+  animalData: Array<AnimalData> | void;
 }
 
 function HomeContentContainer({ animalData}: HomeContentContainerProps) {

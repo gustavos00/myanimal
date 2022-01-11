@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { UserContextData } from '../types/UserContextData';
+import { UserData } from '../types/UserData';
 
 import globalStyles from '../assets/styles/global';
 
@@ -53,7 +53,7 @@ function UpdateProfile() {
 
     try {
       const response = await api.post('/user/update', newUserData);
-      setUser(response.data as unknown as UserContextData);
+      setUser(response.data as unknown as UserData);
       navigation.navigate('Home' as never, { haveAddress: true } as never);
     } catch (e) {
       console.log(e);

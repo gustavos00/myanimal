@@ -1,4 +1,4 @@
-export interface AnimalInfoParams {
+export interface AnimalData {
   age: string;
   birthday: string;
   birthdayMonth: string;

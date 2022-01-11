@@ -2,8 +2,8 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { AnimalInfoParams } from '../types/AnimalInfoParams';
-import { OwnerInfoParams } from '../types/OwnerInfoParams';
+import { AnimalData } from '../types/AnimalData';
+import { AnimalOwnerAddressData } from '../types/AnimalOwnerAddressData';
 
 import SplashScreen from '../pages/SplashScreen';
 import Home from '../pages/Home';
@@ -20,11 +20,11 @@ import FriendsRequests from '../pages/FriendsRequests';
 import UpdateProfile from '../pages/UpdateProfile';
 
 interface AnimalScreenParams {
-  animalInfo: AnimalInfoParams;
+  animalInfo: AnimalData;
 }
 
 interface OwnerContactsParams {
-  ownerData: OwnerInfoParams;
+  ownerData: AnimalOwnerAddressData;
 }
 
 interface HomeAddressStatusParams {

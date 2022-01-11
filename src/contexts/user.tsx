@@ -1,25 +1,25 @@
 import React, { createContext, useState } from 'react';
-import { AnimalInfoParams } from '../types/AnimalInfoParams';
-import { UserContextData } from '../types/UserContextData';
+import { AnimalData } from '../types/AnimalData';
+import { UserData } from '../types/UserData';
 import { showError } from '../utils/error';
 
 interface UserContextContent {
-  user: UserContextData | void;
-  animalData: Array<AnimalInfoParams> | void;
+  user: UserData | void;
+  animalData: Array<AnimalData> | void;
 
-  pushAnimalData: (data: AnimalInfoParams) => void;
+  pushAnimalData: (data: AnimalData) => void;
   deleteAnimalData: (id: number) => void;
-  setAnimalData: (data: Array<AnimalInfoParams>) => void;
-  setUser: (data: UserContextData) => void;
+  setAnimalData: (data: Array<AnimalData>) => void;
+  setUser: (data: UserData) => void;
 }
 
 const UserContext = createContext<UserContextContent>({} as UserContextContent);
 
 export function UserProvider({ children }: any) {
-  const [user, setUser] = useState<UserContextData | void>();
-  const [animalData, setAnimalData] = useState<Array<AnimalInfoParams>>();
+  const [user, setUser] = useState<UserData | void>();
+  const [animalData, setAnimalData] = useState<Array<AnimalData>>();
 
-  const pushAnimalData = (data: AnimalInfoParams) => {
+  const pushAnimalData = (data: AnimalData) => {
     if (animalData) {
       const tempObj = {
         ...data,
