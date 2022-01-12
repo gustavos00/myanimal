@@ -3,6 +3,7 @@ import { showError } from '../utils/error';
 import { FlatList, View } from 'react-native';
 
 import UserContext from '../contexts/user';
+import FriendsContext from '../contexts/friends';
 import api from '../api/api';
 
 import Background from '../components/Background';
@@ -14,23 +15,20 @@ import FriendRequestElement from '../components/FriendRequestElement';
 
 function FriendsRequests() {
   const [loading, setLoading] = useState<boolean>();
-  const [friendsRequests, setFriendsRequests] = useState();
 
   const { user } = useContext(UserContext);
+  const { handlePendingFriends, pendingFriends } = useContext(FriendsContext);
 
   const getAllFriendsRequests = async () => {
     setLoading(true);
     try {
       const response = await api.get(`/user/friend/get?id=${user?.id}`);
-      console.log(response.data);
-      setFriendsRequests(response.data);
+
+      handlePendingFriends(response.data);
       setLoading(false);
     } catch (e) {
       setLoading(false);
-      return showError(
-        'Error: ' + e,
-        'Apparently there was an error, try again'
-      );
+      return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
   };
 
@@ -51,11 +49,12 @@ function FriendsRequests() {
           <BackgroundHeader text={'Friends requests'} />
 
           <FlatList
-            data={friendsRequests}
+            data={pendingFriends}
+            keyExtractor={(item) => item.idfriends.toString()}
             renderItem={({ index, item }) => {
               return (
-                <View key={item.idfriends}>
-                  <FriendRequestElement key={item.idfriends} friendRequestData={item} />
+                <View>
+                  <FriendRequestElement friendRequestData={item} index={index} />
                 </View>
               );
             }}
