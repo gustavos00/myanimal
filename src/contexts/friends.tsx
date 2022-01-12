@@ -1,19 +1,46 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react';
 import { FriendsData } from '../types/FriendsData';
 
-interface AuthContextData {
-  setFriends: Dispatch<SetStateAction<FriendsData[] | undefined>>;
+interface FriendsContextData {
+  pendingFriends: Array<FriendsData> | undefined;
+  acceptedFriends: Array<FriendsData> | undefined;
+  handlePendingFriends: (data: Array<FriendsData>) => void;
+  acceptFriendRequest: (index: number) => void;
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+const FriendsContext = createContext<FriendsContextData>({} as FriendsContextData);
 
-export function AuthProvider({ children }: any) {
-  const [friends, setFriends] = useState<Array<FriendsData>>();
+export function FriendsProvider({ children }: any) {
+  const [pendingFriends, setPendingFriends] = useState<Array<FriendsData>>();
+  const [acceptedFriends, setAcceptedFriends] = useState<Array<FriendsData>>([]);
 
-  const updateFriendRequestToDone = (index: number) => {
-  }
+  const handlePendingFriends = (data: Array<FriendsData>) => {
+    setPendingFriends(data);
+  };
 
-  return <AuthContext.Provider value={{ setFriends }}>{children}</AuthContext.Provider>;
+  const acceptFriendRequest = (index: number) => {
+    if (!pendingFriends) return;
+
+    const tempPendingArray = pendingFriends;
+    const tempAcceptedArray = acceptedFriends;
+    const tempObj = tempPendingArray[index];
+
+    tempObj.status = 'Accepted';
+    tempPendingArray.slice(index)
+    tempAcceptedArray.push(tempObj);
+
+    setPendingFriends(tempPendingArray)
+    setAcceptedFriends(tempAcceptedArray);
+    console.log(acceptedFriends)
+  };
+
+  return (
+    <FriendsContext.Provider
+      value={{ pendingFriends, acceptedFriends, handlePendingFriends, acceptFriendRequest }}
+    >
+      {children}
+    </FriendsContext.Provider>
+  );
 }
 
-export default AuthContext;
+export default FriendsContext;
