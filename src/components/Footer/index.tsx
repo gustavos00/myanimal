@@ -49,7 +49,7 @@ function Footer({ wichActive }: FooterProps) {
 const styles = StyleSheet.create({
   footer: {
     width: '100%',
-    height: 90,
+    height: globalStyles.smallerGap * 5,
     paddingBottom: 10,
 
     shadowColor: '#000',

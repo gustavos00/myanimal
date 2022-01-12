@@ -31,7 +31,7 @@ function Header({ text }: HeaderProps) {
 
 const styles = StyleSheet.create({
   header: {
-    height: 220,
+    height: globalStyles.fullDeviceHeight * .25,
 
     alignItems: 'center',
     justifyContent: 'space-evenly',

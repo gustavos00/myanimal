@@ -8,6 +8,7 @@ import UserContext from '../contexts/user';
 import BottomModal from '../components/BottomModal';
 import CreateAddress from '../components/CreateAddress';
 import HomeContentContainer from '../components/HomeContentContainer';
+import globalStyles from '../assets/styles/global';
 
 const Home = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Home'>>();
@@ -40,7 +41,7 @@ const Home = () => {
 
         {!haveAddressState && (
           <>
-            <BottomModal modalHeight={450}>
+            <BottomModal modalHeight={globalStyles.almostTheFullDeviceHeight}>
               <CreateAddress
                 changeHaveAddressStateFunction={setHaveAddressState}
               />
