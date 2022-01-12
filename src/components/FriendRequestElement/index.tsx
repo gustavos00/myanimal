@@ -1,52 +1,41 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import globalStyles from '../../assets/styles/global';
+import FriendsContext from '../../contexts/friends';
 
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import { View, StyleSheet, Image, Text, ScrollView, Dimensions } from 'react-native';
 import ActionsElements from '../ActionsElements';
 
-import { UserData } from '../../types/UserData';
-
-interface FriendRequestElementContent {
-  userFromWho: number;
-  userToWhom: number;
-  user: UserData
-}
+import { FriendsData } from '../../types/FriendsData';
 
 interface FriendRequestElementProps {
-  friendRequestData: FriendRequestElementContent;
+  friendRequestData: FriendsData;
+  index: number
 }
 
-function FriendRequestElement({
-  friendRequestData,
-}: FriendRequestElementProps) {
+function FriendRequestElement({ friendRequestData, index}: FriendRequestElementProps) {
+  const { acceptFriendRequest } = useContext(FriendsContext);
+
   return (
     <>
       <View style={styles.element}>
         <ScrollView horizontal style={styles.container}>
           <View style={styles.contentContainer}>
-            <Image
-              source={{ uri: friendRequestData.user.photoUrl }}
-              style={styles.icon}
-            />
+            <Image source={{ uri: friendRequestData.fromWhoFk.photoUrl }} style={styles.icon} />
 
             <View style={styles.textContainer}>
-              <Text style={styles.nameText}>
-                {friendRequestData.user.givenName}
-              </Text>
-              <Text style={styles.localityText}>
-                {friendRequestData.user.familyName}
-              </Text>
+              <Text style={styles.nameText}>{friendRequestData.fromWhoFk.givenName}</Text>
+              <Text style={styles.localityText}>{friendRequestData.fromWhoFk.familyName}</Text>
             </View>
           </View>
 
-          <ActionsElements trueText={'Accept'} falseText={'Decline'} trueColor={'green'} falseColor={'red'} trueFunction={() => console.log('ea')} falseFunction={() => console.log('ea')} />
+          <ActionsElements
+            trueText={'Accept'}
+            falseText={'Decline'}
+            trueColor={'green'}
+            falseColor={'red'}
+            trueFunction={() => acceptFriendRequest(index)}
+            falseFunction={() => console.log('ea')}
+          />
         </ScrollView>
       </View>
     </>
@@ -67,26 +56,6 @@ const styles = StyleSheet.create({
 
   actionsContainer: {
     flexDirection: 'row',
-  },
-
-  acceptRequest: {
-    width: 100,
-    height: '100%',
-
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    backgroundColor: 'green',
-  },
-
-  declineRequest: {
-    width: 100,
-    height: '100%',
-
-    justifyContent: 'center',
-    alignItems: 'center',
-
-    backgroundColor: 'red',
   },
 
   element: {
@@ -111,8 +80,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width * 0.22,
     height: Dimensions.get('window').width * 0.22,
     borderRadius: globalStyles.smallerGap,
-
-    backgroundColor: 'red',
   },
 
   textContainer: {
