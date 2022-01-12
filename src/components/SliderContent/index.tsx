@@ -94,22 +94,24 @@ function SliderContent() {
 
 const styles = StyleSheet.create({
   sliderPhoto: {
-    width: globalStyles.fullDeviceWidth,
-    height: globalStyles.fullDeviceHeight * .45,
+    width: globalStyles.almostTheFullDeviceWidth,
+    height: globalStyles.almostTheFullDeviceHeight * .45,
 
-    marginBottom: 30,
+    marginBottom: globalStyles.smallerGap,
   },
 
   sliderContent: {
-    marginHorizontal: Dimensions.get('window').width / 100,
-    borderWidth: 1,
-    
+    width: globalStyles.fullDeviceWidth,
+    height: globalStyles.fullDeviceWidth,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+  
   },
 
   sliderContainer: {
     alignItems: 'center',
     flexDirection: 'row-reverse',
-    borderWidth: 1,
   },
 
   dotsContainer: {

@@ -15,10 +15,7 @@ function NoAnimalAlert() {
   return (
     <>
       <View style={styles.noAnimalContainer}>
-        <Image
-          style={styles.noAnimalPhoto}
-          source={require('../../assets/img/noAnimal.png')}
-        />
+        <Image style={styles.noAnimalPhoto} source={require('../../assets/img/noAnimal.png')} />
 
         <CircleAddButton handleClick={createNewAnimal} />
       </View>
@@ -27,17 +24,7 @@ function NoAnimalAlert() {
 }
 
 const styles = StyleSheet.create({
-  noAnimalText: {
-    margin: 10,
-    marginHorizontal: 25,
-    textAlign: 'center',
-
-    color: globalStyles.black,
-    fontSize: 19,
-    lineHeight: 35,
-  },
-
-  noAnimalPhoto: { width: 300, height: 300, marginVertical: 30 },
+  noAnimalPhoto: { width: 300, height: 300, marginVertical: globalStyles.smallerGap },
 
   noAnimalContainer: {
     alignItems: 'center',
