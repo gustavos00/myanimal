@@ -67,7 +67,7 @@ function ScanQr() {
       setMessage('QR Readed');
 
       try {
-        await api.get(`user/friend/verifyToken?token=${data}&fromWho=${user?.id}`);
+        await api.get(`user/friends/verifyToken?token=${data}&fromWho=${user?.id}`);
 
         Alert.alert('Your friend request has made with success');
         navigation.navigate('Home' as never, { haveAddress: true } as never);
