@@ -7,24 +7,24 @@ import ActionsElements from '../ActionsElements';
 
 import { FriendsData } from '../../types/FriendsData';
 
-interface FriendRequestElementProps {
-  friendRequestData: FriendsData;
+interface FriendsElementProps {
+  friendsElementData: FriendsData;
   index: number
 }
 
-function FriendRequestElement({ friendRequestData, index}: FriendRequestElementProps) {
-  const { acceptFriendRequest } = useContext(FriendsContext);
+function FriendsElement({ friendsElementData, index}: FriendsElementProps) {
+  const { acceptFriendsRequest } = useContext(FriendsContext);
 
   return (
     <>
       <View style={styles.element}>
         <ScrollView horizontal style={styles.container}>
           <View style={styles.contentContainer}>
-            <Image source={{ uri: friendRequestData.fromWhoFk.photoUrl }} style={styles.icon} />
+            <Image source={{ uri: friendsElementData.fromWhoFk.photoUrl }} style={styles.icon} />
 
             <View style={styles.textContainer}>
-              <Text style={styles.nameText}>{friendRequestData.fromWhoFk.givenName}</Text>
-              <Text style={styles.localityText}>{friendRequestData.fromWhoFk.familyName}</Text>
+              <Text style={styles.nameText}>{friendsElementData.fromWhoFk.givenName}</Text>
+              <Text style={styles.localityText}>{friendsElementData.fromWhoFk.familyName}</Text>
             </View>
           </View>
 
@@ -33,7 +33,7 @@ function FriendRequestElement({ friendRequestData, index}: FriendRequestElementP
             falseText={'Decline'}
             trueColor={'green'}
             falseColor={'red'}
-            trueFunction={() => acceptFriendRequest(index)}
+            trueFunction={() => acceptFriendsRequest(index)}
             falseFunction={() => console.log('ea')}
           />
         </ScrollView>
@@ -99,4 +99,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FriendRequestElement;
+export default FriendsElement;
