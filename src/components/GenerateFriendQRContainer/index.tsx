@@ -32,7 +32,7 @@ function GenerateFriendQrContainer({
     if(!userData) return console.log('error getting user data');
     try {
       setLoading(true)
-      const response = await api.get(`user/friend/token?email=${userData.email}&id=${userData.id}`);
+      const response = await api.get(`user/friends/token?email=${userData.email}&id=${userData.id}`);
       setLoading(false)
 
       const { token } = response.data
