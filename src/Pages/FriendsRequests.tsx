@@ -11,7 +11,7 @@ import BackgroundHeader from '../components/BackgroundHeader';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
-import FriendRequestElement from '../components/FriendRequestElement';
+import FriendsElement from '../components/FriendsElement';
 
 function FriendsRequests() {
   const [loading, setLoading] = useState<boolean>();
@@ -22,8 +22,7 @@ function FriendsRequests() {
   const getAllFriendsRequests = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/user/friend/get?id=${user?.id}`);
-
+      const response = await api.get(`/user/friends/getPending?id=${user?.id}`);
       handlePendingFriends(response.data);
       setLoading(false);
     } catch (e) {
@@ -50,11 +49,11 @@ function FriendsRequests() {
 
           <FlatList
             data={pendingFriends}
-            keyExtractor={(item) => item.idfriends.toString()}
+            keyExtractor={(item, index) => index.toString()}
             renderItem={({ index, item }) => {
               return (
                 <View>
-                  <FriendRequestElement friendRequestData={item} index={index} />
+                  <FriendsElement friendsElementData={item} index={index} />
                 </View>
               );
             }}
