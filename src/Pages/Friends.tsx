@@ -13,17 +13,19 @@ import Header from '../components/Header';
 import Loading from '../components/Loading';
 import FriendsElement from '../components/FriendsElement';
 
-function FriendsRequests() {
+function Friends() {
   const [loading, setLoading] = useState<boolean>();
 
   const { user } = useContext(UserContext);
-  const { handlePendingFriends, pendingFriends } = useContext(FriendsContext);
+  const { handleAcceptedFriends, acceptedFriends } = useContext(FriendsContext);
 
-  const getAllFriendsRequests = async () => {
+  const getAllFriends = async () => {
     setLoading(true);
     try {
-      const response = await api.get(`/user/friends/getPending?id=${user?.id}`);
-      handlePendingFriends(response.data);
+      const response = await api.get(`/user/friends/getAccepted?id=${user?.id}`);
+      console.log(response.data)
+
+      handleAcceptedFriends(response.data);
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -32,11 +34,11 @@ function FriendsRequests() {
   };
 
   useEffect(() => {
-    const getFriendsRequests = async () => {
-      await getAllFriendsRequests();
+    const getFriends = async () => {
+      await getAllFriends();
     };
 
-    getFriendsRequests();
+    getFriends();
   }, []);
 
   return (
@@ -48,7 +50,7 @@ function FriendsRequests() {
           <BackgroundHeader text={'Friends requests'} />
 
           <FlatList
-            data={pendingFriends}
+            data={acceptedFriends}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ index, item }) => {
               return (
@@ -68,4 +70,4 @@ function FriendsRequests() {
   );
 }
 
-export default FriendsRequests;
+export default Friends;

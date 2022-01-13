@@ -72,6 +72,10 @@ function Settings() {
           <View style={styles.textContainer}>
             <OptionHeader text={'Friends'} />
             <OptionElement
+              handleClick={async () => changeScreen('Friends')}
+              text={'View friends'}
+            />
+            <OptionElement
               handleClick={async () => changeScreen('FriendsRequests')}
               text={'View friends requests'}
             />
