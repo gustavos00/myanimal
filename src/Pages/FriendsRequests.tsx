@@ -17,7 +17,8 @@ function FriendsRequests() {
   const [loading, setLoading] = useState<boolean>();
 
   const { user } = useContext(UserContext);
-  const { handlePendingFriends, pendingFriends } = useContext(FriendsContext);
+  const { handlePendingFriends, pendingFriends, acceptFriendsRequest, declineFriendsRequests } =
+    useContext(FriendsContext);
 
   const getAllFriendsRequests = async () => {
     setLoading(true);
@@ -52,9 +53,13 @@ function FriendsRequests() {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ index, item }) => {
               return (
-                <View>
-                  <FriendsElement friendsElementData={item} index={index} />
-                </View>
+                <FriendsElement
+                  trueText={'Accept'}
+                  falseText={'Decline'}
+                  trueFunction={() => acceptFriendsRequest(index)}
+                  falseFunction={() => declineFriendsRequests(index)}
+                  friendsElementData={item}
+                />
               );
             }}
           />

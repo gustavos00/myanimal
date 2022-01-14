@@ -9,6 +9,7 @@ interface FriendsContextData {
   handlePendingFriends: (data: Array<FriendsData>) => void;
   handleAcceptedFriends: (data: Array<FriendsData>) => void;
   acceptFriendsRequest: (index: number) => void;
+  declineFriendsRequests: (index: number) => void;
 }
 
 const FriendsContext = createContext<FriendsContextData>({} as FriendsContextData);
@@ -23,6 +24,10 @@ export function FriendsProvider({ children }: any) {
 
   const handleAcceptedFriends = (data: Array<FriendsData>) => {
     setAcceptedFriends(data);
+  };
+
+  const declineFriendsRequests = async (index: number) => {
+    console.log('fix')
   };
 
   const acceptFriendsRequest = async (index: number) => {
@@ -47,7 +52,9 @@ export function FriendsProvider({ children }: any) {
     });
 
     const response = await api.get(`/user/friends/accept?id=${idFriendsElement}`);
-    console.log(response.data);
+
+    if (response) return true;
+    return false;
   };
 
   return (
@@ -58,6 +65,7 @@ export function FriendsProvider({ children }: any) {
         handlePendingFriends,
         handleAcceptedFriends,
         acceptFriendsRequest,
+        declineFriendsRequests,
       }}
     >
       {children}

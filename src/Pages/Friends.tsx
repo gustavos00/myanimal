@@ -23,7 +23,6 @@ function Friends() {
     setLoading(true);
     try {
       const response = await api.get(`/user/friends/getAccepted?id=${user?.id}`);
-      console.log(response.data)
 
       handleAcceptedFriends(response.data);
       setLoading(false);
@@ -52,10 +51,18 @@ function Friends() {
           <FlatList
             data={acceptedFriends}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({ index, item }) => {
+            renderItem={({ item }) => {
               return (
                 <View>
-                  <FriendsElement friendsElementData={item} index={index} />
+                  <FriendsElement
+                    trueText={'Chat'}
+                    falseText={'Remove'}
+                    trueColor={'blue'}
+                    falseColor={'red'}
+                    trueFunction={() => console.log('a')}
+                    falseFunction={() => console.log('a')}
+                    friendsElementData={item}
+                  />
                 </View>
               );
             }}

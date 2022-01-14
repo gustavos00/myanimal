@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import globalStyles from '../../assets/styles/global';
-import FriendsContext from '../../contexts/friends';
 
 import { View, StyleSheet, Image, Text, ScrollView, Dimensions } from 'react-native';
 import ActionsElements from '../ActionsElements';
@@ -9,16 +8,29 @@ import { FriendsData } from '../../types/FriendsData';
 
 interface FriendsElementProps {
   friendsElementData: FriendsData;
-  index: number
+  trueText: string;
+  falseText: string;
+
+  trueColor?: string;
+  falseColor?: string;
+
+  trueFunction: () => void;
+  falseFunction: () => void;
 }
 
-function FriendsElement({ friendsElementData, index}: FriendsElementProps) {
-  const { acceptFriendsRequest } = useContext(FriendsContext);
-
+function FriendsElement({
+  friendsElementData,
+  trueText,
+  falseText,
+  trueColor,
+  falseColor,
+  trueFunction,
+  falseFunction,
+}: FriendsElementProps) {
   return (
     <>
       <View style={styles.element}>
-        <ScrollView horizontal style={styles.container}>
+        <ScrollView horizontal style={styles.container} showsHorizontalScrollIndicator={false}>
           <View style={styles.contentContainer}>
             <Image source={{ uri: friendsElementData.fromWhoFk.photoUrl }} style={styles.icon} />
 
@@ -29,12 +41,12 @@ function FriendsElement({ friendsElementData, index}: FriendsElementProps) {
           </View>
 
           <ActionsElements
-            trueText={'Accept'}
-            falseText={'Decline'}
-            trueColor={'green'}
-            falseColor={'red'}
-            trueFunction={() => acceptFriendsRequest(index)}
-            falseFunction={() => console.log('ea')}
+            trueText={trueText}
+            falseText={falseText}
+            trueColor={trueColor}
+            falseColor={falseColor}
+            trueFunction={trueFunction}
+            falseFunction={falseFunction}
           />
         </ScrollView>
       </View>
@@ -59,6 +71,7 @@ const styles = StyleSheet.create({
   },
 
   element: {
+    height: 105 + (globalStyles.smallerGap / 2),
     marginHorizontal: globalStyles.smallerGap,
     marginTop: globalStyles.smallGap,
 
