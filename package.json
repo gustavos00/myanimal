@@ -9,7 +9,9 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.15.14",
+    "@react-native-async-storage/async-storage": "^1.15.15",
+    "@react-native-firebase/app": "^14.2.2",
+    "@react-native-firebase/firestore": "^14.2.2",
     "@react-navigation/native": "^6.0.4",
     "@react-navigation/stack": "^6.0.9",
     "@stripe/stripe-react-native": "0.2.2",
@@ -23,6 +25,7 @@
     "expo-network": "~4.0.3",
     "expo-notifications": "~0.13.3",
     "expo-status-bar": "~1.1.0",
+    "firebase": "^9.6.3",
     "install": "^0.13.0",
     "lottie-ios": "3.2.3",
     "lottie-react-native": "4.0.3",
@@ -33,6 +36,7 @@
     "react-native-config": "^1.4.5",
     "react-native-dotenv": "^3.2.0",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-gifted-chat": "^0.16.3",
     "react-native-keycode": "^1.1.2",
     "react-native-maps": "0.28.1",
     "react-native-open-maps": "^0.4.0",
