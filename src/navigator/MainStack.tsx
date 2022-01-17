@@ -19,6 +19,7 @@ import ScanQR from '../pages/ScanQR';
 import FriendsRequests from '../pages/FriendsRequests';
 import UpdateProfile from '../pages/UpdateProfile';
 import Friends from '../pages/Friends';
+import Chat from '../pages/Chat';
 
 interface AnimalScreenParams {
   animalInfo: AnimalData;
@@ -47,6 +48,7 @@ export type RootStackParamList = {
   ScanQR: undefined;
   FriendsRequests: undefined;
   Friends: undefined;
+  Chat: undefined;
 };
 
 const { Navigator, Group, Screen } = createStackNavigator<RootStackParamList>();
@@ -56,76 +58,25 @@ export default () => {
     <NavigationContainer>
       <Navigator screenOptions={{ gestureEnabled: false }}>
         <Group>
-          <Screen
-            options={{ headerShown: false }}
-            name="SplashScreen"
-            component={SplashScreen}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="Login"
-            component={Login}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="Home"
-            component={Home}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="ScanQR"
-            component={ScanQR}
-          />
+          <Screen options={{ headerShown: false }} name="SplashScreen" component={SplashScreen} />
+          <Screen options={{ headerShown: false }} name="Login" component={Login} />
+          <Screen options={{ headerShown: false }} name="Home" component={Home} />
+          <Screen options={{ headerShown: false }} name="ScanQR" component={ScanQR} />
           <Screen
             options={{ headerShown: false }}
             name="FriendsRequests"
             component={FriendsRequests}
           />
-          <Screen
-            options={{ headerShown: false }}
-            name="Friends"
-            component={Friends}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="Settings"
-            component={Settings}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="AboutUs"
-            component={AboutUs}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="ViewProfile"
-            component={ViewProfile}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="UpdateProfile"
-            component={UpdateProfile}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="CreateAnimal"
-            component={CreateAnimal}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="ViewAnimal"
-            component={ViewAnimal}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="UpdateAnimal"
-            component={UpdateAnimal}
-          />
-          <Screen
-            options={{ headerShown: false }}
-            name="FindMyAnimal"
-            component={FindMyAnimal}
-          />
+          <Screen options={{ headerShown: false }} name="Friends" component={Friends} />
+          <Screen options={{ headerShown: false }} name="Settings" component={Settings} />
+          <Screen options={{ headerShown: false }} name="AboutUs" component={AboutUs} />
+          <Screen options={{ headerShown: false }} name="ViewProfile" component={ViewProfile} />
+          <Screen options={{ headerShown: false }} name="UpdateProfile" component={UpdateProfile} />
+          <Screen options={{ headerShown: false }} name="CreateAnimal" component={CreateAnimal} />
+          <Screen options={{ headerShown: false }} name="ViewAnimal" component={ViewAnimal} />
+          <Screen options={{ headerShown: false }} name="UpdateAnimal" component={UpdateAnimal} />
+          <Screen options={{ headerShown: false }} name="FindMyAnimal" component={FindMyAnimal} />
+          <Screen options={{ headerShown: false }} name="Chat" component={Chat} />
         </Group>
       </Navigator>
     </NavigationContainer>
