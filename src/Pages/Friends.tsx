@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { showError } from '../utils/error';
 import { FlatList, View } from 'react-native';
+import { FriendsData } from '../types/FriendsData';
 
 import UserContext from '../contexts/user';
 import FriendsContext from '../contexts/friends';
@@ -12,8 +13,15 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import FriendsElement from '../components/FriendsElement';
+import { useNavigation } from '@react-navigation/core';
+
+interface TokenResponse {
+  token: string;
+}
 
 function Friends() {
+  const navigation = useNavigation();
+
   const [loading, setLoading] = useState<boolean>();
 
   const { user } = useContext(UserContext);
@@ -32,6 +40,11 @@ function Friends() {
     }
   };
 
+  const openChat = async (friendData: FriendsData) => {
+    //TODO - CHECK IF TOKEN IS VALID BEFORE
+    navigation.navigate('Chat' as never, { fromWho: friendData.fromWho, toWhom: friendData.toWhom } as never);
+  };
+
   useEffect(() => {
     const getFriends = async () => {
       await getAllFriends();
@@ -46,7 +59,7 @@ function Friends() {
 
       <Background>
         <>
-          <BackgroundHeader text={'Friends requests'} />
+          <BackgroundHeader text={'Friends'} />
 
           <FlatList
             data={acceptedFriends}
@@ -59,7 +72,7 @@ function Friends() {
                     falseText={'Remove'}
                     trueColor={'blue'}
                     falseColor={'red'}
-                    trueFunction={() => console.log('a')}
+                    trueFunction={() => openChat(item)}
                     falseFunction={() => console.log('a')}
                     friendsElementData={item}
                   />
