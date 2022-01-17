@@ -1,13 +1,16 @@
 // @refresh reset
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { RootStackParamList } from '../navigator/MainStack';
 
 import * as Firebase from 'firebase/app';
 import * as Firestore from 'firebase/firestore';
 
 import UserContext from '../contexts/user';
 import Footer from '../components/Footer';
+import storage from '../utils/storage';
 
 interface IMessages {
   _id: number;
@@ -18,12 +21,18 @@ interface IMessages {
 }
 
 export default function Chat() {
-  const { user } = useContext(UserContext);
   const [messages, setMessages] = useState<Array<IMessages>>();
+  let messagesFingerprint: string;
 
+  const route = useRoute<RouteProp<RootStackParamList, 'Chat'>>();
+  const { fromWho, toWhom } = route.params;
+
+  const { user } = useContext(UserContext);
+
+  //TODO -> REMOVE ?? '1' FROM ID AND PREVENT UNDEFINED ID
   const giftedUser = {
     _id: user?.id.toString() ?? '1',
-    name: user?.givenName ?? 'Gustavo',
+    name: user?.givenName ?? 'User',
     avatar: user?.photoUrl ?? '',
   };
 
@@ -45,25 +54,51 @@ export default function Chat() {
   const chatsRef = Firestore.collection(db, 'chats');
 
   useEffect(() => {
-    const unsubscribe = Firestore.onSnapshot(chatsRef, (doc) => {
-      const messages = [] as Array<IMessages>;
-      const docArray = doc.docChanges();
+    const getFingerprint = async () => {
+      const fingerprintKeyName = `${fromWho}-${toWhom}`;
 
-      docArray.forEach(({ type, doc }) => {
-        const message = doc.data() as IMessages;
-        if (type === 'added' && message.createdAt) {
-          messages.push({ ...message, createdAt: message.createdAt.toDate() });
-        }
+      const res = await storage.load({ key: fingerprintKeyName });
+      console.log('ls', res.fingerprint);
+      messagesFingerprint = res.fingerprint as string;
+      if (!res) return <> </>;
+    };
+
+    getFingerprint();
+  }, []);
+
+
+  useEffect(() => {
+    const getMessages = async () => {
+      const unsubscribe = await Firestore.onSnapshot(chatsRef, (doc) => {
+        const messages = [] as Array<IMessages>;
+        const docArray = doc.docChanges();
+
+        docArray.forEach(({ type, doc }) => {
+          const message = doc.data() as IMessages;
+
+          
+          if (message.fingerprint != messagesFingerprint) {
+            // console.log('----');
+            console.log('host ', message.fingerprint);
+            console.log('local ' + messagesFingerprint);
+            console.log('----');
+          }
+
+          if (type === 'added' && message.createdAt && message.fingerprint === '6k7kd') {
+            messages.push({ ...message, createdAt: message.createdAt.toDate() });
+          }
+        });
+
+        const newArray = messages.sort((a, b) => {
+          return b.createdAt.getTime() - a.createdAt.getTime();
+        });
+
+        appendMessages(newArray);
+        return () => unsubscribe();
       });
+    };
 
-      const newArray = messages.sort((a, b) => {
-        return b.createdAt.getTime() - a.createdAt.getTime();
-      });
-
-      appendMessages(newArray);
-    });
-
-    return () => unsubscribe();
+    getMessages();
   }, []);
 
   const appendMessages = useCallback(
@@ -75,7 +110,7 @@ export default function Chat() {
 
   async function handleSend(messages: any) {
     const writes = messages.map((m: object) => {
-      Firestore.addDoc(chatsRef, { ...m });
+      Firestore.addDoc(chatsRef, { ...m, fingerprint: messagesFingerprint });
     });
 
     await Promise.all(writes);
@@ -90,28 +125,3 @@ export default function Chat() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 30,
-  },
-  input: {
-    height: 50,
-    width: '100%',
-    borderWidth: 1,
-    padding: 15,
-    marginBottom: 20,
-    borderColor: 'gray',
-  },
-});
-
-// .forEach(({ type, doc }) => {
-//   if (type === 'added') {
-//     const message = doc.data()
-//     const data = { ...message, createdAt: message.createdAt.toDate()
-//   }
-// })
