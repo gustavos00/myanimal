@@ -33,6 +33,11 @@ interface HomeAddressStatusParams {
   haveAddress?: boolean;
 }
 
+interface ChatParams {
+  fromWho: string;
+  toWhom: string;
+}
+
 export type RootStackParamList = {
   SplashScreen: undefined;
   Home: HomeAddressStatusParams;
@@ -48,7 +53,7 @@ export type RootStackParamList = {
   ScanQR: undefined;
   FriendsRequests: undefined;
   Friends: undefined;
-  Chat: undefined;
+  Chat: ChatParams;
 };
 
 const { Navigator, Group, Screen } = createStackNavigator<RootStackParamList>();
