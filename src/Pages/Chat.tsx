@@ -30,6 +30,7 @@ export default function Chat() {
   const { user } = useContext(UserContext);
 
   //TODO -> REMOVE ?? '1' FROM ID AND PREVENT UNDEFINED ID
+  //TODO -> REMOVE FIREBASE INIT
   const giftedUser = {
     _id: user?.id.toString() ?? '1',
     name: user?.givenName ?? 'User',
