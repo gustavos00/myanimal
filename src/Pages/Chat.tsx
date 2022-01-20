@@ -1,11 +1,11 @@
 // @refresh reset
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
 
-import * as Firebase from 'firebase/app';
+import { chatsRef } from '../services/fire';
 import * as Firestore from 'firebase/firestore';
 
 import UserContext from '../contexts/user';
@@ -22,10 +22,9 @@ interface IMessages {
 
 export default function Chat() {
   const [messages, setMessages] = useState<Array<IMessages>>();
-  let messagesFingerprint: string;
 
   const route = useRoute<RouteProp<RootStackParamList, 'Chat'>>();
-  const { fromWho, toWhom } = route.params;
+  const { friendData } = route.params;
 
   const { user } = useContext(UserContext);
 
@@ -37,37 +36,6 @@ export default function Chat() {
     avatar: user?.photoUrl ?? '',
   };
 
-  const firebaseConfig = {
-    apiKey: 'AIzaSyAExHUCAL26WOEhOBrUMKr2Pg6sZQul9jA',
-    authDomain: 'myanimalchat.firebaseapp.com',
-    projectId: 'myanimalchat',
-    storageBucket: 'myanimalchat.appspot.com',
-    messagingSenderId: '965498175126',
-    appId: '1:965498175126:web:e5e41b03fe85f7bc5e0cb7',
-    measurementId: 'G-2F6DNL3QPW',
-  };
-
-  if (Firebase.getApps().length === 0) {
-    Firebase.initializeApp(firebaseConfig);
-  }
-
-  const db = Firestore.getFirestore();
-  const chatsRef = Firestore.collection(db, 'chats');
-
-  useEffect(() => {
-    const getFingerprint = async () => {
-      const fingerprintKeyName = `${fromWho}-${toWhom}`;
-
-      const res = await storage.load({ key: fingerprintKeyName });
-      console.log('ls', res.fingerprint);
-      messagesFingerprint = res.fingerprint as string;
-      if (!res) return <> </>;
-    };
-
-    getFingerprint();
-  }, []);
-
-
   useEffect(() => {
     const getMessages = async () => {
       const unsubscribe = await Firestore.onSnapshot(chatsRef, (doc) => {
@@ -77,15 +45,7 @@ export default function Chat() {
         docArray.forEach(({ type, doc }) => {
           const message = doc.data() as IMessages;
 
-          
-          if (message.fingerprint != messagesFingerprint) {
-            // console.log('----');
-            console.log('host ', message.fingerprint);
-            console.log('local ' + messagesFingerprint);
-            console.log('----');
-          }
-
-          if (type === 'added' && message.createdAt && message.fingerprint === '6k7kd') {
+          if (type === 'added' && message.createdAt && message.fingerprint === friendData.fingerprint) {
             messages.push({ ...message, createdAt: message.createdAt.toDate() });
           }
         });
@@ -111,7 +71,7 @@ export default function Chat() {
 
   async function handleSend(messages: any) {
     const writes = messages.map((m: object) => {
-      Firestore.addDoc(chatsRef, { ...m, fingerprint: messagesFingerprint });
+      Firestore.addDoc(chatsRef, { ...m, fingerprint: friendData.fingerprint  });
     });
 
     await Promise.all(writes);

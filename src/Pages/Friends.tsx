@@ -42,7 +42,7 @@ function Friends() {
 
   const openChat = async (friendData: FriendsData) => {
     //TODO - CHECK IF TOKEN IS VALID BEFORE
-    navigation.navigate('Chat' as never, { fromWho: friendData.fromWho, toWhom: friendData.toWhom } as never);
+    navigation.navigate('Chat' as never, { friendData } as never);
   };
 
   useEffect(() => {
