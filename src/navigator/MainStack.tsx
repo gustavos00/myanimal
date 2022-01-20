@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { AnimalData } from '../types/AnimalData';
 import { AnimalOwnerAddressData } from '../types/AnimalOwnerAddressData';
+import { FriendsData } from '../types/FriendsData';
 
 import SplashScreen from '../pages/SplashScreen';
 import Home from '../pages/Home';
@@ -34,8 +35,7 @@ interface HomeAddressStatusParams {
 }
 
 interface ChatParams {
-  fromWho: string;
-  toWhom: string;
+  friendData: FriendsData
 }
 
 export type RootStackParamList = {
