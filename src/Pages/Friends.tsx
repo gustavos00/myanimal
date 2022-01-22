@@ -63,7 +63,7 @@ function Friends() {
 
           <FlatList
             data={acceptedFriends}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(_, index) => index.toString()}
             renderItem={({ item }) => {
               return (
                 <View>
@@ -74,7 +74,7 @@ function Friends() {
                     falseColor={'red'}
                     trueFunction={() => openChat(item)}
                     falseFunction={() => console.log('a')}
-                    friendsElementData={item}
+                    friendsElementData={item as any} //TO DO -> FIX ANY
                   />
                 </View>
               );

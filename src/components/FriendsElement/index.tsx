@@ -4,7 +4,18 @@ import globalStyles from '../../assets/styles/global';
 import { View, StyleSheet, Image, Text, ScrollView, Dimensions } from 'react-native';
 import ActionsElements from '../ActionsElements';
 
-import { FriendsData } from '../../types/FriendsData';
+import { UserData } from '../../types/UserData';
+//TO DO -> FIX INTERFACE 
+
+interface FriendsData {
+  idfriends: number,
+  status: string,
+  fingerprint: string,
+  fromWho: number,
+  toWhom: number,
+  friendData: UserData
+}
+
 
 interface FriendsElementProps {
   friendsElementData: FriendsData;
@@ -32,11 +43,11 @@ function FriendsElement({
       <View style={styles.element}>
         <ScrollView horizontal style={styles.container} showsHorizontalScrollIndicator={false}>
           <View style={styles.contentContainer}>
-            <Image source={{ uri: friendsElementData.fromWhoFk.photoUrl }} style={styles.icon} />
+            <Image source={{ uri: friendsElementData.friendData.photoUrl }} style={styles.icon} />
 
             <View style={styles.textContainer}>
-              <Text style={styles.nameText}>{friendsElementData.fromWhoFk.givenName}</Text>
-              <Text style={styles.localityText}>{friendsElementData.fromWhoFk.familyName}</Text>
+              <Text style={styles.nameText}>{friendsElementData.friendData.givenName}</Text>
+              <Text style={styles.localityText}>{friendsElementData.friendData.familyName}</Text>
             </View>
           </View>
 
