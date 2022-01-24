@@ -36,13 +36,15 @@ const requestPermissions = async () => {
 };
 
 export const hasNotificationsPermissions = async () => {
+  //Clicked listener notification
   Notifications.addNotificationResponseReceivedListener((response) => {
     console.log(response.notification.request.content.data);
   });
 
-  Notifications.addNotificationReceivedListener((notification) => {
-    console.log(1);
-  });
+  //Received listener notification
+  // Notifications.addNotificationReceivedListener((notification) => {
+  //   console.log(1);
+  // });
 
   if (Constants.isDevice) {
     const notificationsStatus = await allowsNotifications();

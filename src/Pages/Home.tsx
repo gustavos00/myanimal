@@ -41,7 +41,7 @@ const Home = () => {
 
         {!haveAddressState && (
           <>
-            <BottomModal modalHeight={globalStyles.almostTheFullDeviceHeight}>
+            <BottomModal modalHeight={globalStyles.fullDeviceHeight / 1.5}>
               <CreateAddress
                 changeHaveAddressStateFunction={setHaveAddressState}
               />

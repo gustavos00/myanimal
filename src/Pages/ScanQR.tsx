@@ -12,6 +12,7 @@ import BackgroundHeader from '../components/BackgroundHeader';
 import Footer from '../components/Footer';
 import Button from '../components/Button';
 import UserContext from '../contexts/user';
+import globalStyles from '../assets/styles/global';
 
 interface HandleScanCode {
   type: string;
@@ -24,8 +25,8 @@ function ScanQr() {
   const [message, setMessage] = useState<string | undefined>();
 
   const navigation = useNavigation();
-  const { user } = useContext(UserContext);
-
+  const { user } = useContext(UserContext)
+  
   const askForCameraPermission = () => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -63,7 +64,7 @@ function ScanQr() {
   const handleQRCodeScanned = async ({ type, data }: HandleScanCode) => {
     setScanned(true);
 
-    if (type === 'org.iso.QRCode') {
+    if (type === 'org.iso.QRCode' || Number(type) == 256) {
       setMessage('QR Readed');
 
       try {
@@ -134,10 +135,9 @@ const styles = StyleSheet.create({
   },
 
   qrCodeBox: {
-    width: 350,
-    height: 350,
+    width: '100%',
+    height: '80%',
 
-    overflow: 'hidden',
     borderRadius: 30,
   },
 });
