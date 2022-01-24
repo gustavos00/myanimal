@@ -1,7 +1,7 @@
-import { useContext } from 'react';
 import { showError } from '../utils/error';
 import { UserGoogleData } from '../types/UserGoogleData';
 import { generateFormData } from '../utils/FormData';
+import { generateUrlSearchParams } from '../utils/URLSearchParams';
 
 import api from '../api/api';
 
@@ -67,9 +67,9 @@ export const GoogleSignIn = async () => {
 
 export const storeExpoToken = async ({ expoToken, token }: storeExpoTokenProps) => {
   try {
-    const expoTokenFormData = generateFormData({ expoToken, token });
-    const response = await api.post('/user/expoToken', expoTokenFormData);
+    const expoTokenFormData = generateUrlSearchParams({ expoToken, token });
+    await api.post('/user/expoToken', expoTokenFormData);
   } catch (e) {
-    console.log(e);
+    return showError('Error: ' + e, 'Apparently there was an error, try again');
   }
 };
