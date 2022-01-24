@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { showError } from '../utils/error';
 import { FlatList, View } from 'react-native';
-import { FriendsData } from '../types/FriendsData';
+import { FriendsData, OneFriendDataElementInterface } from '../types/FriendsData';
+import { useNavigation } from '@react-navigation/core';
 
 import UserContext from '../contexts/user';
 import FriendsContext from '../contexts/friends';
@@ -13,11 +14,6 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import FriendsElement from '../components/FriendsElement';
-import { useNavigation } from '@react-navigation/core';
-
-interface TokenResponse {
-  token: string;
-}
 
 function Friends() {
   const navigation = useNavigation();
@@ -41,7 +37,6 @@ function Friends() {
   };
 
   const openChat = async (friendData: FriendsData) => {
-    //TODO - CHECK IF TOKEN IS VALID BEFORE
     navigation.navigate('Chat' as never, { friendData } as never);
   };
 
@@ -74,7 +69,7 @@ function Friends() {
                     falseColor={'red'}
                     trueFunction={() => openChat(item)}
                     falseFunction={() => console.log('a')}
-                    friendsElementData={item as any} //TO DO -> FIX ANY
+                    friendsElementData={item as OneFriendDataElementInterface}
                   />
                 </View>
               );

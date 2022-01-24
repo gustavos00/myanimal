@@ -3,6 +3,7 @@ import { FriendsData } from '../types/FriendsData';
 
 import api from '../api/api';
 import storage from '../utils/storage';
+import { showError } from '../utils/error';
 
 interface FriendsContextData {
   pendingFriends: Array<FriendsData> | undefined;
@@ -37,36 +38,45 @@ export function FriendsProvider({ children }: any) {
 
   const acceptFriendsRequest = async (index: number) => {
     if (!pendingFriends) return console.log('Pending friends dont exist');
-    //TODO -> JUST UPDATE LOCAL STUFFS IF REQUEST WAS MADE WITH SUCCESS
+
     const tempPendingArray = pendingFriends;
     const tempObj = tempPendingArray[index];
     const idFriendsElement = tempPendingArray[index].idfriends;
+    let response;
 
-    tempObj.status = 'Accepted';
-    tempPendingArray.splice(index, 1);
+    try {
+      response = await api.get(`/user/friends/accept?id=${idFriendsElement}`);
+    } catch (e) {
+      return showError('Error: ' + e, 'Apparently there was an error, try again');
+    }
 
-    setPendingFriends(tempPendingArray);
-    setAcceptedFriends((acceptedFriends) => {
-      const alreadyContainsStatus =
-        acceptedFriends.filter((e) => e.idfriends === acceptedFriends[index].idfriends).length > 0;
+    if (!!response) {
+      const responseData: AcceptFriendsRequestResponse = response.data;
+      const fingerprintStorageName = `${tempObj.fromWho}-${tempObj.toWhom}`;
 
-      if (alreadyContainsStatus) {
-        return [...acceptedFriends];
-      }
-      return [...(acceptedFriends ?? []), tempObj];
-    });
+      tempObj.status = 'Accepted';
+      tempPendingArray.splice(index, 1);
 
-    const response = await api.get(`/user/friends/accept?id=${idFriendsElement}`);
-    const responseData: AcceptFriendsRequestResponse = response.data;
-    const fingerprintStorageName = `${tempObj.fromWho}-${tempObj.toWhom}`;
-    console.log(responseData.fingerprint)
+      setPendingFriends(tempPendingArray);
+      setAcceptedFriends((acceptedFriends) => {
+        const alreadyContainsStatus =
+          acceptedFriends.filter((e) => e.idfriends === acceptedFriends[index].idfriends).length >
+          0;
 
-    storage.save({
-      key: fingerprintStorageName,
-      data: { fingerprint: responseData.fingerprint },
-    });
+        if (alreadyContainsStatus) {
+          return [...acceptedFriends];
+        }
+        return [...(acceptedFriends ?? []), tempObj];
+      });
 
-    if (response) return responseData.fingerprint;
+      storage.save({
+        key: fingerprintStorageName,
+        data: { fingerprint: responseData.fingerprint },
+      });
+
+      if (response) return responseData.fingerprint;
+    }
+
     return false;
   };
 

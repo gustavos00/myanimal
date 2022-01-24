@@ -2,8 +2,9 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
+import { showError } from '../utils/error';
 
 import { chatsRef } from '../services/fire';
 import * as Firestore from 'firebase/firestore';
@@ -12,7 +13,7 @@ import UserContext from '../contexts/user';
 import Footer from '../components/Footer';
 import storage from '../utils/storage';
 
-interface IMessages {
+interface AllMessages {
   _id: number;
   text: string;
   createdAt: any;
@@ -20,33 +21,51 @@ interface IMessages {
   fingerprint: string;
 }
 
+interface GiftedUser {
+  _id: string;
+  name: string;
+  avatar: string;
+}
+
 export default function Chat() {
-  const [messages, setMessages] = useState<Array<IMessages>>();
+  const [messages, setMessages] = useState<Array<AllMessages>>();
+  const [giftedUser, setGiftedUser] = useState<GiftedUser>();
 
   const route = useRoute<RouteProp<RootStackParamList, 'Chat'>>();
   const { friendData } = route.params;
 
+  const navigation = useNavigation();
+
   const { user } = useContext(UserContext);
 
-  //TODO -> REMOVE ?? '1' FROM ID AND PREVENT UNDEFINED ID
-  //TODO -> REMOVE FIREBASE INIT
-  const giftedUser = {
-    _id: user?.id.toString() ?? '1',
-    name: user?.givenName ?? 'User',
-    avatar: user?.photoUrl ?? '',
-  };
+  if (!!user) {
+    useEffect(() => {
+      setGiftedUser({
+        _id: user?.id.toString(),
+        name: user?.givenName,
+        avatar: user?.photoUrl,
+      });
+    }, []);
+  } else {
+    navigation.navigate('Friends' as never)
+    return showError('Error: getting user data on chat', 'Apparently there was an error, try again');
+  }
 
   useEffect(() => {
     const getMessages = async () => {
       // TO DO -> Get device ID
       const unsubscribe = await Firestore.onSnapshot(chatsRef, (doc) => {
-        const messages = [] as Array<IMessages>;
+        const messages = [] as Array<AllMessages>;
         const docArray = doc.docChanges();
 
         docArray.forEach(({ type, doc }) => {
-          const message = doc.data() as IMessages;
+          const message = doc.data() as AllMessages;
 
-          if (type === 'added' && message.createdAt && message.fingerprint === friendData.fingerprint) {
+          if (
+            type === 'added' &&
+            message.createdAt &&
+            message.fingerprint === friendData.fingerprint
+          ) {
             messages.push({ ...message, createdAt: message.createdAt.toDate() });
           }
         });
@@ -72,7 +91,7 @@ export default function Chat() {
 
   async function handleSend(messages: any) {
     const writes = messages.map((m: object) => {
-      Firestore.addDoc(chatsRef, { ...m, fingerprint: friendData.fingerprint  });
+      Firestore.addDoc(chatsRef, { ...m, fingerprint: friendData.fingerprint });
     });
 
     await Promise.all(writes);
