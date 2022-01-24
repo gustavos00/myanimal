@@ -1,24 +1,13 @@
 import React from 'react';
 import globalStyles from '../../assets/styles/global';
-
-import { View, StyleSheet, Image, Text, ScrollView, Dimensions } from 'react-native';
 import ActionsElements from '../ActionsElements';
 
-import { UserData } from '../../types/UserData';
-//TO DO -> FIX INTERFACE 
-
-interface FriendsData {
-  idfriends: number,
-  status: string,
-  fingerprint: string,
-  fromWho: number,
-  toWhom: number,
-  friendData: UserData
-}
+import { View, StyleSheet, Image, Text, ScrollView, Dimensions } from 'react-native';
+import { OneFriendDataElementInterface } from '../../types/FriendsData';
 
 
 interface FriendsElementProps {
-  friendsElementData: FriendsData;
+  friendsElementData: OneFriendDataElementInterface;
   trueText: string;
   falseText: string;
 
