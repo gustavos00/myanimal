@@ -37,6 +37,7 @@ export default function Chat() {
 
   useEffect(() => {
     const getMessages = async () => {
+      // TO DO -> Get device ID
       const unsubscribe = await Firestore.onSnapshot(chatsRef, (doc) => {
         const messages = [] as Array<IMessages>;
         const docArray = doc.docChanges();
