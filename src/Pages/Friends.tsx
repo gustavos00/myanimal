@@ -65,8 +65,6 @@ function Friends() {
                   <FriendsElement
                     trueText={'Chat'}
                     falseText={'Remove'}
-                    trueColor={'blue'}
-                    falseColor={'red'}
                     trueFunction={() => openChat(item)}
                     falseFunction={() => console.log('a')}
                     friendsElementData={item as OneFriendDataElementInterface}
