@@ -17,7 +17,6 @@ const globalStyles = {
   almostTheFullDeviceHeight: Dimensions.get('window').height / 1.2,
 
   smallerGap: Dimensions.get('window').width * .04,
-  smallGap: Dimensions.get('window').width * .04,
 }
 
 export default globalStyles
