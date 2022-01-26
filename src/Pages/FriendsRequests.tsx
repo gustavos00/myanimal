@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { showError } from '../utils/error';
-import { FlatList, View } from 'react-native';
+import { FlatList } from 'react-native';
+import { OneFriendDataElementInterface } from '../types/FriendsData';
 
 import UserContext from '../contexts/user';
 import FriendsContext from '../contexts/friends';
@@ -14,6 +15,7 @@ import Loading from '../components/Loading';
 import FriendsElement from '../components/FriendsElement';
 
 function FriendsRequests() {
+  //TO DO FIX UNDEFINED WHEN DONT EXIST FR
   const [loading, setLoading] = useState<boolean>();
 
   const { user } = useContext(UserContext);
@@ -58,7 +60,7 @@ function FriendsRequests() {
                   falseText={'Decline'}
                   trueFunction={() => acceptFriendsRequest(index)}
                   falseFunction={() => declineFriendsRequests(index)}
-                  friendsElementData={item}
+                  friendsElementData={item as OneFriendDataElementInterface}
                 />
               );
             }}
