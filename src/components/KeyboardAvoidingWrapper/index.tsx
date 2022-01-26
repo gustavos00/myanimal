@@ -14,7 +14,7 @@ interface KeyboardAvoidingWrapperProps {
 function KeyboardAvoidingWrapper({ children }: KeyboardAvoidingWrapperProps) {
   return (
     <>
-      <KeyboardAvoidingView style={{width: '100%'}}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <TouchableWithoutFeedback
             onPress={Keyboard.dismiss}
