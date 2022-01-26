@@ -29,10 +29,10 @@ function ActionsElements({
         onPress={trueFunction}
         style={[
           styles.acceptRequest,
-          { backgroundColor: trueColor ?? 'green' },
+          { backgroundColor: trueColor ?? '#145DA0' },
         ]}
       >
-        <Text>{trueText}</Text>
+        <Text style={styles.acceptAndDeclineRequestText}>{trueText}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -40,10 +40,10 @@ function ActionsElements({
         onPress={falseFunction}
         style={[
           styles.declineRequest,
-          { backgroundColor: falseColor ?? 'red' },
+          { backgroundColor: falseColor ?? '#D1192A' },
         ]}
       >
-        <Text>{falseText}</Text>
+        <Text style={styles.acceptAndDeclineRequestText}>{falseText}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
   },
 
   actionsContainer: {
+    paddingRight: 30,
     flexDirection: 'row',
   },
 
@@ -62,15 +63,27 @@ const styles = StyleSheet.create({
     width: 100,
     height: '100%',
 
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+
     justifyContent: 'center',
     alignItems: 'center',
 
     backgroundColor: 'green',
   },
 
+  acceptAndDeclineRequestText: {
+    fontWeight: '600',
+    letterSpacing: 1,
+    color: '#fff',
+  },
+
   declineRequest: {
     width: 100,
     height: '100%',
+
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
 
     justifyContent: 'center',
     alignItems: 'center',
