@@ -13,23 +13,24 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import FriendsElement from '../components/FriendsElement';
+import StatesContext from '../contexts/states';
 
 function FriendsRequests() {
   //TO DO FIX UNDEFINED WHEN DONT EXIST FR
-  const [loading, setLoading] = useState<boolean>();
 
   const { user } = useContext(UserContext);
+  const { isLoading, setIsLoading } = useContext(StatesContext);
   const { handlePendingFriends, pendingFriends, acceptFriendsRequest, declineFriendsRequests } =
     useContext(FriendsContext);
 
   const getAllFriendsRequests = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const response = await api.get(`/user/friends/getPending?id=${user?.id}`);
       handlePendingFriends(response.data);
-      setLoading(false);
+      setIsLoading(false);
     } catch (e) {
-      setLoading(false);
+      setIsLoading(false);
       return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
   };
@@ -53,24 +54,22 @@ function FriendsRequests() {
           <FlatList
             data={pendingFriends}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({ index, item }) => {
-              return (
-                <FriendsElement
-                  trueText={'Accept'}
-                  falseText={'Decline'}
-                  trueFunction={() => acceptFriendsRequest(index)}
-                  falseFunction={() => declineFriendsRequests(index)}
-                  friendsElementData={item as OneFriendDataElementInterface}
-                />
-              );
-            }}
+            renderItem={({ index, item }) => (
+              <FriendsElement
+                trueText={'Accept'}
+                falseText={'Decline'}
+                trueFunction={() => acceptFriendsRequest(index)}
+                falseFunction={() => declineFriendsRequests(index)}
+                friendsElementData={item as OneFriendDataElementInterface}
+              />
+            )}
           />
         </>
       </Background>
 
       <Footer wichActive={'settings'} />
 
-      {loading && <Loading />}
+      {isLoading && <Loading />}
     </>
   );
 }
