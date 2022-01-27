@@ -2,6 +2,8 @@ import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { RouteProp, useRoute, useNavigation } from '@react-navigation/core';
 import { RootStackParamList } from '../navigator/MainStack';
 import { StyleSheet, View, Text } from 'react-native';
+import { showError } from '../utils/error';
+import { generateFormData } from '../utils/FormData';
 
 import api from '../api/api';
 
@@ -14,9 +16,10 @@ import Footer from '../components/Footer/index';
 import Input from '../components/StyledInput';
 import UserContext from '../contexts/user';
 import Loading from '../components/Loading';
-import { showError } from '../utils/error';
+
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
-import { generateFormData } from '../utils/FormData';
+
+import StatesContext from '../contexts/states';
 
 function UpdateAnimal() {
   const navigation = useNavigation();
@@ -32,8 +35,8 @@ function UpdateAnimal() {
   const [photoUrl, setPhotoUrl] = useState<string>(animalInfo.photoUrl);
   const [error, setError] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
-  const [isLoading, setLoading] = useState<boolean>(false);
 
+  const { isLoading, setIsLoading} = useContext(StatesContext);
   const { pushAnimalData } = useContext(UserContext);
 
   const handleSubmitForm = async () => {
@@ -57,19 +60,16 @@ function UpdateAnimal() {
       } as unknown as string | Blob);
 
       try {
-        setLoading(true);
+        setIsLoading(true);
         const result = await api.post('/animal/update', animalData);
         const { data } = result;
 
         pushAnimalData(data as any);
-        setLoading(false);
+        setIsLoading(false);
 
-        navigation.navigate(
-          'Home' as never,
-          { haveAddress: true } as never
-        );
+        navigation.navigate('Home' as never, { haveAddress: true } as never);
       } catch (e) {
-        setLoading(false);
+        setIsLoading(false);
         return showError('Error: ' + e, 'Apparently there was an error, try again');
       }
     }
@@ -119,9 +119,7 @@ function UpdateAnimal() {
                   placeholder={'Name'}
                 />
                 <Input //Age
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setAge, 5, 'number')
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setAge, 5, 'number')}
                   text={age}
                   placeholder={'Age'}
                 />
@@ -131,32 +129,23 @@ function UpdateAnimal() {
                   placeholder={'Breed'}
                 />
                 <Input //Birthday
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setBirthday, 2)
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setBirthday, 2)}
                   text={birthday}
                   placeholder={'Birthday'}
                 />
                 <Input //Birthday month
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setBirthdayMonth, 2)
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setBirthdayMonth, 2)}
                   text={birthdayMonth}
                   placeholder={'Birthday month'}
                 />
                 <Input //Track number
-                  handleChangeFunction={(e: string) =>
-                    handleChangeText(e, setTrackNumber, 50)
-                  }
+                  handleChangeFunction={(e: string) => handleChangeText(e, setTrackNumber, 50)}
                   text={trackNumber}
                   placeholder={'Track number'}
                 />
               </View>
 
-              <CreateOrUpdateSwitch
-                enableFunction={setIsEnabled}
-                enableValue={isEnabled}
-              />
+              <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled} />
               <Button text={'Update animal'} handleClick={handleSubmitForm} />
 
               <Text>{error}</Text>

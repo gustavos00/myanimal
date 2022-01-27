@@ -16,14 +16,16 @@ import GenerateFriendQrContainer from '../components/GenerateFriendQRContainer';
 import FindMyAnimalContainer from '../components/findMyAnimalContainer';
 
 import storage from '../utils/storage';
+import StatesContext from '../contexts/states';
 
 function Settings() {
-  const [loading, setLoading] = useState<boolean>();
   const [userEmail, setUserEmail] = useState<string>('');
   const [generateQRModalIsOpen, setGenerateQRModalIsOpen] = useState<boolean>(false);
   const [findMyAnimalModalIsOpen, setFindMyAnimalModalIsOpen] = useState<boolean>(false);
 
   const navigation = useNavigation();
+
+  const { isLoading, setIsLoading } = useContext(StatesContext);
   const { user } = useContext(UserContext);
 
   useEffect(() => {
@@ -113,11 +115,11 @@ function Settings() {
       {findMyAnimalModalIsOpen && (
         <FindMyAnimalContainer
           closeBottomModalFunction={setFindMyAnimalModalIsOpen}
-          setLoadingFunction={setLoading}
+          setLoadingFunction={setIsLoading}
         />
       )}
 
-      {loading && <Loading />}
+      {isLoading && <Loading />}
 
       {generateQRModalIsOpen && (
         <GenerateFriendQrContainer
