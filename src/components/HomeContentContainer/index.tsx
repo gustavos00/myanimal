@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { AnimalData } from '../../types/AnimalData';
+import AnimalElement from '../AnimalElement';
 
 import Background from '../Background';
 import BackgroundHeader from '../BackgroundHeader';
-import GenerateElements from '../GenerateAnimalElements';
 import KeyboardAvoidingWrapper from '../KeyboardAvoidingWrapper';
 import NoAnimalAlert from '../NoAnimalAlert';
 
@@ -24,8 +25,15 @@ function HomeContentContainer({ animalData }: HomeContentContainerProps) {
             <BackgroundHeader text={'Your animals'} />
             {/**TO DO -> REMOVE KEYBOARD AVOID WRAPPER */}
             <KeyboardAvoidingWrapper>
-              {/** TO DO -> MAKE A CONFIRM MODAL TO CONFIRM DELETE */}
-              <GenerateElements animalData={animalData} />
+              <>
+                {animalData?.map((item, index) => {
+                  return (
+                    <View style={styles.container} key={index}>
+                      <AnimalElement animalData={{arrayKey: index, ...item}}  />
+                    </View>
+                  );
+                })}
+              </>
             </KeyboardAvoidingWrapper>
           </>
         )}
@@ -33,5 +41,12 @@ function HomeContentContainer({ animalData }: HomeContentContainerProps) {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 10,
+    marginHorizontal: 10,
+  },
+});
 
 export default HomeContentContainer;

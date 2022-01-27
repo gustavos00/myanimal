@@ -2,7 +2,6 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Text} from 'react-native'
 
 import LottieView from 'lottie-react-native'
-import BackgroundFilter from '../BackgroundFilter';
 import BottomModal from '../BottomModal';
 
 import globalStyles from '../../assets/styles/global';
@@ -14,7 +13,6 @@ interface NoWIFIModalProps {
 function NoWifiModal({handleClick} : NoWIFIModalProps) {
   return (
     <>
-        <BackgroundFilter >
           <BottomModal modalHeight={300}>
             <>
               <View style={styles.animationContainer}>
@@ -27,7 +25,6 @@ function NoWifiModal({handleClick} : NoWIFIModalProps) {
               </TouchableOpacity>
             </>
           </BottomModal>
-        </BackgroundFilter>
     </>
   );
 }
