@@ -14,31 +14,27 @@ import api from '../../api/api';
 import globalStyles from '../../assets/styles/global';
 
 import { showError } from '../../utils/error';
-import { AnimalData } from '../../types/AnimalData';
+import { AnimalDataWithArraykey } from '../../types/AnimalData';
 import UserContext from '../../contexts/user';
 import ActionsElements from '../ActionsElements';
+import StatesContext from '../../contexts/states';
+
+
 
 interface AnimalElementProps {
-  animalData: AnimalData;
+  animalData: AnimalDataWithArraykey;
 }
 
 function AnimalElement({ animalData }: AnimalElementProps) {
   const navigation = useNavigation();
-  const { deleteAnimalData } = useContext(UserContext);
 
-  const deletingAnimal = async (id: number, arrayKey: number) => {
-    try {
-      await api.delete(`/animal/delete/${String(id)}`);
-      deleteAnimalData(arrayKey);
-    } catch (e) {
-      return showError(
-        'Error: ' + e,
-        'Apparently there was an error deleting this animal, try again'
-      );
-    }
+  const { setDeleteAnimalModalData } = useContext(StatesContext);
+
+  const handleDeleteAnimal = () => {
+    setDeleteAnimalModalData(animalData);
   };
 
-  const updatingAnimal = () => {
+  const handleUpdateAnimal = () => {
     navigation.navigate(
       'UpdateAnimal' as never,
       {
@@ -47,7 +43,7 @@ function AnimalElement({ animalData }: AnimalElementProps) {
     );
   };
 
-  const viewingAnimal = (item: Object) => {
+  const handleViewAnimal = (item: Object) => {
     navigation.navigate(
       'ViewAnimal' as never,
       {
@@ -59,19 +55,20 @@ function AnimalElement({ animalData }: AnimalElementProps) {
   return (
     <>
       <View style={styles.element}>
-        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{alignItems: 'center'}} style={styles.container}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          contentContainerStyle={{ alignItems: 'center' }}
+          style={styles.container}
+        >
           <TouchableOpacity
             onPress={() => {
-              viewingAnimal(animalData);
+              handleViewAnimal(animalData);
             }}
-
-            style={{marginLeft: (globalStyles.almostTheFullDeviceWidth / 2) * .15}}
+            style={{ marginLeft: (globalStyles.almostTheFullDeviceWidth / 2) * 0.15 }}
           >
             <View style={styles.contentContainer}>
-              <Image
-                source={{ uri: animalData.photoUrl }}
-                style={styles.icon}
-              />
+              <Image source={{ uri: animalData.photoUrl }} style={styles.icon} />
 
               <View style={styles.textContainer}>
                 <Text style={styles.nameText}>{animalData.name}</Text>
@@ -83,10 +80,8 @@ function AnimalElement({ animalData }: AnimalElementProps) {
           <ActionsElements
             trueText={'Edit'}
             falseText={'Delete'}
-            trueFunction={updatingAnimal}
-            falseFunction={() => {
-              deletingAnimal(animalData.idAnimal, animalData.arrayKey);
-            }}
+            trueFunction={handleUpdateAnimal}
+            falseFunction={handleDeleteAnimal}
           />
         </ScrollView>
       </View>
@@ -113,7 +108,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
 
-    height: globalStyles.fullDeviceHeight * .13,
+    height: globalStyles.fullDeviceHeight * 0.13,
 
     shadowColor: '#000',
     shadowOffset: {
