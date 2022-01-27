@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   element: {
     height: 105 + (globalStyles.smallerGap / 2),
     marginHorizontal: globalStyles.smallerGap,
-    marginTop: globalStyles.smallGap,
+    marginTop: globalStyles.smallerGap,
 
     backgroundColor: 'white',
     borderRadius: 15,
