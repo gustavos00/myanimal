@@ -14,24 +14,24 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import FriendsElement from '../components/FriendsElement';
+import StatesContext from '../contexts/states';
 
 function Friends() {
   const navigation = useNavigation();
 
-  const [loading, setLoading] = useState<boolean>();
-
+  const { isLoading, setIsLoading } = useContext(StatesContext);
   const { user } = useContext(UserContext);
   const { handleAcceptedFriends, acceptedFriends } = useContext(FriendsContext);
 
   const getAllFriends = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       const response = await api.get(`/user/friends/getAccepted?id=${user?.id}`);
 
       handleAcceptedFriends(response.data);
-      setLoading(false);
+      setIsLoading(false);
     } catch (e) {
-      setLoading(false);
+      setIsLoading(false);
       return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
   };
@@ -78,7 +78,7 @@ function Friends() {
 
       <Footer wichActive={'settings'} />
 
-      {loading && <Loading />}
+      {isLoading && <Loading />}
     </>
   );
 }

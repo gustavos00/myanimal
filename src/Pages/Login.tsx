@@ -8,17 +8,18 @@ import RoundedBackground from '../components/RoundedBackground';
 import SliderContent from '../components/SliderContent';
 import AuthContext from '../contexts/auth';
 import Loading from '../components/Loading';
+import StatesContext from '../contexts/states';
 
 const Login = () => {
-  const [isLoading, setLoading] = useState(false);
   const navigation = useNavigation();
 
+  const { isLoading, setIsLoading} = useContext(StatesContext);
   const { googleSignIn } = useContext(AuthContext);
 
   const handleGoogleSignIn = async () => {
-    setLoading(true);
+    setIsLoading(true);
     const status = await googleSignIn();
-    setLoading(false);
+    setIsLoading(false);
 
     if (status) {
       const { haveAddress } = status;

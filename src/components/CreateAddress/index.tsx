@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 
 import api from '../../api/api';
+import StatesContext from '../../contexts/states';
 import UserContext from '../../contexts/user';
 import { showError } from '../../utils/error';
 import { generateUrlSearchParams } from '../../utils/URLSearchParams';
@@ -21,8 +22,8 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
   const [parish, setParish] = useState<string>();
   const [locality, setLocality] = useState<string>();
   const [error, setError] = useState<string>();
-  const [isLoading, setLoading] = useState<boolean>(false);
 
+  const { isLoading, setIsLoading } = useContext(StatesContext);
   const { user } = useContext(UserContext);
 
   const handleText = (
@@ -55,9 +56,9 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
       const addressData = generateUrlSearchParams(tempObj);
 
       try {
-        setLoading(true);
+        setIsLoading(true);
         await api.post('user/createAddress', addressData);
-        setLoading(false);
+        setIsLoading(false);
         changeHaveAddressStateFunction(true);
 
         //Dynamic push user data

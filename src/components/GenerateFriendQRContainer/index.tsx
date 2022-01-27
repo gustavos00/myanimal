@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import { showError } from '../../utils/error';
 
 import api from '../../api/api';
 
 import QRCode from 'react-native-qrcode-svg';
 import globalStyles from '../../assets/styles/global';
 import BottomModal from '../BottomModal';
-import { showError } from '../../utils/error';
-import Loading from '../Loading';
+
+import Loading from '../Loading'
+import StatesContext from '../../contexts/states'
+
 
 interface userDataProps {
   email?: string,
@@ -24,28 +27,28 @@ function GenerateFriendQrContainer({
   userData,
 }: GenerateFriendQrContainerProps) {
   const [token, setToken] = useState();
-  const [loading, setLoading] = useState<boolean>();
+  const { isLoading, setIsLoading } = useContext(StatesContext);
 
   if(!userData.email) return <></>;
 
   const generateQR = async () => {
     if(!userData) return console.log('error getting user data');
     try {
-      setLoading(true)
+      setIsLoading(true)
       const response = await api.get(`user/friends/token?email=${userData.email}&id=${userData.id}`);
-      setLoading(false)
+      setIsLoading(false)
 
       const { token } = response.data
       setToken(token)
     } catch (e) {
-      setLoading(false)
+      setIsLoading(false)
       return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
   };
 
   useEffect(() => {
     const generateQRuseEffectFunction = async () => {
-      setLoading(true)
+      setIsLoading(true)
       await generateQR()
     }
 
@@ -71,7 +74,7 @@ function GenerateFriendQrContainer({
         </>
       </BottomModal>
 
-      {loading && <Loading />}
+      {isLoading && <Loading />}
     </>
   );
 }
@@ -94,3 +97,4 @@ const styles = StyleSheet.create({
 });
 
 export default GenerateFriendQrContainer;
+

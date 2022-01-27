@@ -17,6 +17,7 @@ import Input from '../components/StyledInput';
 import UserContext from '../contexts/user';
 import Loading from '../components/Loading';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+import StatesContext from '../contexts/states';
 
 function CreateAnimal() {
   const navigation = useNavigation();
@@ -29,8 +30,8 @@ function CreateAnimal() {
   const [trackNumber, setTrackNumber] = useState<string>('');
   const [error, setError] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
-  const [isLoading, setLoading] = useState<boolean>(false);
 
+  const { isLoading, setIsLoading} = useContext(StatesContext);
   const { pushAnimalData, user } = useContext(UserContext);
 
   const handleSubmitForm = async () => {
@@ -41,7 +42,7 @@ function CreateAnimal() {
     }
 
     if (photo === '') {
-      //TODO -> Fake photo or alert?
+      //TO DO -> Fake photo or alert?
       return console.log('Missing photo');
     }
 
@@ -67,15 +68,15 @@ function CreateAnimal() {
     } as unknown as string | Blob);
 
     try {
-      setLoading(true);
+      setIsLoading(true);
       const result = await api.post('/animal/create', animalData);
-      //TODO -> Just update local stuffs if can request
+      //TO DO -> Just update local stuffs if can request
       pushAnimalData(result.data as unknown as AnimalData);
-      setLoading(false);
+      setIsLoading(false);
 
       navigation.navigate('Home' as never, { haveAddress: true } as never);
     } catch (e) {
-      setLoading(false);
+      setIsLoading(false);
       return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
   };
@@ -89,7 +90,7 @@ function CreateAnimal() {
     let valueType = type ? type : 'string'; //Is string by default
 
     if (value.length > valueLenght) {
-      //Todo -> Create customs error messages
+      //To do -> Create customs error messages
       return setError('Error message');
     } else {
       setError('');
