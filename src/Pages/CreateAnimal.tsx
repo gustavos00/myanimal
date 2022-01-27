@@ -31,17 +31,23 @@ function CreateAnimal() {
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  const { pushAnimalData } = useContext(UserContext);
+  const { pushAnimalData, user } = useContext(UserContext);
 
   const handleSubmitForm = async () => {
+    //Can't insert if exist a animal with same values
     //Check if error is a empty string
     if (!!error) {
       return console.log('Error');
     }
 
     if (photo === '') {
-      //Should i set a fake image or request a image?
+      //TODO -> Fake photo or alert?
       return console.log('Missing photo');
+    }
+
+    if (!user) {
+      showError('User dont exist on create animal', 'Apparently there was an error, try again');
+      navigation.navigate('Home' as never, { haveAddress: true } as never);
     }
 
     const tempObj = {
@@ -51,6 +57,7 @@ function CreateAnimal() {
       birthday,
       birthdayMonth,
       trackNumber,
+      token: user?.token,
     };
     const animalData = generateFormData(tempObj);
     animalData.append('animalPhoto', {
@@ -62,6 +69,7 @@ function CreateAnimal() {
     try {
       setLoading(true);
       const result = await api.post('/animal/create', animalData);
+      //TODO -> Just update local stuffs if can request
       pushAnimalData(result.data as unknown as AnimalData);
       setLoading(false);
 
@@ -81,6 +89,7 @@ function CreateAnimal() {
     let valueType = type ? type : 'string'; //Is string by default
 
     if (value.length > valueLenght) {
+      //Todo -> Create customs error messages
       return setError('Error message');
     } else {
       setError('');
