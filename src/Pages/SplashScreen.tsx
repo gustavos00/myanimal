@@ -66,8 +66,9 @@ function SplashScreen() {
         setToken(userData?.token);
         setUser(userData as UserData);
         setAnimalData(userData.animalData as Array<AnimalData>);
+        
         const { userAddress } = userData;
-        return { haveAddress: !isEmpty(userAddress) };
+        return { haveAddress: !isEmpty(userAddress)};
       }
     } else {
       return false;

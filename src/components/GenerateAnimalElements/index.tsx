@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import { AnimalData } from '../../types/AnimalData';
 import AnimalElement from '../AnimalElement';
@@ -13,7 +13,7 @@ function GenerateElements({ animalData }: GenerateElementsProps) {
     <>
       {animalData?.map((item, index) => {
         return (
-          <View key={index}>
+          <View style={styles.container} key={index}>
             <AnimalElement animalData={item as AnimalData} />
           </View>
         );
@@ -21,5 +21,11 @@ function GenerateElements({ animalData }: GenerateElementsProps) {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: 10, marginHorizontal: 10
+  }
+})
 
 export default GenerateElements;

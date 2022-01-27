@@ -11,7 +11,7 @@ interface HomeContentContainerProps {
   animalData: Array<AnimalData> | void;
 }
 
-function HomeContentContainer({ animalData}: HomeContentContainerProps) {
+function HomeContentContainer({ animalData }: HomeContentContainerProps) {
   return (
     <>
       <Background>
@@ -22,10 +22,10 @@ function HomeContentContainer({ animalData}: HomeContentContainerProps) {
         ) : (
           <>
             <BackgroundHeader text={'Your animals'} />
+            {/**TO DO -> REMOVE KEYBOARD AVOID WRAPPER */}
             <KeyboardAvoidingWrapper>
-              <GenerateElements
-                animalData={animalData}
-              />
+              {/** TO DO -> MAKE A CONFIRM MODAL TO CONFIRM DELETE */}
+              <GenerateElements animalData={animalData} />
             </KeyboardAvoidingWrapper>
           </>
         )}

@@ -21,6 +21,7 @@ interface geographicDataProps {
 }
 
 function FindMyAnimal() {
+  //TO-DO FIX GEOGRAPHICDATA 
   const [haveValidAddress, setHaveValidAddress] = useState<boolean>();
   const [geographicData, setGeographicData] = useState<geographicDataProps>();
 

@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
     right: 25,
 
     borderRadius: 40,
-    backgroundColor: 'red',
   },
 
   circle: {
