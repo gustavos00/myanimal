@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: '100%',
 
-    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },

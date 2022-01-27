@@ -55,7 +55,9 @@ const styles = StyleSheet.create({
   },
 
   actionsContainer: {
+    height: '100%',
     paddingRight: 30,
+    
     flexDirection: 'row',
   },
 
