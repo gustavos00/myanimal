@@ -59,11 +59,13 @@ function AnimalElement({ animalData }: AnimalElementProps) {
   return (
     <>
       <View style={styles.element}>
-        <ScrollView horizontal style={styles.container}>
+        <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={{alignItems: 'center'}} style={styles.container}>
           <TouchableOpacity
             onPress={() => {
               viewingAnimal(animalData);
             }}
+
+            style={{marginLeft: (globalStyles.almostTheFullDeviceWidth / 2) * .15}}
           >
             <View style={styles.contentContainer}>
               <Image
@@ -81,7 +83,6 @@ function AnimalElement({ animalData }: AnimalElementProps) {
           <ActionsElements
             trueText={'Edit'}
             falseText={'Delete'}
-            trueColor={'blue'}
             trueFunction={updatingAnimal}
             falseFunction={() => {
               deletingAnimal(animalData.idAnimal, animalData.arrayKey);
@@ -100,16 +101,19 @@ const styles = StyleSheet.create({
 
   contentContainer: {
     width: globalStyles.fullDeviceWidth,
-    padding: globalStyles.smallerGap,
 
     flexDirection: 'row',
   },
 
   element: {
-    margin: globalStyles.smallerGap,
-
     backgroundColor: 'white',
     borderRadius: 15,
+
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
+    height: globalStyles.fullDeviceHeight * .13,
 
     shadowColor: '#000',
     shadowOffset: {
@@ -126,8 +130,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width * 0.22,
     height: Dimensions.get('window').width * 0.22,
     borderRadius: globalStyles.smallerGap,
-
-    backgroundColor: 'red',
   },
 
   textContainer: {
