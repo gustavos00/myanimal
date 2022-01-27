@@ -9,5 +9,8 @@ export interface AnimalData {
   name: string;
   trackNumber: string;
   userIdUser: number;
+}
+
+export interface AnimalDataWithArraykey extends AnimalData {
   arrayKey: number
 }
