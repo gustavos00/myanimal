@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { AnimalData } from '../types/AnimalData';
+import { AnimalData, AnimalDataWithArraykey } from '../types/AnimalData';
 import { UserData } from '../types/UserData';
 import { showError } from '../utils/error';
 
@@ -9,7 +9,7 @@ interface UserContextContent {
 
   pushAnimalData: (data: AnimalData) => void;
   deleteAnimalData: (id: number) => void;
-  setAnimalData: (data: Array<AnimalData>) => void;
+  setAnimalData: (data: Array<AnimalDataWithArraykey>) => void;
   setUser: (data: UserData) => void;
 }
 
@@ -17,13 +17,13 @@ const UserContext = createContext<UserContextContent>({} as UserContextContent);
 
 export function UserProvider({ children }: any) {
   const [user, setUser] = useState<UserData | void>();
-  const [animalData, setAnimalData] = useState<Array<AnimalData>>();
+  const [animalData, setAnimalData] = useState<Array<AnimalDataWithArraykey>>();
 
   const pushAnimalData = (data: AnimalData) => {
     if (animalData) {
       const tempObj = {
         ...data,
-        arraykey: animalData.length + 1,
+        arrayKey: animalData.length + 1,
       };
       if (animalData) {
         setAnimalData((animalData) => [...(animalData ?? []), tempObj]);
