@@ -80,9 +80,7 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
           <StyledInput
             text={doorNumber}
             placeholder={'Door number'}
-            handleChangeFunction={(e: string) =>
-              handleText(e, 4, setDoorNumber, 'number')
-            }
+            handleChangeFunction={(e: string) => handleText(e, 4, setDoorNumber, 'number')}
           />
           <StyledInput
             text={postalCode}
@@ -105,11 +103,7 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
         </>
       </KeyboardAvoidingWrapper>
 
-      {isLoading && (
-        <>
-          <Loading />
-        </>
-      )}
+      {isLoading && <Loading />}
     </>
   );
 }
