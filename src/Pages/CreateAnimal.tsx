@@ -18,20 +18,23 @@ import UserContext from '../contexts/user';
 import Loading from '../components/Loading';
 import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import StatesContext from '../contexts/states';
+import Modal from '../components/Modal';
+import BackgroundFilter from '../components/BackgroundFilter';
 
 function CreateAnimal() {
   const navigation = useNavigation();
-  const [photo, setPhoto] = useState<string>('');
-  const [name, setName] = useState<string>('');
-  const [age, setAge] = useState<string>('');
-  const [breed, setBreed] = useState<string>('');
-  const [birthday, setBirthday] = useState<string>('');
-  const [birthdayMonth, setBirthdayMonth] = useState<string>('');
-  const [trackNumber, setTrackNumber] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [photo, setPhoto] = useState<string | undefined>();
+  const [name, setName] = useState<string | undefined>();
+  const [age, setAge] = useState<string | undefined>();
+  const [breed, setBreed] = useState<string | undefined>();
+  const [birthday, setBirthday] = useState<string | undefined>();
+  const [birthdayMonth, setBirthdayMonth] = useState<string | undefined>();
+  const [trackNumber, setTrackNumber] = useState<string | undefined>();
+  const [error, setError] = useState<string | undefined>();
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
+  const [isNoPhotoModalOpen, setIsNoPhotoModalOpen] = useState<boolean>(false);
 
-  const { isLoading, setIsLoading} = useContext(StatesContext);
+  const { isLoading, setIsLoading } = useContext(StatesContext);
   const { pushAnimalData, user } = useContext(UserContext);
 
   const handleSubmitForm = async () => {
@@ -40,15 +43,12 @@ function CreateAnimal() {
     if (!!error) {
       return console.log('Error');
     }
-
-    if (photo === '') {
-      //TO DO -> Fake photo or alert?
-      return console.log('Missing photo');
+    if (!photo) {
+      return setIsNoPhotoModalOpen(true);
     }
-
     if (!user) {
       showError('User dont exist on create animal', 'Apparently there was an error, try again');
-      navigation.navigate('Home' as never, { haveAddress: true } as never);
+      return navigation.navigate('Home' as never, { haveAddress: true } as never);
     }
 
     const tempObj = {
@@ -70,7 +70,7 @@ function CreateAnimal() {
     try {
       setIsLoading(true);
       const result = await api.post('/animal/create', animalData);
-      //TO DO -> Just update local stuffs if can request
+
       pushAnimalData(result.data as unknown as AnimalData);
       setIsLoading(false);
 
@@ -83,31 +83,21 @@ function CreateAnimal() {
 
   const handleChangeText = (
     value: string,
-    setFunction: Dispatch<SetStateAction<string>>,
-    valueLenght: number,
+    setFunction: Dispatch<SetStateAction<any>>,
+    valueLength: number,
     type?: string
   ) => {
-    let valueType = type ? type : 'string'; //Is string by default
+    const textType = type && 'string';
 
-    if (value.length > valueLenght) {
-      //To do -> Create customs error messages
-      return setError('Error message');
-    } else {
-      setError('');
+    if (value.length > valueLength) {
+      return setError('Length');
+    } 
+
+    if(textType as never == 'number') {
+      return !Number.isNaN(value) ? setFunction(value) : setError('Please, insert a valid age.')
     }
 
-    if (valueType === 'string') {
-      setFunction(value);
-    } else if (valueType === 'number') {
-      if (!isNaN(Number(value))) {
-        setError('');
-        setFunction(value);
-        return;
-      }
-      setError('Please, insert a valid age');
-    } else {
-      return showError('Error handle text on create animal');
-    }
+    setError('')
   };
 
   return (
@@ -143,12 +133,13 @@ function CreateAnimal() {
                   handleChangeFunction={(e: string) => handleChangeText(e, setTrackNumber, 50)}
                   placeholder={'Track number'}
                 />
+
+                <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled} />
               </View>
 
-              <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled} />
-              <Button text={'Create new pet'} handleClick={handleSubmitForm} />
+              {!!error && <Text>{error}</Text>}
 
-              <Text>{error}</Text>
+              <Button text={'Create new pet'} handleClick={handleSubmitForm} />
             </View>
           </KeyboardAvoidingWrapper>
         </Background>
@@ -157,6 +148,19 @@ function CreateAnimal() {
       <Footer wichActive={'home'} />
 
       {isLoading && <Loading />}
+
+      {isNoPhotoModalOpen && (
+        <BackgroundFilter>
+          <Modal
+            title={'Somethign is missing..'}
+            text={"Apparently you didn't post a picture of your pet, are you sure?"}
+            noButtonText={'No'}
+            yesButtonText={'Yes'}
+            trueFunction={() => setIsNoPhotoModalOpen(false)}
+            falseFunction={() => setIsNoPhotoModalOpen(false)}
+          />
+        </BackgroundFilter>
+      )}
     </>
   );
 }
@@ -173,6 +177,8 @@ const styles = StyleSheet.create({
   inputsContainer: {
     width: '80%',
     marginTop: 40,
+
+    alignItems: 'center',
   },
 
   container: {
