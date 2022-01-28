@@ -105,7 +105,7 @@ function Settings() {
           <View style={styles.textContainer}>
             <OptionHeader text={'More'} />
             <OptionElement handleClick={() => changeScreen('AboutUs')} text={'About us'} />
-            <OptionElement handleClick={() => changeScreen('Home')} text={'Privacy Policy'} />
+            <OptionElement handleClick={() => changeScreen('AboutUs')} text={'Privacy Policy'} />
           </View>
         </Scroll>
       </Background>
