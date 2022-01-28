@@ -17,6 +17,7 @@ import FindMyAnimalContainer from '../components/findMyAnimalContainer';
 
 import storage from '../utils/storage';
 import StatesContext from '../contexts/states';
+import Scroll from '../components/Scroll';
 
 function Settings() {
   const [userEmail, setUserEmail] = useState<string>('');
@@ -58,9 +59,8 @@ function Settings() {
       <Header />
 
       <Background>
-        <>
-          <BackgroundHeader text={'Settings'} />
-
+        <BackgroundHeader text={'Settings'} />
+        <Scroll>
           <View style={styles.textContainer}>
             <OptionHeader text={'Account Settings'} />
             <OptionElement
@@ -107,7 +107,7 @@ function Settings() {
             <OptionElement handleClick={() => changeScreen('AboutUs')} text={'About us'} />
             <OptionElement handleClick={() => changeScreen('Home')} text={'Privacy Policy'} />
           </View>
-        </>
+        </Scroll>
       </Background>
 
       <Footer wichActive={'settings'} />

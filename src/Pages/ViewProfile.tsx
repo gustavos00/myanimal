@@ -6,9 +6,9 @@ import Background from '../components/Background';
 import BottomModal from '../components/BottomModal';
 import Button from '../components/Button';
 import Footer from '../components/Footer';
-import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import OptionHeader from '../components/OptionHeader';
 import ProfilePhoto from '../components/ProfilePhoto';
+import Scroll from '../components/Scroll';
 import StyledInput from '../components/StyledInput';
 import StyledText from '../components/StyledText';
 import Underline from '../components/Underline';
@@ -36,7 +36,7 @@ function ViewProfile() {
         <ProfilePhoto photoUrl={user?.photoUrl} />
 
         <Background heightSize={'75%'}>
-          <KeyboardAvoidingWrapper>
+          <Scroll>
             <View style={styles.container}>
               <View style={styles.firstInputContainer}>
                 <OptionHeader text={'Account information'} />
@@ -77,7 +77,7 @@ function ViewProfile() {
                 />
               </View>
             </View>
-          </KeyboardAvoidingWrapper>
+          </Scroll>
         </Background>
       </View>
 
