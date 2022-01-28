@@ -1,9 +1,10 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { FriendsData } from '../types/FriendsData';
 
 import api from '../api/api';
 import storage from '../utils/storage';
 import { showError } from '../utils/error';
+import StatesContext from './states';
 
 interface FriendsContextData {
   pendingFriends: Array<FriendsData> | undefined;
@@ -23,6 +24,8 @@ const FriendsContext = createContext<FriendsContextData>({} as FriendsContextDat
 export function FriendsProvider({ children }: any) {
   const [pendingFriends, setPendingFriends] = useState<Array<FriendsData>>();
   const [acceptedFriends, setAcceptedFriends] = useState<Array<FriendsData>>([]);
+
+  const { isLoading, setIsLoading} = useContext(StatesContext)
 
   const handlePendingFriends = (data: Array<FriendsData>) => {
     setPendingFriends(data);
@@ -45,8 +48,11 @@ export function FriendsProvider({ children }: any) {
     let response;
 
     try {
+      setIsLoading(true)
       response = await api.get(`/user/friends/accept?id=${idFriendsElement}`);
+      setIsLoading(false)
     } catch (e) {
+      setIsLoading(false)
       return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
 
