@@ -50,7 +50,7 @@ function CreateAnimal() {
       showError('User dont exist on create animal', 'Apparently there was an error, try again');
       return navigation.navigate('Home' as never, { haveAddress: true } as never);
     }
-
+    
     const tempObj = {
       name,
       breed,
@@ -88,15 +88,15 @@ function CreateAnimal() {
     type?: string
   ) => {
     const textType = type && 'string';
-
     if (value.length > valueLength) {
       return setError('Length');
     } 
 
     if(textType as never == 'number') {
-      return !Number.isNaN(value) ? setFunction(value) : setError('Please, insert a valid age.')
+      return Number.isNaN(value) ? setFunction(value) : setError('Please, insert a valid age.')
     }
 
+    setFunction(value)
     setError('')
   };
 
