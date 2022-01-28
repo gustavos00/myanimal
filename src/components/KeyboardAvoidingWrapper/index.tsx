@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import Scroll from '../Scroll';
 
 interface KeyboardAvoidingWrapperProps {
   children: ReactNode;
@@ -15,14 +16,9 @@ function KeyboardAvoidingWrapper({ children }: KeyboardAvoidingWrapperProps) {
   return (
     <>
       <KeyboardAvoidingView>
-        <ScrollView>
-          <TouchableWithoutFeedback
-            onPress={Keyboard.dismiss}
-          >
-            {children}
-          </TouchableWithoutFeedback>
-          <View style={{ marginBottom: 100 }} />
-        </ScrollView>
+        <Scroll>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>{children}</TouchableWithoutFeedback>
+        </Scroll>
       </KeyboardAvoidingView>
     </>
   );

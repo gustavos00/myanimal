@@ -5,8 +5,8 @@ import AnimalElement from '../AnimalElement';
 
 import Background from '../Background';
 import BackgroundHeader from '../BackgroundHeader';
-import KeyboardAvoidingWrapper from '../KeyboardAvoidingWrapper';
 import NoAnimalAlert from '../NoAnimalAlert';
+import Scroll from '../Scroll';
 
 interface HomeContentContainerProps {
   animalData: Array<AnimalData> | void;
@@ -23,8 +23,7 @@ function HomeContentContainer({ animalData }: HomeContentContainerProps) {
         ) : (
           <>
             <BackgroundHeader text={'Your animals'} />
-            {/**TO DO -> REMOVE KEYBOARD AVOID WRAPPER */}
-            <KeyboardAvoidingWrapper>
+            <Scroll>
               <>
                 {animalData?.map((item, index) => {
                   return (
@@ -34,7 +33,7 @@ function HomeContentContainer({ animalData }: HomeContentContainerProps) {
                   );
                 })}
               </>
-            </KeyboardAvoidingWrapper>
+            </Scroll>
           </>
         )}
       </Background>

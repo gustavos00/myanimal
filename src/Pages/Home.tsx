@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
+import { showError } from '../utils/error';
 
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -11,8 +12,10 @@ import HomeContentContainer from '../components/HomeContentContainer';
 import globalStyles from '../assets/styles/global';
 import BackgroundFilter from '../components/BackgroundFilter';
 import StatesContext from '../contexts/states';
-import ConfirmDeleteAnimalModal from '../components/ConfirmDeleteAnimalModal';
+import Modal from '../components/Modal';
 import api from '../api/api';
+
+
 
 const Home = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Home'>>();
@@ -72,7 +75,11 @@ const Home = () => {
 
         {!!deleteAnimalModalData && (
           <BackgroundFilter handlePress={handleCloseDeleteAnimalModal}>
-            <ConfirmDeleteAnimalModal
+            <Modal
+              title={'Uhm, are you sure?'}
+              text={'Are you sure you will permanently delete an animal?'}
+              noButtonText={'Nevermind'}
+              yesButtonText={'Delete'}
               trueFunction={handleDeleteAnimal}
               falseFunction={handleCloseDeleteAnimalModal}
             />
@@ -84,10 +91,4 @@ const Home = () => {
 };
 
 export default Home;
-function deleteAnimalData(arrayKey: number) {
-  throw new Error('Function not implemented.');
-}
 
-function showError(arg0: string, arg1: string) {
-  throw new Error('Function not implemented.');
-}

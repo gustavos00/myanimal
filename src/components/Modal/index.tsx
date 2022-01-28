@@ -2,22 +2,41 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
-interface ConfirmDeleteAnimalModalProps {
-  falseFunction: () => void,
-  trueFunction: () => void,
+interface ModalProps {
+  falseFunction: () => void;
+  trueFunction: () => void;
+  title: string;
+  text: string;
+  noButtonText: string;
+  yesButtonText: string;
 }
 
-function ConfirmDeleteAnimalModal({falseFunction, trueFunction}: ConfirmDeleteAnimalModalProps) {
+function Modal({
+  falseFunction,
+  trueFunction,
+  title,
+  text,
+  noButtonText,
+  yesButtonText,
+}: ModalProps) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Uhm, are you sure?</Text>
-      <Text style={styles.text}>Are you sure you will permanently delete an animal?</Text>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.text}>{text}</Text>
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity activeOpacity={.7} onPress={falseFunction} style={[styles.button, { backgroundColor: '#D1192A' }]}>
-          <Text style={styles.buttonsText}>Nevermind</Text>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={falseFunction}
+          style={[styles.button, { backgroundColor: '#D1192A' }]}
+        >
+          <Text style={styles.buttonsText}>{noButtonText}</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={.7} onPress={trueFunction} style={[styles.button, { backgroundColor: 'green' }]}>
-          <Text style={styles.buttonsText}>Delete</Text>
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={trueFunction}
+          style={[styles.button, { backgroundColor: 'green' }]}
+        >
+          <Text style={styles.buttonsText}>{yesButtonText}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -57,7 +76,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    width: globalStyles.fullDeviceWidth * .3,
+    width: globalStyles.fullDeviceWidth * 0.3,
     height: globalStyles.fullDeviceHeight / 25,
     marginHorizontal: 10,
 
@@ -71,7 +90,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 1,
     color: '#fff',
-  }
+  },
 });
 
-export default ConfirmDeleteAnimalModal;
+export default Modal;

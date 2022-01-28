@@ -9,17 +9,11 @@ interface StyledInputProps {
   width?: number;
 }
 
-function StyledInput({
-  text,
-  handleChangeFunction,
-  placeholder,
-  width,
-}: StyledInputProps) {
-
+function StyledInput({ text, handleChangeFunction, placeholder, width }: StyledInputProps) {
   return (
     <>
       <View style={styles.inputContainer}>
-        <View style={[styles.container, { width: width ?? '90%'}]}>
+        <View style={[styles.container, { width: width ?? '90%' }]}>
           <View style={styles.textContainer}>
             <Text style={styles.text}>{placeholder}</Text>
           </View>
@@ -44,17 +38,13 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingLeft: 5,
-    paddingRight: 5,
-
-    marginTop: 10,
-    marginBottom: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    marginVertical: 10,
 
     borderWidth: 1,
     borderColor: globalStyles.gray,
-    borderRadius: 5
+    borderRadius: 5,
   },
 
   input: {

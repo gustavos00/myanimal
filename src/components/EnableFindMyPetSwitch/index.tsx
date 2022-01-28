@@ -22,7 +22,7 @@ function EnableFindMyPetSwitch({ enableFunction, enableValue }: EnableFindMyPetS
 
 const styles = StyleSheet.create({
   switchContainer: {
-    width: '80%',
+    width: '90%',
 
     flexDirection: 'row',
     justifyContent: 'space-between',
