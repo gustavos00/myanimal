@@ -23,7 +23,6 @@ function HomeContentContainer({ animalData }: HomeContentContainerProps) {
         ) : (
           <>
             <BackgroundHeader text={'Your animals'} />
-            {/**TO DO -> REMOVE KEYBOARD AVOID WRAPPER */}
             <Scroll>
               <>
                 {animalData?.map((item, index) => {

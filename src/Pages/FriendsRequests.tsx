@@ -16,8 +16,6 @@ import FriendsElement from '../components/FriendsElement';
 import StatesContext from '../contexts/states';
 
 function FriendsRequests() {
-  //TO DO FIX UNDEFINED WHEN DONT EXIST FR
-
   const { user } = useContext(UserContext);
   const { isLoading, setIsLoading } = useContext(StatesContext);
   const { handlePendingFriends, pendingFriends, acceptFriendsRequest, declineFriendsRequests } =
