@@ -3,7 +3,7 @@ import storage from '../utils/storage';
 import api from '../api/api';
 import UserContext from '../contexts/user';
 import AuthContext from '../contexts/auth';
-import isEmpty from '../utils/isEmpty'
+import isEmpty from '../utils/isEmpty';
 import NoWIFIModal from '../components/NoWIFIModal';
 
 import { useNavigation } from '@react-navigation/core';
@@ -14,8 +14,6 @@ import { verifyNetwork } from '../utils/network';
 import { showError } from '../utils/error';
 import { hasNotificationsPermissions } from '../utils/notifications';
 import { storeExpoToken } from '../services/auth';
-
-
 
 function SplashScreen() {
   const navigation = useNavigation();
