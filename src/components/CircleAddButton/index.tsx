@@ -30,10 +30,8 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    width: 50,
-
-    fontSize: 35,
-    fontWeight: '400',
+   
+    fontSize: 32,
     color: globalStyles.mainColor,
     textAlign: 'center',
   }

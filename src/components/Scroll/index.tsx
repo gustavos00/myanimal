@@ -7,7 +7,10 @@ interface ScrollProps {
 
 function Scroll({ children }: ScrollProps) {
   return (
-    <ScrollView style={ styles.container }>
+    <ScrollView
+      contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+      style={styles.container}
+    >
       {children}
     </ScrollView>
   );
@@ -15,7 +18,9 @@ function Scroll({ children }: ScrollProps) {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 100
+    display: 'flex',
+
+    marginBottom: 100,
   },
 });
 

@@ -27,16 +27,16 @@ function Modal({
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={falseFunction}
-          style={[styles.button, { backgroundColor: '#D1192A' }]}
+          style={[styles.button, { borderColor: '#D1192A' }]}
         >
-          <Text style={styles.buttonsText}>{noButtonText}</Text>
+          <Text style={[styles.buttonsText, {color: '#D1192A'}]}>{noButtonText}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.7}
           onPress={trueFunction}
-          style={[styles.button, { backgroundColor: 'green' }]}
+          style={[styles.button, { borderColor: 'green' }]}
         >
-          <Text style={styles.buttonsText}>{yesButtonText}</Text>
+          <Text style={[styles.buttonsText, {color: 'green'}]}>{yesButtonText}</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
 
     borderRadius: 7,
+    borderWidth: 1,
 
     justifyContent: 'center',
     alignItems: 'center',
