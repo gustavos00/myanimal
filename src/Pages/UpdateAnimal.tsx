@@ -4,6 +4,7 @@ import { RootStackParamList } from '../navigator/MainStack';
 import { StyleSheet, View, Text } from 'react-native';
 import { showError } from '../utils/error';
 import { generateFormData } from '../utils/FormData';
+import { AnimalData } from '../types/AnimalData';
 
 import api from '../api/api';
 
@@ -16,8 +17,7 @@ import Footer from '../components/Footer/index';
 import Input from '../components/StyledInput';
 import UserContext from '../contexts/user';
 import Loading from '../components/Loading';
-
-import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
+import Scroll from '../components/Scroll';
 
 import StatesContext from '../contexts/states';
 
@@ -36,8 +36,8 @@ function UpdateAnimal() {
   const [error, setError] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
 
-  const { isLoading, setIsLoading} = useContext(StatesContext);
-  const { pushAnimalData } = useContext(UserContext);
+  const { isLoading, setIsLoading } = useContext(StatesContext);
+  const { pushAnimalData, deleteAnimalData } = useContext(UserContext);
 
   const handleSubmitForm = async () => {
     //Check if error is a empty string
@@ -62,8 +62,9 @@ function UpdateAnimal() {
       try {
         setIsLoading(true);
         const result = await api.post('/animal/update', animalData);
-        const { data } = result;
+        const data = result.data as unknown as AnimalData;
 
+        deleteAnimalData(data.idAnimal);
         pushAnimalData(data as any);
         setIsLoading(false);
 
@@ -107,50 +108,54 @@ function UpdateAnimal() {
   return (
     <>
       <View style={styles.headerBg}>
-        <AddImage photoUrl={animalInfo.photoUrl} setProfilePhotoFunction={setPhotoUrl} />
+        <AddImage setProfilePhotoFunction={setPhotoUrl} photoUrl={photoUrl} />
 
         <Background heightSize={'75%'}>
-          <KeyboardAvoidingWrapper>
-            <View style={styles.container}>
-              <View style={styles.inputsContainer}>
-                <Input //Name
-                  handleChangeFunction={(e: string) => handleChangeText(e, setName, 250)}
-                  text={name}
-                  placeholder={'Name'}
-                />
-                <Input //Age
-                  handleChangeFunction={(e: string) => handleChangeText(e, setAge, 5, 'number')}
-                  text={age}
-                  placeholder={'Age'}
-                />
-                <Input //Breed
-                  handleChangeFunction={(e: string) => handleChangeText(e, setBreed, 250)}
-                  text={breed}
-                  placeholder={'Breed'}
-                />
-                <Input //Birthday
-                  handleChangeFunction={(e: string) => handleChangeText(e, setBirthday, 2)}
-                  text={birthday}
-                  placeholder={'Birthday'}
-                />
-                <Input //Birthday month
-                  handleChangeFunction={(e: string) => handleChangeText(e, setBirthdayMonth, 2)}
-                  text={birthdayMonth}
-                  placeholder={'Birthday month'}
-                />
-                <Input //Track number
-                  handleChangeFunction={(e: string) => handleChangeText(e, setTrackNumber, 50)}
-                  text={trackNumber}
-                  placeholder={'Track number'}
-                />
-              </View>
+          <Scroll>
+            <View style={styles.inputsContainer}>
+              <Input
+                width={'100%'}
+                text={name}
+                placeholder={'Name'}
+                handleChangeFunction={(e: string) => handleChangeText(e, setName, 250)}
+              />
+              <Input
+                width={'100%'}
+                text={age}
+                placeholder={'Age'}
+                handleChangeFunction={(e: string) => handleChangeText(e, setAge, 3, 'number')}
+              />
+              <Input
+                width={'100%'}
+                text={breed}
+                placeholder={'Breed'}
+                handleChangeFunction={(e: string) => handleChangeText(e, setBreed, 250)}
+              />
+              <Input
+                width={'100%'}
+                text={birthday}
+                placeholder={'Birthday'}
+                handleChangeFunction={(e: string) => handleChangeText(e, setBirthday, 2)}
+              />
+              <Input
+                width={'100%'}
+                text={birthdayMonth}
+                handleChangeFunction={(e: string) => handleChangeText(e, setBirthdayMonth, 2)}
+                placeholder={'Birthday month'}
+              />
+              <Input
+                width={'100%'}
+                text={trackNumber}
+                handleChangeFunction={(e: string) => handleChangeText(e, setTrackNumber, 250)}
+                placeholder={'Track number'}
+              />
 
               <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled} />
               <Button text={'Update animal'} handleClick={handleSubmitForm} />
 
               <Text>{error}</Text>
             </View>
-          </KeyboardAvoidingWrapper>
+          </Scroll>
         </Background>
       </View>
 
