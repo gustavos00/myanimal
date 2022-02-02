@@ -6,7 +6,7 @@ interface StyledInputProps {
   handleChangeFunction: (e: string) => void;
   placeholder: string;
   text?: string;
-  width?: number;
+  width?: number | string;
 }
 
 function StyledInput({ text, handleChangeFunction, placeholder, width }: StyledInputProps) {
