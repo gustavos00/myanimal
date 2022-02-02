@@ -36,9 +36,10 @@ export function UserProvider({ children }: any) {
     }
   };
 
-  const deleteAnimalData = (id: number) => {
+  const deleteAnimalData = (animalId: number) => {
     const temp = [...(animalData ?? [])];
-    temp.splice(id - 1); //ID start in 1, but where we are talking about the lenght
+    const animalIndexArray = temp.findIndex(element => element.idAnimal == animalId)
+    temp.splice(animalIndexArray, 1); 
     setAnimalData(temp);
   };
 
