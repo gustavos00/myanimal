@@ -29,7 +29,7 @@ function SplashScreen() {
   //Check token on localstorage
   const getTokenFromLocalStorage = async () => {
     try {
-      const response = await storage.load({ key: '@userAccess' });
+      const response = await storage.load({ key: '@userAccess' }); //Try find access token on local storage
       setAccessResponse(response);
     } catch (e: any) {
       switch (e.name) {
@@ -50,7 +50,7 @@ function SplashScreen() {
       const tokenData = generateUrlSearchParams({ salt, token });
 
       try {
-        const response = await api.post('/user/access/verify', tokenData);
+        const response = await api.post('/user/access/verify', tokenData); //Make a request to API to verify access token
         setUserData(response.data as unknown as UserData);
       } catch (e: any) {
         //Verify error type by docs https://github.com/sunnylqm/react-native-storage
@@ -59,7 +59,7 @@ function SplashScreen() {
         return false;
       }
 
-      if (userData) {
+      if (userData) { //If is valid, set data to context API
         setToken(userData?.token);
         setUser(userData as UserData);
         setAnimalData(userData.animalData as Array<AnimalDataWithArraykey>);
@@ -74,7 +74,7 @@ function SplashScreen() {
 
   useEffect(() => {
     const getToken = async () => {
-      const response = await getTokenFromLocalStorage();
+      const response = await getTokenFromLocalStorage(); //Trigger getTokenFromLS function
 
       if (!!response) {
         navigation.navigate('Home' as never, response as never);
@@ -87,7 +87,7 @@ function SplashScreen() {
   }, []);
 
   useEffect(() => {
-    const getNotificationsStatus = async () => {
+    const getNotificationsStatus = async () => { //Trigger function to detect if user allow notifications 
       const response = await hasNotificationsPermissions();
       if (!!response) {
         storeExpoToken({ expoToken: response, token: token ?? '' });
@@ -100,7 +100,7 @@ function SplashScreen() {
   const verifyNetworkLocal = () => {
     useEffect(() => {
       const verifyNetworkInsideUseEffect = async () => {
-        const status = await verifyNetwork();
+        const status = await verifyNetwork(); //Trigger function to verify if user have internet
         setInternetConnection(!status);
       };
       verifyNetworkInsideUseEffect();

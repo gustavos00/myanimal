@@ -49,6 +49,7 @@ const Home = () => {
     try {
       await api.delete(`/animal/delete/${String(idAnimal)}`);
       deleteAnimalData(arrayKey);
+      setDeleteAnimalModalData(undefined)
     } catch (e) {
       return showError(
         'Error: ' + e,
