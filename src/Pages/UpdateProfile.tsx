@@ -33,7 +33,8 @@ function UpdateProfile() {
   const [photoUrl, setPhotoUrl] = useState<string | undefined>(user?.photoUrl);
 
   const handleSubmitForm = async () => {
-    const tempObj = {
+    const tempObj = {     
+      id: user?.id,  
       streetName,
       doorNumber,
       postalCode,
