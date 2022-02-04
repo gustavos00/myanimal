@@ -18,14 +18,14 @@ import StatesContext from '../contexts/states';
 function FriendsRequests() {
   const { user } = useContext(UserContext);
   const { isLoading, setIsLoading } = useContext(StatesContext);
-  const { handlePendingFriends, pendingFriends, acceptFriendsRequest, declineFriendsRequests } =
+  const { setPendingFriends, pendingFriends, acceptFriendsRequest, declineFriendsRequests } =
     useContext(FriendsContext);
 
   const getAllFriendsRequests = async () => {
     setIsLoading(true);
     try {
       const response = await api.get(`/user/friends/getPending?id=${user?.id}`);
-      handlePendingFriends(response.data);
+      setPendingFriends(response.data);
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
