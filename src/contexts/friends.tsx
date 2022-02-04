@@ -25,7 +25,7 @@ export function FriendsProvider({ children }: any) {
   const [pendingFriends, setPendingFriends] = useState<Array<FriendsData>>();
   const [acceptedFriends, setAcceptedFriends] = useState<Array<FriendsData>>([]);
 
-  const { isLoading, setIsLoading} = useContext(StatesContext)
+  const { isLoading, setIsLoading } = useContext(StatesContext);
 
   const handlePendingFriends = (data: Array<FriendsData>) => {
     setPendingFriends(data);
@@ -36,7 +36,26 @@ export function FriendsProvider({ children }: any) {
   };
 
   const declineFriendsRequests = async (index: number) => {
-    console.log('fix');
+    //TO DO -> SHOULD I HAVE A CONFIRM MODAL?
+    if (!pendingFriends) return console.log('Pending friends dont exist');
+
+    const tempPendingArray = pendingFriends;
+    const idFriendsElement = tempPendingArray[index].idfriends;
+
+    try {
+      setIsLoading(true);
+      await api.get(`/user/friends/decline?id=${idFriendsElement}`);
+      setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+      return showError('Error: ' + e, 'Apparently there was an error, try again');
+    }
+
+    const pendingFriendIndex = tempPendingArray.findIndex(
+      (element) => element.idfriends == idFriendsElement
+    );
+    tempPendingArray.splice(pendingFriendIndex, 1);
+    setPendingFriends([...tempPendingArray]);
   };
 
   const acceptFriendsRequest = async (index: number) => {
@@ -48,11 +67,11 @@ export function FriendsProvider({ children }: any) {
     let response;
 
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       response = await api.get(`/user/friends/accept?id=${idFriendsElement}`);
-      setIsLoading(false)
+      setIsLoading(false);
     } catch (e) {
-      setIsLoading(false)
+      setIsLoading(false);
       return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
 
