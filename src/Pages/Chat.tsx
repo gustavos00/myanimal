@@ -11,7 +11,6 @@ import * as Firestore from 'firebase/firestore';
 
 import UserContext from '../contexts/user';
 import Footer from '../components/Footer';
-import storage from '../utils/storage';
 
 interface AllMessages {
   _id: number;
