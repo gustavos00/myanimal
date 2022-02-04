@@ -9,8 +9,8 @@ import StatesContext from './states';
 interface FriendsContextData {
   pendingFriends: Array<FriendsData> | undefined;
   acceptedFriends: Array<FriendsData> | undefined;
-  handlePendingFriends: (data: Array<FriendsData>) => void;
-  handleAcceptedFriends: (data: Array<FriendsData>) => void;
+  setPendingFriends: (data: Array<FriendsData>) => void;
+  setAcceptedFriends: (data: Array<FriendsData>) => void;
   acceptFriendsRequest: (index: number) => void;
   declineFriendsRequests: (index: number) => void;
 }
@@ -26,15 +26,7 @@ export function FriendsProvider({ children }: any) {
   const [acceptedFriends, setAcceptedFriends] = useState<Array<FriendsData>>([]);
 
   const { isLoading, setIsLoading } = useContext(StatesContext);
-
-  const handlePendingFriends = (data: Array<FriendsData>) => {
-    setPendingFriends(data);
-  };
-
-  const handleAcceptedFriends = (data: Array<FriendsData>) => {
-    setAcceptedFriends(data);
-  };
-
+  
   const declineFriendsRequests = async (index: number) => {
     //TO DO -> SHOULD I HAVE A CONFIRM MODAL?
     if (!pendingFriends) return console.log('Pending friends dont exist');
@@ -110,8 +102,8 @@ export function FriendsProvider({ children }: any) {
       value={{
         pendingFriends,
         acceptedFriends,
-        handlePendingFriends,
-        handleAcceptedFriends,
+        setPendingFriends,
+        setAcceptedFriends,
         acceptFriendsRequest,
         declineFriendsRequests,
       }}
