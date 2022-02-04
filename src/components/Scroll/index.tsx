@@ -3,12 +3,13 @@ import { StyleSheet, ScrollView } from 'react-native';
 
 interface ScrollProps {
   children: ReactNode;
+  aligned?: boolean
 }
 
-function Scroll({ children }: ScrollProps) {
+function Scroll({ children, aligned }: ScrollProps) {
   return (
     <ScrollView
-      contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+      contentContainerStyle={aligned && { justifyContent: 'center', alignItems: 'center' }}
       style={styles.container}
     >
       {children}

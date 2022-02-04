@@ -111,7 +111,7 @@ function UpdateAnimal() {
         <AddImage setProfilePhotoFunction={setPhotoUrl} photoUrl={photoUrl} />
 
         <Background heightSize={'75%'}>
-          <Scroll>
+          <Scroll aligned>
             <View style={styles.inputsContainer}>
               <Input
                 width={'100%'}

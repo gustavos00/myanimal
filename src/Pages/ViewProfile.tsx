@@ -36,7 +36,7 @@ function ViewProfile() {
         <ProfilePhoto photoUrl={user?.photoUrl} />
 
         <Background heightSize={'75%'}>
-          <Scroll>
+          <Scroll aligned>
             <View style={styles.container}>
               <View style={styles.firstInputContainer}>
                 <OptionHeader text={'Account information'} />
