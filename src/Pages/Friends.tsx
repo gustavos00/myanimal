@@ -21,14 +21,14 @@ function Friends() {
 
   const { isLoading, setIsLoading } = useContext(StatesContext);
   const { user } = useContext(UserContext);
-  const { handleAcceptedFriends, acceptedFriends } = useContext(FriendsContext);
+  const { setAcceptedFriends, acceptedFriends } = useContext(FriendsContext);
 
   const getAllFriends = async () => {
     setIsLoading(true);
     try {
       const response = await api.get(`/user/friends/getAccepted?id=${user?.id}`);
 
-      handleAcceptedFriends(response.data);
+      setAcceptedFriends(response.data);
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
@@ -39,6 +39,28 @@ function Friends() {
   const openChat = async (friendData: FriendsData) => {
     navigation.navigate('Chat' as never, { friendData } as never);
   };
+
+  const deleteFriend = async(index: number) => {
+    if (!acceptedFriends) return console.log('Pending friends dont exist');
+
+    const tempAcceptedFriends = acceptedFriends;
+    const idFriendsElement = tempAcceptedFriends[index].idfriends;
+
+    try {
+      setIsLoading(true);
+      await api.get(`/user/friends/decline?id=${idFriendsElement}`);
+      setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+      return showError('Error: ' + e, 'Apparently there was an error, try again');
+    }
+
+    const acceptedFriendIndex = tempAcceptedFriends.findIndex(
+      (element) => element.idfriends == idFriendsElement
+    );
+    tempAcceptedFriends.splice(acceptedFriendIndex, 1);
+    setAcceptedFriends([...tempAcceptedFriends]);
+  }
 
   useEffect(() => {
     const getFriends = async () => {
@@ -59,14 +81,14 @@ function Friends() {
           <FlatList
             data={acceptedFriends}
             keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item }) => {
+            renderItem={({ item, index }) => {
               return (
                 <View>
                   <FriendsElement
                     trueText={'Chat'}
                     falseText={'Remove'}
                     trueFunction={() => openChat(item)}
-                    falseFunction={() => console.log('a')}
+                    falseFunction={() => deleteFriend(index)}
                     friendsElementData={item as OneFriendDataElementInterface}
                   />
                 </View>
