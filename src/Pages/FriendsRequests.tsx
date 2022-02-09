@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { showError } from '../utils/error';
 import { FlatList } from 'react-native';
-import { OneFriendDataElementInterface } from '../types/FriendsData';
 
 import UserContext from '../contexts/user';
 import FriendsContext from '../contexts/friends';
@@ -12,8 +11,8 @@ import BackgroundHeader from '../components/BackgroundHeader';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
-import FriendsElement from '../components/FriendsElement';
 import StatesContext from '../contexts/states';
+import DataElement from '../components/DataElement';
 
 function FriendsRequests() {
   const { user } = useContext(UserContext);
@@ -53,12 +52,14 @@ function FriendsRequests() {
             data={pendingFriends}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ index, item }) => (
-              <FriendsElement
-                trueText={'Accept'}
-                falseText={'Decline'}
-                trueFunction={() => acceptFriendsRequest(index)}
-                falseFunction={() => declineFriendsRequests(index)}
-                friendsElementData={item as OneFriendDataElementInterface}
+              <DataElement
+                photoUrl={item.friendData.photoUrl}
+                title={item.friendData.givenName}
+                subTitle={item.friendData.familyName}
+                sliderTrueText={'Edit'}
+                sliderFalseText={'Delete'}
+                sliderTrueFunction={() => acceptFriendsRequest(index)}
+                sliderFalseFunction={() => declineFriendsRequests(index)}
               />
             )}
           />
