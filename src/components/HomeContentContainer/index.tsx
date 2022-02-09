@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/core';
+import React, { useContext, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { AnimalData } from '../../types/AnimalData';
-import AnimalElement from '../AnimalElement';
 
+import StatesContext from '../../contexts/states';
 import Background from '../Background';
 import BackgroundHeader from '../BackgroundHeader';
+import DataElement from '../DataElement';
 import NoAnimalAlert from '../NoAnimalAlert';
 import Scroll from '../Scroll';
 
@@ -13,6 +15,31 @@ interface HomeContentContainerProps {
 }
 
 function HomeContentContainer({ animalData }: HomeContentContainerProps) {
+  const navigation = useNavigation();
+
+  const { setDeleteAnimalModalData } = useContext(StatesContext);
+
+  const handleDeleteAnimal = (data: any) => {
+    setDeleteAnimalModalData(data);
+  };
+
+  const handleUpdateAnimal = (item: Object) => {
+    navigation.navigate(
+      'UpdateAnimal' as never,
+      {
+        animalInfo: item,
+      } as never
+    );
+  };
+
+  const handleViewAnimal = (item: Object) => {
+    navigation.navigate(
+      'ViewAnimal' as never,
+      {
+        animalInfo: item,
+      } as never
+    );
+  };
   return (
     <>
       <Background>
@@ -25,13 +52,19 @@ function HomeContentContainer({ animalData }: HomeContentContainerProps) {
             <BackgroundHeader text={'Your animals'} />
             <Scroll>
               <>
-                {animalData?.map((item, index) => {
-                  return (
-                    <View style={styles.container} key={index}>
-                      <AnimalElement animalData={{arrayKey: index, ...item}}  />
-                    </View>
-                  );
-                })}
+                {animalData?.map((item, index) => (
+                  <DataElement
+                    key={index}
+                    photoUrl={item.photoUrl}
+                    title={item.name}
+                    subTitle={item.breed}
+                    handleOnPress={() => handleViewAnimal(item)}
+                    sliderTrueText={'Edit'}
+                    sliderFalseText={'Delete'}
+                    sliderTrueFunction={() => handleUpdateAnimal(item)}
+                    sliderFalseFunction={() => handleDeleteAnimal(item)}
+                  />
+                ))}
               </>
             </Scroll>
           </>
@@ -41,11 +74,6 @@ function HomeContentContainer({ animalData }: HomeContentContainerProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: 10,
-    marginHorizontal: 10,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default HomeContentContainer;

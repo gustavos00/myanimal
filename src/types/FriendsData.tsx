@@ -7,8 +7,5 @@ export interface FriendsData {
    fromWho: number,
    toWhom: number,
    fromWhoFk: UserData
-}
-
-export interface OneFriendDataElementInterface extends FriendsData {
    friendData: UserData
- }
+}

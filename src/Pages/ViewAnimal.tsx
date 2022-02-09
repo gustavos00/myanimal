@@ -9,6 +9,8 @@ import EnableFindMyPetSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
 import StyledText from '../components/StyledText';
 import ProfilePhoto from '../components/ProfilePhoto';
+import Scroll from '../components/Scroll';
+import SetAnimalVeterinarian from '../components/SetAnimalVeterinarian';
 
 function CreateOrUpdateAnimal() {
   const route = useRoute<RouteProp<RootStackParamList, 'ViewAnimal'>>();
@@ -20,24 +22,26 @@ function CreateOrUpdateAnimal() {
         <ProfilePhoto photoUrl={animalInfo.photoUrl} />
 
         <Background heightSize={'75%'}>
-          <ScrollView contentContainerStyle={styles.container}>
+          <Scroll aligned>
             <View style={styles.inputsContainer}>
               <StyledText value={animalInfo.name} text={'Name'} />
               <StyledText value={animalInfo.age} text={'Age'} />
               <StyledText value={animalInfo.breed} text={'Breed'} />
               <StyledText value={animalInfo.birthday} text={'Birthday'} />
-              <StyledText
-                value={animalInfo.birthdayMonth}
-                text={'Birthday month'}
-              />
-              <StyledText
-                value={animalInfo.trackNumber}
-                text={'Track number'}
-              />
+              <StyledText value={animalInfo.birthdayMonth} text={'Birthday month'} />
+              <StyledText value={animalInfo.trackNumber} text={'Track number'} />
             </View>
 
             <EnableFindMyPetSwitch enableValue={false} />
-          </ScrollView>
+
+            <SetAnimalVeterinarian
+              data={{
+                photoUrl: 'https://myanimal.s3.amazonaws.com/apacc63%40gmail.com-userPhoto',
+                name: 'Gustavo',
+                location: 'Lisboa',
+              }}
+            />
+          </Scroll>
         </Background>
       </View>
 
