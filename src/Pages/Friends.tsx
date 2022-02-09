@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { showError } from '../utils/error';
 import { FlatList, View } from 'react-native';
-import { FriendsData, OneFriendDataElementInterface } from '../types/FriendsData';
+import { FriendsData } from '../types/FriendsData';
 import { useNavigation } from '@react-navigation/core';
 
 import UserContext from '../contexts/user';
@@ -13,8 +13,8 @@ import BackgroundHeader from '../components/BackgroundHeader';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
-import FriendsElement from '../components/FriendsElement';
 import StatesContext from '../contexts/states';
+import DataElement from '../components/DataElement';
 
 function Friends() {
   const navigation = useNavigation();
@@ -40,7 +40,7 @@ function Friends() {
     navigation.navigate('Chat' as never, { friendData } as never);
   };
 
-  const deleteFriend = async(index: number) => {
+  const deleteFriend = async (index: number) => {
     if (!acceptedFriends) return console.log('Pending friends dont exist');
 
     const tempAcceptedFriends = acceptedFriends;
@@ -60,7 +60,7 @@ function Friends() {
     );
     tempAcceptedFriends.splice(acceptedFriendIndex, 1);
     setAcceptedFriends([...tempAcceptedFriends]);
-  }
+  };
 
   useEffect(() => {
     const getFriends = async () => {
@@ -81,19 +81,19 @@ function Friends() {
           <FlatList
             data={acceptedFriends}
             keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item, index }) => {
-              return (
-                <View>
-                  <FriendsElement
-                    trueText={'Chat'}
-                    falseText={'Remove'}
-                    trueFunction={() => openChat(item)}
-                    falseFunction={() => deleteFriend(index)}
-                    friendsElementData={item as OneFriendDataElementInterface}
-                  />
-                </View>
-              );
-            }}
+            renderItem={({ item, index }) => (
+              <View>
+                <DataElement
+                  photoUrl={item.friendData.photoUrl}
+                  title={item.friendData.givenName}
+                  subTitle={item.friendData.familyName}
+                  sliderTrueText={'Edit'}
+                  sliderFalseText={'Delete'}
+                  sliderTrueFunction={() => openChat(item)}
+                  sliderFalseFunction={() => deleteFriend(index)}
+                />
+              </View>
+            )}
           />
         </>
       </Background>
