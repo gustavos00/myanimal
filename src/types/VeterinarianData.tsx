@@ -1,5 +1,5 @@
-export interface VeterinarianData {
-  photoUrl: string,
-  name: string,
+import { UserData } from "./UserData";
+
+export interface VeterinarianData extends UserData {
   location: string,
 }
