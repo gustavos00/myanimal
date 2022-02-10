@@ -12,21 +12,31 @@ interface SetAnimalVeterinarianProps {
 }
 
 function SetAnimalVeterinarian({ data }: SetAnimalVeterinarianProps) {
-  return (
-    <View style={styles.container}>
-      <BackgroundHeader text={'Animal Vet'} />
+  if (!!data) {
+    return (
+      <View style={styles.container}>
+        <BackgroundHeader text={'Animal Vet'} />
 
-      <DataElement
-        photoUrl={data.photoUrl}
-        title={data.name}
-        subTitle={data.location}
-        sliderTrueText={'Chat'}
-        sliderFalseText={'Remove'}
-        sliderFalseFunction={() => console.log('test')}
-        sliderTrueFunction={() => console.log('test')}
-      />
-    </View>
-  );
+        <DataElement
+          photoUrl={data.photoUrl}
+          title={data.givenName}
+          subTitle={data.location}
+          sliderTrueText={'Chat'}
+          sliderFalseText={'Remove'}
+          sliderFalseFunction={() => console.log('test')}
+          sliderTrueFunction={() => console.log('test')}
+        />
+      </View>
+    );
+  } else {
+    return (
+      <>
+        <View style={styles.container}>
+          <BackgroundHeader text={'Animal Vet'} />
+        </View>
+      </>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

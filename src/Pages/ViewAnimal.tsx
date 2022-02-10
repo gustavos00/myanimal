@@ -33,14 +33,7 @@ function CreateOrUpdateAnimal() {
             </View>
 
             <EnableFindMyPetSwitch enableValue={false} />
-
-            <SetAnimalVeterinarian
-              data={{
-                photoUrl: 'https://myanimal.s3.amazonaws.com/apacc63%40gmail.com-userPhoto',
-                name: 'Gustavo',
-                location: 'Lisboa',
-              }}
-            />
+            <SetAnimalVeterinarian data={animalInfo.veterinarianFk} />
           </Scroll>
         </Background>
       </View>
