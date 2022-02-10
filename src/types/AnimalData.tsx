@@ -1,3 +1,5 @@
+import { VeterinarianData } from "./VeterinarianData";
+
 export interface AnimalData {
   age: string;
   birthday: string;
@@ -9,6 +11,7 @@ export interface AnimalData {
   name: string;
   trackNumber: string;
   userIdUser: number;
+  veterinarianFk: VeterinarianData
 }
 
 export interface AnimalDataWithArraykey extends AnimalData {
