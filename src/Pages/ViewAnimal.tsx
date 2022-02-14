@@ -30,10 +30,10 @@ function CreateOrUpdateAnimal() {
               <StyledText value={animalInfo.birthday} text={'Birthday'} />
               <StyledText value={animalInfo.birthdayMonth} text={'Birthday month'} />
               <StyledText value={animalInfo.trackNumber} text={'Track number'} />
-            </View>
 
-            <EnableFindMyPetSwitch enableValue={false} />
-            <SetAnimalVeterinarian data={animalInfo.veterinarianFk} />
+              <EnableFindMyPetSwitch enableValue={false} />
+            </View>
+            <SetAnimalVeterinarian data={animalInfo.userVeterinarianFk} />
           </Scroll>
         </Background>
       </View>

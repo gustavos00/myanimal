@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AnimalData } from '../types/AnimalData';
 import { AnimalOwnerAddressData } from '../types/AnimalOwnerAddressData';
 import { FriendsData } from '../types/FriendsData';
+import { VeterinarianData } from '../types/VeterinarianData';
 
 import SplashScreen from '../pages/SplashScreen';
 import Home from '../pages/Home';
@@ -21,6 +22,13 @@ import FriendsRequests from '../pages/FriendsRequests';
 import UpdateProfile from '../pages/UpdateProfile';
 import Friends from '../pages/Friends';
 import Chat from '../pages/Chat';
+import ViewVeterinarianProfile from '../pages/ViewVeterinarianProfile';
+
+
+interface ViewVeterinarianProfileParams {
+  veterinarianData: VeterinarianData;
+  isUserAnimalVeterinarian?: boolean;
+}
 
 interface AnimalScreenParams {
   animalInfo: AnimalData;
@@ -54,6 +62,7 @@ export type RootStackParamList = {
   FriendsRequests: undefined;
   Friends: undefined;
   Chat: ChatParams;
+  ViewVeterinarianProfile: ViewVeterinarianProfileParams
 };
 
 const { Navigator, Group, Screen } = createStackNavigator<RootStackParamList>();
@@ -82,6 +91,7 @@ export default () => {
           <Screen options={{ headerShown: false }} name="UpdateAnimal" component={UpdateAnimal} />
           <Screen options={{ headerShown: false }} name="FindMyAnimal" component={FindMyAnimal} />
           <Screen options={{ headerShown: false }} name="Chat" component={Chat} />
+          <Screen options={{ headerShown: false }} name="ViewVeterinarianProfile" component={ViewVeterinarianProfile} />
         </Group>
       </Navigator>
     </NavigationContainer>

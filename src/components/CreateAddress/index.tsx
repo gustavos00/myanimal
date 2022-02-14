@@ -1,6 +1,8 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+import { View } from 'react-native';
 
 import api from '../../api/api';
+import globalStyles from '../../assets/styles/global';
 import StatesContext from '../../contexts/states';
 import UserContext from '../../contexts/user';
 import { showError } from '../../utils/error';
@@ -52,6 +54,7 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
         doorNumber,
         postalCode,
         email: user?.email ?? '',
+        isVeterinarian: user?.isVeterinarian,
       };
       const addressData = generateUrlSearchParams(tempObj);
 
@@ -69,32 +72,37 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
   };
 
   return (
-    <>
-      <KeyboardAvoidingWrapper>
+    <View style={{ width: globalStyles.fullDeviceWidth }}>
+      <KeyboardAvoidingWrapper aligned withoutMargin>
         <>
           <StyledInput
             text={streetName}
+            width={'80%'}
             placeholder={'Street name'}
             handleChangeFunction={(e: string) => handleText(e, 4, setStreetName)}
           />
           <StyledInput
             text={doorNumber}
+            width={'80%'}
             placeholder={'Door number'}
             handleChangeFunction={(e: string) => handleText(e, 4, setDoorNumber, 'number')}
           />
           <StyledInput
             text={postalCode}
+            width={'80%'}
             placeholder={'Postal Code'}
             handleChangeFunction={(e: string) => handleText(e, 4, setPostalCode)}
           />
 
           <StyledInput
             text={parish}
+            width={'80%'}
             placeholder={'Parish'}
             handleChangeFunction={(e: string) => handleText(e, 4, setParish)}
           />
           <StyledInput
             text={locality}
+            width={'80%'}
             placeholder={'Locality'}
             handleChangeFunction={(e: string) => handleText(e, 4, setLocality)}
           />
@@ -104,7 +112,7 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
       </KeyboardAvoidingWrapper>
 
       {isLoading && <Loading />}
-    </>
+    </View>
   );
 }
 

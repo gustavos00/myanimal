@@ -11,7 +11,7 @@ export interface AnimalData {
   name: string;
   trackNumber: string;
   userIdUser: number;
-  veterinarianFk: VeterinarianData
+  userVeterinarianFk: VeterinarianData
 }
 
 export interface AnimalDataWithArraykey extends AnimalData {

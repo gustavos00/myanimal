@@ -84,11 +84,12 @@ function Friends() {
             renderItem={({ item, index }) => (
               <View>
                 <DataElement
+                  haveSlider
                   photoUrl={item.friendData.photoUrl}
                   title={item.friendData.givenName}
                   subTitle={item.friendData.familyName}
-                  sliderTrueText={'Edit'}
-                  sliderFalseText={'Delete'}
+                  sliderTrueText={'Chat'}
+                  sliderFalseText={'Remove'}
                   sliderTrueFunction={() => openChat(item)}
                   sliderFalseFunction={() => deleteFriend(index)}
                 />

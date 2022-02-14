@@ -22,7 +22,7 @@ const storeUserData = async ({
 }: UserGoogleData) => {
   const salt = uuid.v4();
 
-  const userData = generateFormData({ salt, givenName, familyName, email });
+  const userData = generateFormData({ salt, givenName, familyName, email, isVeterinarian: false });
   userData.append('userPhoto', {
     uri: photoUrl,
     name: 'userPhoto',

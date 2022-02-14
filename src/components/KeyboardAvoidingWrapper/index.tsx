@@ -1,22 +1,18 @@
 import React, { ReactNode } from 'react';
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  ScrollView,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback } from 'react-native';
 import Scroll from '../Scroll';
 
 interface KeyboardAvoidingWrapperProps {
   children: ReactNode;
+  aligned?: boolean;
+  withoutMargin?: boolean;
 }
 
-function KeyboardAvoidingWrapper({ children }: KeyboardAvoidingWrapperProps) {
+function KeyboardAvoidingWrapper({ children, aligned,  withoutMargin }: KeyboardAvoidingWrapperProps) {
   return (
     <>
       <KeyboardAvoidingView>
-        <Scroll>
+        <Scroll withoutMargin={withoutMargin} aligned={aligned}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>{children}</TouchableWithoutFeedback>
         </Scroll>
       </KeyboardAvoidingView>
