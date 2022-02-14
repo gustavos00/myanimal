@@ -9,6 +9,7 @@ export interface UserData {
   phoneNumber: string;
   token: string;
   photoUrl: string;
+  isVeterinarian: boolean;
   animalData: Array<AnimalData>
   userAddress: UserAddressData;
 }

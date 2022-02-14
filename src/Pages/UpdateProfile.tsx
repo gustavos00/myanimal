@@ -44,6 +44,7 @@ function UpdateProfile() {
       familyName,
       phoneNumber,
       email: user?.email,
+      isVeterinarian: user?.isVeterinarian
     };
     const newUserData = generateFormData(tempObj);
     newUserData.append('userPhoto', {
