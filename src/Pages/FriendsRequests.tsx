@@ -53,10 +53,11 @@ function FriendsRequests() {
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ index, item }) => (
               <DataElement
+                haveSlider
                 photoUrl={item.friendData.photoUrl}
                 title={item.friendData.givenName}
                 subTitle={item.friendData.familyName}
-                sliderTrueText={'Edit'}
+                sliderTrueText={'Accept'}
                 sliderFalseText={'Delete'}
                 sliderTrueFunction={() => acceptFriendsRequest(index)}
                 sliderFalseFunction={() => declineFriendsRequests(index)}

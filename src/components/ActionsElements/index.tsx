@@ -4,14 +4,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import globalStyles from '../../assets/styles/global';
 
 interface ActionsElementsProps {
-  trueText: string;
-  falseText: string;
+  trueText?: string;
+  falseText?: string;
 
   trueColor?: string;
   falseColor?: string;
 
-  trueFunction: () => void;
-  falseFunction: () => void;
+  trueFunction?: () => void;
+  falseFunction?: () => void;
 }
 
 function ActionsElements({

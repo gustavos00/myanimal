@@ -9,22 +9,24 @@ interface DataElementProps {
   title: any;
   subTitle: string;
   photoUrl: string;
+  haveSlider?: boolean;
   handleOnPress?: () => void;
 
-  sliderTrueText: string;
-  sliderFalseText: string;
+  sliderTrueText?: string;
+  sliderFalseText?: string;
 
   sliderTrueColor?: string;
   sliderFalseColor?: string;
 
-  sliderTrueFunction: () => void;
-  sliderFalseFunction: () => void;
+  sliderTrueFunction?: () => void;
+  sliderFalseFunction?: () => void;
 }
 
 function DataElement({
   title,
   subTitle,
   photoUrl,
+  haveSlider,
   handleOnPress,
   sliderTrueText,
   sliderFalseText,
@@ -52,14 +54,16 @@ function DataElement({
               </View>
             </View>
           </TouchableOpacity>
-          <ActionsElements
-            trueText={sliderTrueText}
-            falseText={sliderFalseText}
-            trueColor={sliderTrueColor}
-            falseColor={sliderFalseColor}
-            trueFunction={sliderTrueFunction}
-            falseFunction={sliderFalseFunction}
-          />
+          {haveSlider && (
+            <ActionsElements
+              trueText={sliderTrueText}
+              falseText={sliderFalseText}
+              trueColor={sliderTrueColor}
+              falseColor={sliderFalseColor}
+              trueFunction={sliderTrueFunction}
+              falseFunction={sliderFalseFunction}
+            />
+          )}
         </ScrollView>
       </View>
     </>

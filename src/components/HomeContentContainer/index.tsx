@@ -58,6 +58,7 @@ function HomeContentContainer({ animalData }: HomeContentContainerProps) {
                     photoUrl={item.photoUrl}
                     title={item.name}
                     subTitle={item.breed}
+                    haveSlider
                     handleOnPress={() => handleViewAnimal(item)}
                     sliderTrueText={'Edit'}
                     sliderFalseText={'Delete'}
