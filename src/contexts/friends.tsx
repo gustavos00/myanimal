@@ -69,7 +69,7 @@ export function FriendsProvider({ children }: any) {
 
     if (!!response) {
       const responseData: AcceptFriendsRequestResponse = response.data;
-      const fingerprintStorageName = `${tempObj.fromWho}-${tempObj.toWhom}`;
+      const fingerprintStorageName = `${tempObj.userFriendsIdFromWho}-${tempObj.userFriendsIdToWho}`;
 
       tempObj.status = 'Accepted';
       tempPendingArray.splice(index, 1);

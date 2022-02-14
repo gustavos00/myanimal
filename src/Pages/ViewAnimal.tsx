@@ -33,7 +33,7 @@ function CreateOrUpdateAnimal() {
 
               <EnableFindMyPetSwitch enableValue={false} />
             </View>
-            <SetAnimalVeterinarian data={animalInfo.veterinarianFk} />
+            <SetAnimalVeterinarian data={animalInfo.userVeterinarianFk} />
           </Scroll>
         </Background>
       </View>

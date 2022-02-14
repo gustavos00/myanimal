@@ -4,8 +4,8 @@ export interface FriendsData {
    idfriends: number,
    status: string,
    fingerprint: string,
-   fromWho: number,
-   toWhom: number,
-   fromWhoFk: UserData
+   userFriendsIdFromWho: number,
+   userFriendsIdToWho: number,
+   userFriendsIdFromWhoFk: UserData
    friendData: UserData
 }

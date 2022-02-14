@@ -54,6 +54,7 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
         doorNumber,
         postalCode,
         email: user?.email ?? '',
+        isVeterinarian: user?.isVeterinarian,
       };
       const addressData = generateUrlSearchParams(tempObj);
 
