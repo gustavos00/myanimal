@@ -6,8 +6,8 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
 import { showError } from '../utils/error';
 
-import { chatsRef } from '../services/fire';
-import * as Firestore from 'firebase/firestore';
+import { chatsRef, db } from '../services/fire';
+import { addDoc, where, onSnapshot, query, collection } from 'firebase/firestore';
 
 import UserContext from '../contexts/user';
 import Footer from '../components/Footer';
@@ -46,27 +46,26 @@ export default function Chat() {
       });
     }, []);
   } else {
-    navigation.navigate('Friends' as never)
-    return showError('Error: getting user data on chat', 'Apparently there was an error, try again');
+    navigation.navigate('Friends' as never);
+    return showError(
+      'Error: getting user data on chat',
+      'Apparently there was an error, try again'
+    );
   }
 
   useEffect(() => {
     const getMessages = async () => {
-      // TO DO -> Get device ID
-      const unsubscribe = await Firestore.onSnapshot(chatsRef, (doc) => {
+      const q = query(
+        chatsRef,
+        where('fingerprint', '==', friendData.fingerprint)
+      );
+      const unsubscribe = await onSnapshot(q, (doc) => {
         const messages = [] as Array<AllMessages>;
         const docArray = doc.docChanges();
 
         docArray.forEach(({ type, doc }) => {
           const message = doc.data() as AllMessages;
-
-          if (
-            type === 'added' &&
-            message.createdAt &&
-            message.fingerprint === friendData.fingerprint
-          ) {
-            messages.push({ ...message, createdAt: message.createdAt.toDate() });
-          }
+          messages.push({ ...message, createdAt: message.createdAt.toDate() });
         });
 
         const newArray = messages.sort((a, b) => {
@@ -90,7 +89,7 @@ export default function Chat() {
 
   async function handleSend(messages: any) {
     const writes = messages.map((m: object) => {
-      Firestore.addDoc(chatsRef, { ...m, fingerprint: friendData.fingerprint });
+      addDoc(chatsRef, { ...m, fingerprint: friendData.fingerprint });
     });
 
     await Promise.all(writes);
