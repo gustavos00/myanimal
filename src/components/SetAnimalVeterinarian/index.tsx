@@ -7,14 +7,15 @@ import { useNavigation } from '@react-navigation/core';
 import globalStyles from '../../assets/styles/global';
 import BackgroundHeader from '../BackgroundHeader';
 import DataElement from '../DataElement';
+import Button from '../Button';
 
 interface SetAnimalVeterinarianProps {
   data: VeterinarianData;
+  idAnimal: number
 }
 
-function SetAnimalVeterinarian({ data }: SetAnimalVeterinarianProps) {
+function SetAnimalVeterinarian({ data, idAnimal }: SetAnimalVeterinarianProps) {
   const navigation = useNavigation();
-  console.log(data);
 
   if (!!data) {
     return (
@@ -39,6 +40,8 @@ function SetAnimalVeterinarian({ data }: SetAnimalVeterinarianProps) {
       <>
         <View style={styles.container}>
           <BackgroundHeader text={'Animal Vet'} />
+
+          <Button text={'Get a vet!'} handleClick={() => navigation.navigate('Veterinarians' as never, {idAnimal } as never)} />
         </View>
       </>
     );

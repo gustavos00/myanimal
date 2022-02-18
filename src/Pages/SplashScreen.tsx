@@ -5,6 +5,7 @@ import UserContext from '../contexts/user';
 import AuthContext from '../contexts/auth';
 import isEmpty from '../utils/isEmpty';
 import NoWIFIModal from '../components/NoWIFIModal';
+import VeterinariansContext from '../contexts/veterinarians';
 
 import { useNavigation } from '@react-navigation/core';
 import { UserData } from '../types/UserData';
@@ -15,6 +16,7 @@ import { showError } from '../utils/error';
 import { hasNotificationsPermissions } from '../utils/notifications';
 import { storeExpoToken } from '../services/auth';
 
+
 function SplashScreen() {
   const navigation = useNavigation();
 
@@ -22,9 +24,48 @@ function SplashScreen() {
   const [userData, setUserData] = useState<UserData>();
 
   const { setUser, setAnimalData } = useContext(UserContext);
+  const { setVeterinarians } = useContext(VeterinariansContext);
   const { setToken, token } = useContext(AuthContext);
 
   const [internetConnection, setInternetConnection] = useState<boolean>(false);
+
+  useEffect(() => {
+    const getVeterinarians = async () => {
+      try {
+        const response = await api.get('/veterinarian/get');
+        setVeterinarians(response.data)
+      } catch (e) {
+        showError('Error: ' + e, 'Apparently there was an error, try again');
+      }
+    };
+    getVeterinarians();
+  }, []);
+
+  useEffect(() => {
+    const getToken = async () => {
+      const response = await getTokenFromLocalStorage(); //Trigger getTokenFromLS function
+
+      if (!!response) {
+        navigation.navigate('Home' as never, response as never);
+      } else {
+        navigation.navigate('Login' as any);
+      }
+    };
+
+    getToken();
+  }, []);
+
+  //Get notification status
+  useEffect(() => {
+    const getNotificationsStatus = async () => {
+      //Trigger function to detect if user allow notifications
+      const response = await hasNotificationsPermissions();
+      if (!!response) {
+        storeExpoToken({ expoToken: response, token: token ?? '' });
+      }
+    };
+    getNotificationsStatus();
+  }, []);
 
   //Check token on localstorage
   const getTokenFromLocalStorage = async () => {
@@ -46,6 +87,8 @@ function SplashScreen() {
     if (!!accessResponse) {
       const { salt, token } = accessResponse;
 
+      if(!salt) return false
+
       //API request
       const tokenData = generateUrlSearchParams({ salt, token });
 
@@ -59,7 +102,8 @@ function SplashScreen() {
         return false;
       }
 
-      if (userData) { //If is valid, set data to context API
+      if (userData) {
+        //If is valid, set data to context API
         setToken(userData?.token);
         setUser(userData as UserData);
         setAnimalData(userData.animalData as Array<AnimalDataWithArraykey>);
@@ -67,34 +111,10 @@ function SplashScreen() {
         const { userAddress } = userData;
         return { haveAddress: !isEmpty(userAddress) };
       }
-    } else {
-      return false;
     }
+
+    return false;
   };
-
-  useEffect(() => {
-    const getToken = async () => {
-      const response = await getTokenFromLocalStorage(); //Trigger getTokenFromLS function
-
-      if (!!response) {
-        navigation.navigate('Home' as never, response as never);
-      } else {
-        navigation.navigate('Login' as any);
-      }
-    };
-
-    getToken();
-  }, []);
-
-  useEffect(() => {
-    const getNotificationsStatus = async () => { //Trigger function to detect if user allow notifications 
-      const response = await hasNotificationsPermissions();
-      if (!!response) {
-        storeExpoToken({ expoToken: response, token: token ?? '' });
-      }
-    };
-    getNotificationsStatus();
-  }, []);
 
   //CHECK INTERNET
   const verifyNetworkLocal = () => {

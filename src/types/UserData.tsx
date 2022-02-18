@@ -4,7 +4,8 @@ import { UserAddressData } from "./UserAddressData";
 export interface UserData {
   familyName: string;
   givenName: string;
-  id: number;
+  id?: number;
+  idUser?: number;
   email: string;
   phoneNumber: string;
   token: string;
