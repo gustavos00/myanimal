@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRoute, RouteProp } from '@react-navigation/core';
+import { useRoute, RouteProp, useNavigation } from '@react-navigation/core';
 import { View, StyleSheet } from 'react-native';
 import { RootStackParamList } from '../navigator/MainStack';
 
@@ -11,9 +11,12 @@ import ProfilePhoto from '../components/ProfilePhoto';
 import Scroll from '../components/Scroll';
 import StyledText from '../components/StyledText';
 
+
 function ViewVeterinarianProfile() {
   const route = useRoute<RouteProp<RootStackParamList, 'ViewVeterinarianProfile'>>();
   const { veterinarianData, isUserAnimalVeterinarian } = route.params;
+
+  const navigation = useNavigation();
 
   return (
     <>
@@ -32,6 +35,8 @@ function ViewVeterinarianProfile() {
                 <>
                   <Button text={'Send message'} handleClick={() => console.log('test')} />
                   <Button text={'View saved files'} handleClick={() => console.log('test')} />
+                  <Button text={'Remove vet'} handleClick={() => console.log('test')} />
+                  <Button text={'Choose another one'} handleClick={() => navigation.navigate('Veterinarians' as never)} />
                 </>
               )}
             </View>
@@ -65,3 +70,4 @@ const styles = StyleSheet.create({
 });
 
 export default ViewVeterinarianProfile;
+
