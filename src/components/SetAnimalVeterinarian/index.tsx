@@ -11,7 +11,7 @@ import Button from '../Button';
 
 interface SetAnimalVeterinarianProps {
   data: VeterinarianData;
-  idAnimal: number
+  idAnimal: number;
 }
 
 function SetAnimalVeterinarian({ data, idAnimal }: SetAnimalVeterinarianProps) {
@@ -26,10 +26,16 @@ function SetAnimalVeterinarian({ data, idAnimal }: SetAnimalVeterinarianProps) {
           photoUrl={data.photoUrl}
           title={data.givenName}
           subTitle={data.location}
+          haveSlider
+          sliderFalseColor={'green'}
+          sliderTrueText={'Chat'}
+          sliderFalseText={'View documents'}
+          sliderTrueFunction={() => console.log('To do -> Open chat')}
+          sliderFalseFunction={() => console.log('To do -> View animal documents')}
           handleOnPress={() =>
             navigation.navigate(
               'ViewVeterinarianProfile' as never,
-              { veterinarianData: data, isUserAnimalVeterinarian: true } as never
+              { veterinarianData: data, isUserAnimalVeterinarian: true, idAnimal } as never
             )
           }
         />
@@ -41,7 +47,10 @@ function SetAnimalVeterinarian({ data, idAnimal }: SetAnimalVeterinarianProps) {
         <View style={styles.container}>
           <BackgroundHeader text={'Animal Vet'} />
 
-          <Button text={'Get a vet!'} handleClick={() => navigation.navigate('Veterinarians' as never, {idAnimal } as never)} />
+          <Button
+            text={'Get a vet!'}
+            handleClick={() => navigation.navigate('Veterinarians' as never, { idAnimal } as never)}
+          />
         </View>
       </>
     );
