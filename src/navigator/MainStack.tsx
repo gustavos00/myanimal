@@ -29,6 +29,7 @@ import Veterinarians from '../pages/Veterinarians';
 interface ViewVeterinarianProfileParams {
   veterinarianData: VeterinarianData;
   isUserAnimalVeterinarian?: boolean;
+  idAnimal?: number
 }
 
 interface AnimalScreenParams {
