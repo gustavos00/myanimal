@@ -11,6 +11,7 @@ export interface AnimalData {
   name: string;
   trackNumber: string;
   userIdUser: number;
+  userVeterinarian: number
   userVeterinarianFk: VeterinarianData
 }
 
