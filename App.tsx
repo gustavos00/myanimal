@@ -6,6 +6,7 @@ import { AuthProvider } from './src/contexts/auth';
 import { FriendsProvider } from './src/contexts/friends';
 import { LogBox } from 'react-native';
 import { StatesProvider } from './src/contexts/states';
+import { VeterinariansProvider } from './src/contexts/veterinarians';
 
 export default function App() {
   //LogBox.ignoreAllLogs()
@@ -13,9 +14,11 @@ export default function App() {
     <StatesProvider>
       <UserProvider>
         <AuthProvider>
-          <FriendsProvider>
-            <MainStack />
-          </FriendsProvider>
+          <VeterinariansProvider>
+            <FriendsProvider>
+              <MainStack />
+            </FriendsProvider>
+          </VeterinariansProvider>
         </AuthProvider>
       </UserProvider>
     </StatesProvider>
