@@ -1,22 +1,50 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/core';
 import { View, StyleSheet } from 'react-native';
 import { RootStackParamList } from '../navigator/MainStack';
+import { showError } from '../utils/error';
 
+import api from '../api/api';
 import globalStyles from '../assets/styles/global';
 import Background from '../components/Background';
-import Button from '../components/Button';
 import Footer from '../components/Footer';
 import ProfilePhoto from '../components/ProfilePhoto';
 import Scroll from '../components/Scroll';
 import StyledText from '../components/StyledText';
-
+import SmallButton from '../components/SmallButton';
+import StatesContext from '../contexts/states';
+import Loading from '../components/Loading';
+import { generateUrlSearchParams } from '../utils/URLSearchParams';
 
 function ViewVeterinarianProfile() {
   const route = useRoute<RouteProp<RootStackParamList, 'ViewVeterinarianProfile'>>();
-  const { veterinarianData, isUserAnimalVeterinarian } = route.params;
+  const { veterinarianData, isUserAnimalVeterinarian, idAnimal } = route.params;
+
+  const { isLoading, setIsLoading } = useContext(StatesContext);
 
   const navigation = useNavigation();
+
+  // TO DO -> Show correct information
+
+  const handleRemoveVeterinarian = async () => {
+    try {
+      setIsLoading(true);
+
+      console.log(idAnimal);
+      const tempObj = { animalId: idAnimal };
+      const veterinarianUpdateData = generateUrlSearchParams(tempObj);
+
+      await api.post('/veterinarian/remove', veterinarianUpdateData);
+      setIsLoading(false);
+
+      //to do -> update local
+
+      navigation.goBack()
+    } catch (e) {
+      setIsLoading(false);
+      return showError('Error: ' + e, 'Apparently there was an error, try again');
+    }
+  };
 
   return (
     <>
@@ -32,12 +60,22 @@ function ViewVeterinarianProfile() {
               <StyledText value={veterinarianData.givenName} text={'Locality'} />
 
               {isUserAnimalVeterinarian && (
-                <>
-                  <Button text={'Send message'} handleClick={() => console.log('test')} />
-                  <Button text={'View saved files'} handleClick={() => console.log('test')} />
-                  <Button text={'Remove vet'} handleClick={() => console.log('test')} />
-                  <Button text={'Choose another one'} handleClick={() => navigation.navigate('Veterinarians' as never)} />
-                </>
+                <View style={styles.buttonContainer}>
+                  <SmallButton
+                    borderColor={'#D44956'}
+                    textColor={'#D44956'}
+                    handleClick={handleRemoveVeterinarian}
+                    text={'Remove'}
+                  />
+                  <SmallButton
+                    textColor={'#fff'}
+                    backgroundColor={'#5399DA'}
+                    handleClick={() =>
+                      navigation.navigate('Veterinarians' as never, { idAnimal } as never)
+                    }
+                    text={'Change'}
+                  />
+                </View>
               )}
             </View>
           </Scroll>
@@ -45,6 +83,8 @@ function ViewVeterinarianProfile() {
       </View>
 
       <Footer wichActive={'home'} />
+
+      {isLoading && <Loading />}
     </>
   );
 }
@@ -67,7 +107,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+
+  buttonContainer: {
+    marginTop: 10,
+
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });
 
 export default ViewVeterinarianProfile;
-
