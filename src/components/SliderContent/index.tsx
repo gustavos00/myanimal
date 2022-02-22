@@ -1,20 +1,12 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  SafeAreaView,
-  Animated,
-  ImageSourcePropType,
-  Dimensions,
-} from 'react-native';
-
+import FastImage, { Source } from 'react-native-fast-image';
 import sliderData from '../../sliderData';
 import SliderDot from '../SliderDot';
 import SliderHeader from '../SliderHeader';
 import SliderSubheader from '../SliderSubheader';
+import globalStyles from '../../assets/styles/global';
 
-import globalStyles from '../../assets/styles/global'
+import { View, StyleSheet, SafeAreaView, Animated, Dimensions } from 'react-native';
 
 interface SliderContentProps {
   textBeforeBolder: string;
@@ -27,7 +19,7 @@ interface SliderContentProps {
 }
 
 function SliderContent() {
-  let photoLocal: ImageSourcePropType;
+  let photoLocal: number | Source;
   const { width } = Dimensions.get('screen');
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
@@ -39,10 +31,9 @@ function SliderContent() {
         horizontal
         pagingEnabled
         scrollEventThrottle={32}
-        onScroll={Animated.event(
-          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-          { useNativeDriver: false }
-        )}
+        onScroll={Animated.event([{ nativeEvent: { contentOffset: { x: scrollX } } }], {
+          useNativeDriver: false,
+        })}
         showsHorizontalScrollIndicator={false}
         renderItem={({ item }) => {
           switch (item.image) {
@@ -71,7 +62,7 @@ function SliderContent() {
             <View style={styles.sliderContainer}>
               <SafeAreaView />
               <View style={styles.sliderContent}>
-                <Image style={styles.sliderPhoto} source={photoLocal} />
+                <FastImage style={styles.sliderPhoto} source={photoLocal} />
 
                 <SliderHeader
                   textBeforeBolder={item.textBeforeBolder}
@@ -95,7 +86,7 @@ function SliderContent() {
 const styles = StyleSheet.create({
   sliderPhoto: {
     width: globalStyles.almostTheFullDeviceWidth,
-    height: globalStyles.almostTheFullDeviceHeight * .45,
+    height: globalStyles.almostTheFullDeviceHeight * 0.45,
 
     marginBottom: globalStyles.smallerGap,
   },
@@ -106,7 +97,6 @@ const styles = StyleSheet.create({
 
     justifyContent: 'center',
     alignItems: 'center',
-  
   },
 
   sliderContainer: {

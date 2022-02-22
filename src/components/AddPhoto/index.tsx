@@ -1,25 +1,26 @@
 import React from 'react';
-import { Image, StyleSheet, View, TouchableOpacity } from 'react-native';
-
-import * as ImagePicker from 'expo-image-picker'
-
+import FastImage from 'react-native-fast-image';
 import globalStyles from '../../assets/styles/global';
+
+import * as ImagePicker from 'expo-image-picker';
+
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 
 interface AddPhotoProps {
-  widthSize?: string,
-  heightSize?: string,
+  widthSize?: string;
+  heightSize?: string;
   setProfilePhotoFunction?: (url: string) => void;
-  photoUrl?: string
+  photoUrl?: string;
 }
 
 function AddPhoto({ photoUrl, setProfilePhotoFunction, widthSize, heightSize }: AddPhotoProps) {
-  const [localPhotoUrl, setLocalPhotoUrl] = useState<string | undefined>(photoUrl)
+  const [localPhotoUrl, setLocalPhotoUrl] = useState<string | undefined>(photoUrl);
 
-  const openPhotoLibrary = async() => {
+  const openPhotoLibrary = async () => {
     const data = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-    if(data.status === 'granted') {
+    if (data.status === 'granted') {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
@@ -32,23 +33,26 @@ function AddPhoto({ photoUrl, setProfilePhotoFunction, widthSize, heightSize }: 
         setLocalPhotoUrl(result.uri);
       }
     } else {
-      console.log(data)
+      console.log(data);
     }
-  }
+  };
   return (
     <>
       <View style={styles.container}>
-        <TouchableOpacity 
-          onPress={openPhotoLibrary} 
-          activeOpacity={.5} 
-          style={[styles.circle, widthSize ? {width: widthSize} : {width: 190}, heightSize ? {height: heightSize} : {height: 190}]}
+        <TouchableOpacity
+          onPress={openPhotoLibrary}
+          activeOpacity={0.5}
+          style={[
+            styles.circle,
+            widthSize ? { width: widthSize } : { width: 190 },
+            heightSize ? { height: heightSize } : { height: 190 },
+          ]}
         >
-          {photoUrl || localPhotoUrl ? 
-            <Image style={styles.animalPhoto} source={{uri: localPhotoUrl}} />
-          : 
-            <Image style={styles.photo} source={require('../../assets/img/add.png')} />
-          }
-          
+          {photoUrl || localPhotoUrl ? (
+            <FastImage style={styles.animalPhoto} source={{ uri: localPhotoUrl }} />
+          ) : (
+            <FastImage style={styles.photo} source={require('../../assets/img/add.png')} />
+          )}
         </TouchableOpacity>
       </View>
     </>
@@ -57,26 +61,26 @@ function AddPhoto({ photoUrl, setProfilePhotoFunction, widthSize, heightSize }: 
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%', 
+    width: '100%',
 
     position: 'absolute',
     top: '7%',
 
     elevation: 100,
     zIndex: 1000,
-    
+
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   circle: {
-    width: 190,    
+    width: 190,
     height: 190,
 
     borderRadius: 100,
     backgroundColor: globalStyles.white,
 
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 5,
@@ -85,7 +89,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
 
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 
   photo: {
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     width: '100%',
     height: '100%',
-  }
-})
+  },
+});
 
 export default AddPhoto;

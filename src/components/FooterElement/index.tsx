@@ -1,40 +1,45 @@
-import React, { ReactNode } from 'react';
-import { TouchableOpacity, Image ,StyleSheet } from 'react-native';
+import React from 'react';
+import FastImage from 'react-native-fast-image';
+
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
 interface FooterElementProps {
-  photoName: string,
-  active?: boolean,
-  handleClick: () => void
+  photoName: string;
+  active?: boolean;
+  handleClick: () => void;
 }
 
 function FooterElement({ photoName, active, handleClick }: FooterElementProps) {
-  let photo 
+  let photo;
 
   switch (photoName) {
     case 'setting':
-      photo = require('../../assets/img/setting.png')
+      photo = require('../../assets/img/setting.png');
       break;
 
     case 'home':
-      photo = require('../../assets/img/home.png')
+      photo = require('../../assets/img/home.png');
       break;
 
     case 'notification':
-      photo = require('../../assets/img/notifications.png')
+      photo = require('../../assets/img/notifications.png');
       break;
 
     case 'user':
-      photo = require('../../assets/img/user.png')
+      photo = require('../../assets/img/user.png');
       break;
-  
+
     default:
-      console.log('Error: #0301')
+      console.log('Error: #0301');
       break;
   }
   return (
     <>
       <TouchableOpacity onPress={handleClick}>
-        <Image style={[styles.photo, active ? {opacity: 1,} : {opacity: .4}]} source={photo} />
+        <FastImage
+          style={[styles.photo, active ? { opacity: 1 } : { opacity: 0.4 }]}
+          source={photo}
+        />
       </TouchableOpacity>
     </>
   );
@@ -44,7 +49,7 @@ const styles = StyleSheet.create({
   photo: {
     width: 32,
     height: 32,
-  }
-})
+  },
+});
 
 export default FooterElement;

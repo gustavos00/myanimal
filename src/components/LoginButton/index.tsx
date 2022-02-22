@@ -1,17 +1,19 @@
 import React from 'react';
-import { Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import globalStyles from '../../assets/styles/global';
 
+import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+
 interface LoginButtonProps {
-  text: string,
-  handleClick: () => void
+  text: string;
+  handleClick: () => void;
 }
 
-function LoginButton({text, handleClick} : LoginButtonProps) {
+function LoginButton({ text, handleClick }: LoginButtonProps) {
   return (
     <>
-      <TouchableOpacity activeOpacity={.7} style={styles.button} onPress={handleClick}>
-        <Image style={styles.buttonPhoto} source={require('../../assets/img/googleLogo.png')}/>
+      <TouchableOpacity activeOpacity={0.7} style={styles.button} onPress={handleClick}>
+        <FastImage style={styles.buttonPhoto} source={require('../../assets/img/googleLogo.png')} />
         <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
     </>
@@ -37,14 +39,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 24,
 
-    color: globalStyles.mainColor
+    color: globalStyles.mainColor,
   },
 
   buttonPhoto: {
     width: 27,
     height: 27,
-  }
-})
-
+  },
+});
 
 export default LoginButton;
