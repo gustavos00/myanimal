@@ -1,7 +1,6 @@
 import React from 'react';
-import FastImage from 'react-native-fast-image';
 
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Image } from 'react-native'
 
 interface HeaderIconProps {
   photoUrl: string | undefined
@@ -10,7 +9,7 @@ interface HeaderIconProps {
 function HeaderIcon({ photoUrl }: HeaderIconProps) {
   return (
     <>
-      <FastImage style={styles.photo} source={{uri: photoUrl}}/>
+      <Image style={styles.photo} source={{uri: photoUrl}}/>
     </>
   );
 }

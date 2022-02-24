@@ -1,17 +1,17 @@
 import React from 'react';
-import FastImage from 'react-native-fast-image';
 import globalStyles from '../../assets/styles/global';
 
 import * as ImagePicker from 'expo-image-picker';
 
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 import { useState } from 'react';
 
 interface AddPhotoProps {
   widthSize?: string;
   heightSize?: string;
-  setProfilePhotoFunction?: (url: string) => void;
   photoUrl?: string;
+
+  setProfilePhotoFunction?: (url: string) => void;
 }
 
 function AddPhoto({ photoUrl, setProfilePhotoFunction, widthSize, heightSize }: AddPhotoProps) {
@@ -36,6 +36,7 @@ function AddPhoto({ photoUrl, setProfilePhotoFunction, widthSize, heightSize }: 
       console.log(data);
     }
   };
+
   return (
     <>
       <View style={styles.container}>
@@ -49,9 +50,9 @@ function AddPhoto({ photoUrl, setProfilePhotoFunction, widthSize, heightSize }: 
           ]}
         >
           {photoUrl || localPhotoUrl ? (
-            <FastImage style={styles.animalPhoto} source={{ uri: localPhotoUrl }} />
+            <Image style={styles.animalPhoto} source={{ uri: localPhotoUrl }} />
           ) : (
-            <FastImage style={styles.photo} source={require('../../assets/img/add.png')} />
+            <Image style={styles.photo} source={require('../../assets/img/add.png')} />
           )}
         </TouchableOpacity>
       </View>

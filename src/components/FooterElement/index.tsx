@@ -1,7 +1,5 @@
 import React from 'react';
-import FastImage from 'react-native-fast-image';
-
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image } from 'react-native';
 
 interface FooterElementProps {
   photoName: string;
@@ -36,8 +34,8 @@ function FooterElement({ photoName, active, handleClick }: FooterElementProps) {
   return (
     <>
       <TouchableOpacity onPress={handleClick}>
-        <FastImage
-          style={[styles.photo, active ? { opacity: 1 } : { opacity: 0.4 }]}
+        <Image
+          style={[styles.photo, active ? { opacity: 1 } : { opacity: 0.4 }]} //to do -> fix
           source={photo}
         />
       </TouchableOpacity>

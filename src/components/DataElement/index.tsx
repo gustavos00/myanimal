@@ -1,10 +1,9 @@
 import React from 'react';
-import FastImage from 'react-native-fast-image';
 import globalStyles from '../../assets/styles/global';
 import ActionsElements from '../ActionsElements';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 
 interface DataElementProps {
   title: any;
@@ -47,7 +46,7 @@ function DataElement({
         >
           <TouchableOpacity onPress={handleOnPress}>
             <View style={styles.contentContainer}>
-              <FastImage source={{ uri: photoUrl }} style={styles.icon} />
+              <Image source={{ uri: photoUrl }} style={styles.icon} />
 
               <View style={styles.textContainer}>
                 <Text style={styles.nameText}>{title}</Text>

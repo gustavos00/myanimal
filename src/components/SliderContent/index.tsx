@@ -1,12 +1,11 @@
 import React from 'react';
-import FastImage, { Source } from 'react-native-fast-image';
 import sliderData from '../../sliderData';
 import SliderDot from '../SliderDot';
 import SliderHeader from '../SliderHeader';
 import SliderSubheader from '../SliderSubheader';
 import globalStyles from '../../assets/styles/global';
 
-import { View, StyleSheet, SafeAreaView, Animated, Dimensions } from 'react-native';
+import { View, StyleSheet, SafeAreaView, Animated, Dimensions, Image, ImageSourcePropType } from 'react-native';
 
 interface SliderContentProps {
   textBeforeBolder: string;
@@ -19,7 +18,7 @@ interface SliderContentProps {
 }
 
 function SliderContent() {
-  let photoLocal: number | Source;
+  let photoLocal: ImageSourcePropType;
   const { width } = Dimensions.get('screen');
   const scrollX = React.useRef(new Animated.Value(0)).current;
 
@@ -62,7 +61,7 @@ function SliderContent() {
             <View style={styles.sliderContainer}>
               <SafeAreaView />
               <View style={styles.sliderContent}>
-                <FastImage style={styles.sliderPhoto} source={photoLocal} />
+              <Image style={styles.sliderPhoto} source={photoLocal} />
 
                 <SliderHeader
                   textBeforeBolder={item.textBeforeBolder}

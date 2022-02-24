@@ -1,8 +1,7 @@
 import React from 'react';
 import globalStyles from '../../assets/styles/global';
-import FastImage from 'react-native-fast-image';
 
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 
 interface ProfilePhotoProps {
   widthSize?: number;
@@ -22,7 +21,7 @@ function ProfilePhoto({ widthSize, heightSize, photoUrl, statusMessage }: Profil
             heightSize ? { height: heightSize } : { height: 190 },
           ]}
         >
-          <FastImage style={styles.animalPhoto} source={{ uri: photoUrl }} />
+          <Image style={styles.animalPhoto} source={{ uri: photoUrl }} />
 
           {statusMessage && (
             <>

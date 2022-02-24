@@ -1,9 +1,8 @@
 import React from 'react';
 import globalStyles from '../../assets/styles/global';
 import CircleAddButton from '../CircleAddButton';
-import FastImage from 'react-native-fast-image';
 
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 function NoAnimalAlert() {
@@ -16,7 +15,7 @@ function NoAnimalAlert() {
   return (
     <>
       <View style={styles.noAnimalContainer}>
-        <FastImage style={styles.noAnimalPhoto} source={require('../../assets/img/noAnimal.png')} />
+        <Image style={styles.noAnimalPhoto} source={require('../../assets/img/noAnimal.png')} />
 
         <CircleAddButton handleClick={createNewAnimal} />
       </View>

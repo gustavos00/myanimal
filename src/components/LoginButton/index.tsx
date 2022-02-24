@@ -1,8 +1,7 @@
 import React from 'react';
-import FastImage from 'react-native-fast-image';
 import globalStyles from '../../assets/styles/global';
 
-import { Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 interface LoginButtonProps {
   text: string;
@@ -13,7 +12,7 @@ function LoginButton({ text, handleClick }: LoginButtonProps) {
   return (
     <>
       <TouchableOpacity activeOpacity={0.7} style={styles.button} onPress={handleClick}>
-        <FastImage style={styles.buttonPhoto} source={require('../../assets/img/googleLogo.png')} />
+        <Image style={styles.buttonPhoto} source={require('../../assets/img/googleLogo.png')} />
         <Text style={styles.buttonText}>{text}</Text>
       </TouchableOpacity>
     </>
