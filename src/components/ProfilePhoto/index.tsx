@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 import globalStyles from '../../assets/styles/global';
+
+import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
 
 interface ProfilePhotoProps {
   widthSize?: number;
@@ -9,12 +10,7 @@ interface ProfilePhotoProps {
   statusMessage?: string;
 }
 
-function ProfilePhoto({
-  widthSize,
-  heightSize,
-  photoUrl,
-  statusMessage,
-}: ProfilePhotoProps) {
+function ProfilePhoto({ widthSize, heightSize, photoUrl, statusMessage }: ProfilePhotoProps) {
   return (
     <>
       <View style={styles.container}>

@@ -43,7 +43,7 @@ function Settings() {
 
   const userDataObj = {
     email: userEmail,
-    id: user?.id,
+    id: user?.idUser, //Changed
   };
 
   const changeScreen = async (screenName: string, clearStorage?: boolean) => {
@@ -67,7 +67,7 @@ function Settings() {
               handleClick={async () => changeScreen('UpdateProfile')}
               text={'Edit profile'}
             />
-            <OptionElement handleClick={async () => changeScreen('Login', true)} text={'Log-out'} />
+            <OptionElement handleClick={() => changeScreen('Login', true)} text={'Log-out'} />
           </View>
 
           <Underline />

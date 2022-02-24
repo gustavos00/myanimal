@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native'
+
+import { StyleSheet, Image } from 'react-native'
 
 interface HeaderIconProps {
   photoUrl: string | undefined

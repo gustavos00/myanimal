@@ -1,9 +1,9 @@
 import React from 'react';
-
-import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import globalStyles from '../../assets/styles/global';
 import ActionsElements from '../ActionsElements';
+
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
 
 interface DataElementProps {
   title: any;

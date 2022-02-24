@@ -3522,6 +3522,11 @@ expo-barcode-scanner@~11.1.2:
     expo-image-loader "~3.0.0"
     expo-modules-core "~0.4.4"
 
+expo-cached-image@^44.1.0:
+  version "44.1.0"
+  resolved "https://registry.yarnpkg.com/expo-cached-image/-/expo-cached-image-44.1.0.tgz#20d6cb2c191828c5d8a00b173f6403b0c1035f94"
+  integrity sha512-jThNVcchbIlYs/tqtjcyg5xxQZzSlizMx3P8Ed/il+gt/iAHziYK6dNSnEfARV3gpcUz1J4FzSwTWJ0nJioq/Q==
+
 expo-constants@~12.1.2, expo-constants@~12.1.3:
   version "12.1.3"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-12.1.3.tgz#bec48a42a7760b010450961c209bb4b1158b9cd6"

@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-
 import globalStyles from '../../assets/styles/global';
 import CircleAddButton from '../CircleAddButton';
+
+import { View, StyleSheet, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 function NoAnimalAlert() {
   const navigation = useNavigation();

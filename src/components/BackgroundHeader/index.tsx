@@ -1,28 +1,18 @@
 import React from 'react';
-import { Text, StyleSheet, View, Image} from 'react-native';
-
 import globalStyles from '../../assets/styles/global';
 import Underline from '../Underline';
 
+import { Text, StyleSheet, View } from 'react-native';
+
 interface BackgroundHeaderProps {
-  text: string,
-  isEditing?:boolean
+  text: string;
 }
 
-function BackgroundHeader({ isEditing, text }: BackgroundHeaderProps) {
+function BackgroundHeader({ text }: BackgroundHeaderProps) {
   return (
     <>
       <View style={styles.container}>
         <Text style={styles.header}>{text}</Text>
-
-        <View style={{width: 24, height: 24}}>
-          {isEditing &&
-            <>
-              <Image style={{width: 24, height: 24}} source={require('../../assets/img/save.png')}/>
-            </>
-          }
-        </View>
-
       </View>
 
       <Underline />
@@ -45,8 +35,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     lineHeight: 28,
 
-    color: globalStyles.black
+    color: globalStyles.black,
   },
-})
+});
 
 export default BackgroundHeader;

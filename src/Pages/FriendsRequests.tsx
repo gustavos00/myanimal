@@ -23,7 +23,7 @@ function FriendsRequests() {
   const getAllFriendsRequests = async () => {
     setIsLoading(true);
     try {
-      const response = await api.get(`/user/friends/getPending?id=${user?.id}`);
+      const response = await api.get(`/user/friends/getPending?id=${user?.idUser}`); //Changed
       setPendingFriends(response.data);
       setIsLoading(false);
     } catch (e) {

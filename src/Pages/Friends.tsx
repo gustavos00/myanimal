@@ -26,7 +26,7 @@ function Friends() {
   const getAllFriends = async () => {
     setIsLoading(true);
     try {
-      const response = await api.get(`/user/friends/getAccepted?id=${user?.id}`);
+      const response = await api.get(`/user/friends/getAccepted?id=${user?.idUser}`);
 
       setAcceptedFriends(response.data);
       setIsLoading(false);

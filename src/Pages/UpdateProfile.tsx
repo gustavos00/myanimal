@@ -34,7 +34,7 @@ function UpdateProfile() {
 
   const handleSubmitForm = async () => {
     const tempObj = {     
-      id: user?.id,  
+      id: user?.idUser,  //Changed
       streetName,
       doorNumber,
       postalCode,
