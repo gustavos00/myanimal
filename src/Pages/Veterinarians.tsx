@@ -15,35 +15,37 @@ import Header from '../components/Header';
 import Loading from '../components/Loading';
 import StatesContext from '../contexts/states';
 import VeterinariansContext from '../contexts/veterinarians';
+import { VeterinarianData } from '../types/VeterinarianData';
 
-
-
-interface VeterinariansProps {
-  children: ReactNode;
-}
-
-function Veterinarians({ children }: VeterinariansProps) {
+function Veterinarians() {
   const { isLoading, setIsLoading } = useContext(StatesContext);
-  const { veterinarians } = useContext(VeterinariansContext);
+  const { veterinarians, updateAnimalVeterinarian } = useContext(VeterinariansContext);
 
   const navigation = useNavigation();
 
   const route = useRoute<RouteProp<RootStackParamList, 'Veterinarians'>>();
   const { idAnimal } = route.params;
 
-  const handleSelectVeterinarian = async (veterinarianId?: number) => {
-    if(!veterinarianId) return showError('Cant get veterinarian id on handleSelectVeterinarian funtion', 'Apparently there was an error, try again')
+  const handleSelectVeterinarian = async (veterinarian?: VeterinarianData) => {
+    if (!veterinarian || !idAnimal)
+      return showError(
+        'Cant get veterinarian id on handleSelectVeterinarian funtion',
+        'Apparently there was an error, try again'
+      );
     try {
       setIsLoading(true);
 
       const tempObj = {
-        veterinarianId,
+        veterinarianId: veterinarian.idUser,
         animalId: idAnimal,
       };
       const veterinarianUpdateData = generateUrlSearchParams(tempObj);
       await api.post(`/veterinarian/accept`, veterinarianUpdateData);
+
+      const animalInfo = updateAnimalVeterinarian(veterinarian, idAnimal);
+
       setIsLoading(false);
-      navigation.goBack()
+      navigation.navigate('ViewAnimal' as never, { animalInfo } as never);
     } catch (e) {
       setIsLoading(false);
       return showError('Error: ' + e, 'Apparently there was an error, try again');
@@ -77,7 +79,7 @@ function Veterinarians({ children }: VeterinariansProps) {
                       { veterinarianData: item } as never
                     )
                   }
-                  sliderFalseFunction={(() => handleSelectVeterinarian(item.idUser))}
+                  sliderFalseFunction={() => handleSelectVeterinarian(item)}
                 />
               </View>
             )}
