@@ -7,7 +7,8 @@ interface VeterinariansContextContent {
   veterinarians: Array<VeterinarianData> | void;
   setVeterinarians: Dispatch<SetStateAction<VeterinarianData[] | undefined>>;
 
-  updateAnimalVeterinarian: (veterinarianData: VeterinarianData, idAnimal: number) => {};
+  deleteAnimalVeterinarian: (idAnimal: number | undefined) => void;
+  updateAnimalVeterinarian: (veterinarianData: VeterinarianData, idAnimal: number) => void;
 }
 
 const VeterinariansContext = createContext<VeterinariansContextContent>(
@@ -19,20 +20,30 @@ export function VeterinariansProvider({ children }: any) {
   const { animalData, setAnimalData } = useContext(UserContext);
 
   const updateAnimalVeterinarian = (veterinarianData: VeterinarianData, idAnimal: number) => {
-    const tempAnimalData = [...animalData ?? []]
-    const animalElementIndex = animalData?.findIndex((element) => element.idAnimal == idAnimal)
-    if(animalElementIndex && animalData) {
-      const animalElement = animalData[animalElementIndex]
-      animalElement.userVeterinarian = veterinarianData.idUser ?? 999
-      animalElement.userVeterinarianFk = veterinarianData
+    const tempAnimalData = animalData ?? [];
+    const animalElementIndex = tempAnimalData.findIndex((element) => element.idAnimal == idAnimal);
+    const animalElement = tempAnimalData[animalElementIndex as number];
 
-      tempAnimalData.splice(animalElementIndex, 1)
-      setAnimalData([...tempAnimalData, animalElement])
-      return animalElement
-    }
-    setAnimalData([...tempAnimalData])
-    return {}
-  }
+    animalElement.userVeterinarian = veterinarianData.idUser ?? null;
+    animalElement.userVeterinarianFk = veterinarianData;
+    tempAnimalData.splice(animalElementIndex, 1);
+    setAnimalData([...tempAnimalData, animalElement]);
+
+    return animalElement;
+  };
+
+  const deleteAnimalVeterinarian = (idAnimal: number | undefined) => {
+    const tempAnimalData = animalData ?? [];
+    const animalElementIndex = tempAnimalData.findIndex((element) => element.idAnimal == idAnimal);
+    const animalElement = tempAnimalData[animalElementIndex as number];
+
+    animalElement.userVeterinarian = null;
+    animalElement.userVeterinarianFk = null;
+    tempAnimalData.splice(animalElementIndex, 1);
+    setAnimalData([...tempAnimalData, animalElement]);
+
+    return animalElement;
+  };
 
   return (
     <VeterinariansContext.Provider
@@ -40,6 +51,7 @@ export function VeterinariansProvider({ children }: any) {
         veterinarians,
         setVeterinarians,
 
+        deleteAnimalVeterinarian,
         updateAnimalVeterinarian,
       }}
     >
