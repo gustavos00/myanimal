@@ -10,7 +10,7 @@ import DataElement from '../DataElement';
 import Button from '../Button';
 
 interface SetAnimalVeterinarianProps {
-  data: VeterinarianData;
+  data: VeterinarianData | null;
   idAnimal: number;
 }
 
@@ -30,7 +30,7 @@ function SetAnimalVeterinarian({ data, idAnimal }: SetAnimalVeterinarianProps) {
           sliderFalseColor={'green'}
           sliderTrueText={'Chat'}
           sliderFalseText={'View documents'}
-          sliderTrueFunction={() => console.log('To do -> Open chat')}
+          sliderTrueFunction={() => navigation.navigate('Chat' as never, { data } as never)}
           sliderFalseFunction={() => console.log('To do -> View animal documents')}
           handleOnPress={() =>
             navigation.navigate(

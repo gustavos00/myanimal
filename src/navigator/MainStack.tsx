@@ -46,6 +46,7 @@ interface HomeAddressStatusParams {
 
 interface ChatParams {
   friendData: FriendsData
+  isVeterinarian?: boolean
 }
 
 interface VeterinariansParams {
