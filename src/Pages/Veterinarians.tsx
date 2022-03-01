@@ -40,11 +40,11 @@ function Veterinarians() {
         animalId: idAnimal,
       };
       const veterinarianUpdateData = generateUrlSearchParams(tempObj);
+
       await api.post(`/veterinarian/accept`, veterinarianUpdateData);
+      setIsLoading(false);
 
       const animalInfo = updateAnimalVeterinarian(veterinarian, idAnimal);
-
-      setIsLoading(false);
       navigation.navigate('ViewAnimal' as never, { animalInfo } as never);
     } catch (e) {
       setIsLoading(false);

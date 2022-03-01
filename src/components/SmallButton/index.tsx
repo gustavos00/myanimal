@@ -38,7 +38,7 @@ function SmallButton({
 const styles = StyleSheet.create({
   button: {
     width: globalStyles.fullDeviceWidth * 0.38,
-    height: 50,
+    height: 40,
 
     justifyContent: 'center',
     alignItems: 'center',
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 
   title: {
     fontWeight: 'bold',
-    fontSize: 24,
+    fontSize: 22,
     color: '#000',
   },
 });

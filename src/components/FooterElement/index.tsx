@@ -35,7 +35,7 @@ function FooterElement({ photoName, active, handleClick }: FooterElementProps) {
     <>
       <TouchableOpacity onPress={handleClick}>
         <Image
-          style={[styles.photo, active ? { opacity: 1 } : { opacity: 0.4 }]} //to do -> fix
+          style={[styles.photo, active ? { opacity: 1 } : { opacity: 0.4 }]}
           source={photo}
         />
       </TouchableOpacity>
