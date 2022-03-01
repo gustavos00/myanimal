@@ -8,7 +8,11 @@ interface VeterinariansContextContent {
   setVeterinarians: Dispatch<SetStateAction<VeterinarianData[] | undefined>>;
 
   deleteAnimalVeterinarian: (idAnimal: number | undefined) => void;
-  updateAnimalVeterinarian: (veterinarianData: VeterinarianData, idAnimal: number) => void;
+  updateAnimalVeterinarian: (
+    veterinarianData: VeterinarianData,
+    idAnimal: number,
+    fingerprint: string
+  ) => void;
 }
 
 const VeterinariansContext = createContext<VeterinariansContextContent>(
@@ -19,13 +23,18 @@ export function VeterinariansProvider({ children }: any) {
   const [veterinarians, setVeterinarians] = useState<Array<VeterinarianData>>();
   const { animalData, setAnimalData } = useContext(UserContext);
 
-  const updateAnimalVeterinarian = (veterinarianData: VeterinarianData, idAnimal: number) => {
+  const updateAnimalVeterinarian = (
+    veterinarianData: VeterinarianData,
+    idAnimal: number,
+    fingerprint: string
+  ) => {
     const tempAnimalData = animalData ?? [];
     const animalElementIndex = tempAnimalData.findIndex((element) => element.idAnimal == idAnimal);
     const animalElement = tempAnimalData[animalElementIndex as number];
 
     animalElement.userVeterinarian = veterinarianData.idUser ?? null;
     animalElement.userVeterinarianFk = veterinarianData;
+    animalElement.veterinarianChatFingerprint = fingerprint
     tempAnimalData.splice(animalElementIndex, 1);
     setAnimalData([...tempAnimalData, animalElement]);
 

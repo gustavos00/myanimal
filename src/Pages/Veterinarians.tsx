@@ -5,6 +5,7 @@ import { RootStackParamList } from '../navigator/MainStack';
 import { showError } from '../utils/error';
 import { generateFormData } from '../utils/FormData';
 import { generateUrlSearchParams } from '../utils/URLSearchParams';
+import { VeterinarianData } from '../types/VeterinarianData';
 
 import api from '../api/api';
 import Background from '../components/Background';
@@ -15,7 +16,6 @@ import Header from '../components/Header';
 import Loading from '../components/Loading';
 import StatesContext from '../contexts/states';
 import VeterinariansContext from '../contexts/veterinarians';
-import { VeterinarianData } from '../types/VeterinarianData';
 
 function Veterinarians() {
   const { isLoading, setIsLoading } = useContext(StatesContext);
@@ -41,10 +41,11 @@ function Veterinarians() {
       };
       const veterinarianUpdateData = generateUrlSearchParams(tempObj);
 
-      await api.post(`/veterinarian/accept`, veterinarianUpdateData);
+      const response = await api.post(`/veterinarian/accept`, veterinarianUpdateData);
+      const data : any = response.data
       setIsLoading(false);
 
-      const animalInfo = updateAnimalVeterinarian(veterinarian, idAnimal);
+      const animalInfo = updateAnimalVeterinarian(veterinarian, idAnimal, data.veterinarianFingerprint)
       navigation.navigate('ViewAnimal' as never, { animalInfo } as never);
     } catch (e) {
       setIsLoading(false);
