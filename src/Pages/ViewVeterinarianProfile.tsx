@@ -15,12 +15,14 @@ import SmallButton from '../components/SmallButton';
 import StatesContext from '../contexts/states';
 import Loading from '../components/Loading';
 import { generateUrlSearchParams } from '../utils/URLSearchParams';
+import VeterinariansContext from '../contexts/veterinarians';
 
 function ViewVeterinarianProfile() {
   const route = useRoute<RouteProp<RootStackParamList, 'ViewVeterinarianProfile'>>();
   const { veterinarianData, isUserAnimalVeterinarian, idAnimal } = route.params;
 
   const { isLoading, setIsLoading } = useContext(StatesContext);
+  const { deleteAnimalVeterinarian } = useContext(VeterinariansContext);
 
   const navigation = useNavigation();
 
@@ -30,16 +32,14 @@ function ViewVeterinarianProfile() {
     try {
       setIsLoading(true);
 
-      console.log(idAnimal);
       const tempObj = { animalId: idAnimal };
       const veterinarianUpdateData = generateUrlSearchParams(tempObj);
 
       await api.post('/veterinarian/remove', veterinarianUpdateData);
       setIsLoading(false);
 
-      //to do -> update local
-
-      navigation.goBack()
+      const animalInfo = deleteAnimalVeterinarian( idAnimal);
+      navigation.navigate('ViewAnimal' as never, { animalInfo } as never);
     } catch (e) {
       setIsLoading(false);
       return showError('Error: ' + e, 'Apparently there was an error, try again');
@@ -55,9 +55,9 @@ function ViewVeterinarianProfile() {
           <Scroll aligned>
             <View style={styles.inputsContainer}>
               <StyledText value={veterinarianData.givenName} text={'Name'} />
-              <StyledText value={veterinarianData.givenName} text={'Street'} />
-              <StyledText value={veterinarianData.givenName} text={'City'} />
-              <StyledText value={veterinarianData.givenName} text={'Locality'} />
+              <StyledText value={veterinarianData.veterinarianAddress.streetName} text={'Street'} />
+              <StyledText value={veterinarianData.veterinarianAddress.parishName} text={'City'} />
+              <StyledText value={veterinarianData.veterinarianAddress.locationName} text={'Locality'} />
 
               {isUserAnimalVeterinarian && (
                 <View style={styles.buttonContainer}>

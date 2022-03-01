@@ -6,7 +6,7 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
 import { showError } from '../utils/error';
 
-import { chatsRef, db } from '../services/fire';
+import { chatsRef } from '../services/fire';
 import { addDoc, where, onSnapshot, query, collection } from 'firebase/firestore';
 
 import UserContext from '../contexts/user';
@@ -31,21 +31,13 @@ export default function Chat() {
   const [giftedUser, setGiftedUser] = useState<GiftedUser>();
 
   const route = useRoute<RouteProp<RootStackParamList, 'Chat'>>();
-  const { friendData } = route.params;
+  const { friendData, isVeterinarian } = route.params;
 
   const navigation = useNavigation();
 
   const { user } = useContext(UserContext);
 
-  if (!!user) {
-    useEffect(() => {
-      setGiftedUser({
-        _id: user?.id.toString(),
-        name: user?.givenName,
-        avatar: user?.photoUrl,
-      });
-    }, []);
-  } else {
+  if (!user) {
     navigation.navigate('Friends' as never);
     return showError(
       'Error: getting user data on chat',
@@ -54,11 +46,16 @@ export default function Chat() {
   }
 
   useEffect(() => {
+    setGiftedUser({
+      _id: user?.idUser.toString(), //To do -> To fix
+      name: user?.givenName,
+      avatar: user?.photoUrl,
+    });
+  }, []);
+
+  useEffect(() => {
     const getMessages = async () => {
-      const q = query(
-        chatsRef,
-        where('fingerprint', '==', friendData.fingerprint)
-      );
+      const q = query(chatsRef, where('fingerprint', '==', friendData.fingerprint));
       const unsubscribe = await onSnapshot(q, (doc) => {
         const messages = [] as Array<AllMessages>;
         const docArray = doc.docChanges();

@@ -3,6 +3,7 @@ import React, { ReactNode } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { VeterinarianData } from '../../types/VeterinarianData';
 import { useNavigation } from '@react-navigation/core';
+import { AnimalData } from '../../types/AnimalData';
 
 import globalStyles from '../../assets/styles/global';
 import BackgroundHeader from '../BackgroundHeader';
@@ -11,10 +12,10 @@ import Button from '../Button';
 
 interface SetAnimalVeterinarianProps {
   data: VeterinarianData | null;
-  idAnimal: number;
+  animalData: AnimalData;
 }
 
-function SetAnimalVeterinarian({ data, idAnimal }: SetAnimalVeterinarianProps) {
+function SetAnimalVeterinarian({ data, animalData }: SetAnimalVeterinarianProps) {
   const navigation = useNavigation();
 
   if (!!data) {
@@ -30,12 +31,21 @@ function SetAnimalVeterinarian({ data, idAnimal }: SetAnimalVeterinarianProps) {
           sliderFalseColor={'green'}
           sliderTrueText={'Chat'}
           sliderFalseText={'View documents'}
-          sliderTrueFunction={() => navigation.navigate('Chat' as never, { data } as never)}
+          sliderTrueFunction={() =>
+            navigation.navigate(
+              'Chat' as never,
+              { friendData: { ...data, fingerprint: animalData.veterinarianChatFingerprint } } as never
+            )
+          }
           sliderFalseFunction={() => console.log('To do -> View animal documents')}
           handleOnPress={() =>
             navigation.navigate(
               'ViewVeterinarianProfile' as never,
-              { veterinarianData: data, isUserAnimalVeterinarian: true, idAnimal } as never
+              {
+                veterinarianData: data,
+                isUserAnimalVeterinarian: true,
+                idAnimal: animalData.idAnimal,
+              } as never
             )
           }
         />
@@ -49,7 +59,12 @@ function SetAnimalVeterinarian({ data, idAnimal }: SetAnimalVeterinarianProps) {
 
           <Button
             text={'Get a vet!'}
-            handleClick={() => navigation.navigate('Veterinarians' as never, { idAnimal } as never)}
+            handleClick={() =>
+              navigation.navigate(
+                'Veterinarians' as never,
+                { idAnimal: animalData.idAnimal } as never
+              )
+            }
           />
         </View>
       </>
