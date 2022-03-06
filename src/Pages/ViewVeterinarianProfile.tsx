@@ -3,6 +3,7 @@ import { useRoute, RouteProp, useNavigation } from '@react-navigation/core';
 import { View, StyleSheet } from 'react-native';
 import { RootStackParamList } from '../navigator/MainStack';
 import { showError } from '../utils/error';
+import { generateUrlSearchParams } from '../utils/URLSearchParams';
 
 import api from '../api/api';
 import globalStyles from '../assets/styles/global';
@@ -14,7 +15,6 @@ import StyledText from '../components/StyledText';
 import SmallButton from '../components/SmallButton';
 import StatesContext from '../contexts/states';
 import Loading from '../components/Loading';
-import { generateUrlSearchParams } from '../utils/URLSearchParams';
 import VeterinariansContext from '../contexts/veterinarians';
 
 function ViewVeterinarianProfile() {
@@ -25,8 +25,6 @@ function ViewVeterinarianProfile() {
   const { deleteAnimalVeterinarian } = useContext(VeterinariansContext);
 
   const navigation = useNavigation();
-
-  // TO DO -> Show correct information
 
   const handleRemoveVeterinarian = async () => {
     try {
