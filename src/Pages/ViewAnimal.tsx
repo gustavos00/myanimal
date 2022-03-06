@@ -12,7 +12,7 @@ import ProfilePhoto from '../components/ProfilePhoto';
 import Scroll from '../components/Scroll';
 import SetAnimalVeterinarian from '../components/SetAnimalVeterinarian';
 
-function CreateOrUpdateAnimal() {
+function ViewAnimal() {
   const route = useRoute<RouteProp<RootStackParamList, 'ViewAnimal'>>();
   const { animalInfo } = route.params;
 
@@ -33,7 +33,10 @@ function CreateOrUpdateAnimal() {
 
               <EnableFindMyPetSwitch enableValue={false} />
             </View>
-            <SetAnimalVeterinarian data={animalInfo.userVeterinarianFk} idAnimal={animalInfo.idAnimal} />
+            <SetAnimalVeterinarian
+              data={animalInfo.userVeterinarianFk}
+              animalData={animalInfo}
+            />
           </Scroll>
         </Background>
       </View>
@@ -63,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateOrUpdateAnimal;
+export default ViewAnimal;
