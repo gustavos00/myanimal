@@ -30,7 +30,7 @@ function SetAnimalVeterinarian({ data, animalData }: SetAnimalVeterinarianProps)
           haveSlider
           sliderFalseColor={'green'}
           sliderTrueText={'Chat'}
-          sliderFalseText={'View documents'}
+          sliderFalseText={'Medical information'}
           sliderTrueFunction={() =>
             navigation.navigate(
               'Chat' as never,
