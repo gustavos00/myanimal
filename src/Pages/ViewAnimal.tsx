@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { RootStackParamList } from '../navigator/MainStack';
 
 import globalStyles from '../assets/styles/global';
@@ -33,10 +33,7 @@ function ViewAnimal() {
 
               <EnableFindMyPetSwitch enableValue={false} />
             </View>
-            <SetAnimalVeterinarian
-              data={animalInfo.userVeterinarianFk}
-              animalData={animalInfo}
-            />
+            <SetAnimalVeterinarian data={animalInfo.userVeterinarianFk} animalData={animalInfo} />
           </Scroll>
         </Background>
       </View>
