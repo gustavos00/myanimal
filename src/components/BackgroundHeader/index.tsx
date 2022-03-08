@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import globalStyles from '../../assets/styles/global';
 import Underline from '../Underline';
 
@@ -6,18 +6,32 @@ import { Text, StyleSheet, View } from 'react-native';
 
 interface BackgroundHeaderProps {
   text: string;
+  children?: ReactNode;
 }
 
-function BackgroundHeader({ text }: BackgroundHeaderProps) {
-  return (
-    <>
-      <View style={styles.container}>
-        <Text style={styles.header}>{text}</Text>
-      </View>
+function BackgroundHeader({ text, children }: BackgroundHeaderProps) {
+  if (children) {
+    return (
+      <>
+        <View style={styles.container}>
+          <Text style={styles.header}>{text}</Text>
+          {children}
+        </View>
 
-      <Underline />
-    </>
-  );
+        <Underline />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <View style={styles.container}>
+          <Text style={styles.header}>{text}</Text>
+        </View>
+
+        <Underline />
+      </>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
