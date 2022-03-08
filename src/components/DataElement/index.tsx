@@ -3,14 +3,7 @@ import globalStyles from '../../assets/styles/global';
 import ActionsElements from '../ActionsElements';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  ImageSourcePropType,
-} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, ImageSourcePropType } from 'react-native';
 
 interface DataElementProps {
   title: any;
@@ -45,18 +38,25 @@ function DataElement({
   sliderFalseFunction,
 }: DataElementProps) {
   const dynamicPhotoUrl = typeof photoUrl === 'string' ? { uri: photoUrl } : photoUrl;
-  const [photoFlag, setPhotoFlag] = useState<ImageSourcePropType>();
+  const [photoFlag, setPhotoFlag] = useState<ImageSourcePropType | undefined>();
   const [photoFlagColor, setPhotoFlagColor] = useState<string>();
 
   useEffect(() => {
-    if (photoFlagType === 'warning') {
-      setPhotoFlag(require('../../assets/img/warning.png'));
-      setPhotoFlagColor('#FFCD83');
-    }
+    switch (photoFlagType) {
+      case 'missingReport':
+        setPhotoFlag(require('../../assets/img/warning.png'));
+        setPhotoFlagColor('#FFCD83');
+        break;
 
-    if (photoFlagType === 'done') {
-      setPhotoFlag(require('../../assets/img/done.png'));
-      setPhotoFlagColor('#A7A5EF');
+      case 'alreadyDone':
+        setPhotoFlag(require('../../assets/img/done.png'));
+        setPhotoFlagColor('#A7A5EF');
+        break;
+        
+      case 'soon':
+        setPhotoFlag(undefined)
+        setPhotoFlagColor(undefined)
+        break;
     }
   }, [photoFlagType]);
 
