@@ -24,7 +24,7 @@ import Friends from '../pages/Friends';
 import Chat from '../pages/Chat';
 import ViewVeterinarianProfile from '../pages/ViewVeterinarianProfile';
 import Veterinarians from '../pages/Veterinarians';
-
+import ViewAnimalMedicalInformation from '../pages/ViewAnimalMedicalInformation';
 
 interface ViewVeterinarianProfileParams {
   veterinarianData: VeterinarianData;
@@ -71,6 +71,7 @@ export type RootStackParamList = {
   Chat: ChatParams;
   ViewVeterinarianProfile: ViewVeterinarianProfileParams;
   Veterinarians: VeterinariansParams;
+  ViewAnimalMedicalInformation: undefined
 };
 
 const { Navigator, Group, Screen } = createStackNavigator<RootStackParamList>();
@@ -101,6 +102,7 @@ export default () => {
           <Screen options={{ headerShown: false }} name="Chat" component={Chat} />
           <Screen options={{ headerShown: false }} name="ViewVeterinarianProfile" component={ViewVeterinarianProfile} />
           <Screen options={{ headerShown: false }} name="Veterinarians" component={Veterinarians} />
+          <Screen options={{ headerShown: false }} name="ViewAnimalMedicalInformation" component={ViewAnimalMedicalInformation} />
         </Group>
       </Navigator>
     </NavigationContainer>
