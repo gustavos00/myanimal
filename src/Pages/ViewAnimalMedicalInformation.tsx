@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
 import DataElement from '../components/DataElement';
@@ -11,19 +11,23 @@ import Button from '../components/Button';
 import api from '../api/api';
 
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { MedicalEvents } from '../types/AnimalMedicalEvents';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../navigator/MainStack';
 
-interface ViewAnimalMedicalInformationProps {}
-
-function ViewAnimalMedicalInformation({}: ViewAnimalMedicalInformationProps) {
+function ViewAnimalMedicalInformation() {
   const [filterModalIsOpen, setFilterModalIsOpen] = useState<boolean>();
   const [filter, setFilter] = useState<string>();
-  const [events, setEvents] = useState<any>();
-  const [filteredEvents, setFilteredEvents] = useState<any>();
+  const [events, setEvents] = useState<Array<MedicalEvents>>([]);
+  const [filteredEvents, setFilteredEvents] = useState<Array<MedicalEvents>>([]);
+
+  const route = useRoute<RouteProp<RootStackParamList, 'ViewAnimalMedicalInformation'>>();
+  const { idAnimal } = route.params;
 
   useEffect(() => {
     const handleGetEvents = async () => {
       try {
-        const response = await api.get(`animal/medicalEvents/?id=1`);
+        const response = await api.get(`animal/medicalEvents/?id=${idAnimal}`);
         setEvents(response.data);
         setFilteredEvents(response.data);
       } catch (e) {

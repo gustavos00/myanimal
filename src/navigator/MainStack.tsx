@@ -53,6 +53,10 @@ interface VeterinariansParams {
   idAnimal?: number
 }
 
+interface ViewAnimalMedicalInformationParams {
+  idAnimal: number
+}
+
 export type RootStackParamList = {
   SplashScreen: undefined;
   Home: HomeAddressStatusParams;
@@ -71,7 +75,7 @@ export type RootStackParamList = {
   Chat: ChatParams;
   ViewVeterinarianProfile: ViewVeterinarianProfileParams;
   Veterinarians: VeterinariansParams;
-  ViewAnimalMedicalInformation: undefined
+  ViewAnimalMedicalInformation: ViewAnimalMedicalInformationParams
 };
 
 const { Navigator, Group, Screen } = createStackNavigator<RootStackParamList>();
