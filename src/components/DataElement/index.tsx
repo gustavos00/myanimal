@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import globalStyles from '../../assets/styles/global';
 import ActionsElements from '../ActionsElements';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { View, Text, StyleSheet, ScrollView, Dimensions, Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Image,
+  ImageSourcePropType,
+} from 'react-native';
 
 interface DataElementProps {
   title: any;
   subTitle: string;
-  photoUrl: string;
+  photoUrl: string | ImageSourcePropType;
+  photoFlagType?: string;
   haveSlider?: boolean;
   handleOnPress?: () => void;
 
@@ -26,6 +34,7 @@ function DataElement({
   title,
   subTitle,
   photoUrl,
+  photoFlagType,
   haveSlider,
   handleOnPress,
   sliderTrueText,
@@ -35,6 +44,22 @@ function DataElement({
   sliderTrueFunction,
   sliderFalseFunction,
 }: DataElementProps) {
+  const dynamicPhotoUrl = typeof photoUrl === 'string' ? { uri: photoUrl } : photoUrl;
+  const [photoFlag, setPhotoFlag] = useState<ImageSourcePropType>();
+  const [photoFlagColor, setPhotoFlagColor] = useState<string>();
+
+  useEffect(() => {
+    if (photoFlagType === 'warning') {
+      setPhotoFlag(require('../../assets/img/warning.png'));
+      setPhotoFlagColor('#FFCD83');
+    }
+
+    if (photoFlagType === 'done') {
+      setPhotoFlag(require('../../assets/img/done.png'));
+      setPhotoFlagColor('#A7A5EF');
+    }
+  }, [photoFlagType]);
+
   return (
     <>
       <View style={styles.element}>
@@ -46,7 +71,12 @@ function DataElement({
         >
           <TouchableOpacity onPress={handleOnPress}>
             <View style={styles.contentContainer}>
-              <Image source={{ uri: photoUrl }} style={styles.icon} />
+              <View>
+                <Image source={dynamicPhotoUrl} style={styles.icon} />
+                <View style={[styles.photoFlagContainer, { backgroundColor: photoFlagColor }]}>
+                  {photoFlag && <Image source={photoFlag} style={styles.photoFlagElement} />}
+                </View>
+              </View>
 
               <View style={styles.textContainer}>
                 <Text style={styles.nameText}>{title}</Text>
@@ -107,9 +137,30 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    width: Dimensions.get('window').width * 0.22,
-    height: Dimensions.get('window').width * 0.22,
+    width: globalStyles.fullDeviceWidth * 0.22,
+    height: globalStyles.fullDeviceWidth * 0.22,
     borderRadius: globalStyles.smallerGap,
+
+    position: 'relative',
+  },
+
+  photoFlagContainer: {
+    width: 25,
+    height: 25,
+
+    position: 'absolute',
+    top: -5,
+    right: -5,
+
+    borderRadius: 5,
+
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  photoFlagElement: {
+    width: 17,
+    height: 17,
   },
 
   textContainer: {

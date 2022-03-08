@@ -34,10 +34,12 @@ function SetAnimalVeterinarian({ data, animalData }: SetAnimalVeterinarianProps)
           sliderTrueFunction={() =>
             navigation.navigate(
               'Chat' as never,
-              { friendData: { ...data, fingerprint: animalData.veterinarianChatFingerprint } } as never
+              {
+                friendData: { ...data, fingerprint: animalData.veterinarianChatFingerprint },
+              } as never
             )
           }
-          sliderFalseFunction={() => console.log('To do -> View animal documents')}
+          sliderFalseFunction={() => navigation.navigate('ViewAnimalMedicalInformation' as never)}
           handleOnPress={() =>
             navigation.navigate(
               'ViewVeterinarianProfile' as never,
