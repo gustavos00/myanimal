@@ -39,7 +39,12 @@ function SetAnimalVeterinarian({ data, animalData }: SetAnimalVeterinarianProps)
               } as never
             )
           }
-          sliderFalseFunction={() => navigation.navigate('ViewAnimalMedicalInformation' as never)}
+          sliderFalseFunction={() =>
+            navigation.navigate(
+              'ViewAnimalMedicalInformation' as never,
+              { idAnimal: animalData.idAnimal } as never
+            )
+          }
           handleOnPress={() =>
             navigation.navigate(
               'ViewVeterinarianProfile' as never,
