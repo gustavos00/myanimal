@@ -3522,11 +3522,6 @@ expo-barcode-scanner@~11.1.2:
     expo-image-loader "~3.0.0"
     expo-modules-core "~0.4.4"
 
-expo-cached-image@^44.1.0:
-  version "44.1.0"
-  resolved "https://registry.yarnpkg.com/expo-cached-image/-/expo-cached-image-44.1.0.tgz#20d6cb2c191828c5d8a00b173f6403b0c1035f94"
-  integrity sha512-jThNVcchbIlYs/tqtjcyg5xxQZzSlizMx3P8Ed/il+gt/iAHziYK6dNSnEfARV3gpcUz1J4FzSwTWJ0nJioq/Q==
-
 expo-constants@~12.1.2, expo-constants@~12.1.3:
   version "12.1.3"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-12.1.3.tgz#bec48a42a7760b010450961c209bb4b1158b9cd6"
@@ -6555,6 +6550,14 @@ react-native-parsed-text@0.0.22:
   integrity sha512-hfD83RDXZf9Fvth3DowR7j65fMnlqM9PpxZBGWkzVcUTFtqe6/yPcIoIAgrJbKn6YmtzkivmhWE2MCE4JKBXrQ==
   dependencies:
     prop-types "^15.7.x"
+
+react-native-picker-select@^8.0.4:
+  version "8.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-picker-select/-/react-native-picker-select-8.0.4.tgz#3f7f1f42df69b06e7d2c10338288332a6c40fd10"
+  integrity sha512-orBjPIwBkV5oipyVw263YNMI56f6Kj3p/ejabZoCYYNSG3AiLVVhC2RqsxMgDA7IayyURAW+AlV+mDJyVqLBkg==
+  dependencies:
+    "@react-native-picker/picker" "^1.8.3"
+    lodash.isequal "^4.5.0"
 
 react-native-qrcode-svg@^6.1.2:
   version "6.1.2"
