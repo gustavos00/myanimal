@@ -6,6 +6,7 @@ import { AnimalData } from '../types/AnimalData';
 import { AnimalOwnerAddressData } from '../types/AnimalOwnerAddressData';
 import { FriendsData } from '../types/FriendsData';
 import { VeterinarianData } from '../types/VeterinarianData';
+import { AnimalMedicalEvents } from '../types/AnimalMedicalEvents';
 
 import SplashScreen from '../pages/SplashScreen';
 import Home from '../pages/Home';
@@ -25,6 +26,8 @@ import Chat from '../pages/Chat';
 import ViewVeterinarianProfile from '../pages/ViewVeterinarianProfile';
 import Veterinarians from '../pages/Veterinarians';
 import ViewAnimalMedicalInformation from '../pages/ViewAnimalMedicalInformation';
+import ViewMedicalInformationDetails from '../pages/ViewMedicalInformationDetails';
+
 
 interface ViewVeterinarianProfileParams {
   veterinarianData: VeterinarianData;
@@ -57,6 +60,10 @@ interface ViewAnimalMedicalInformationParams {
   idAnimal: number
 }
 
+interface ViewMedicalInformationDetailsParams {
+  medicalEventData: AnimalMedicalEvents
+}
+
 export type RootStackParamList = {
   SplashScreen: undefined;
   Home: HomeAddressStatusParams;
@@ -76,6 +83,7 @@ export type RootStackParamList = {
   ViewVeterinarianProfile: ViewVeterinarianProfileParams;
   Veterinarians: VeterinariansParams;
   ViewAnimalMedicalInformation: ViewAnimalMedicalInformationParams
+  ViewMedicalInformationDetails: ViewMedicalInformationDetailsParams
 };
 
 const { Navigator, Group, Screen } = createStackNavigator<RootStackParamList>();
@@ -107,6 +115,7 @@ export default () => {
           <Screen options={{ headerShown: false }} name="ViewVeterinarianProfile" component={ViewVeterinarianProfile} />
           <Screen options={{ headerShown: false }} name="Veterinarians" component={Veterinarians} />
           <Screen options={{ headerShown: false }} name="ViewAnimalMedicalInformation" component={ViewAnimalMedicalInformation} />
+          <Screen options={{ headerShown: false }} name="ViewMedicalInformationDetails" component={ViewMedicalInformationDetails} />
         </Group>
       </Navigator>
     </NavigationContainer>
