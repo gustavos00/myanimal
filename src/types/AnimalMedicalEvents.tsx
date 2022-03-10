@@ -1,4 +1,4 @@
-export interface MedicalEvents {
+export interface AnimalMedicalEvents {
   date: string;
   report: string;
   eventsStatus: EventsStatus;
