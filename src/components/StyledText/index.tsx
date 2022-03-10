@@ -1,22 +1,28 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, ScrollView } from 'react-native';
 
 import globalStyles from '../../assets/styles/global';
 
 interface StyledTextProps {
-  text: string, 
-  value: string,
+  text: string;
+  value: string;
+  hasScroll?: boolean;
 }
 
-function StyledText({ text, value }: StyledTextProps) {
+function StyledText({ text, value, hasScroll }: StyledTextProps) {
   return (
     <>
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.text}>{text}</Text>
         </View>
-
-        <Text style={styles.input}>{value}</Text>
+        {hasScroll ? (
+          <ScrollView showsVerticalScrollIndicator={false} style={{ height: 100 }}>
+            <Text style={styles.input}>{value}</Text>
+          </ScrollView>
+        ) : (
+          <Text style={styles.input}>{value}</Text>
+        )}
       </View>
     </>
   );
@@ -34,12 +40,12 @@ const styles = StyleSheet.create({
 
     borderWidth: 1,
     borderRadius: 5,
-    borderColor: globalStyles.gray
+    borderColor: globalStyles.gray,
   },
 
   input: {
     padding: 10,
-    color: globalStyles.darkGray
+    color: globalStyles.darkGray,
   },
 
   text: {
@@ -47,7 +53,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
 
     fontSize: 14,
-    color: globalStyles.gray
+    color: globalStyles.gray,
   },
 
   textContainer: {
@@ -55,12 +61,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
 
     position: 'absolute',
-    top: -10, 
+    top: -10,
     left: 10,
 
-    zIndex: 10, 
-    elevation: 10
-  }
-})
+    zIndex: 10,
+    elevation: 10,
+  },
+});
 
 export default StyledText;
