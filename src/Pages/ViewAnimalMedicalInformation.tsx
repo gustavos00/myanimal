@@ -11,20 +11,23 @@ import Button from '../components/Button';
 import api from '../api/api';
 
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { MedicalEvents } from '../types/AnimalMedicalEvents';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import { AnimalMedicalEvents } from '../types/AnimalMedicalEvents';
+import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
 
 function ViewAnimalMedicalInformation() {
   const [filterModalIsOpen, setFilterModalIsOpen] = useState<boolean>();
   const [filter, setFilter] = useState<string>();
-  const [events, setEvents] = useState<Array<MedicalEvents>>([]);
-  const [filteredEvents, setFilteredEvents] = useState<Array<MedicalEvents>>([]);
+  const [events, setEvents] = useState<Array<AnimalMedicalEvents>>([]);
+  const [filteredEvents, setFilteredEvents] = useState<Array<AnimalMedicalEvents>>([]);
+
+  const navigation = useNavigation();
 
   const route = useRoute<RouteProp<RootStackParamList, 'ViewAnimalMedicalInformation'>>();
   const { idAnimal } = route.params;
 
   useEffect(() => {
+    //to do -> try useMemo
     const handleGetEvents = async () => {
       try {
         const response = await api.get(`animal/medicalEvents/?id=${idAnimal}`);
@@ -71,6 +74,12 @@ function ViewAnimalMedicalInformation() {
 
               return (
                 <DataElement
+                  handleOnPress={() =>
+                    navigation.navigate(
+                      'ViewMedicalInformationDetails' as never,
+                      { medicalEventData: item } as never
+                    )
+                  }
                   photoUrl={require('../assets/img/doctor.png')}
                   photoFlagType={item.eventsStatus.label}
                   title={item.eventsType.value}
