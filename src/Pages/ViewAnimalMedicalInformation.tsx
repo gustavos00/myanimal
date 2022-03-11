@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
 import DataElement from '../components/DataElement';
@@ -8,18 +8,48 @@ import BackgroundFilter from '../components/BackgroundFilter';
 import globalStyles from '../assets/styles/global';
 import RNPickerSelect from 'react-native-picker-select';
 import Button from '../components/Button';
+import api from '../api/api';
 
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { AnimalMedicalEvents } from '../types/AnimalMedicalEvents';
+import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../navigator/MainStack';
 
-interface ViewAnimalMedicalInformationProps {}
-
-function ViewAnimalMedicalInformation({}: ViewAnimalMedicalInformationProps) {
+function ViewAnimalMedicalInformation() {
   const [filterModalIsOpen, setFilterModalIsOpen] = useState<boolean>();
   const [filter, setFilter] = useState<string>();
+  const [events, setEvents] = useState<Array<AnimalMedicalEvents>>([]);
+  const [filteredEvents, setFilteredEvents] = useState<Array<AnimalMedicalEvents>>([]);
+
+  const navigation = useNavigation();
+
+  const route = useRoute<RouteProp<RootStackParamList, 'ViewAnimalMedicalInformation'>>();
+  const { idAnimal } = route.params;
+
+  useEffect(() => {
+    //to do -> try useMemo
+    const handleGetEvents = async () => {
+      try {
+        const response = await api.get(`animal/medicalEvents/?id=${idAnimal}`);
+        setEvents(response.data);
+        setFilteredEvents(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    handleGetEvents();
+  }, []);
 
   const handleApplyFilter = () => {
-    
-  }
+    if (filter === 'all') {
+      setFilteredEvents(events);
+      setFilterModalIsOpen(false);
+      return;
+    }
+    const localFilteredEvents = events.filter((e: any) => e.eventsStatus.label === filter);
+    setFilteredEvents(localFilteredEvents);
+    setFilterModalIsOpen(false);
+  };
 
   return (
     <>
@@ -33,26 +63,31 @@ function ViewAnimalMedicalInformation({}: ViewAnimalMedicalInformationProps) {
             </TouchableOpacity>
           </BackgroundHeader>
 
-          <DataElement
-            photoUrl={require('../assets/img/doctor.png')}
-            photoFlagType={'warning'}
-            title={'Routine'}
-            subTitle={'01/01/2000'}
-            haveSlider={false}
-          />
-          <DataElement
-            photoUrl={require('../assets/img/doctor.png')}
-            photoFlagType={'done'}
-            title={'Urgency'}
-            subTitle={'01/01/2000'}
-            haveSlider={false}
-          />
-          <DataElement
-            photoUrl={require('../assets/img/doctor.png')}
-            photoFlagType={'warning'}
-            title={'Routine'}
-            subTitle={'01/01/2000'}
-            haveSlider={false}
+          <FlatList
+            data={filteredEvents}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={({ item, index }) => {
+              const dateContent = item.date.split('T');
+              const date = dateContent[0].split('-').reverse().join('/');
+              const time = dateContent[1].split(':');
+              const eventDate = `${date} - ${time[0]}h${time[1]}m`;
+
+              return (
+                <DataElement
+                  handleOnPress={() =>
+                    navigation.navigate(
+                      'ViewMedicalInformationDetails' as never,
+                      { medicalEventData: item } as never
+                    )
+                  }
+                  photoUrl={require('../assets/img/doctor.png')}
+                  photoFlagType={item.eventsStatus.label}
+                  title={item.eventsType.value}
+                  subTitle={eventDate}
+                  haveSlider={false}
+                />
+              );
+            }}
           />
         </>
       </Background>
@@ -66,13 +101,14 @@ function ViewAnimalMedicalInformation({}: ViewAnimalMedicalInformationProps) {
               <Text style={styles.header}>{'Please select a filter'}</Text>
 
               <View style={styles.pickerContainer}>
-                <RNPickerSelect 
+                <RNPickerSelect
                   onValueChange={(value) => setFilter(value)}
                   items={[
+                    //To do -> should be dynamic?
                     { label: 'All', value: 'all' },
-                    { label: 'Done', value: 'done' },
+                    { label: 'Soon', value: 'soon' },
                     { label: 'Missing report', value: 'missingReport' },
-                    { label: 'To be done', value: 'missingReport' },
+                    { label: 'Already done', value: 'alreadyDone' },
                   ]}
                 />
               </View>
@@ -125,7 +161,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
 
     borderRadius: 5,
-    backgroundColor: '#ccc'
+    backgroundColor: '#ccc',
   },
 
   header: {

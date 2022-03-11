@@ -13,13 +13,11 @@ import StatesContext from '../contexts/states';
 const Login = () => {
   const navigation = useNavigation();
 
-  const { isLoading, setIsLoading} = useContext(StatesContext);
+  const { isLoading} = useContext(StatesContext);
   const { googleSignIn } = useContext(AuthContext);
 
   const handleGoogleSignIn = async () => {
-    setIsLoading(true);
     const status = await googleSignIn();
-    setIsLoading(false);
 
     if (status) {
       const { haveAddress } = status;
