@@ -5,6 +5,7 @@ import * as auth from '../services/auth';
 import storage from '../utils/storage';
 import isEmpty from '../utils/isEmpty';
 import UserContext from './user';
+import StatesContext from './states';
 
 interface HomeAddressStatusParams {
   haveAddress?: boolean;
@@ -23,6 +24,7 @@ export function AuthProvider({ children }: any) {
   const [token, setToken] = useState<string | void>();
 
   const { setAnimalData, setUser } = useContext(UserContext);
+  const { setIsLoading} = useContext(StatesContext);
 
   const setTokenOnLocalStorage = async (token: string, salt: string) => {
     //Missing date
@@ -37,6 +39,7 @@ export function AuthProvider({ children }: any) {
     let haveAddressStatus;
 
     try {
+      setIsLoading(true)
       const response = await auth.GoogleSignIn();
       if (!response) return false;
 
@@ -45,7 +48,9 @@ export function AuthProvider({ children }: any) {
       setUser(response);
       haveAddressStatus = !isEmpty(response.userAddress);
       await setTokenOnLocalStorage(response.accessToken, response.salt);
+      setIsLoading(false)
     } catch (e) {
+      setIsLoading(false)
       return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
 
