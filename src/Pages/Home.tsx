@@ -14,8 +14,7 @@ import BackgroundFilter from '../components/BackgroundFilter';
 import StatesContext from '../contexts/states';
 import Modal from '../components/Modal';
 import api from '../api/api';
-
-
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 const Home = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Home'>>();
@@ -41,21 +40,29 @@ const Home = () => {
   };
 
   const handleDeleteAnimal = async () => {
-    if(!deleteAnimalModalData) {
-      return console.log('dont exist')
-    };
+    if (!deleteAnimalModalData) {
+      setDeleteAnimalModalData(undefined);
+      return showError(
+        'user want delete a animal that doesnt exist',
+        'Apparently there was an error deleting this animal, try again'
+      );
+    }
 
-    const {idAnimal, arrayKey} = deleteAnimalModalData 
+    const { idAnimal, arrayKey } = deleteAnimalModalData;
     try {
       await api.delete(`/animal/delete/${String(idAnimal)}`);
       deleteAnimalData(arrayKey);
-      setDeleteAnimalModalData(undefined)
+      setDeleteAnimalModalData(undefined);
     } catch (e) {
       return showError(
         'Error: ' + e,
         'Apparently there was an error deleting this animal, try again'
       );
     }
+  };
+
+  const handleCloseBottomModal = () => {
+    setHaveAddressState(true);
   };
 
   return (
@@ -68,7 +75,10 @@ const Home = () => {
 
         {!haveAddressState && (
           <>
-            <BottomModal modalHeight={globalStyles.fullDeviceHeight / 1.5}>
+            <BottomModal
+              swipeDownFunction={handleCloseBottomModal}
+              modalHeight={globalStyles.fullDeviceHeight / 1.5}
+            >
               <CreateAddress changeHaveAddressStateFunction={setHaveAddressState} />
             </BottomModal>
           </>
@@ -92,4 +102,3 @@ const Home = () => {
 };
 
 export default Home;
-
