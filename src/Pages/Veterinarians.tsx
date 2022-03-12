@@ -16,6 +16,7 @@ import Header from '../components/Header';
 import Loading from '../components/Loading';
 import StatesContext from '../contexts/states';
 import VeterinariansContext from '../contexts/veterinarians';
+import Scroll from '../components/Scroll';
 
 function Veterinarians() {
   const { isLoading, setIsLoading } = useContext(StatesContext);
@@ -42,10 +43,14 @@ function Veterinarians() {
       const veterinarianUpdateData = generateUrlSearchParams(tempObj);
 
       const response = await api.post(`/veterinarian/accept`, veterinarianUpdateData);
-      const data : any = response.data
+      const data: any = response.data;
       setIsLoading(false);
 
-      const animalInfo = updateAnimalVeterinarian(veterinarian, idAnimal, data.veterinarianFingerprint)
+      const animalInfo = updateAnimalVeterinarian(
+        veterinarian,
+        idAnimal,
+        data.veterinarianFingerprint
+      );
       navigation.navigate('ViewAnimal' as never, { animalInfo } as never);
     } catch (e) {
       setIsLoading(false);
@@ -61,12 +66,12 @@ function Veterinarians() {
         <>
           <BackgroundHeader text={'Veterinarians'} />
 
-          <FlatList
-            data={veterinarians ?? []}
-            keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item, index }) => (
-              <View>
+          <Scroll>
+            {veterinarians?.map((item, index) => {
+              console.log(item.photoUrl);
+              return (
                 <DataElement
+                  key={index}
                   haveSlider
                   photoUrl={item.photoUrl}
                   title={item.givenName}
@@ -74,17 +79,17 @@ function Veterinarians() {
                   sliderFalseColor={'green'}
                   sliderTrueText={'More info'}
                   sliderFalseText={'Select'}
+                  sliderFalseFunction={() => handleSelectVeterinarian(item)}
                   sliderTrueFunction={() =>
                     navigation.navigate(
                       'ViewVeterinarianProfile' as never,
                       { veterinarianData: item } as never
                     )
                   }
-                  sliderFalseFunction={() => handleSelectVeterinarian(item)}
                 />
-              </View>
-            )}
-          />
+              );
+            })}
+          </Scroll>
         </>
       </Background>
 

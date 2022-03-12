@@ -35,7 +35,6 @@ function ScanQr() {
     })();
   };
 
-  // Request Camera Permission
   useEffect(() => {
     askForCameraPermission();
   }, []);
@@ -64,8 +63,6 @@ function ScanQr() {
   // What happens when we scan the bar code
   const handleQRCodeScanned = async ({ type, data }: HandleScanCode) => {
     setScanned(true);
-
-    //to do -> adding loading
 
     if (type === 'org.iso.QRCode' || Number(type) == 256) {
       setIsLoading(true);
@@ -120,10 +117,10 @@ function ScanQr() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 50,
+    paddingHorizontal: 20,
 
     alignItems: 'center',
+    justifyContent: 'center',
   },
 
   messageText: {
