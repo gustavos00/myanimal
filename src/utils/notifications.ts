@@ -2,6 +2,8 @@ import Constants from 'expo-constants';
 
 import * as Notifications from 'expo-notifications';
 
+import { useNavigation } from '@react-navigation/core';
+
 Notifications.setNotificationHandler({
   handleNotification: async () => {
     return {
@@ -38,13 +40,9 @@ const requestPermissions = async () => {
 export const hasNotificationsPermissions = async () => {
   //Clicked listener notification
   Notifications.addNotificationResponseReceivedListener((response) => {
-    console.log(response.notification.request.content.data);
+    const { data } = response.notification.request.content;
+    console.log(data)
   });
-
-  //Received listener notification
-  // Notifications.addNotificationReceivedListener((notification) => {
-  //   console.log(1);
-  // });
 
   if (Constants.isDevice) {
     const notificationsStatus = await allowsNotifications();
