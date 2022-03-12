@@ -50,6 +50,8 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
   const handleSubmitForm = async () => {
     if (streetName && doorNumber && postalCode) {
       const tempObj = {
+        parishName: parish,
+        locationName: locality,
         streetName,
         doorNumber,
         postalCode,
@@ -110,8 +112,6 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
           <Button text={'Create address'} handleClick={handleSubmitForm} />
         </>
       </KeyboardAvoidingWrapper>
-
-      {isLoading && <Loading />}
     </View>
   );
 }
