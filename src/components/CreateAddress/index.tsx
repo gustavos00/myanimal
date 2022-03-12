@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import api from '../../api/api';
 import globalStyles from '../../assets/styles/global';
@@ -31,18 +31,18 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
   const handleText = (
     e: string,
     stringLenght: number,
-    setFunction: Dispatch<SetStateAction<string | undefined>>,
-    type?: string
+    setFunction: Dispatch<SetStateAction<string | undefined>>
   ) => {
-    if (type === 'number' && e.length > stringLenght) {
-      if (isNaN(Number(e))) {
-        setError('Please, insert a valid age');
-      } else {
-        setError('');
-        setFunction(e);
-      }
+    if (!!error) {
+      setFunction(e);
+      return setError(error);
+    }
+
+    if (e.length > stringLenght) {
+      setError('Please, insert a valid text.');
+      setFunction(e);
     } else {
-      //Verify string
+      setError('');
       setFunction(e);
     }
   };
@@ -53,6 +53,8 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
         streetName,
         doorNumber,
         postalCode,
+        parishName: parish,
+        locationName: locality,
         email: user?.email ?? '',
         isVeterinarian: user?.isVeterinarian,
       };
@@ -79,33 +81,35 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
             text={streetName}
             width={'80%'}
             placeholder={'Street name'}
-            handleChangeFunction={(e: string) => handleText(e, 4, setStreetName)}
+            handleChangeFunction={(e: string) => handleText(e, 100, setStreetName)}
           />
           <StyledInput
             text={doorNumber}
             width={'80%'}
             placeholder={'Door number'}
-            handleChangeFunction={(e: string) => handleText(e, 4, setDoorNumber, 'number')}
+            handleChangeFunction={(e: string) => handleText(e, 10, setDoorNumber)}
           />
           <StyledInput
             text={postalCode}
             width={'80%'}
             placeholder={'Postal Code'}
-            handleChangeFunction={(e: string) => handleText(e, 4, setPostalCode)}
+            handleChangeFunction={(e: string) => handleText(e, 12, setPostalCode)}
           />
 
           <StyledInput
             text={parish}
             width={'80%'}
             placeholder={'Parish'}
-            handleChangeFunction={(e: string) => handleText(e, 4, setParish)}
+            handleChangeFunction={(e: string) => handleText(e, 100, setParish)}
           />
           <StyledInput
             text={locality}
             width={'80%'}
             placeholder={'Locality'}
-            handleChangeFunction={(e: string) => handleText(e, 4, setLocality)}
+            handleChangeFunction={(e: string) => handleText(e, 100, setLocality)}
           />
+
+          <Text>{error}</Text>
 
           <Button text={'Create address'} handleClick={handleSubmitForm} />
         </>
