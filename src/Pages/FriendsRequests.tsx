@@ -20,21 +20,17 @@ function FriendsRequests() {
   const { setPendingFriends, pendingFriends, acceptFriendsRequest, declineFriendsRequests } =
     useContext(FriendsContext);
 
-  const getAllFriendsRequests = async () => {
-    setIsLoading(true);
-    try {
-      const response = await api.get(`/user/friends/getPending?id=${user?.idUser}`); //Changed
-      setPendingFriends(response.data);
-      setIsLoading(false);
-    } catch (e) {
-      setIsLoading(false);
-      return showError('Error: ' + e, 'Apparently there was an error, try again');
-    }
-  };
-
   useEffect(() => {
     const getFriendsRequests = async () => {
-      await getAllFriendsRequests();
+      setIsLoading(true);
+      try {
+        const response = await api.get(`/user/friends/getPending?id=${user?.idUser}`); //Changed
+        setPendingFriends(response.data);
+        setIsLoading(false);
+      } catch (e) {
+        setIsLoading(false);
+        return showError('Error: ' + e, 'Apparently there was an error, try again');
+      }
     };
 
     getFriendsRequests();
@@ -48,22 +44,19 @@ function FriendsRequests() {
         <>
           <BackgroundHeader text={'Friends requests'} />
 
-          <FlatList
-            data={pendingFriends}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ index, item }) => (
-              <DataElement
-                haveSlider
-                photoUrl={item.friendData.photoUrl}
-                title={item.friendData.givenName}
-                subTitle={item.friendData.familyName}
-                sliderTrueText={'Accept'}
-                sliderFalseText={'Delete'}
-                sliderTrueFunction={() => acceptFriendsRequest(index)}
-                sliderFalseFunction={() => declineFriendsRequests(index)}
-              />
-            )}
-          />
+          {pendingFriends?.map((item, index) => (
+            <DataElement
+              key={index}
+              haveSlider
+              photoUrl={item.friendData.photoUrl}
+              title={item.friendData.givenName}
+              subTitle={item.friendData.familyName}
+              sliderTrueText={'Accept'}
+              sliderFalseText={'Delete'}
+              sliderTrueFunction={() => acceptFriendsRequest(index)}
+              sliderFalseFunction={() => declineFriendsRequests(index)}
+            />
+          ))}
         </>
       </Background>
 

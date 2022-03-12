@@ -66,7 +66,7 @@ function ViewAnimalMedicalInformation() {
           <FlatList
             data={filteredEvents}
             keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item, index }) => {
+            renderItem={({ item }) => {
               const dateContent = item.date.split('T');
               const date = dateContent[0].split('-').reverse().join('/');
               const time = dateContent[1].split(':');
@@ -102,9 +102,9 @@ function ViewAnimalMedicalInformation() {
 
               <View style={styles.pickerContainer}>
                 <RNPickerSelect
+                  placeholder={{ label: 'Please, select a filter', value: 'pleaseSelectAFilter' }}
                   onValueChange={(value) => setFilter(value)}
                   items={[
-                    //To do -> should be dynamic?
                     { label: 'All', value: 'all' },
                     { label: 'Soon', value: 'soon' },
                     { label: 'Missing report', value: 'missingReport' },
