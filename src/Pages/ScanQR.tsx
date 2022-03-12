@@ -12,7 +12,8 @@ import BackgroundHeader from '../components/BackgroundHeader';
 import Footer from '../components/Footer';
 import Button from '../components/Button';
 import UserContext from '../contexts/user';
-import globalStyles from '../assets/styles/global';
+import StatesContext from '../contexts/states';
+import Loading from '../components/Loading';
 
 interface HandleScanCode {
   type: string;
@@ -22,11 +23,12 @@ interface HandleScanCode {
 function ScanQr() {
   const [hasPermission, setHasPermission] = useState<boolean>();
   const [scanned, setScanned] = useState(false);
-  const [message, setMessage] = useState<string | undefined>();
 
   const navigation = useNavigation();
-  const { user } = useContext(UserContext)
-  
+
+  const { isLoading, setIsLoading } = useContext(StatesContext);
+  const { user } = useContext(UserContext);
+
   const askForCameraPermission = () => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -34,7 +36,6 @@ function ScanQr() {
     })();
   };
 
-  // Request Camera Permission
   useEffect(() => {
     askForCameraPermission();
   }, []);
@@ -65,24 +66,24 @@ function ScanQr() {
     setScanned(true);
 
     if (type === 'org.iso.QRCode' || Number(type) == 256) {
-      setMessage('QR Readed');
-
+      setIsLoading(true);
       try {
         await api.get(`user/friends/verifyToken?token=${data}&fromWho=${user?.idUser}`);
 
         Alert.alert('Your friend request has made with success');
+        setIsLoading(false);
         navigation.navigate('Home' as never, { haveAddress: true } as never);
       } catch (e: any) {
+        setIsLoading(false);
         showError('Error: ' + e, 'Apparently there was an error, try again');
       }
     } else {
-      setMessage('Please, read a valid QR code.');
+      showError('invalid QR code readed', 'Please, read a valid QR code.');
     }
   };
 
   const enableReScan = () => {
     setScanned(false);
-    setMessage(undefined);
   };
 
   return (
@@ -98,28 +99,24 @@ function ScanQr() {
               style={styles.qrCodeBox}
             />
 
-            {message && (
-              <>
-                <Text style={styles.messageText}>{message}</Text>
-
-                <Button handleClick={enableReScan} text={'Re-scan'} />
-              </>
-            )}
+            {scanned && <Button handleClick={enableReScan} text={'Re-scan'} />}
           </View>
 
           <Footer wichActive={'settings'} />
         </>
       </Background>
+
+      {isLoading && <Loading />}
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 50,
+    paddingHorizontal: 20,
 
     alignItems: 'center',
+    justifyContent: 'center',
   },
 
   messageText: {
