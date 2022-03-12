@@ -16,11 +16,9 @@ import { showError } from '../utils/error';
 import { hasNotificationsPermissions } from '../utils/notifications';
 import { storeExpoToken } from '../services/auth';
 
-
 function SplashScreen() {
   const navigation = useNavigation();
 
-  const [accessResponse, setAccessResponse] = useState();
   const [userData, setUserData] = useState<UserData>();
 
   const { setUser, setAnimalData } = useContext(UserContext);
@@ -33,9 +31,9 @@ function SplashScreen() {
     const getVeterinarians = async () => {
       try {
         const response = await api.get('/veterinarian/get');
-        setVeterinarians(response.data)
+        setVeterinarians(response.data);
       } catch (e) {
-        showError('Error: ' + e, 'Apparently there was an error, try again');
+        showError('Error: ' + e, 'error getting vets');
       }
     };
     getVeterinarians();
@@ -43,7 +41,7 @@ function SplashScreen() {
 
   useEffect(() => {
     const getToken = async () => {
-      const response = await getTokenFromLocalStorage(); //Trigger getTokenFromLS function
+      const response = await getTokenFromLocalStorage();
 
       if (!!response) {
         navigation.navigate('Home' as never, response as never);
@@ -55,23 +53,11 @@ function SplashScreen() {
     getToken();
   }, []);
 
-  //Get notification status
-  useEffect(() => {
-    const getNotificationsStatus = async () => {
-      //Trigger function to detect if user allow notifications
-      const response = await hasNotificationsPermissions();
-      if (!!response) {
-        storeExpoToken({ expoToken: response, token: token ?? '' });
-      }
-    };
-    getNotificationsStatus();
-  }, []);
-
   //Check token on localstorage
   const getTokenFromLocalStorage = async () => {
+    let accessResponse;
     try {
-      const response = await storage.load({ key: '@userAccess' }); //Try find access token on local storage
-      setAccessResponse(response);
+      accessResponse = await storage.load({ key: '@userAccess' }); //Try find access token on local storage
     } catch (e: any) {
       switch (e.name) {
         case 'NotFoundError':
@@ -84,16 +70,15 @@ function SplashScreen() {
       return false;
     }
 
-    if (!!accessResponse) {
-      const { salt, token } = accessResponse;
+    const { salt, token } = accessResponse;
 
-      if(!salt) return false
-
+    if (!!salt && !!token) {
       //API request
       const tokenData = generateUrlSearchParams({ salt, token });
 
       try {
-        const response = await api.post('/user/access/verify', tokenData); //Make a request to API to verify access token
+        const response = await api.post('/user/access/verify', tokenData);
+
         setUserData(response.data as unknown as UserData);
       } catch (e: any) {
         //Verify error type by docs https://github.com/sunnylqm/react-native-storage
@@ -101,9 +86,7 @@ function SplashScreen() {
 
         return false;
       }
-
       if (userData) {
-        //If is valid, set data to context API
         setToken(userData?.token);
         setUser(userData as UserData);
         setAnimalData(userData.animalData as Array<AnimalDataWithArraykey>);
@@ -115,6 +98,23 @@ function SplashScreen() {
 
     return false;
   };
+
+  //Get notification status
+  useEffect(() => {
+    const getNotificationsStatus = async () => {
+      //Trigger function to detect if user allow notifications
+      const response = await hasNotificationsPermissions();
+
+      if (!!response) {
+        if (!token) {
+          return console.log('token undefined');
+        }
+        console.log('storing');
+        storeExpoToken({ expoToken: response, token: token ?? '' });
+      }
+    };
+    getNotificationsStatus();
+  }, []);
 
   //CHECK INTERNET
   const verifyNetworkLocal = () => {
