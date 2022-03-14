@@ -5,7 +5,7 @@ export interface UserData {
   familyName: string;
   givenName: string;
   id?: number;
-  idUser?: number;
+  idUser: number;
   email: string;
   phoneNumber: string;
   token: string;
