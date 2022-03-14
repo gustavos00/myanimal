@@ -25,9 +25,8 @@ function ScanQr() {
   const [scanned, setScanned] = useState(false);
 
   const navigation = useNavigation();
-
-  const { isLoading, setIsLoading } = useContext(StatesContext);
   const { user } = useContext(UserContext);
+  const { isLoading, setIsLoading } = useContext(StatesContext);
 
   const askForCameraPermission = async () => {
     const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -62,7 +61,8 @@ function ScanQr() {
         showError('Error: ' + e, 'Apparently there was an error, try again');
       }
     } else {
-      showError('invalid QR code readed', 'Please, read a valid QR code.');
+      setIsLoading(false);
+      showError('Invalid QR code readed', 'Please, read a valid QR code.');
     }
   };
 
