@@ -29,37 +29,14 @@ function ScanQr() {
   const { isLoading, setIsLoading } = useContext(StatesContext);
   const { user } = useContext(UserContext);
 
-  const askForCameraPermission = () => {
-    (async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted' ? true : false);
-    })();
+  const askForCameraPermission = async () => {
+    const { status } = await BarCodeScanner.requestPermissionsAsync();
+    setHasPermission(status === 'granted' ? true : false);
   };
 
   useEffect(() => {
     askForCameraPermission();
   }, []);
-
-  /* RE-REQUEST IF DONT HAVE CAMERA PERMS
-  Check permissions and return the screens
-  if (hasPermission === null) {
-    return (
-      <View style={styles.container}>
-        <Text>Requesting for camera permission</Text>
-      </View>
-    );
-  }
-  if (hasPermission === false) {
-    return (
-      <View style={styles.container}>
-        <Text style={{ margin: 10 }}>No access to camera</Text>
-        <Button
-          title={'Allow Camera'}
-          onPress={() => askForCameraPermission()}
-        />
-      </View>
-    );
-  }*/
 
   // What happens when we scan the bar code
   const handleQRCodeScanned = async ({ type, data }: HandleScanCode) => {
@@ -68,11 +45,18 @@ function ScanQr() {
     if (type === 'org.iso.QRCode' || Number(type) == 256) {
       setIsLoading(true);
       try {
-        await api.get(`user/friends/verifyToken?token=${data}&fromWho=${user?.idUser}`);
+        const response = await api.get(
+          `user/friends/verifyToken?token=${data}&fromWho=${user?.idUser}`
+        );
 
-        Alert.alert('Your friend request has made with success');
         setIsLoading(false);
-        navigation.navigate('Home' as never, { haveAddress: true } as never);
+        if (response.status === 200) {
+          Alert.alert('You are already friends, please check!');
+          setScanned(false);
+        } else {
+          Alert.alert('Your friend request has made with success');
+          navigation.navigate('Home' as never, { haveAddress: true } as never);
+        }
       } catch (e: any) {
         setIsLoading(false);
         showError('Error: ' + e, 'Apparently there was an error, try again');
@@ -82,9 +66,21 @@ function ScanQr() {
     }
   };
 
-  const enableReScan = () => {
-    setScanned(false);
-  };
+  //Check permissions and return the screens
+  if (hasPermission === null)
+    return (
+      <View style={styles.container}>
+        <Text>Requesting for camera permission</Text>
+      </View>
+    );
+
+  if (hasPermission === false)
+    return (
+      <View style={styles.container}>
+        <Text style={{ margin: 10 }}>No access to camera</Text>
+        <Button text={'Allow Camera'} handleClick={() => askForCameraPermission()} />
+      </View>
+    );
 
   return (
     <>
@@ -99,7 +95,7 @@ function ScanQr() {
               style={styles.qrCodeBox}
             />
 
-            {scanned && <Button handleClick={enableReScan} text={'Re-scan'} />}
+            {scanned && <Button handleClick={() => setScanned(false)} text={'Re-scan'} />}
           </View>
 
           <Footer wichActive={'settings'} />
