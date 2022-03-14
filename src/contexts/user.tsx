@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { AnimalData, AnimalDataWithArraykey } from '../types/AnimalData';
 import { UserData } from '../types/UserData';
 import { showError } from '../utils/error';
