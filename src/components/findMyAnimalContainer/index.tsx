@@ -32,7 +32,7 @@ function FindMyAnimalContainer({
     try {
       setLoadingFunction(true);
       response = await api.get(
-        `/animal/findMyAnimal/?trackNumber=${trackNumber}`
+        `/animal/findMyAnimal/?tracking=${trackNumber}`
       );
 
       const data: ResponseData = response.data;
