@@ -6,8 +6,8 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
 import { showError } from '../utils/error';
 
-import { chatsRef } from '../services/fire';
-import { addDoc, where, onSnapshot, query, collection } from 'firebase/firestore';
+import { chatsRef, db } from '../services/fire';
+import { addDoc, where, onSnapshot, query, doc, deleteDoc } from 'firebase/firestore';
 
 import UserContext from '../contexts/user';
 import Footer from '../components/Footer';
@@ -30,10 +30,10 @@ export default function Chat() {
   const [messages, setMessages] = useState<Array<AllMessages>>();
   const [giftedUser, setGiftedUser] = useState<GiftedUser>();
 
-  const route = useRoute<RouteProp<RootStackParamList, 'Chat'>>();
-  const { friendData, isVeterinarian } = route.params;
-
   const navigation = useNavigation();
+
+  const route = useRoute<RouteProp<RootStackParamList, 'Chat'>>();
+  const { friendData } = route.params;
 
   const { user } = useContext(UserContext);
 
@@ -47,7 +47,7 @@ export default function Chat() {
 
   useEffect(() => {
     setGiftedUser({
-      _id: user?.idUser.toString(), //To do -> To fix
+      _id: user?.idUser.toString(),
       name: user?.givenName,
       avatar: user?.photoUrl,
     });
@@ -84,13 +84,13 @@ export default function Chat() {
     [messages]
   );
 
-  async function handleSend(messages: any) {
+  const handleSend = async (messages: any) => {
     const writes = messages.map((m: object) => {
       addDoc(chatsRef, { ...m, fingerprint: friendData.fingerprint });
     });
 
     await Promise.all(writes);
-  }
+  };
 
   return (
     <>
