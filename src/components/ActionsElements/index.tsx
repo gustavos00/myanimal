@@ -12,6 +12,8 @@ interface ActionsElementsProps {
 
   trueFunction?: () => void;
   falseFunction?: () => void;
+
+  haveOneSlider?: boolean;
 }
 
 function ActionsElements({
@@ -21,27 +23,30 @@ function ActionsElements({
   falseColor,
   trueFunction,
   falseFunction,
+  haveOneSlider,
 }: ActionsElementsProps) {
   return (
     <View style={styles.actionsContainer}>
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={trueFunction}
-        style={[
-          styles.acceptRequest,
-          { backgroundColor: trueColor ?? '#145DA0' },
-        ]}
-      >
-        <Text style={styles.acceptAndDeclineRequestText}>{trueText}</Text>
-      </TouchableOpacity>
-
+      {!haveOneSlider && (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={trueFunction}
+          style={[
+            styles.acceptRequest,
+            {
+              backgroundColor: trueColor ?? '#145DA0',
+              borderTopRightRadius: haveOneSlider ? 10 : 0,
+              borderBottomRightRadius: haveOneSlider ? 10 : 0,
+            },
+          ]}
+        >
+          <Text style={styles.acceptAndDeclineRequestText}>{trueText}</Text>
+        </TouchableOpacity>
+      )}
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={falseFunction}
-        style={[
-          styles.declineRequest,
-          { backgroundColor: falseColor ?? '#D1192A' },
-        ]}
+        style={[styles.declineRequest, { backgroundColor: falseColor ?? '#D1192A' }]}
       >
         <Text style={styles.acceptAndDeclineRequestText}>{falseText}</Text>
       </TouchableOpacity>
@@ -56,8 +61,8 @@ const styles = StyleSheet.create({
 
   actionsContainer: {
     height: '100%',
-    paddingRight: 30,
-    
+    paddingRight: 20,
+
     flexDirection: 'row',
   },
 
@@ -78,7 +83,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 1,
     color: '#fff',
-    textAlign: 'center'
+    textAlign: 'center',
   },
 
   declineRequest: {

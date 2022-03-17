@@ -11,6 +11,7 @@ interface DataElementProps {
   photoUrl: string | ImageSourcePropType;
   photoFlagType?: string;
   haveSlider?: boolean;
+  haveOneSlider?: boolean;
   handleOnPress?: () => void;
 
   sliderTrueText?: string;
@@ -30,6 +31,7 @@ function DataElement({
   photoFlagType,
   haveSlider,
   handleOnPress,
+  haveOneSlider,
   sliderTrueText,
   sliderFalseText,
   sliderTrueColor,
@@ -52,10 +54,10 @@ function DataElement({
         setPhotoFlag(require('../../assets/img/done.png'));
         setPhotoFlagColor('#A7A5EF');
         break;
-        
+
       case 'soon':
-        setPhotoFlag(undefined)
-        setPhotoFlagColor(undefined)
+        setPhotoFlag(undefined);
+        setPhotoFlagColor(undefined);
         break;
     }
   }, [photoFlagType]);
@@ -86,6 +88,7 @@ function DataElement({
           </TouchableOpacity>
           {haveSlider && (
             <ActionsElements
+              haveOneSlider={haveOneSlider}
               trueText={sliderTrueText}
               falseText={sliderFalseText}
               trueColor={sliderTrueColor}
