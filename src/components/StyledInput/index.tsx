@@ -19,7 +19,7 @@ function StyledInput({ text, handleChangeFunction, placeholder, width }: StyledI
           </View>
 
           <TextInput
-            value={text}
+            value={text === 'null' ? '' : text}
             onChangeText={(text) => handleChangeFunction(text)}
             style={styles.input}
           />
