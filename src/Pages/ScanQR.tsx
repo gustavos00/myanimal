@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useNavigation } from '@react-navigation/core';
 import { showError } from '../utils/error';
+import { generateUrlSearchParams } from '../utils/URLSearchParams';
 
 import api from '../api/api';
 
@@ -44,10 +45,8 @@ function ScanQr() {
     if (type === 'org.iso.QRCode' || Number(type) == 256) {
       setIsLoading(true);
       try {
-        const response = await api.get(
-          `user/friends/verifyToken?token=${data}&fromWho=${user?.idUser}`
-        );
-
+        const QRData =generateUrlSearchParams({ token: data, fromWho: user?.idUser });
+        const response = await api.post('user/friends/verifyToken', QRData);
         setIsLoading(false);
         if (response.status === 200) {
           Alert.alert('You are already friends, please check!');
