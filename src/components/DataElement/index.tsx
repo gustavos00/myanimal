@@ -3,12 +3,13 @@ import globalStyles from '../../assets/styles/global';
 import ActionsElements from '../ActionsElements';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { View, Text, StyleSheet, ScrollView, Image, ImageSourcePropType } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { Image } from 'react-native-expo-image-cache';
 
 interface DataElementProps {
   title: any;
   subTitle: string;
-  photoUrl: string | ImageSourcePropType;
+  photoUrl: string;
   photoFlagType?: string;
   haveSlider?: boolean;
   haveOneSlider?: boolean;
@@ -39,8 +40,7 @@ function DataElement({
   sliderTrueFunction,
   sliderFalseFunction,
 }: DataElementProps) {
-  const dynamicPhotoUrl = typeof photoUrl === 'string' ? { uri: photoUrl } : photoUrl;
-  const [photoFlag, setPhotoFlag] = useState<ImageSourcePropType | undefined>();
+  const [photoFlag, setPhotoFlag] = useState<string>();
   const [photoFlagColor, setPhotoFlagColor] = useState<string>();
 
   useEffect(() => {
@@ -74,9 +74,9 @@ function DataElement({
           <TouchableOpacity onPress={handleOnPress}>
             <View style={styles.contentContainer}>
               <View>
-                <Image source={dynamicPhotoUrl} style={styles.icon} />
+                <Image uri={photoUrl} style={styles.icon} />
                 <View style={[styles.photoFlagContainer, { backgroundColor: photoFlagColor }]}>
-                  {photoFlag && <Image source={photoFlag} style={styles.photoFlagElement} />}
+                  {photoFlag && <Image uri={photoFlag} style={styles.photoFlagElement} />}
                 </View>
               </View>
 
