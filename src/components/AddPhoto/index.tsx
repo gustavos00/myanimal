@@ -4,6 +4,7 @@ import globalStyles from '../../assets/styles/global';
 import * as ImagePicker from 'expo-image-picker';
 
 import { StyleSheet, View, TouchableOpacity, Image } from 'react-native';
+import * as CachedImage from 'react-native-expo-image-cache';
 import { useState } from 'react';
 
 interface AddPhotoProps {
@@ -50,7 +51,7 @@ function AddPhoto({ photoUrl, setProfilePhotoFunction, widthSize, heightSize }: 
           ]}
         >
           {photoUrl || localPhotoUrl ? (
-            <Image style={styles.animalPhoto} source={{ uri: localPhotoUrl }} />
+            <CachedImage.Image style={styles.animalPhoto} uri={localPhotoUrl ?? ''} />
           ) : (
             <Image style={styles.photo} source={require('../../assets/img/add.png')} />
           )}
