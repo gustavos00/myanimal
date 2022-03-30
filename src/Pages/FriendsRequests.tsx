@@ -48,6 +48,7 @@ function FriendsRequests() {
             <DataElement
               key={index}
               haveSlider
+              haveOneSlider={item.fromWhoId === user?.idUser ? true : false}
               photoUrl={item.friendData.photoUrl}
               title={item.friendData.givenName}
               subTitle={item.friendData.familyName}

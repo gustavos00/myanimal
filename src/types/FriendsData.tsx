@@ -8,4 +8,5 @@ export interface FriendsData {
    userFriendsIdToWho: number,
    userFriendsIdFromWhoFk: UserData
    friendData: UserData
+   fromWhoId?: Number
 }

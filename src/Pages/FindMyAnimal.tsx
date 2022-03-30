@@ -21,7 +21,6 @@ interface geographicDataProps {
 }
 
 function FindMyAnimal() {
-  //TO-DO FIX GEOGRAPHICDATA 
   const [haveValidAddress, setHaveValidAddress] = useState<boolean>();
   const [geographicData, setGeographicData] = useState<geographicDataProps>();
 
@@ -64,13 +63,9 @@ function FindMyAnimal() {
                 longitude={geographicData?.longitude ?? 0}
                 latitude={geographicData?.latitude ?? 0}
               />
-
-              <Button
-                text={'Open on maps'}
-                handleClick={(geographicData: geographicDataProps) => {
-                  openOnMapsHandleClick(geographicData);
-                }}
-              />
+            </View>
+            <View style={styles.ownerContainer}>
+              
             </View>
           </>
         ) : (
@@ -86,6 +81,10 @@ function FindMyAnimal() {
 const styles = StyleSheet.create({
   mapsContainer: {
     flex: 0.7,
+  },
+
+  ownerContainer: {
+    marginTop: 20,
   },
 });
 

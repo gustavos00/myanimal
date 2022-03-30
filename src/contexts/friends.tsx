@@ -5,6 +5,7 @@ import api from '../api/api';
 import storage from '../utils/storage';
 import { showError } from '../utils/error';
 import StatesContext from './states';
+import { generateUrlSearchParams } from '../utils/URLSearchParams';
 
 interface FriendsContextData {
   pendingFriends: Array<FriendsData> | undefined;
@@ -25,8 +26,8 @@ export function FriendsProvider({ children }: any) {
   const [pendingFriends, setPendingFriends] = useState<Array<FriendsData>>();
   const [acceptedFriends, setAcceptedFriends] = useState<Array<FriendsData>>([]);
 
-  const { isLoading, setIsLoading } = useContext(StatesContext);
-  
+  const { setIsLoading } = useContext(StatesContext);
+
   const declineFriendsRequests = async (index: number) => {
     //TO DO -> SHOULD I HAVE A CONFIRM MODAL?
     if (!pendingFriends) return console.log('Pending friends dont exist');
@@ -36,7 +37,8 @@ export function FriendsProvider({ children }: any) {
 
     try {
       setIsLoading(true);
-      await api.get(`/user/friends/decline?id=${idFriendsElement}`);
+      const data = generateUrlSearchParams({ id: idFriendsElement });
+      await api.post('/user/friends/decline', data);
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
@@ -60,7 +62,8 @@ export function FriendsProvider({ children }: any) {
 
     try {
       setIsLoading(true);
-      response = await api.get(`/user/friends/accept?id=${idFriendsElement}`);
+      const data = generateUrlSearchParams({ id: idFriendsElement });
+      response = await api.post('/user/friends/accept', data);
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
@@ -68,7 +71,7 @@ export function FriendsProvider({ children }: any) {
     }
 
     if (!!response) {
-      const responseData: AcceptFriendsRequestResponse = response.data;
+      const responseData: any = response.data;
       const fingerprintStorageName = `${tempObj.userFriendsIdFromWho}-${tempObj.userFriendsIdToWho}`;
 
       tempObj.status = 'Accepted';

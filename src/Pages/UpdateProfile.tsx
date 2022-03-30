@@ -33,8 +33,8 @@ function UpdateProfile() {
   const [photoUrl, setPhotoUrl] = useState<string | undefined>(user?.photoUrl);
 
   const handleSubmitForm = async () => {
-    const tempObj = {     
-      id: user?.idUser,  //Changed
+    const tempObj = {
+      id: user?.idUser, //Changed
       streetName,
       doorNumber,
       postalCode,
@@ -44,7 +44,7 @@ function UpdateProfile() {
       familyName,
       phoneNumber,
       email: user?.email,
-      isVeterinarian: user?.isVeterinarian
+      isVeterinarian: user?.isVeterinarian,
     };
     const newUserData = generateFormData(tempObj);
     newUserData.append('userPhoto', {
@@ -55,7 +55,12 @@ function UpdateProfile() {
 
     try {
       const response = await api.post('/user/update', newUserData);
-      setUser(response.data as unknown as UserData);
+      const cleanResponse = response.data as any;
+      const localUserData = {
+        ...user,
+        ...cleanResponse,
+      };
+      setUser({...localUserData as unknown as UserData});
       navigation.navigate('Home' as never, { haveAddress: true } as never);
     } catch (e) {
       console.log(e);
