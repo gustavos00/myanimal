@@ -47,11 +47,10 @@ function Settings() {
   };
 
   const changeScreen = async (screenName: string, clearStorage?: boolean) => {
-    navigation.navigate(screenName as any);
-
     if (clearStorage) {
       await storage.remove({ key: '@userAccess' });
     }
+    navigation.navigate(screenName as any);
   };
 
   return (
