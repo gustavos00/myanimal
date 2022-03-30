@@ -21,7 +21,7 @@ function StyledText({ text, value, hasScroll }: StyledTextProps) {
             <Text style={styles.input}>{value}</Text>
           </ScrollView>
         ) : (
-          <Text style={styles.input}>{value}</Text>
+          <Text style={styles.input}>{value === 'null' ? '' : value}</Text>
         )}
       </View>
     </>
