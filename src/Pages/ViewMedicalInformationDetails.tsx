@@ -8,7 +8,7 @@ import Scroll from '../components/Scroll';
 import StyledText from '../components/StyledText';
 
 import { useRoute, RouteProp } from '@react-navigation/native';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { RootStackParamList } from '../navigator/MainStack';
 import BackgroundHeader from '../components/BackgroundHeader';
 
@@ -16,11 +16,17 @@ function ViewMedicalInformationDetails() {
   const route = useRoute<RouteProp<RootStackParamList, 'ViewMedicalInformationDetails'>>();
   const { medicalEventData } = route.params;
 
-  const dateContent = medicalEventData.date.split('T');
-  const date = dateContent[0].split('-').reverse().join('/');
-  const time = dateContent[1].split(':');
-  const eventDate = `${date} - ${time[0]}h${time[1]}m`;
+  const splitedDate = new Date(medicalEventData.date)
+  .toISOString()
+  .replace(/T/, ' ')
+  .replace(/\..+/, '')
+  .split(' ')
 
+  const date = splitedDate[0].split('-').reverse().join('/')
+  const splitedTime = splitedDate[1].split(':')
+  const fullTime = splitedTime[0] + ':' + splitedTime[1]
+  const eventDate = `${date} ${fullTime}`
+  
   return (
     <>
       <View style={styles.headerBg}>
@@ -32,13 +38,7 @@ function ViewMedicalInformationDetails() {
               <StyledText value={eventDate} text={'Date'} />
               <StyledText value={medicalEventData.eventsStatus.value} text={'Status'} />
               <StyledText value={medicalEventData.eventsType.value} text={'Type'} />
-              <StyledText
-                value={
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dolor quam, mattis sed quam a, varius porttitor leo. Etiam ac lectus eget urna ultricies dapibus blandit ac sem. Quisque erat sapien, accumsan eget sollicitudin ac, gravida non diam. Curabitur nunc ipsum, interdum eu lacinia quis, pharetra sit amet ipsum. Fusce tempor cursus enim at dignissim. Sed imperdiet, turpis at pharetra lobortis, orci lacus mattis ligula, ac rhoncus risus erat in enim. Quisque euismod venenatis porta. Etiam quis leo magna.'
-                }
-                text={'Report'}
-                hasScroll
-              />
+              <StyledText value={medicalEventData.report} text={'Report'} hasScroll />
             </View>
 
             <View style={styles.filesContainer}>
