@@ -3,6 +3,7 @@ export interface AnimalMedicalEvents {
   report: string;
   eventsStatus: EventsStatus;
   eventsType: EventsTypes;
+  files: Array<AnimalMedicalEventsFiles>
 }
 
 export interface EventsTypes {
@@ -15,4 +16,10 @@ export interface EventsStatus {
   value: string;
 }
 
-
+export interface AnimalMedicalEventsFiles {
+  file: string,
+  function: string,
+  label: string,
+  name: string,
+  updatedAt: string
+}
