@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Background from '../components/Background';
 import BackgroundHeader from '../components/BackgroundHeader';
 import DataElement from '../components/DataElement';
@@ -9,17 +9,23 @@ import globalStyles from '../assets/styles/global';
 import RNPickerSelect from 'react-native-picker-select';
 import Button from '../components/Button';
 import api from '../api/api';
+import StatesContext from '../contexts/states';
+import Loading from '../components/Loading';
 
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AnimalMedicalEvents } from '../types/AnimalMedicalEvents';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
+import { formatDate } from '../utils/date';
 
 function ViewAnimalMedicalInformation() {
   const [filterModalIsOpen, setFilterModalIsOpen] = useState<boolean>();
   const [filter, setFilter] = useState<string>();
   const [events, setEvents] = useState<Array<AnimalMedicalEvents>>([]);
   const [filteredEvents, setFilteredEvents] = useState<Array<AnimalMedicalEvents>>([]);
+
+  //get loading and setLoading useeffect from context api
+  const { isLoading, setIsLoading } = useContext(StatesContext);
 
   const navigation = useNavigation();
 
@@ -29,6 +35,7 @@ function ViewAnimalMedicalInformation() {
   useEffect(() => {
     //to do -> try useMemo
     const handleGetEvents = async () => {
+      setIsLoading(true);
       try {
         const response = await api.get(`animal/medicalEvents/?id=${idAnimal}`);
         setEvents(response.data);
@@ -36,7 +43,9 @@ function ViewAnimalMedicalInformation() {
       } catch (e) {
         console.log(e);
       }
+      setIsLoading(false);
     };
+
     handleGetEvents();
   }, []);
 
@@ -67,16 +76,7 @@ function ViewAnimalMedicalInformation() {
             data={filteredEvents}
             keyExtractor={(_, index) => index.toString()}
             renderItem={({ item }) => {
-              const splitedDate = new Date(item.date)
-                .toISOString()
-                .replace(/T/, ' ')
-                .replace(/\..+/, '')
-                .split(' ');
-
-              const date = splitedDate[0].split('-').reverse().join('/');
-              const splitedTime = splitedDate[1].split(':');
-              const fullTime = splitedTime[0] + ':' + splitedTime[1];
-              const eventDate = `${date} ${fullTime}`;
+              const eventDate = formatDate(item.date);
 
               return (
                 <DataElement
@@ -123,6 +123,8 @@ function ViewAnimalMedicalInformation() {
           </BackgroundFilter>
         </>
       )}
+
+      {isLoading && <Loading />}
     </>
   );
 }
