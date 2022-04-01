@@ -65,7 +65,7 @@ function UpdateAnimal() {
         const data = result.data as unknown as AnimalData;
 
         deleteAnimalData(data.idAnimal);
-        pushAnimalData(data as any);
+        pushAnimalData({...animalInfo, ...data} as any);
         setIsLoading(false);
 
         navigation.navigate('Home' as never, { haveAddress: true } as never);
