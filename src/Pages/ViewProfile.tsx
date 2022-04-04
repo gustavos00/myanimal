@@ -36,7 +36,7 @@ function ViewProfile() {
         <ProfilePhoto photoUrl={user?.photoUrl} />
 
         <Background heightSize={'75%'}>
-          <Scroll aligned>
+          <Scroll>
             <View style={styles.container}>
               <View style={styles.firstInputContainer}>
                 <OptionHeader text={'Account information'} />
@@ -69,7 +69,7 @@ function ViewProfile() {
                 />
                 <StyledText
                   value={user?.userAddress.parishName ?? ''}
-                  text={'Parish'}
+                  text={'City'}
                 />
                 <StyledText
                   value={user?.userAddress.locationName ?? ''}
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
   firstInputContainer: {
     width: '80%',
     marginTop: 40,
+    borderWidth: 1,
   },
 
   inputsContainer: {

@@ -64,9 +64,6 @@ function FindMyAnimal() {
                 latitude={geographicData?.latitude ?? 0}
               />
             </View>
-            <View style={styles.ownerContainer}>
-              
-            </View>
           </>
         ) : (
           <></>
@@ -80,7 +77,7 @@ function FindMyAnimal() {
 
 const styles = StyleSheet.create({
   mapsContainer: {
-    flex: 0.7,
+    flex: 1
   },
 
   ownerContainer: {

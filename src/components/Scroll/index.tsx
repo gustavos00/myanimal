@@ -15,7 +15,7 @@ function Scroll({ children, aligned, withoutMargin }: ScrollProps) {
       contentContainerStyle={aligned && { justifyContent: 'center', alignItems: 'center' }}
       style={[
         styles.container,
-        !withoutMargin && { marginBottom: 100 }, //footer height
+        !withoutMargin && { marginBottom: globalStyles.smallerGap * 5 }, //footer height
       ]}
     >
       {children}

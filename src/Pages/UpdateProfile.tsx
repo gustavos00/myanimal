@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { UserData } from '../types/UserData';
+import { generateFormData } from '../utils/FormData';
 
 import globalStyles from '../assets/styles/global';
 
@@ -16,7 +17,7 @@ import StyledInput from '../components/StyledInput';
 import Underline from '../components/Underline';
 import UserContext from '../contexts/user';
 import AddPhoto from '../components/AddPhoto';
-import { generateFormData } from '../utils/FormData';
+import Scroll from '../components/Scroll';
 
 function UpdateProfile() {
   const navigation = useNavigation();
@@ -60,7 +61,7 @@ function UpdateProfile() {
         ...user,
         ...cleanResponse,
       };
-      setUser({...localUserData as unknown as UserData});
+      setUser({ ...(localUserData as unknown as UserData) });
       navigation.navigate('Home' as never, { haveAddress: true } as never);
     } catch (e) {
       console.log(e);
@@ -73,7 +74,7 @@ function UpdateProfile() {
         <AddPhoto photoUrl={photoUrl} setProfilePhotoFunction={setPhotoUrl} />
 
         <Background heightSize={'75%'}>
-          <KeyboardAvoidingWrapper>
+          <Scroll>
             <View style={styles.container}>
               <View style={styles.firstInputContainer}>
                 <OptionHeader text={'Account information'} />
@@ -113,11 +114,7 @@ function UpdateProfile() {
                   text={postalCode}
                   placeholder={'Postal code'}
                 />
-                <StyledInput
-                  handleChangeFunction={setParish}
-                  text={parish}
-                  placeholder={'Parish'}
-                />
+                <StyledInput handleChangeFunction={setParish} text={parish} placeholder={'City'} />
                 <StyledInput
                   handleChangeFunction={setLocality}
                   text={locality}
@@ -126,7 +123,7 @@ function UpdateProfile() {
               </View>
               <Button text={'Save'} handleClick={handleSubmitForm} />
             </View>
-          </KeyboardAvoidingWrapper>
+          </Scroll>
         </Background>
       </View>
 
@@ -138,7 +135,6 @@ function UpdateProfile() {
 const styles = StyleSheet.create({
   headerBg: {
     flex: 1,
-
     justifyContent: 'center',
 
     backgroundColor: globalStyles.mainColor,

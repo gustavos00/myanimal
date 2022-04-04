@@ -1,14 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import globalStyles from '../../assets/styles/global';
+import Button from '../Button';
 
 interface ModalProps {
   falseFunction: () => void;
   trueFunction: () => void;
   title: string;
   text: string;
-  noButtonText: string;
-  yesButtonText: string;
+  borderedButtonText?: string;
+  filledButtonText?: string;
 }
 
 function Modal({
@@ -16,28 +17,21 @@ function Modal({
   trueFunction,
   title,
   text,
-  noButtonText,
-  yesButtonText,
+  borderedButtonText,
+  filledButtonText,
 }: ModalProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.text}>{text}</Text>
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={falseFunction}
-          style={[styles.button, { borderColor: '#D1192A' }]}
-        >
-          <Text style={[styles.buttonsText, {color: '#D1192A'}]}>{noButtonText}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={trueFunction}
-          style={[styles.button, { borderColor: 'green' }]}
-        >
-          <Text style={[styles.buttonsText, {color: 'green'}]}>{yesButtonText}</Text>
-        </TouchableOpacity>
+        {borderedButtonText && (
+          <Button isBordered width={90} text={borderedButtonText} handleClick={falseFunction} />
+        )}
+
+        {filledButtonText && (
+          <Button width={90} text={filledButtonText} handleClick={trueFunction} />
+        )}
       </View>
     </View>
   );
@@ -55,7 +49,10 @@ const styles = StyleSheet.create({
   },
 
   buttonsContainer: {
-    marginTop: 20,
+    width: globalStyles.fullDeviceWidth * 0.8,
+    marginTop: 10,
+
+    justifyContent: 'space-around',
     flexDirection: 'row',
   },
 

@@ -149,13 +149,12 @@ function CreateAnimal() {
 
       {isLoading && <Loading />}
 
-      {isNoPhotoModalOpen && (
-        <BackgroundFilter>
+      {isNoPhotoModalOpen && /* to do -> verify if is everthing ok on simulator */ (
+        <BackgroundFilter> 
           <Modal
             title={'Somethign is missing..'}
-            text={"Apparently you didn't post a picture of your pet, are you sure?"}
-            noButtonText={'No'}
-            yesButtonText={'Yes'}
+            text={"Apparently you didn't post a picture of your pet. Please select a photo."}
+            borderedButtonText={'Close'}
             trueFunction={() => setIsNoPhotoModalOpen(false)}
             falseFunction={() => setIsNoPhotoModalOpen(false)}
           />

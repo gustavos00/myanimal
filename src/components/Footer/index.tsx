@@ -32,11 +32,6 @@ function Footer({ wichActive }: FooterProps) {
           active={wichActive === 'home' ? true : false}
         />
         <FooterElement
-          handleClick={() => changeScreen('Home')}
-          photoName={'notification'}
-          active={wichActive === 'notification' ? true : false}
-        />
-        <FooterElement
           handleClick={() => changeScreen('ViewProfile')}
           photoName={'user'}
           active={wichActive === 'user' ? true : false}

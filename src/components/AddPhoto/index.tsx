@@ -51,7 +51,7 @@ function AddPhoto({ photoUrl, setProfilePhotoFunction, widthSize, heightSize }: 
           ]}
         >
           {photoUrl || localPhotoUrl ? (
-            <CachedImage.Image style={styles.animalPhoto} uri={localPhotoUrl ?? ''} />
+            <Image style={styles.animalPhoto} source={{ uri: localPhotoUrl }} />
           ) : (
             <Image style={styles.photo} source={require('../../assets/img/add.png')} />
           )}
