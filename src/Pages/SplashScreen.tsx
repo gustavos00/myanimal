@@ -99,22 +99,6 @@ function SplashScreen() {
     return false;
   };
 
-  //Get notification status
-  useEffect(() => {
-    const getNotificationsStatus = async () => {
-      //Trigger function to detect if user allow notifications
-      const response = await hasNotificationsPermissions();
-
-      if (!!response) {
-        if (!token) {
-          return console.log('token undefined');
-        }
-        console.log('storing');
-        storeExpoToken({ expoToken: response, token: token ?? '' });
-      }
-    };
-    getNotificationsStatus();
-  }, []);
 
   //CHECK INTERNET
   const verifyNetworkLocal = () => {

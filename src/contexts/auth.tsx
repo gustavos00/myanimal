@@ -6,6 +6,8 @@ import storage from '../utils/storage';
 import isEmpty from '../utils/isEmpty';
 import UserContext from './user';
 import StatesContext from './states';
+import { storeExpoToken } from '../services/auth';
+import { hasNotificationsPermissions } from '../utils/notifications';
 
 interface HomeAddressStatusParams {
   haveAddress?: boolean;
@@ -14,7 +16,7 @@ interface HomeAddressStatusParams {
 interface AuthContextData {
   token: string | void;
 
-  googleSignIn: () => Promise<false | HomeAddressStatusParams | undefined>;
+  googleSignIn: () => Promise<false | void | HomeAddressStatusParams | undefined>;
   setToken: (token: string) => void;
 }
 
@@ -24,7 +26,7 @@ export function AuthProvider({ children }: any) {
   const [token, setToken] = useState<string | void>();
 
   const { setAnimalData, setUser } = useContext(UserContext);
-  const { setIsLoading} = useContext(StatesContext);
+  const { setIsLoading } = useContext(StatesContext);
 
   const setTokenOnLocalStorage = async (token: string, salt: string) => {
     //Missing date
@@ -39,18 +41,27 @@ export function AuthProvider({ children }: any) {
     let haveAddressStatus;
 
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const response = await auth.GoogleSignIn();
       if (!response) return false;
 
       setToken(response.token);
       setAnimalData(response.animalData);
       setUser(response);
-      haveAddressStatus = !isEmpty(response.userAddress);
+      haveAddressStatus = response.userAddress.idAddress !== null;
       await setTokenOnLocalStorage(response.accessToken, response.salt);
-      setIsLoading(false)
+
+      const notificationsResponse = await hasNotificationsPermissions();
+      if (!!notificationsResponse) {
+        if (!response.token) {
+          return console.log('missing token');
+        }
+        console.log('storing');
+        storeExpoToken({ expoToken: notificationsResponse, token: response.token ?? '' });
+      }
+      setIsLoading(false);
     } catch (e) {
-      setIsLoading(false)
+      setIsLoading(false);
       return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
 
