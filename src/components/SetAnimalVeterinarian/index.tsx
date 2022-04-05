@@ -18,7 +18,7 @@ interface SetAnimalVeterinarianProps {
 function SetAnimalVeterinarian({ data, animalData }: SetAnimalVeterinarianProps) {
   const navigation = useNavigation();
 
-  if (!!data) {
+  if (data?.idUser !== null && !!data) {
     return (
       <View style={styles.container}>
         <BackgroundHeader text={'Animal Vet'} />

@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
   firstInputContainer: {
     width: '80%',
     marginTop: 40,
-    borderWidth: 1,
   },
 
   inputsContainer: {
