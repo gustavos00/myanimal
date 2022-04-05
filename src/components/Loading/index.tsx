@@ -7,7 +7,7 @@ function Loading() {
   return (
     <>
       <BackgroundFilter>
-       <LottieView source={require('../../assets/animations/loading.json')} autoPlay loop/>
+       <LottieView source={require('../../assets/animations/loading.json')} style={{width: 120, height: 120}} autoPlay loop/>
       </BackgroundFilter>
     </>
   );
