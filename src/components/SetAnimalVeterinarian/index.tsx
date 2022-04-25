@@ -26,8 +26,8 @@ function SetAnimalVeterinarian({ data, animalData }: SetAnimalVeterinarianProps)
         <DataElement
           photoUrl={data.photoUrl}
           title={data.givenName}
-          subTitle={data.location}
-          haveSlider
+          subTitle={data.veterinarianAddress.locationName}
+          haveSlider={animalData.veterinarianAcceptedRequest}
           sliderFalseColor={'green'}
           sliderTrueText={'Chat'}
           sliderFalseText={'Medical information'}
@@ -52,6 +52,7 @@ function SetAnimalVeterinarian({ data, animalData }: SetAnimalVeterinarianProps)
                 veterinarianData: data,
                 isUserAnimalVeterinarian: true,
                 idAnimal: animalData.idAnimal,
+                veterinarianAcceptedRequest: animalData.veterinarianAcceptedRequest,
               } as never
             )
           }

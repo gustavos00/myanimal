@@ -56,7 +56,6 @@ export function AuthProvider({ children }: any) {
         if (!response.token) {
           return console.log('missing token');
         }
-        console.log('storing');
         storeExpoToken({ expoToken: notificationsResponse, token: response.token ?? '' });
       }
       setIsLoading(false);

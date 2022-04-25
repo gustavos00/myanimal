@@ -16,6 +16,8 @@ const Login = () => {
   const { isLoading, setIsLoading } = useContext(StatesContext);
   const { googleSignIn } = useContext(AuthContext);
 
+  //Função que irá ser executa ao clicar no botão.
+  //Executa a função da AuthContext chamada "googleSignIn"
   const handleGoogleSignIn = async () => {
     const status = await googleSignIn();
 

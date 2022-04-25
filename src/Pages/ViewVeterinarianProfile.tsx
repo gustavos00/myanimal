@@ -19,7 +19,7 @@ import VeterinariansContext from '../contexts/veterinarians';
 
 function ViewVeterinarianProfile() {
   const route = useRoute<RouteProp<RootStackParamList, 'ViewVeterinarianProfile'>>();
-  const { veterinarianData, isUserAnimalVeterinarian, idAnimal } = route.params;
+  const { veterinarianData, isUserAnimalVeterinarian, idAnimal, veterinarianAcceptedRequest } = route.params;
 
   const { isLoading, setIsLoading } = useContext(StatesContext);
   const { deleteAnimalVeterinarian } = useContext(VeterinariansContext);
@@ -36,7 +36,7 @@ function ViewVeterinarianProfile() {
       await api.post('/veterinarian/remove', veterinarianUpdateData);
       setIsLoading(false);
 
-      const animalInfo = deleteAnimalVeterinarian( idAnimal);
+      const animalInfo = deleteAnimalVeterinarian(idAnimal);
       navigation.navigate('ViewAnimal' as never, { animalInfo } as never);
     } catch (e) {
       setIsLoading(false);
@@ -52,10 +52,17 @@ function ViewVeterinarianProfile() {
         <Background heightSize={'75%'}>
           <Scroll aligned>
             <View style={styles.inputsContainer}>
-              <StyledText value={veterinarianData.givenName} text={'Name'} />
+              <StyledText
+                value={`${veterinarianData.givenName} ${veterinarianData.familyName}`}
+                text={'Name'}
+              />
               <StyledText value={veterinarianData.veterinarianAddress.streetName} text={'Street'} />
               <StyledText value={veterinarianData.veterinarianAddress.parishName} text={'City'} />
-              <StyledText value={veterinarianData.veterinarianAddress.locationName} text={'Locality'} />
+              <StyledText
+                value={veterinarianData.veterinarianAddress.locationName}
+                text={'Locality'}
+              />
+              <StyledText value={veterinarianAcceptedRequest ? 'Accepted' : 'Waiting'} text={'Status'} />
 
               {isUserAnimalVeterinarian && (
                 <View style={styles.buttonContainer}>

@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { UserData } from '../types/UserData';
 import { generateFormData } from '../utils/FormData';
 
 import globalStyles from '../assets/styles/global';
@@ -11,17 +10,20 @@ import api from '../api/api';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import Footer from '../components/Footer';
-import KeyboardAvoidingWrapper from '../components/KeyboardAvoidingWrapper';
 import OptionHeader from '../components/OptionHeader';
 import StyledInput from '../components/StyledInput';
 import Underline from '../components/Underline';
 import UserContext from '../contexts/user';
 import AddPhoto from '../components/AddPhoto';
 import Scroll from '../components/Scroll';
+import StatesContext from '../contexts/states';
+import { showError } from '../utils/error';
+import Loading from '../components/Loading';
 
 function UpdateProfile() {
   const navigation = useNavigation();
   const { user, setUser } = useContext(UserContext);
+  const { isLoading, setIsLoading } = useContext(StatesContext);
 
   const [streetName, setStreetName] = useState<string | undefined>(user?.userAddress.streetName);
   const [doorNumber, setDoorNumber] = useState<string | undefined>(user?.userAddress.doorNumber);
@@ -35,18 +37,15 @@ function UpdateProfile() {
 
   const handleSubmitForm = async () => {
     const tempObj = {
-      id: user?.idUser, //Changed
-      streetName,
-      doorNumber,
-      postalCode,
-      parish,
-      locality,
+      id: user?.idUser,
       givenName,
       familyName,
       phoneNumber,
+      idAddress: user?.userAddress,
       email: user?.email,
       isVeterinarian: user?.isVeterinarian,
     };
+
     const newUserData = generateFormData(tempObj);
     newUserData.append('userPhoto', {
       uri: photoUrl,
@@ -55,16 +54,25 @@ function UpdateProfile() {
     } as unknown as string | Blob);
 
     try {
+      setIsLoading(true);
       const response = await api.post('/user/update', newUserData);
       const cleanResponse = response.data as any;
+
       const localUserData = {
         ...user,
-        ...cleanResponse,
+        givenName,
+        familyName,
+        phoneNumber,
+        photoUrl: cleanResponse.photoUrl,
+        photoName: cleanResponse.photoName,
       };
-      setUser({ ...(localUserData as unknown as UserData) });
+
+      setIsLoading(false);
+      setUser(localUserData as any);
       navigation.navigate('Home' as never, { haveAddress: true } as never);
     } catch (e) {
-      console.log(e);
+      setIsLoading(false);
+      return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
   };
 
@@ -128,6 +136,8 @@ function UpdateProfile() {
       </View>
 
       <Footer wichActive={'settings'} />
+
+      {isLoading && <Loading />}
     </>
   );
 }

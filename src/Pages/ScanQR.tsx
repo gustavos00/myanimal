@@ -15,6 +15,8 @@ import Button from '../components/Button';
 import UserContext from '../contexts/user';
 import StatesContext from '../contexts/states';
 import Loading from '../components/Loading';
+import Scroll from '../components/Scroll';
+import globalStyles from '../assets/styles/global';
 
 interface HandleScanCode {
   type: string;
@@ -45,12 +47,11 @@ function ScanQr() {
     if (type === 'org.iso.QRCode' || Number(type) == 256) {
       setIsLoading(true);
       try {
-        const QRData =generateUrlSearchParams({ token: data, fromWho: user?.idUser });
+        const QRData = generateUrlSearchParams({ token: data, fromWho: user?.idUser });
         const response = await api.post('user/friends/verifyToken', QRData);
         setIsLoading(false);
         if (response.status === 200) {
           Alert.alert('You are already friends, please check!');
-          setScanned(false);
         } else {
           Alert.alert('Your friend request has made with success');
           navigation.navigate('Home' as never, { haveAddress: true } as never);
@@ -88,14 +89,16 @@ function ScanQr() {
         <>
           <BackgroundHeader text={'Scan Friend QR Code'} />
 
-          <View style={styles.container}>
-            <BarCodeScanner
-              onBarCodeScanned={scanned ? undefined : handleQRCodeScanned}
-              style={styles.qrCodeBox}
-            />
+          <Scroll>
+            <View style={styles.container}>
+              <BarCodeScanner
+                onBarCodeScanned={scanned ? undefined : handleQRCodeScanned}
+                style={styles.qrCodeBox}
+              />
 
-            {scanned && <Button handleClick={() => setScanned(false)} text={'Re-scan'} />}
-          </View>
+              {scanned && <Button handleClick={() => setScanned(false)} text={'Re-scan'} />}
+            </View>
+          </Scroll>
 
           <Footer wichActive={'settings'} />
         </>
@@ -108,10 +111,11 @@ function ScanQr() {
 
 const styles = StyleSheet.create({
   container: {
+    height: globalStyles.fullDeviceHeight * .65,
     paddingHorizontal: 20,
+    paddingTop: 20,
 
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly'
   },
 
   messageText: {

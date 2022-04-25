@@ -43,7 +43,7 @@ function Settings() {
 
   const userDataObj = {
     email: userEmail,
-    id: user?.idUser, //Changed
+    id: user?.idUser,
   };
 
   const changeScreen = async (screenName: string, clearStorage?: boolean) => {

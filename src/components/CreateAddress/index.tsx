@@ -55,8 +55,6 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
         streetName,
         doorNumber,
         postalCode,
-        parishName: parish,
-        locationName: locality,
         email: user?.email ?? '',
         isVeterinarian: user?.isVeterinarian,
       };
@@ -68,7 +66,7 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
         setIsLoading(false);
         changeHaveAddressStateFunction(true);
 
-        //Dynamic push user data
+        //to do Dynamic push user data
       } catch (e) {
         return showError('Error: ' + e, 'Apparently there was an error, try again');
       }

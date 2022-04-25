@@ -52,8 +52,7 @@ export const hasNotificationsPermissions = async () => {
       //Handle response
     }
 
-    const expoToken = await getExpoToken();
-    return expoToken;
+    return await getExpoToken();
   } else {
     console.log('its not a device');
     return null;
