@@ -101,7 +101,7 @@ function CreateAddress({ changeHaveAddressStateFunction }: CreateAddressProps) {
           <StyledInput
             text={parish}
             width={'80%'}
-            placeholder={'Parish'}
+            placeholder={'City'}
             handleChangeFunction={(e: string) => handleText(e, 100, setParish)}
           />
           <StyledInput

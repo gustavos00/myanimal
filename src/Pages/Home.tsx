@@ -14,7 +14,6 @@ import BackgroundFilter from '../components/BackgroundFilter';
 import StatesContext from '../contexts/states';
 import Modal from '../components/Modal';
 import api from '../api/api';
-import GestureRecognizer from 'react-native-swipe-gestures';
 
 const Home = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Home'>>();
@@ -89,8 +88,8 @@ const Home = () => {
             <Modal
               title={'Uhm, are you sure?'}
               text={'Are you sure you will permanently delete an animal?'}
-              noButtonText={'Nevermind'}
-              yesButtonText={'Delete'}
+              borderedButtonText={'Nevermind'}
+              filledButtonText={'Delete'}
               trueFunction={handleDeleteAnimal}
               falseFunction={handleCloseDeleteAnimalModal}
             />

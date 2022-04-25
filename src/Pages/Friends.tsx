@@ -3,6 +3,7 @@ import { showError } from '../utils/error';
 import { FlatList, View } from 'react-native';
 import { FriendsData } from '../types/FriendsData';
 import { useNavigation } from '@react-navigation/core';
+import { generateUrlSearchParams } from '../utils/URLSearchParams';
 
 import UserContext from '../contexts/user';
 import FriendsContext from '../contexts/friends';
@@ -48,7 +49,8 @@ function Friends() {
 
     try {
       setIsLoading(true);
-      await api.get(`/user/friends/decline?id=${idFriendsElement}`);
+      const deleteFriendData = generateUrlSearchParams({ id: idFriendsElement });
+      await api.post(`/user/friends/decline`, deleteFriendData);
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);

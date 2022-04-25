@@ -68,7 +68,6 @@ function Veterinarians() {
 
           <Scroll>
             {veterinarians?.map((item, index) => {
-              console.log(item.photoUrl);
               return (
                 <DataElement
                   key={index}

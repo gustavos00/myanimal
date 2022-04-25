@@ -12,39 +12,34 @@ interface StyledInputProps {
 function StyledInput({ text, handleChangeFunction, placeholder, width }: StyledInputProps) {
   return (
     <>
-      <View style={styles.inputContainer}>
-        <View style={[styles.container, { width: width ?? '90%' }]}>
-          <View style={styles.textContainer}>
-            <Text style={styles.text}>{placeholder}</Text>
-          </View>
-
-          <TextInput
-            value={text == 'null' ? '' : text}
-            onChangeText={(text) => handleChangeFunction(text)}
-            style={styles.input}
-          />
+      <View style={[styles.container, { width: width ?? '100%' }]}>
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{placeholder}</Text>
         </View>
+
+        <TextInput
+          value={text == 'null' ? '' : text}
+          onChangeText={(text) => handleChangeFunction(text)}
+          style={styles.input}
+        />
       </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    width: '100%',
-
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
   container: {
-    paddingVertical: 10,
-    paddingHorizontal: 5,
-    marginVertical: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 5,
+    paddingRight: 5,
+
+    marginTop: 10,
+    marginBottom: 10,
 
     borderWidth: 1,
-    borderColor: globalStyles.gray,
     borderRadius: 5,
+    borderColor: globalStyles.gray,
   },
 
   input: {
