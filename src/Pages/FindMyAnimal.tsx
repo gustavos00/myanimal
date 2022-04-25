@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Dimensions, View, StyleSheet } from 'react-native';
+import { Dimensions, View, StyleSheet, Text } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
 
@@ -12,6 +12,7 @@ import Footer from '../components/Footer';
 import Button from '../components/Button';
 
 import Maps from '../components/Maps';
+import StyledText from '../components/StyledText';
 
 interface geographicDataProps {
   latitude: number;
@@ -27,10 +28,6 @@ function FindMyAnimal() {
   const route = useRoute<RouteProp<RootStackParamList, 'FindMyAnimal'>>();
   const { ownerData } = route.params;
   const { latitude, longitude } = ownerData;
-
-  const openOnMapsHandleClick = (region: geographicDataProps) => {
-    openMap(region);
-  };
 
   if (longitude && latitude) {
     useEffect(() => {
@@ -66,7 +63,14 @@ function FindMyAnimal() {
             </View>
           </>
         ) : (
-          <></>
+          <View style={styles.addressContainer}>
+            <StyledText text={'Name'} value={ownerData.name ?? ''} />
+            <StyledText text={'Contact'} value={ownerData.phoneNumber} />
+            <StyledText text={'Door Number'} value={ownerData.doorNumber ?? ''} />
+            <StyledText text={'Street Name'} value={ownerData.streetName ?? ''} />
+            <StyledText text={'Parish'} value={ownerData.parishName ?? ''} />
+            <StyledText text={'Locality'} value={ownerData.locationName ?? ''} />
+          </View>
         )}
       </Background>
 
@@ -77,12 +81,18 @@ function FindMyAnimal() {
 
 const styles = StyleSheet.create({
   mapsContainer: {
-    flex: 1
+    flex: 1,
   },
 
   ownerContainer: {
     marginTop: 20,
   },
+
+  addressContainer: {
+    flex: 1,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
+  }
 });
 
 export default FindMyAnimal;

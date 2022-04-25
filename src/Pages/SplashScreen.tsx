@@ -13,8 +13,6 @@ import { AnimalDataWithArraykey } from '../types/AnimalData';
 import { generateUrlSearchParams } from '../utils/URLSearchParams';
 import { verifyNetwork } from '../utils/network';
 import { showError } from '../utils/error';
-import { hasNotificationsPermissions } from '../utils/notifications';
-import { storeExpoToken } from '../services/auth';
 
 function SplashScreen() {
   const navigation = useNavigation();
@@ -23,23 +21,36 @@ function SplashScreen() {
 
   const { setUser, setAnimalData } = useContext(UserContext);
   const { setVeterinarians } = useContext(VeterinariansContext);
-  const { setToken, token } = useContext(AuthContext);
+  const { setToken } = useContext(AuthContext);
 
   const [internetConnection, setInternetConnection] = useState<boolean>(false);
 
+  const verifyNetworkLocal = () => {
+    //Verifica se o cliente tem acesso a internet para evitar problemas nos requests.
+    useEffect(() => {
+      const verifyNetworkInsideUseEffect = async () => {
+        const status = await verifyNetwork();
+        setInternetConnection(!status);
+      };
+      verifyNetworkInsideUseEffect();
+    }, []);
+  };
+
   useEffect(() => {
+    //Request GET para receber os dados dos veterinários
     const getVeterinarians = async () => {
       try {
         const response = await api.get('/veterinarian/get');
         setVeterinarians(response.data);
       } catch (e) {
-        showError('Error: ' + e, 'error getting vets');
+        showError('Error: ' + e, 'Apparently there was an error, try again');
       }
     };
     getVeterinarians();
   }, []);
 
   useEffect(() => {
+    //Chama a função getTokenFromLocalStorage dentro de um useEffect para que a função só seja chamada 1 vez.
     const getToken = async () => {
       const response = await getTokenFromLocalStorage();
 
@@ -49,15 +60,14 @@ function SplashScreen() {
         navigation.navigate('Login' as any);
       }
     };
-
     getToken();
   }, []);
 
-  //Check token on localstorage
+  //Request ao Local Storage para procurar se o utilizador tem um token previamente guardado.
   const getTokenFromLocalStorage = async () => {
     let accessResponse;
     try {
-      accessResponse = await storage.load({ key: '@userAccess' }); //Try find access token on local storage
+      accessResponse = await storage.load({ key: '@userAccess' });
     } catch (e: any) {
       switch (e.name) {
         case 'NotFoundError':
@@ -69,49 +79,35 @@ function SplashScreen() {
       }
       return false;
     }
-
     const { salt, token } = accessResponse;
 
     if (!!salt && !!token) {
-      //API request
       const tokenData = generateUrlSearchParams({ salt, token });
 
       try {
         const response = await api.post('/user/access/verify', tokenData);
-
         setUserData(response.data as unknown as UserData);
       } catch (e: any) {
-        //Verify error type by docs https://github.com/sunnylqm/react-native-storage
         showError('Error: ' + e, 'Apparently there was an error, try again');
-
         return false;
       }
+
       if (userData) {
         setToken(userData?.token);
         setUser(userData as UserData);
         setAnimalData(userData.animalData as Array<AnimalDataWithArraykey>);
-
-        const { userAddress } = userData;
-        return { haveAddress: !isEmpty(userAddress) };
+        return { haveAddress: !isEmpty(userData.userAddress) };
       }
     }
 
     return false;
   };
 
-
-  //CHECK INTERNET
-  const verifyNetworkLocal = () => {
-    useEffect(() => {
-      const verifyNetworkInsideUseEffect = async () => {
-        const status = await verifyNetwork(); //Trigger function to verify if user have internet
-        setInternetConnection(!status);
-      };
-      verifyNetworkInsideUseEffect();
-    }, []);
-  };
-
-  return <>{internetConnection && <NoWIFIModal handleClick={verifyNetworkLocal} />}</>;
+  return (
+    <>
+      {internetConnection && <NoWIFIModal handleClick={verifyNetworkLocal} />}
+    </>
+  );
 }
 
 export default SplashScreen;

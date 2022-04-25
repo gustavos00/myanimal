@@ -33,6 +33,7 @@ interface ViewVeterinarianProfileParams {
   veterinarianData: VeterinarianData;
   isUserAnimalVeterinarian?: boolean;
   idAnimal?: number
+  veterinarianAcceptedRequest: boolean
 }
 
 interface AnimalScreenParams {

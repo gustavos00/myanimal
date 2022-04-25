@@ -12,6 +12,7 @@ export interface AnimalData {
   trackNumber: string;
   userIdUser: number;
   veterinarianChatFingerprint: string,
+  veterinarianAcceptedRequest: boolean,
   userVeterinarian: number | null
   userVeterinarianFk: VeterinarianData | null
 }

@@ -31,14 +31,11 @@ function FindMyAnimalContainer({
 
     try {
       setLoadingFunction(true);
-      response = await api.get(
-        `/animal/findMyAnimal/?tracking=${trackNumber}`
-      );
+      response = await api.get(`/animal/findMyAnimal/?tracking=${trackNumber}`);
 
       const data: ResponseData = response.data;
 
       if (!data.message) {
-        //If dont have message
         navigation.navigate(
           'FindMyAnimal' as never,
           {
@@ -46,21 +43,19 @@ function FindMyAnimalContainer({
           } as never
         );
       } else {
-        Alert.alert(data.message);
-        setTrackNumber('')
+        setTrackNumber('');
       }
       setLoadingFunction(false);
     } catch (e) {
+      setLoadingFunction(false)
       return showError('Error: ' + e, 'Apparently there was an error, try again');
     }
   };
   return (
     <>
-      <BottomModal
-        swipeDownFunction={() => closeBottomModalFunction(false)}
-        modalHeight={250}
-      >
+      <BottomModal swipeDownFunction={() => closeBottomModalFunction(false)} modalHeight={250}>
         <StyledInput
+          width={'90%'}
           placeholder={'Track number'}
           text={trackNumber}
           handleChangeFunction={(e: string) => setTrackNumber(e)}
