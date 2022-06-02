@@ -28,7 +28,7 @@ function FindMyAnimal() {
   const route = useRoute<RouteProp<RootStackParamList, 'FindMyAnimal'>>();
   const { ownerData } = route.params;
   const { latitude, longitude } = ownerData;
-
+  
   if (longitude && latitude) {
     useEffect(() => {
       setHaveValidAddress(true);

@@ -10,6 +10,7 @@ import BottomModal from '../BottomModal';
 
 import Loading from '../Loading'
 import StatesContext from '../../contexts/states'
+import { generateUrlSearchParams } from '../../utils/URLSearchParams';
 
 
 interface userDataProps {
@@ -35,10 +36,12 @@ function GenerateFriendQrContainer({
     if(!userData) return console.log('error getting user data');
     try {
       setIsLoading(true)
-      const response = await api.get(`user/friends/token?email=${userData.email}&id=${userData.id}`);
+
+      const data = generateUrlSearchParams(userData)
+      const response = await api.post('user/friends/token', data);
       setIsLoading(false)
 
-      const { token } = response.data
+      const { token } = response.data as any
       setToken(token)
     } catch (e) {
       setIsLoading(false)

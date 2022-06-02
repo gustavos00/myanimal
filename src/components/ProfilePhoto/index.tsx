@@ -1,13 +1,12 @@
 import React from 'react';
 import globalStyles from '../../assets/styles/global';
 
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { Image } from 'react-native-expo-image-cache';
+import { StyleSheet, View, TouchableOpacity, Image, ImageSourcePropType } from 'react-native';
 
 interface ProfilePhotoProps {
   widthSize?: number;
   heightSize?: number;
-  photoUrl: string | undefined;
+  photoUrl?: ImageSourcePropType | string;
   statusMessage?: string;
 }
 
@@ -22,7 +21,7 @@ function ProfilePhoto({ widthSize, heightSize, photoUrl, statusMessage }: Profil
             heightSize ? { height: heightSize } : { height: 190 },
           ]}
         >
-          <Image style={styles.animalPhoto} uri={photoUrl ?? ''} />
+          <Image style={styles.animalPhoto} source={photoUrl as any} />
 
           {statusMessage && (
             <>
