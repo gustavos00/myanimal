@@ -27,10 +27,10 @@ function Veterinarians() {
   const route = useRoute<RouteProp<RootStackParamList, 'Veterinarians'>>();
   const { idAnimal } = route.params;
 
-  const handleSelectVeterinarian = async (veterinarian?: VeterinarianData) => {
-    if (!veterinarian || !idAnimal)
+  const handleSelectVeterinarian = async (veterinarian: VeterinarianData) => {
+    if (!idAnimal)
       return showError(
-        'Cant get veterinarian id on handleSelectVeterinarian funtion',
+        'Cant get animal id on handleSelectVeterinarian funtion',
         'Apparently there was an error, try again'
       );
     try {
@@ -67,27 +67,25 @@ function Veterinarians() {
           <BackgroundHeader text={'Veterinarians'} />
 
           <Scroll>
-            {veterinarians?.map((item, index) => {
-              return (
-                <DataElement
-                  key={index}
-                  haveSlider
-                  photoUrl={item.photoUrl}
-                  title={item.givenName}
-                  subTitle={item.familyName}
-                  sliderFalseColor={'green'}
-                  sliderTrueText={'More info'}
-                  sliderFalseText={'Select'}
-                  sliderFalseFunction={() => handleSelectVeterinarian(item)}
-                  sliderTrueFunction={() =>
-                    navigation.navigate(
-                      'ViewVeterinarianProfile' as never,
-                      { veterinarianData: item } as never
-                    )
-                  }
-                />
-              );
-            })}
+            {veterinarians?.map((item, index) => (
+              <DataElement
+                key={index}
+                haveSlider
+                photoUrl={item.photoUrl}
+                title={item.givenName}
+                subTitle={item.familyName}
+                sliderFalseColor={'green'}
+                sliderTrueText={'More info'}
+                sliderFalseText={'Select'}
+                sliderFalseFunction={() => handleSelectVeterinarian(item)}
+                sliderTrueFunction={() =>
+                  navigation.navigate(
+                    'ViewVeterinarianProfile' as never,
+                    { veterinarianData: item } as never
+                  )
+                }
+              />
+            ))}
           </Scroll>
         </>
       </Background>

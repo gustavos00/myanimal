@@ -66,36 +66,34 @@ const Home = () => {
 
   return (
     <>
-      <>
-        <Header text={homePhrase} />
-        <HomeContentContainer animalData={animalData} />
+      <Header text={homePhrase} />
+      <HomeContentContainer animalData={animalData} />
 
-        <Footer wichActive={'home'} />
+      <Footer wichActive={'home'} />
 
-        {!haveAddressState && (
-          <>
-            <BottomModal
-              swipeDownFunction={handleCloseBottomModal}
-              modalHeight={globalStyles.fullDeviceHeight / 1.5}
-            >
-              <CreateAddress changeHaveAddressStateFunction={setHaveAddressState} />
-            </BottomModal>
-          </>
-        )}
+      {!haveAddressState && (
+        <>
+          <BottomModal
+            swipeDownFunction={handleCloseBottomModal}
+            modalHeight={globalStyles.fullDeviceHeight / 1.5}
+          >
+            <CreateAddress changeHaveAddressStateFunction={setHaveAddressState} />
+          </BottomModal>
+        </>
+      )}
 
-        {!!deleteAnimalModalData && (
-          <BackgroundFilter handlePress={handleCloseDeleteAnimalModal}>
-            <Modal
-              title={'Uhm, are you sure?'}
-              text={'Are you sure you will permanently delete an animal?'}
-              borderedButtonText={'Nevermind'}
-              filledButtonText={'Delete'}
-              trueFunction={handleDeleteAnimal}
-              falseFunction={handleCloseDeleteAnimalModal}
-            />
-          </BackgroundFilter>
-        )}
-      </>
+      {!!deleteAnimalModalData && (
+        <BackgroundFilter handlePress={handleCloseDeleteAnimalModal}>
+          <Modal
+            title={'Uhm, are you sure?'}
+            text={'Are you sure you will permanently delete an animal?'}
+            borderedButtonText={'Nevermind'}
+            filledButtonText={'Delete'}
+            trueFunction={handleDeleteAnimal}
+            falseFunction={handleCloseDeleteAnimalModal}
+          />
+        </BackgroundFilter>
+      )}
     </>
   );
 };

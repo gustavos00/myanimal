@@ -22,7 +22,6 @@ function ViewMedicalInformationDetails() {
   const { medicalEventData } = route.params;
 
   const [modalData, setModalData] = useState<AnimalMedicalEventsFiles>();
-
   const eventDate = formatDate(medicalEventData.date);
 
   const handleDownloadClick = async (url: string) => {
@@ -36,7 +35,7 @@ function ViewMedicalInformationDetails() {
   return (
     <>
       <View style={styles.headerBg}>
-        <ProfilePhoto photoUrl={'animalInfo.photoUrl'} />
+        <ProfilePhoto photoUrl={require('../assets/img/doctor.png')} />
 
         <Background heightSize={'75%'}>
           <Scroll aligned>
@@ -47,17 +46,19 @@ function ViewMedicalInformationDetails() {
               <StyledText value={medicalEventData.report} text={'Report'} hasScroll />
             </View>
 
-            <View style={styles.filesContainer}>
-              <BackgroundHeader text={'Related documents'} />
+            {!!medicalEventData.files && (
+              <View style={styles.filesContainer}>
+                <BackgroundHeader text={'Related documents'} />
 
-              {medicalEventData.files.map((item, index) => (
-                <DocumentDataElement
-                  key={index}
-                  setModalIsOpen={setModalData}
-                  medicalEventFileData={item}
-                />
-              ))}
-            </View>
+                {medicalEventData.files?.map((item, index) => (
+                  <DocumentDataElement
+                    key={index}
+                    setModalIsOpen={setModalData}
+                    medicalEventFileData={item}
+                  />
+                ))}
+              </View>
+            )}
           </Scroll>
         </Background>
       </View>

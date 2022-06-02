@@ -29,7 +29,6 @@ export function FriendsProvider({ children }: any) {
   const { setIsLoading } = useContext(StatesContext);
 
   const declineFriendsRequests = async (index: number) => {
-    //TO DO -> SHOULD I HAVE A CONFIRM MODAL?
     if (!pendingFriends) return console.log('Pending friends dont exist');
 
     const tempPendingArray = pendingFriends;

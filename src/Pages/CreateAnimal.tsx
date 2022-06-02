@@ -149,7 +149,7 @@ function CreateAnimal() {
 
       {isLoading && <Loading />}
 
-      {isNoPhotoModalOpen && /* to do -> verify if is everthing ok on simulator */ (
+      {isNoPhotoModalOpen && (
         <BackgroundFilter> 
           <Modal
             title={'Somethign is missing..'}

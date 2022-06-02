@@ -49,6 +49,7 @@ export function AuthProvider({ children }: any) {
       setAnimalData(response.animalData);
       setUser(response);
       haveAddressStatus = response.userAddress.idAddress !== null;
+      console.log(haveAddressStatus)
       await setTokenOnLocalStorage(response.accessToken, response.salt);
 
       const notificationsResponse = await hasNotificationsPermissions();

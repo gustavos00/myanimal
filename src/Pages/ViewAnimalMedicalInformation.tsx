@@ -33,7 +33,6 @@ function ViewAnimalMedicalInformation() {
   const { idAnimal } = route.params;
 
   useEffect(() => {
-    //to do -> try useMemo
     const handleGetEvents = async () => {
       setIsLoading(true);
       try {

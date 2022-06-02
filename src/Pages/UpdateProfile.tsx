@@ -36,17 +36,21 @@ function UpdateProfile() {
   const [photoUrl, setPhotoUrl] = useState<string | undefined>(user?.photoUrl);
 
   const handleSubmitForm = async () => {
-    const tempObj = {
+    const newUserData = generateFormData({
       id: user?.idUser,
       givenName,
       familyName,
       phoneNumber,
-      idAddress: user?.userAddress,
       email: user?.email,
       isVeterinarian: user?.isVeterinarian,
-    };
 
-    const newUserData = generateFormData(tempObj);
+      idAddress: user?.userAddress?.idAddress,
+      streetName,
+      doorNumber,
+      postalCode,
+      parishName: parish,
+      locationName: locality
+    });
     newUserData.append('userPhoto', {
       uri: photoUrl,
       name: 'userPhoto',
@@ -86,48 +90,19 @@ function UpdateProfile() {
             <View style={styles.container}>
               <View style={styles.firstInputContainer}>
                 <OptionHeader text={'Account information'} />
-
-                <StyledInput
-                  handleChangeFunction={setGivenName}
-                  text={givenName}
-                  placeholder={'Given Name'}
-                />
-                <StyledInput
-                  handleChangeFunction={setFamilyName}
-                  text={familyName}
-                  placeholder={'Family Name'}
-                />
-                <StyledInput
-                  handleChangeFunction={setPhoneNumber}
-                  text={phoneNumber}
-                  placeholder={'Phone number'}
-                />
+                <StyledInput handleChangeFunction={setGivenName} text={givenName} placeholder={'Given Name'} />
+                <StyledInput handleChangeFunction={setFamilyName} text={familyName} placeholder={'Family Name'} />
+                <StyledInput handleChangeFunction={setPhoneNumber} text={phoneNumber} placeholder={'Phone number'} />
               </View>
 
               <Underline />
               <View style={styles.inputsContainer}>
                 <OptionHeader text={'Address information'} />
-                <StyledInput
-                  handleChangeFunction={setStreetName}
-                  text={streetName}
-                  placeholder={'Street name'}
-                />
-                <StyledInput
-                  handleChangeFunction={setDoorNumber}
-                  text={doorNumber}
-                  placeholder={'Door number'}
-                />
-                <StyledInput
-                  handleChangeFunction={setPostalCode}
-                  text={postalCode}
-                  placeholder={'Postal code'}
-                />
+                <StyledInput handleChangeFunction={setStreetName} text={streetName} placeholder={'Street name'} />
+                <StyledInput handleChangeFunction={setDoorNumber} text={doorNumber} placeholder={'Door number'} />
+                <StyledInput handleChangeFunction={setPostalCode} text={postalCode} placeholder={'Postal code'} />
                 <StyledInput handleChangeFunction={setParish} text={parish} placeholder={'City'} />
-                <StyledInput
-                  handleChangeFunction={setLocality}
-                  text={locality}
-                  placeholder={'Locality'}
-                />
+                <StyledInput handleChangeFunction={setLocality} text={locality} placeholder={'Locality'} />
               </View>
               <Button text={'Save'} handleClick={handleSubmitForm} />
             </View>

@@ -7,7 +7,7 @@ import { RootStackParamList } from '../navigator/MainStack';
 import { showError } from '../utils/error';
 
 import { chatsRef, db } from '../services/fire';
-import { addDoc, where, onSnapshot, query, doc, deleteDoc } from 'firebase/firestore';
+import { addDoc, where, onSnapshot, query } from 'firebase/firestore';
 
 import UserContext from '../contexts/user';
 import Footer from '../components/Footer';

@@ -35,11 +35,11 @@ function FindMyAnimalContainer({
 
       const data: ResponseData = response.data;
 
-      if (!data.message) {
+      if (!!data) {
         navigation.navigate(
           'FindMyAnimal' as never,
           {
-            ownerData: response.data,
+            ownerData: data,
           } as never
         );
       } else {
