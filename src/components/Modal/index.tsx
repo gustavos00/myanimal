@@ -26,11 +26,11 @@ function Modal({
       <Text style={styles.text}>{text}</Text>
       <View style={styles.buttonsContainer}>
         {borderedButtonText && (
-          <Button isBordered width={90} text={borderedButtonText} handleClick={falseFunction} />
+          <Button isBordered width={130} text={borderedButtonText} handleClick={falseFunction} />
         )}
 
         {filledButtonText && (
-          <Button width={90} text={filledButtonText} handleClick={trueFunction} />
+          <Button width={130} text={filledButtonText} handleClick={trueFunction} />
         )}
       </View>
     </View>

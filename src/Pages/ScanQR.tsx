@@ -50,6 +50,7 @@ function ScanQr() {
         const QRData = generateUrlSearchParams({ token: data, fromWho: user?.idUser });
         const response = await api.post('user/friends/verifyToken', QRData);
         setIsLoading(false);
+        
         if (response.status === 200) {
           Alert.alert('You are already friends, please check!');
         } else {
@@ -114,8 +115,6 @@ const styles = StyleSheet.create({
     height: globalStyles.fullDeviceHeight * .65,
     paddingHorizontal: 20,
     paddingTop: 20,
-
-    justifyContent: 'space-evenly'
   },
 
   messageText: {

@@ -3,7 +3,7 @@ export interface AnimalMedicalEvents {
   report: string;
   eventsStatus: EventsStatus;
   eventsType: EventsTypes;
-  files: Array<AnimalMedicalEventsFiles>
+  files?: Array<AnimalMedicalEventsFiles>
 }
 
 export interface EventsTypes {
