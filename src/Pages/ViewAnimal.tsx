@@ -5,7 +5,6 @@ import { RootStackParamList } from '../navigator/MainStack';
 
 import globalStyles from '../assets/styles/global';
 import Background from '../components/Background';
-import EnableFindMyPetSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
 import StyledText from '../components/StyledText';
 import ProfilePhoto from '../components/ProfilePhoto';
@@ -30,8 +29,6 @@ function ViewAnimal() {
               <StyledText value={animalInfo.birthday} text={'Birthday'} />
               <StyledText value={animalInfo.birthdayMonth} text={'Birthday month'} />
               <StyledText value={animalInfo.trackNumber} text={'Track number'} />
-
-              <EnableFindMyPetSwitch enableValue={false} />
             </View>
             <SetAnimalVeterinarian data={animalInfo.userVeterinarianFk} animalData={animalInfo} />
           </Scroll>

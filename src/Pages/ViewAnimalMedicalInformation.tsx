@@ -17,6 +17,7 @@ import { AnimalMedicalEvents } from '../types/AnimalMedicalEvents';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../navigator/MainStack';
 import { formatDate } from '../utils/date';
+import Scroll from '../components/Scroll';
 
 function ViewAnimalMedicalInformation() {
   const [filterModalIsOpen, setFilterModalIsOpen] = useState<boolean>();
@@ -71,13 +72,9 @@ function ViewAnimalMedicalInformation() {
             </TouchableOpacity>
           </BackgroundHeader>
 
-          <FlatList
-            data={filteredEvents}
-            keyExtractor={(_, index) => index.toString()}
-            renderItem={({ item }) => {
-              const eventDate = formatDate(item.date);
-
-              return (
+          <Scroll>
+            <>
+              {filteredEvents?.map((item, index) => (
                 <DataElement
                   handleOnPress={() =>
                     navigation.navigate(
@@ -88,12 +85,12 @@ function ViewAnimalMedicalInformation() {
                   photoUrl={require('../assets/img/doctor.png')}
                   photoFlagType={item.eventsStatus.label}
                   title={item.eventsType.value}
-                  subTitle={eventDate}
+                  subTitle={formatDate(item.date)}
                   haveSlider={false}
                 />
-              );
-            }}
-          />
+              ))}
+            </>
+          </Scroll>
         </>
       </Background>
 

@@ -11,7 +11,6 @@ import globalStyles from '../assets/styles/global';
 import AddPhoto from '../components/AddPhoto';
 import Background from '../components/Background';
 import Button from '../components/Button';
-import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
 import Input from '../components/StyledInput';
 import UserContext from '../contexts/user';
@@ -133,8 +132,6 @@ function CreateAnimal() {
                   handleChangeFunction={(e: string) => handleChangeText(e, setTrackNumber, 50)}
                   placeholder={'Track number'}
                 />
-
-                <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled} />
               </View>
 
               {!!error && <Text>{error}</Text>}

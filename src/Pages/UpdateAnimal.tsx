@@ -12,7 +12,6 @@ import globalStyles from '../assets/styles/global';
 import AddImage from '../components/AddPhoto';
 import Background from '../components/Background';
 import Button from '../components/Button';
-import CreateOrUpdateSwitch from '../components/EnableFindMyPetSwitch';
 import Footer from '../components/Footer/index';
 import Input from '../components/StyledInput';
 import UserContext from '../contexts/user';
@@ -150,7 +149,6 @@ function UpdateAnimal() {
                 placeholder={'Track number'}
               />
 
-              <CreateOrUpdateSwitch enableFunction={setIsEnabled} enableValue={isEnabled} />
               <Button text={'Update animal'} handleClick={handleSubmitForm} />
 
               <Text>{error}</Text>

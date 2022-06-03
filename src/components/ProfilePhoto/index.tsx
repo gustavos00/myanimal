@@ -14,21 +14,12 @@ function ProfilePhoto({ widthSize, heightSize, photoUrl, statusMessage }: Profil
   return (
     <>
       <View style={styles.container}>
-        <View
-          style={[
-            styles.circle,
-            widthSize ? { width: widthSize } : { width: 190 },
-            heightSize ? { height: heightSize } : { height: 190 },
-          ]}
-        >
-          <Image style={styles.animalPhoto} source={photoUrl as any} />
+        <View style={[styles.circle, widthSize ? { width: widthSize } : { width: 190 }, heightSize ? { height: heightSize } : { height: 190 }]}>
+          {typeof photoUrl === 'string' ? <Image style={styles.animalPhoto} source={{ uri: photoUrl } as any} /> : <Image style={styles.animalPhoto} source={photoUrl as any} />}
 
           {statusMessage && (
             <>
-              <TouchableOpacity
-                activeOpacity={0.7}
-                style={styles.statusContainer}
-              ></TouchableOpacity>
+              <TouchableOpacity activeOpacity={0.7} style={styles.statusContainer}></TouchableOpacity>
             </>
           )}
         </View>
